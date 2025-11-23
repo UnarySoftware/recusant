@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}",
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/../../godot-cpp/include",
+                "${workspaceFolder}/../../godot-cpp/gen/include",
+                "${workspaceFolder}/../../godot-cpp/gdextension",
+                "${workspaceFolder}/../../windows/mingw64/include",
+                "${workspaceFolder}/../../windows/mingw64/x86_64-w64-mingw32/include",
+                "${workspaceFolder}/../../steam/include"
+            ],
+            "compilerPath": "${workspaceFolder}/../../windows/mingw64/bin/gcc.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++20",
+            "intelliSenseMode": "windows-gcc-x64",
+            "defines": ["DEBUG_ENABLED"]
+        }
+    ],
+    "version": 4
+}

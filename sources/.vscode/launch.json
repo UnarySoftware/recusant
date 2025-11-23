@@ -1,0 +1,146 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Build",
+        "request": "launch",
+        "program": "${workspaceFolder}/../../windows/dummy.exe",
+        "cwd": "${workspaceFolder}/../",
+        "type": "cppdbg",
+        "MIMode": "gdb",
+        "miDebuggerPath": "${workspaceFolder}/../../windows/mingw64/bin/gdb.exe",
+        "preLaunchTask": "BuildDebug"
+      },
+      {
+        "name": "Host",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/../../windows/godot/editor.exe",
+        "args": ["--debug", "--verbose", "--nosteam"],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}/../",
+        "visualizerFile": 
+        [
+          "${workspaceFolder}/../../windows/godot/godot.natvis",
+        ],
+        "showDisplayString": true,
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "miDebuggerPath": "${workspaceFolder}/../../windows/mingw/bin/gdb.exe",
+        "setupCommands": [
+          {
+            "description": "Enable pretty-printing for gdb",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+          }
+        ],
+        "preLaunchTask": "BuildDebug"
+      },
+      {
+        "name": "Client",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/../../windows/godot/editor.exe",
+        "args": ["--debug", "--verbose", "--client", "--nosteam"],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}/../",
+        "visualizerFile": 
+        [
+          "${workspaceFolder}/../../windows/godot/godot.natvis",
+        ],
+        "showDisplayString": true,
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "miDebuggerPath": "${workspaceFolder}/../../windows/mingw/bin/gdb.exe",
+        "setupCommands": [
+          {
+            "description": "Enable pretty-printing for gdb",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+          }
+        ],
+        "preLaunchTask": "BuildDebug"
+      },
+      {
+        "name": "Host Steam",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/../../windows/godot/editor.exe",
+        "args": ["--debug", "--verbose", "--server"],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}/../",
+        "visualizerFile": 
+        [
+          "${workspaceFolder}/../../windows/godot/godot.natvis",
+        ],
+        "showDisplayString": true,
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "miDebuggerPath": "${workspaceFolder}/../../windows/mingw/bin/gdb.exe",
+        "setupCommands": [
+          {
+            "description": "Enable pretty-printing for gdb",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+          }
+        ],
+        "preLaunchTask": "BuildDebug"
+      },
+      {
+        "name": "Client Steam",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/../../windows/godot/editor.exe",
+        "args": ["--debug", "--verbose", "--client", "STEAM_ID"],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}/../",
+        "visualizerFile": 
+        [
+          "${workspaceFolder}/../../windows/godot/godot.natvis",
+        ],
+        "showDisplayString": true,
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "miDebuggerPath": "${workspaceFolder}/../../windows/mingw/bin/gdb.exe",
+        "setupCommands": [
+          {
+            "description": "Enable pretty-printing for gdb",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+          }
+        ],
+        "preLaunchTask": "BuildDebug"
+      },
+      {
+        "name": "Editor",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/../../windows/godot/editor.exe",
+        "args": ["--editor", "--debug", "--verbose", "--path", "../recusant/"],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}/../",
+        "visualizerFile": 
+        [
+          "${workspaceFolder}/../../windows/godot/godot.natvis",
+        ],
+        "showDisplayString": true,
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "additionalSOLibSearchPath": "${workspaceFolder}/../bin",
+        "miDebuggerPath": "${workspaceFolder}/../../windows/mingw/bin/gdb.exe",
+        "setupCommands": [
+          {
+            "description": "Enable pretty-printing for gdb",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+          }
+        ],
+        "preLaunchTask": "BuildDebug"
+      },
+    ]
+  }
