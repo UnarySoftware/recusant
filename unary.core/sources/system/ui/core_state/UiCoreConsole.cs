@@ -269,7 +269,6 @@ namespace Unary.Core
                         entry.Label.LabelSettings.OutlineColor = black;
                         _warnVoice.Stop();
                         _warnVoice.Play();
-                        _warnVoice.Play();
                         break;
                     }
                 case RuntimeLogger.LogType.Error:
@@ -277,7 +276,6 @@ namespace Unary.Core
                         entry.Label.LabelSettings.FontColor = red;
                         entry.Label.LabelSettings.OutlineColor = deepBlue;
                         _errorVoice.Stop();
-                        _errorVoice.Stream = _data.Error;
                         _errorVoice.Play();
                         break;
                     }

@@ -67,6 +67,8 @@ namespace Unary.Core
                 return;
             }
 
+            _initialized = true;
+
             var nodes = GetTree().GetNodesInGroup(GetGroups()[0]);
 
             foreach (var node in nodes)

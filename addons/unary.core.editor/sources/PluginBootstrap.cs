@@ -77,7 +77,7 @@ namespace Unary.Core.Editor
         {
             await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
-            if (_systems.Initialized && EditorInterface.Singleton.IsPluginEnabled("unary.core.editor"))
+            if (!_systems.Initialized && EditorInterface.Singleton.IsPluginEnabled("unary.core.editor"))
             {
                 EditorInterface.Singleton.SetPluginEnabled("unary.core.editor", false);
             }

@@ -89,50 +89,22 @@ namespace Unary.Core
                 header = reader.ReadLine();
             }
 
-            int index = 0;
-            bool foundKey = false;
-            string result = string.Empty;
+            int keyStart = header.IndexOf(key);
 
-            while (index < header.Length)
-            {
-                if (!foundKey)
-                {
-                    int keyIndex = 0;
-                    int tempIndex = index;
-
-                    while (tempIndex < header.Length && keyIndex < key.Length && header[tempIndex] == key[keyIndex])
-                    {
-                        tempIndex++;
-                        keyIndex++;
-                    }
-
-                    if (keyIndex == key.Length)
-                    {
-                        index = tempIndex;
-                        foundKey = true;
-                    }
-                    else
-                    {
-                        index++;
-                    }
-                }
-                else
-                {
-                    while (index < header.Length && header[index] != '\"')
-                    {
-                        result += header[index];
-                        index++;
-                    }
-                    break;
-                }
-            }
-
-            if (result == string.Empty)
+            if (keyStart == -1)
             {
                 return "Resource";
             }
 
-            return result;
+            int valueStart = keyStart + key.Length;
+            int valueEnd = header.IndexOf('\"', valueStart);
+
+            if (valueEnd == -1)
+            {
+                return "Resource";
+            }
+
+            return header.Substring(valueStart, valueEnd - valueStart);
         }
 
         private static readonly string[] _audibleHashes =

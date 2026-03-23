@@ -51,6 +51,11 @@ namespace Unary.Core.Editor
 
         void ISystem.Process(float delta)
         {
+            if (!_initialized)
+            {
+                return;
+            }
+
             _client.Invoke();
 
             _timer += delta;

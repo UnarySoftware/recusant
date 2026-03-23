@@ -52,32 +52,37 @@ namespace Unary.Core
 
             Resource resource;
 
-            ResourceLoader.CacheMode mode = (ResourceLoader.CacheMode)cacheMode;
-
-            // Temporary load
-            if (mode == ResourceLoader.CacheMode.IgnoreDeep)
+            try
             {
-                if (_temporaryCache.TryGetValue(path, out var tempResult))
+                ResourceLoader.CacheMode mode = (ResourceLoader.CacheMode)cacheMode;
+
+                // Temporary load
+                if (mode == ResourceLoader.CacheMode.IgnoreDeep)
                 {
-                    // TODO Multithread this
-                    //RuntimeLogger.Log(this, $"[TEMP CACHE FETCH]: {originalPath}");
-                    resource = tempResult;
+                    if (_temporaryCache.TryGetValue(path, out var tempResult))
+                    {
+                        // TODO Multithread this
+                        //RuntimeLogger.Log(this, $"[TEMP CACHE FETCH]: {originalPath}");
+                        resource = tempResult;
+                    }
+                    else
+                    {
+                        //RuntimeLogger.Log(this, $"[NEW TEMP LOAD]: {originalPath}");
+                        resource = ResourceLoader.Singleton.Load(originalPath, cacheMode: ResourceLoader.CacheMode.IgnoreDeep);
+                        _temporaryCache[path] = resource;
+                    }
                 }
                 else
                 {
-                    //RuntimeLogger.Log(this, $"[NEW TEMP LOAD]: {originalPath}");
-                    resource = ResourceLoader.Singleton.Load(originalPath, cacheMode: ResourceLoader.CacheMode.IgnoreDeep);
-                    _temporaryCache[path] = resource;
+                    // We are only interested in deep temporary loads - those indicate that we want resource patching
+                    //RuntimeLogger.Log(this, $"[REUSE CACHE FETCH]: {originalPath}");
+                    return default;
                 }
             }
-            else
+            finally
             {
-                // We are only interested in deep temporary loads - those indicate that we want resource patching
-                //RuntimeLogger.Log(this, $"[REUSE CACHE FETCH]: {originalPath}");
-                return default;
+                _bypassing = false;
             }
-
-            _bypassing = false;
 
             _processor.Process(resource);
 

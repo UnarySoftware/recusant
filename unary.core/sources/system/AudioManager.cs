@@ -45,6 +45,7 @@ namespace Unary.Core
                     server.SetBusSend(index, bus.Parent.Name);
                 }
 
+                server.SetBusVolumeLinear(index, bus.Volume);
                 _buses[bus.Name] = index;
                 index++;
             }

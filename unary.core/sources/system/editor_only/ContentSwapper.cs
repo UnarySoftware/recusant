@@ -41,7 +41,7 @@ namespace Unary.Core
 
             if (!File.Exists(pathB))
             {
-                return reporter(typeof(ContentSwapper), $"Failed to swap file {pathA} since it does not exist");
+                return reporter(typeof(ContentSwapper), $"Failed to swap file {pathB} since it does not exist");
             }
 
             File.Move(pathA, TempFile);
@@ -181,6 +181,7 @@ namespace Unary.Core
             {
                 newOperations.Originals[counter] = replacement.Key;
                 newOperations.Replacements[counter] = replacement.Value;
+                counter++;
             }
 
             SwapContent(newOperations, RuntimeLogger.Critical);

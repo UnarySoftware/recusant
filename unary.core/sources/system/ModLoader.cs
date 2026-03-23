@@ -108,12 +108,16 @@ namespace Unary.Core
 
                     if (!dependencyVersion.TryParse(dependentMod.Version))
                     {
-                        return this.Critical($"Dependency version for \"{dependentMod.ModId}\" within mod \"{mod.Key}\" has an invalid mod version \"{modVersion}\"");
+                        return this.Critical($"Dependency version for \"{dependentMod.ModId}\" within mod \"{mod.Key}\" has an invalid mod version \"{dependentMod.Version}\"");
                     }
 
-                    if (dependencyVersion.InRange(modVersion))
+                    if (AllMods.TryGetValue(dependentMod.ModId, out var depMod))
                     {
-                        dependencies.Add(dependentMod.ModId);
+                        ModVersion depModVersion = new();
+                        if (depModVersion.TryParse(depMod.Version) && dependencyVersion.InRange(depModVersion))
+                        {
+                            dependencies.Add(dependentMod.ModId);
+                        }
                     }
                 }
 

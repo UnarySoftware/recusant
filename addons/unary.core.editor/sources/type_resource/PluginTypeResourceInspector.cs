@@ -23,11 +23,7 @@ namespace Unary.Core.Editor
 
         public override bool _CanHandle(GodotObject @object)
         {
-            if (@object is TypeResource)
-            {
-                return true;
-            }
-            return false;
+            return @object is TypeResource;
         }
 
         public override bool _ParseProperty(GodotObject @object, Variant.Type type, string name, PropertyHint hintType, string hintString, PropertyUsageFlags usageFlags, bool wide)

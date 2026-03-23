@@ -324,7 +324,7 @@ namespace Unary.Core
 
             for (uint i = 0; i < itemsCount; i++)
             {
-                if (!SteamUGC.GetItemInstallInfo(items[i], out ulong _, out string folder, 1024, out uint _))
+                if (SteamUGC.GetItemInstallInfo(items[i], out ulong _, out string folder, 1024, out uint _))
                 {
                     result[folder] = items[i];
                 }

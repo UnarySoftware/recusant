@@ -126,6 +126,8 @@ namespace Unary.Core
                 _asyncEntries.Remove(deletion, out var _);
             }
 
+            _deleteEntries.Clear();
+
             if (!_asyncEntries.IsEmpty)
             {
                 _hadEntries = true;

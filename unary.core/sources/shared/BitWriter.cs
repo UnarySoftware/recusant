@@ -28,7 +28,7 @@ namespace Unary.Core
 			}
 		}
 
-		public void Write(bool value) => Write(1, 1);
+		public void Write(bool value) => Write(value ? 1 : 0, 1);
 
 		/// <summary>
 		/// Writes a full byte. If there are less than 8 bits remaining in the current byte,

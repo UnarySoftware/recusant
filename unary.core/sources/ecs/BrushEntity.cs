@@ -25,6 +25,11 @@ namespace Unary.Core
 
             var groups = GetGroups();
 
+            if (groups.Count == 0)
+            {
+                return;
+            }
+
             if (groups.Count > 1)
             {
                 PluginLogger.Warning(this, "BrushEntity has more than 1 node group");

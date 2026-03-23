@@ -31,37 +31,25 @@ namespace Unary.Core
 
             switch (Type)
             {
-                default:
+                case SelectionType.Exact:
+                    result.Append(Major).Append('.').Append(Minor).Append('.').Append(Patch);
+                    break;
                 case SelectionType.Lower:
-                    {
-                        result.Append("< ");
-                        break;
-                    }
+                    result.Append("< ").Append(Major).Append('.').Append(Minor).Append('.').Append(Patch);
+                    break;
                 case SelectionType.LowerEqual:
-                    {
-                        result.Append("<= ");
-                        break;
-                    }
+                    result.Append("<= ").Append(Major).Append('.').Append(Minor).Append('.').Append(Patch);
+                    break;
                 case SelectionType.Higher:
-                    {
-                        result.Append("> ");
-                        break;
-                    }
+                    result.Append("> ").Append(Major).Append('.').Append(Minor).Append('.').Append(Patch);
+                    break;
                 case SelectionType.HigherEqual:
-                    {
-                        result.Append(">= ");
-                        break;
-                    }
-            }
-
-            if (Type == SelectionType.Exact)
-            {
-                result.Append(Major).Append('.').Append(Minor).Append('.').Append(Patch);
-            }
-            else // Range
-            {
-                result.Append('[').Append(Major).Append('.').Append(Minor).Append('.').Append(Patch).Append(" - ")
-                .Append(MaxMajor).Append('.').Append(MaxMinor).Append('.').Append(MaxPatch).Append(']');
+                    result.Append(">= ").Append(Major).Append('.').Append(Minor).Append('.').Append(Patch);
+                    break;
+                case SelectionType.Range:
+                    result.Append('[').Append(Major).Append('.').Append(Minor).Append('.').Append(Patch)
+                        .Append(" - ").Append(MaxMajor).Append('.').Append(MaxMinor).Append('.').Append(MaxPatch).Append(']');
+                    break;
             }
 
             return result.ToString();
@@ -71,6 +59,27 @@ namespace Unary.Core
         {
             input = input.Replace(" ", "");
 
+            if (input.StartsWith("<="))
+            {
+                Type = SelectionType.LowerEqual;
+                input = input[2..];
+            }
+            else if (input.StartsWith(">="))
+            {
+                Type = SelectionType.HigherEqual;
+                input = input[2..];
+            }
+            else if (input.StartsWith('<'))
+            {
+                Type = SelectionType.Lower;
+                input = input[1..];
+            }
+            else if (input.StartsWith('>'))
+            {
+                Type = SelectionType.Higher;
+                input = input[1..];
+            }
+
             if (input.Contains('-'))
             {
                 string[] versions = input.Split('-');
@@ -79,6 +88,8 @@ namespace Unary.Core
                 {
                     return false;
                 }
+
+                Type = SelectionType.Range;
 
                 if (!ParseVersion(versions[0], out Major, out Minor, out Patch))
                 {
@@ -101,122 +112,26 @@ namespace Unary.Core
             return true;
         }
 
+        private static int Compare(ModVersion a, int major, int minor, int patch)
+        {
+            if (a.Major != major) return a.Major.CompareTo(major);
+            if (a.Minor != minor) return a.Minor.CompareTo(minor);
+            return a.Patch.CompareTo(patch);
+        }
+
         public bool InRange(ModVersion compared)
         {
-            switch (Type)
+            return Type switch
             {
-                case SelectionType.Exact:
-                    {
-                        return compared.Major == Major && compared.Minor == Minor && compared.Patch == Patch;
-                    }
-                case SelectionType.Lower:
-                    {
-                        if (compared.Major < Major)
-                        {
-                            return true;
-                        }
-
-                        if (compared.Minor < Minor)
-                        {
-                            return true;
-                        }
-
-                        if (compared.Patch < Patch)
-                        {
-                            return true;
-                        }
-
-                        return false;
-                    }
-                case SelectionType.LowerEqual:
-                    {
-                        if (compared.Major == Major && compared.Minor == Minor && compared.Patch == Patch)
-                        {
-                            return true;
-                        }
-
-                        if (compared.Major < Major)
-                        {
-                            return true;
-                        }
-
-                        if (compared.Minor < Minor)
-                        {
-                            return true;
-                        }
-
-                        if (compared.Patch < Patch)
-                        {
-                            return true;
-                        }
-
-                        return false;
-                    }
-                case SelectionType.Higher:
-                    {
-                        if (compared.Major > Major)
-                        {
-                            return true;
-                        }
-
-                        if (compared.Minor > Minor)
-                        {
-                            return true;
-                        }
-
-                        if (compared.Patch > Patch)
-                        {
-                            return true;
-                        }
-
-                        return false;
-                    }
-                case SelectionType.HigherEqual:
-                    {
-                        if (compared.Major == Major && compared.Minor == Minor && compared.Patch == Patch)
-                        {
-                            return true;
-                        }
-
-                        if (compared.Major > Major)
-                        {
-                            return true;
-                        }
-
-                        if (compared.Minor > Minor)
-                        {
-                            return true;
-                        }
-
-                        if (compared.Patch > Patch)
-                        {
-                            return true;
-                        }
-
-                        return false;
-                    }
-                case SelectionType.Range:
-                    {
-                        if (compared.Major < Major || compared.Major > MaxMajor)
-                        {
-                            return false;
-                        }
-
-                        if (compared.Minor < Minor || compared.Minor > MaxMinor)
-                        {
-                            return false;
-                        }
-
-                        if (compared.Patch < Patch || compared.Patch > MaxPatch)
-                        {
-                            return false;
-                        }
-
-                        return true;
-                    }
-                default:
-                    return false;
-            }
+                SelectionType.Exact => Compare(compared, Major, Minor, Patch) == 0,
+                SelectionType.Lower => Compare(compared, Major, Minor, Patch) < 0,
+                SelectionType.LowerEqual => Compare(compared, Major, Minor, Patch) <= 0,
+                SelectionType.Higher => Compare(compared, Major, Minor, Patch) > 0,
+                SelectionType.HigherEqual => Compare(compared, Major, Minor, Patch) >= 0,
+                SelectionType.Range => Compare(compared, Major, Minor, Patch) >= 0
+                                        && Compare(compared, MaxMajor, MaxMinor, MaxPatch) <= 0,
+                _ => false,
+            };
         }
     }
 }

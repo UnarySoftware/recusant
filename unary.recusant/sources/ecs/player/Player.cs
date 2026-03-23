@@ -119,7 +119,7 @@ public partial class Player : CharacterBody3D
 		Input.Singleton.MouseMode = Input.MouseModeEnum.Captured;
 	}
 
-	public override void _EnterTree()
+	public override void _ExitTree()
 	{
 		Instance = null;
 	}
