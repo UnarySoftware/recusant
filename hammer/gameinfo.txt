@@ -1,0 +1,24 @@
+"GameInfo"
+{
+	game 		"Recusant"
+	title 		"Recusant"
+	title2		"demo"
+	type		singleplayer_only
+	developer			"Unary Software"
+	developer_url		"https://github.com/UnarySoftware"
+
+	icon "resource/icon"
+	gamelogo 1
+	gamedata "recusant.fgd"
+
+	FileSystem
+	{
+		SteamAppId		420
+		SearchPaths
+		{
+			game+mod+mod_write+default_write_path		|gameinfo_path|.
+
+			platform			|all_source_engine_paths|platform/platform_misc.vpk
+		}
+	}
+}

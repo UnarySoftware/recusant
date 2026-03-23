@@ -1,0 +1,15 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bl7eb30w6jhhw"]
+
+[ext_resource type="Texture2D" uid="uid://byw4swy5hx14g" path="res://hammer/materials/unary.core/tools/npc_clip.vtf" id="1_b2q0a"]
+
+[resource]
+albedo_texture = ExtResource("1_b2q0a")
+metadata/compile_keys = ["compilenpcclip"]
+metadata/surfaceprop = "silent"
+metadata/details = {
+"$alpha": 0.5,
+"$basetexture": "tools/npc_clip",
+"$surfaceprop": "silent",
+"%compilenpcclip": 1,
+"%keywords": "tools"
+}

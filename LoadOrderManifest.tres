@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="LoadOrderManifest" format=3 uid="uid://uasmlp5bt3sh"]
+
+[ext_resource type="Script" uid="uid://cguswu3v0mlw0" path="res://unary.core/sources/resources/LoadOrderManifest.cs" id="1_1m6xs"]
+[ext_resource type="Script" uid="uid://c311ej1o580jr" path="res://unary.core/sources/resources/ModManifestSelector.cs" id="1_irrk3"]
+
+[sub_resource type="Resource" id="Resource_we0js"]
+script = ExtResource("1_irrk3")
+ModId = "unary.core"
+Version = "0.0.1"
+metadata/_custom_type_script = "uid://c311ej1o580jr"
+
+[sub_resource type="Resource" id="Resource_7udn8"]
+script = ExtResource("1_irrk3")
+ModId = "unary.recusant"
+Version = "0.0.1"
+metadata/_custom_type_script = "uid://c311ej1o580jr"
+
+[resource]
+script = ExtResource("1_1m6xs")
+Enabled = [SubResource("Resource_we0js"), SubResource("Resource_7udn8")]
+metadata/_custom_type_script = "uid://cguswu3v0mlw0"

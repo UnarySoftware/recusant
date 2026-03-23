@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="LevelDefinition" format=3 uid="uid://dk8727qw3xud0"]
+
+[ext_resource type="Script" uid="uid://d182yuar3h6wo" path="res://unary.core/sources/resources/LazyResource.cs" id="1_2s05i"]
+[ext_resource type="Script" uid="uid://dxj680v60xb1e" path="res://unary.recusant/sources/resources/LevelDefinition.cs" id="2_v7l1g"]
+
+[sub_resource type="Resource" id="Resource_2s05i"]
+script = ExtResource("1_2s05i")
+TargetValue = "uid://c6doi3245gedv"
+metadata/_custom_type_script = "uid://d182yuar3h6wo"
+
+[resource]
+script = ExtResource("2_v7l1g")
+Scene = SubResource("Resource_2s05i")
+metadata/_custom_type_script = "uid://dxj680v60xb1e"

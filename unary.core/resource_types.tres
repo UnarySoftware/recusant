@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ResourceTypesManifest" format=3]
+
+[ext_resource type="Script" path="res://unary.core/sources/resources/ResourceTypesManifest.cs" id="1_j6fs5"]
+
+[resource]
+script = ExtResource("1_j6fs5")
+Paths = PackedStringArray("res://unary.core/unary.core.tres", "res://unary.core/ui/core.tres", "res://unary.core/ui/console_data.tres", "res://unary.core/sound/ui/ui_bus.tres")
+Types = PackedStringArray("ModManifest", "UiStateManifest", "UiCoreConsoleData", "AudioBusDeclaration")

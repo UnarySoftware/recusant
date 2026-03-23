@@ -1,0 +1,30 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+# Ignore the static web subrepo
+unary.recusant/resources/web/.git/
+# Ignore local cache
+.unary/
+.vs/
+*.import
+*.svg
+*.vmt
+*.vmf
+*.vcs
+*.vtx
+*.vtf
+*.mdl
+*.gdignore
+*.vvd
+*.vmx
+*.phy
+*.png
+*.patch
+unary.recusant/resources/web/
+*.exr
+*.lmbake
+*.occ
+*.dll
+unary.core/analyzers/bin
+unary.core/analyzers/obj
+*.ogg

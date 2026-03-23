@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dov7a7jgmgccw"]
+
+[ext_resource type="Script" uid="uid://81icihneabs3" path="res://addons/unary.core.editor/hammer/entities/brush.gd" id="1_maxi8"]
+
+[node name="Brush" type="Node3D" unique_id=332743349]
+script = ExtResource("1_maxi8")
+metadata/_custom_type_script = "uid://81icihneabs3"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1974556561]
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=2132272541]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1864889552]
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="MeshInstance3D" unique_id=785967140]
+motion_mode = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/CharacterBody3D" unique_id=1929267595]

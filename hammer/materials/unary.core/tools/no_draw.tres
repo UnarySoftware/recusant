@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://sl8m8pkgi7c"]
+
+[ext_resource type="Texture2D" uid="uid://c6dfur7y4w6yl" path="res://hammer/materials/unary.core/tools/no_draw.vtf" id="1_gkimj"]
+
+[resource]
+albedo_texture = ExtResource("1_gkimj")
+metadata/compile_keys = ["compilenodraw"]
+metadata/details = {
+"$basetexture": "tools/no_draw",
+"%compilenodraw": 1,
+"%keywords": "tools"
+}

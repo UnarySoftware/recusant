@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dy7x42n27nhuw"]
+
+[ext_resource type="Shader" uid="uid://c66tg8oq8ptko" path="res://hammer/materials/unary.core/tools/block_light.gdshader" id="1_te0bm"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_te0bm")

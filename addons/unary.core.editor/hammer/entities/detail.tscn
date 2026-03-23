@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://c23w6hgskshfd"]
+
+[ext_resource type="Script" uid="uid://cc1ka7e2apbhl" path="res://addons/unary.core/hammer/entities/detail.gd" id="1_yg214"]
+
+[node name="Detail" type="Node3D"]
+script = ExtResource("1_yg214")
+metadata/_custom_type_script = "uid://cc1ka7e2apbhl"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]

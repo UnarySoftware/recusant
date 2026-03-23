@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://by8dj33sr5qf3"]
+
+[ext_resource type="Script" uid="uid://b788362bk01xw" path="res://addons/unary.core/hammer/entities/trigger.gd" id="1_m65ow"]
+
+[node name="Trigger" type="Node3D"]
+script = ExtResource("1_m65ow")
+metadata/_custom_type_script = "uid://b788362bk01xw"
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+debug_color = Color(18.892157, 18.892157, 18.892157, 0.42000002)

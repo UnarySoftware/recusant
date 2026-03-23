@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://cpfgixxhm77iu"]
+
+[ext_resource type="Texture2D" uid="uid://b4vml0ea05vif" path="res://unary.recusant/ui/Crosshair.png" id="1_kagta"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kagta"]
+font_size = 36
+
+[sub_resource type="LabelSettings" id="LabelSettings_iwta5"]
+font_size = 36
+font_color = Color(1, 0, 0, 1)
+
+[node name="Gameplay" type="Control" unique_id=1299453935]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Crosshair" type="TextureRect" parent="." unique_id=1479764784]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_kagta")
+
+[node name="Control" type="Control" parent="." unique_id=1754220647]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=1117208758]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=1846086532]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = -180.0
+offset_right = 56.5
+offset_bottom = -76.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label1" type="Label" parent="Control/VBoxContainer" unique_id=999175759]
+unique_name_in_owner = true
+layout_mode = 2
+text = "1249.0 m/s"
+label_settings = SubResource("LabelSettings_kagta")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Control/VBoxContainer" unique_id=1637110878]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0.0 dmg"
+label_settings = SubResource("LabelSettings_iwta5")
+horizontal_alignment = 1

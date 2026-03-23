@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ResourceTypesManifest" format=3 uid="uid://he2bta6u8gu5"]
+
+[ext_resource type="Script" uid="uid://npsq52ljwbnp" path="res://unary.core/sources/resources/ResourceTypesManifest.cs" id="1_512lh"]
+
+[resource]
+script = ExtResource("1_512lh")
+Paths = PackedStringArray("res://unary.testmod1/unary.testmod1.tres")
+Types = PackedStringArray("ModManifest")

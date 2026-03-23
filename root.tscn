@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://24beweal5uma"]
+
+[ext_resource type="Script" uid="uid://chkqnktcbaoah" path="res://unary.core/sources/system/Bootstrap.cs" id="1_pq8q7"]
+
+[node name="Root" type="Node" unique_id=878183785]
+script = ExtResource("1_pq8q7")
+metadata/_custom_type_script = "uid://chkqnktcbaoah"

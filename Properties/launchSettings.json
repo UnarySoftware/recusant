@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Solution": {
+      "commandName": "Project"
+    },
+    "Profile 1": {
+      "commandName": "Executable",
+      "executablePath": "..\\godot\\editor.exe",
+      "workingDirectory": ".",
+      "nativeDebugging": true
+    }
+  }
+}

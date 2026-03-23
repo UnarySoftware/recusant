@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ModManifest" format=3]
+
+[ext_resource type="Resource" path="res://unary.core/build.tres" id="1_iiery"]
+[ext_resource type="Script" path="res://unary.core/sources/resources/ModManifest.cs" id="2_wx7dq"]
+
+[resource]
+script = ExtResource("2_wx7dq")
+ModId = "unary.core"
+Version = "0.0.1"
+BuildManifest = ExtResource("1_iiery")
+metadata/_custom_type_script = "uid://b6blro5hl3a4t"

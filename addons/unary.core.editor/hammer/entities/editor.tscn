@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://dm6uv2u6wtt6b"]
+
+[ext_resource type="Script" uid="uid://cssbyej03wqw2" path="res://addons/unary.core/hammer/entities/editor_brush.gd" id="1_rwvb3"]
+
+[node name="BrushEditor" type="Node3D"]
+script = ExtResource("1_rwvb3")
+metadata/_custom_type_script = "uid://cssbyej03wqw2"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+layers = 524288
+cast_shadow = 0
+ignore_occlusion_culling = true
+gi_mode = 0
+skeleton = NodePath("")

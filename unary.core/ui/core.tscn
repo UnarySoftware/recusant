@@ -1,0 +1,313 @@
+[gd_scene format=3 uid="uid://dl0q61n85kv8m"]
+
+[ext_resource type="Texture2D" uid="uid://odnt6j4mcrw1" path="res://unary.core/textures/InfoPrint.png" id="1_0m1jr"]
+[ext_resource type="Texture2D" uid="uid://byp4owx5ipk2f" path="res://unary.core/textures/WarnPrint.png" id="2_ehbmy"]
+[ext_resource type="Texture2D" uid="uid://dntdocykh121b" path="res://unary.core/textures/ErrorPrint.png" id="3_oh8pw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oh8pw"]
+content_margin_left = 8.0
+content_margin_top = 2.0
+content_margin_right = 8.0
+content_margin_bottom = 2.0
+bg_color = Color(0.19793725, 0.19793722, 0.19793722, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="Theme" id="Theme_oh8pw"]
+TooltipPanel/styles/panel = SubResource("StyleBoxFlat_oh8pw")
+
+[sub_resource type="LabelSettings" id="LabelSettings_oh8pw"]
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_n52op"]
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_h22bl"]
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_mrxvf"]
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_tdkg7"]
+font_size = 20
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Core" type="Control" unique_id=260036912]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_oh8pw")
+
+[node name="VersionText" type="Label" parent="." unique_id=169660075]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -127.0
+offset_bottom = 23.0
+grow_horizontal = 0
+text = "%VERSION TEXT% "
+
+[node name="LeftSide" type="VBoxContainer" parent="." unique_id=2124201547]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_vertical = 2
+
+[node name="Counters" type="HBoxContainer" parent="LeftSide" unique_id=2129095278]
+layout_mode = 2
+
+[node name="LogCounter" type="MarginContainer" parent="LeftSide/Counters" unique_id=1040323704]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+
+[node name="Background" type="ColorRect" parent="LeftSide/Counters/LogCounter" unique_id=1604894415]
+show_behind_parent = true
+layout_mode = 2
+color = Color(0, 0, 0, 0.39215687)
+
+[node name="InnerMargin" type="MarginContainer" parent="LeftSide/Counters/LogCounter" unique_id=786973777]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Horizontal" type="HBoxContainer" parent="LeftSide/Counters/LogCounter/InnerMargin" unique_id=1638706822]
+layout_mode = 2
+
+[node name="Texture" type="TextureRect" parent="LeftSide/Counters/LogCounter/InnerMargin/Horizontal" unique_id=108683753]
+layout_mode = 2
+texture = ExtResource("1_0m1jr")
+
+[node name="LogCounterText" type="Label" parent="LeftSide/Counters/LogCounter/InnerMargin/Horizontal" unique_id=1555008420]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+text = "111"
+label_settings = SubResource("LabelSettings_oh8pw")
+horizontal_alignment = 1
+
+[node name="WarningCounter" type="MarginContainer" parent="LeftSide/Counters" unique_id=560539317]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+
+[node name="Background" type="ColorRect" parent="LeftSide/Counters/WarningCounter" unique_id=1564582768]
+show_behind_parent = true
+layout_mode = 2
+color = Color(0, 0, 0, 0.39215687)
+
+[node name="InnerMargin" type="MarginContainer" parent="LeftSide/Counters/WarningCounter" unique_id=105807029]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Horizontal" type="HBoxContainer" parent="LeftSide/Counters/WarningCounter/InnerMargin" unique_id=1120932002]
+layout_mode = 2
+
+[node name="Texture" type="TextureRect" parent="LeftSide/Counters/WarningCounter/InnerMargin/Horizontal" unique_id=1773756309]
+layout_mode = 2
+texture = ExtResource("2_ehbmy")
+
+[node name="WarningCounterText" type="Label" parent="LeftSide/Counters/WarningCounter/InnerMargin/Horizontal" unique_id=734887024]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+text = "111"
+label_settings = SubResource("LabelSettings_n52op")
+horizontal_alignment = 1
+
+[node name="ErrorCounter" type="MarginContainer" parent="LeftSide/Counters" unique_id=1145214557]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+
+[node name="Background" type="ColorRect" parent="LeftSide/Counters/ErrorCounter" unique_id=1864597257]
+show_behind_parent = true
+layout_mode = 2
+color = Color(0, 0, 0, 0.39215687)
+
+[node name="InnerMargin" type="MarginContainer" parent="LeftSide/Counters/ErrorCounter" unique_id=2013970364]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Horizontal" type="HBoxContainer" parent="LeftSide/Counters/ErrorCounter/InnerMargin" unique_id=1112797707]
+layout_mode = 2
+
+[node name="Texture" type="TextureRect" parent="LeftSide/Counters/ErrorCounter/InnerMargin/Horizontal" unique_id=525649189]
+layout_mode = 2
+texture = ExtResource("3_oh8pw")
+
+[node name="ErrorCounterText" type="Label" parent="LeftSide/Counters/ErrorCounter/InnerMargin/Horizontal" unique_id=746161035]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+text = "111"
+label_settings = SubResource("LabelSettings_h22bl")
+horizontal_alignment = 1
+
+[node name="ConsoleHeader" type="MarginContainer" parent="LeftSide/Counters" unique_id=717521676]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+
+[node name="Background" type="ColorRect" parent="LeftSide/Counters/ConsoleHeader" unique_id=410358466]
+show_behind_parent = true
+layout_mode = 2
+color = Color(0, 0, 0, 0.39215687)
+
+[node name="InnerMargin" type="MarginContainer" parent="LeftSide/Counters/ConsoleHeader" unique_id=1814205917]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Label" type="Label" parent="LeftSide/Counters/ConsoleHeader/InnerMargin" unique_id=852565097]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+text = "Console"
+label_settings = SubResource("LabelSettings_mrxvf")
+horizontal_alignment = 1
+
+[node name="FontIncrease" type="MarginContainer" parent="LeftSide/Counters" unique_id=634631865]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+
+[node name="Background" type="ColorRect" parent="LeftSide/Counters/FontIncrease" unique_id=500046031]
+show_behind_parent = true
+layout_mode = 2
+color = Color(0, 0, 0, 0.39215687)
+
+[node name="InnerMargin" type="MarginContainer" parent="LeftSide/Counters/FontIncrease" unique_id=2031272999]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="FontIncreaseButton" type="Button" parent="LeftSide/Counters/FontIncrease/InnerMargin" unique_id=1439517648]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Font +"
+
+[node name="FontDecrease" type="MarginContainer" parent="LeftSide/Counters" unique_id=926288419]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+
+[node name="Background" type="ColorRect" parent="LeftSide/Counters/FontDecrease" unique_id=695778598]
+show_behind_parent = true
+layout_mode = 2
+color = Color(0, 0, 0, 0.39215687)
+
+[node name="InnerMargin" type="MarginContainer" parent="LeftSide/Counters/FontDecrease" unique_id=652318527]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="FontDecreaseButton" type="Button" parent="LeftSide/Counters/FontDecrease/InnerMargin" unique_id=835886652]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Font -"
+
+[node name="Close" type="MarginContainer" parent="LeftSide/Counters" unique_id=22738082]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+
+[node name="Background" type="ColorRect" parent="LeftSide/Counters/Close" unique_id=838347381]
+show_behind_parent = true
+layout_mode = 2
+color = Color(0, 0, 0, 0.39215687)
+
+[node name="InnerMargin" type="MarginContainer" parent="LeftSide/Counters/Close" unique_id=925488143]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="CloseButton" type="Button" parent="LeftSide/Counters/Close/InnerMargin" unique_id=590018359]
+unique_name_in_owner = true
+layout_mode = 2
+text = "  X  "
+
+[node name="ConsoleBackground" type="ColorRect" parent="LeftSide" unique_id=2114097306]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0, 0, 0, 0.43529412)
+
+[node name="ConsoleScroll" type="ScrollContainer" parent="LeftSide/ConsoleBackground" unique_id=163831399]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ConsoleEntries" type="VBoxContainer" parent="LeftSide/ConsoleBackground/ConsoleScroll" unique_id=1083079431]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ConsoleEntry" type="MarginContainer" parent="LeftSide/ConsoleBackground/ConsoleScroll/ConsoleEntries" unique_id=864414796]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 1
+
+[node name="Text" type="Label" parent="LeftSide/ConsoleBackground/ConsoleScroll/ConsoleEntries/ConsoleEntry" unique_id=535274856]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 16
+theme_override_constants/outline_size = 1
+text = "Loading resource: res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.s3tc.ctex
+test"
+label_settings = SubResource("LabelSettings_tdkg7")
+autowrap_mode = 3

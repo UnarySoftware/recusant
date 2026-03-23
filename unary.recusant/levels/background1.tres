@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="LevelDefinition" format=3 uid="uid://b7vhvmww6u28p"]
+
+[ext_resource type="Script" uid="uid://dxj680v60xb1e" path="res://unary.recusant/sources/resources/LevelDefinition.cs" id="1_dr1r6"]
+
+[resource]
+script = ExtResource("1_dr1r6")
+Name = "Background1"
+metadata/_custom_type_script = "uid://dxj680v60xb1e"

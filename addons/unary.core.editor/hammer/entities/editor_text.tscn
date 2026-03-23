@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://ixbijsjhrlqv"]
+
+[ext_resource type="Script" uid="uid://7n6o7vg5670k" path="res://addons/unary.core/hammer/entities/editor_text.gd" id="1_kf4md"]
+
+[node name="TextEditor" type="Node3D"]
+script = ExtResource("1_kf4md")
+metadata/_custom_type_script = "uid://7n6o7vg5670k"
+
+[node name="Label3D" type="Label3D" parent="."]
+text = "WWWW"
+horizontal_alignment = 0
+text_direction = 2

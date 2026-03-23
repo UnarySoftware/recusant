@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://ogwcuffu0drx"]
+
+[ext_resource type="Texture2D" uid="uid://vcy7if1p761l" path="res://hammer/materials/unary.core/dev/measure_door.vtf" id="1_sd3yj"]
+
+[resource]
+albedo_texture = ExtResource("1_sd3yj")
+metadata/surfaceprop = "concrete"
+metadata/details = {
+"$basetexture": "unary.core/dev/measure_door",
+"$surfaceprop": "concrete"
+}

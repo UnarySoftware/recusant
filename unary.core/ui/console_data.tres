@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UiCoreConsoleData" format=3 uid="uid://dbbsj1lr02nmx"]
+
+[ext_resource type="Script" uid="uid://bgewrrax56ud7" path="res://unary.core/sources/resources/UiCoreConsoleData.cs" id="1_k53dw"]
+[ext_resource type="AudioStream" uid="uid://c4rgla6wbx7gu" path="res://unary.core/sound/ui/error.ogg" id="1_qvp3t"]
+[ext_resource type="AudioStream" uid="uid://bw4rsbu72qx3o" path="res://unary.core/sound/ui/warning.ogg" id="2_wh835"]
+
+[resource]
+script = ExtResource("1_k53dw")
+Warning = ExtResource("2_wh835")
+Error = ExtResource("1_qvp3t")
+metadata/_custom_type_script = "uid://bgewrrax56ud7"

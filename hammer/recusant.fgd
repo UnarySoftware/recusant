@@ -1,0 +1,90 @@
+@mapsize(-32768, 32768)
+
+@BaseClass = Targetname 
+[ 
+	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+]
+
+@BaseClass = Angles
+[ 
+	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "This entity's orientation in the world. Pitch is rotation around the Y axis, " +
+		"yaw is the rotation around the Z axis, roll is the rotation around the X axis."
+]
+
+@BaseClass = Origin
+[ 
+	origin(origin) : "Origin (X Y Z)" : : "The position of this entity's center in the world. Rotating entities typically rotate around their origin."
+]
+
+@BaseClass = Default 
+[ 
+	surfacepropname(string) : "Surface Prop Name" : "silent" : "Sets this entity with a surface prop"
+	
+	gimode(choices) : "Global Illumination Mode" : 1 =
+	[
+		0 : "Disabled"
+		1 : "Static"
+		2 : "Dynamic"
+	]
+]
+
+@BaseClass = Brush 
+[
+	collision(choices) : "Collision Type" : 1 =
+	[
+		0 : "Disabled"
+		1 : "Static"
+		2 : "Dynamic"
+	]
+]
+
+@BaseClass = Detail 
+[
+	collision(choices) : "Collision Type" : 1 =
+	[
+		0 : "Disabled"
+		1 : "Static"
+	]
+]
+
+@BaseClass = Group 
+[
+	groupname(string) : "Group Name" : "default" : "Adds this entity in a scene group by default"
+]
+
+@BaseClass = DebugColor
+[
+	rendercolor(color255) : "Debug Color (R G B)" : "255 255 255" : "Color used by the debug visualizations."
+]
+
+@SolidClass base(Targetname, Origin, Default, Brush, Group) = brush : 
+	"A brush entity that's designed to be referenced by scripts."
+[
+	
+]
+
+@SolidClass base(Targetname, Origin, Group, DebugColor) = trigger : 
+	"A trigger brush entity that's designed to be referenced by scripts that need to monitor entrances/leaves of certain objects in an area."
+[
+	
+]
+
+@SolidClass base(Default, Detail) = detail : 
+	"A brush entity that's designed to be used for splitting level into detail parts."
+[
+	
+]
+
+@SolidClass = editor : 
+	"Editor-only entity that's designed to be used as a scaffolding for level design."
+[
+	
+]
+
+@BaseClass color(0 255 0) = PlayerClass []
+
+@PointClass base(PlayerClass) studio("models/editor/playerstart.mdl") = player :
+	"This entity is used to eyeball a size of the room, since it provides a one-to-one scale of a player AABB."
+[
+
+]
