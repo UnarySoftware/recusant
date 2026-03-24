@@ -69,7 +69,14 @@ namespace Unary.Core
 
             _initialized = true;
 
-            var nodes = GetTree().GetNodesInGroup(GetGroups()[0]);
+            var groups = GetGroups();
+
+            if (groups.Count == 0)
+            {
+                return;
+            }
+
+            var nodes = GetTree().GetNodesInGroup(groups[0]);
 
             foreach (var node in nodes)
             {

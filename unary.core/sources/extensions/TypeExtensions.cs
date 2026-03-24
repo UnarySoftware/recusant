@@ -6,7 +6,7 @@ namespace Unary.Core
     {
         public static string GetModId(this Type source)
         {
-            return source.Namespace.Replace(".Editor", "").Trim('_');
+            return (source.Namespace ?? "").Replace(".Editor", "").Trim('_');
         }
     }
 }

@@ -13,6 +13,11 @@ namespace Unary.Core.Analyzers
         {
             var classSymbol = semanticModel.GetDeclaredSymbol(classDeclaration);
 
+            if (classSymbol == null)
+            {
+                return;
+            }
+
             var result = GetAttributeFromHierarchy(classSymbol, "SingletonProvider", true);
 
             if (result == null)
