@@ -20,7 +20,7 @@ namespace Unary.Core.Editor
 
         public override bool _CanHandle(GodotObject @object)
         {
-            return @object is LazyResource);
+            return @object is LazyResource;
         }
 
         public override bool _ParseProperty(GodotObject @object, Variant.Type type, string name, PropertyHint hintType, string hintString, PropertyUsageFlags usageFlags, bool wide)

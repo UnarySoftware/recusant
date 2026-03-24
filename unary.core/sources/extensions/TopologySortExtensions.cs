@@ -46,7 +46,7 @@ namespace Unary.Core
                 return nodeList.Where(x => x.DecreaseDependencyCount()).Select(x => x.Item);
             }
 
-            return null;
+            return Enumerable.Empty<TItem>();
         }
 
         private void Add(TKey key, Node<TItem> node)

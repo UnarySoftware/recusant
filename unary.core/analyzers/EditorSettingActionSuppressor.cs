@@ -22,7 +22,7 @@ namespace Unary.Core.Analyzers
                 {
                     var model = context.GetSemanticModel(node.SyntaxTree);
                     var declaredSymbol = model.GetDeclaredSymbol(node, context.CancellationToken);
-                    if (declaredSymbol.GetAttributes().Any(a => a.AttributeClass.Name.Contains("Editor")) == true)
+                    if (declaredSymbol != null && declaredSymbol.GetAttributes().Any(a => a.AttributeClass?.Name.Contains("Editor") == true))
                     {
                         context.ReportSuppression(Suppression.Create(SupportedSuppressions[0], diagnostic));
                     }

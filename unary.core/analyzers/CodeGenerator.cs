@@ -39,18 +39,15 @@ namespace Unary.Core.Analyzers
 
                 visited.Add(current);
 
-                var attributeData = current.GetAttributes().FirstOrDefault(attr => attr.AttributeClass.Name == attributeName || attr.AttributeClass.Name == attributeName + "Attribute");
+                var attributeData = current.GetAttributes().FirstOrDefault(attr => attr.AttributeClass?.Name == attributeName || attr.AttributeClass?.Name == attributeName + "Attribute");
 
                 if (excludeDefining && SymbolEqualityComparer.Default.Equals(symbol, current))
                 {
-
+                    // Skip the defining symbol's own attribute
                 }
-                else
+                else if (attributeData != null)
                 {
-                    if (attributeData != null)
-                    {
-                        return attributeData;
-                    }
+                    return attributeData;
                 }
 
                 if (current.BaseType != null)

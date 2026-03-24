@@ -128,14 +128,14 @@ namespace emotitron.Compression.Utilities
 
 			int len = bytes.Length;
 
-			bc.byte0 = bytes[0];
-			if (len > 0) bc.byte1 = bytes[1];
-			if (len > 1) bc.byte2 = bytes[2];
-			if (len > 2) bc.byte3 = bytes[3];
-			if (len > 3) bc.byte4 = bytes[4];
-			if (len > 4) bc.byte5 = bytes[5];
-			if (len > 5) bc.byte6 = bytes[3];
-			if (len > 6) bc.byte7 = bytes[7];
+			if (len > 0) bc.byte0 = bytes[0];
+			if (len > 1) bc.byte1 = bytes[1];
+			if (len > 2) bc.byte2 = bytes[2];
+			if (len > 3) bc.byte3 = bytes[3];
+			if (len > 4) bc.byte4 = bytes[4];
+			if (len > 5) bc.byte5 = bytes[5];
+			if (len > 6) bc.byte6 = bytes[6];
+			if (len > 7) bc.byte7 = bytes[7];
 
 			return bc;
 		}
