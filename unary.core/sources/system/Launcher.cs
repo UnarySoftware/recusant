@@ -31,10 +31,5 @@ namespace Unary.Core
 
             return true;
         }
-
-        void ISystem.Deinitialize()
-        {
-
-        }
     }
 }
