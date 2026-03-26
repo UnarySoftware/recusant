@@ -10,7 +10,8 @@ namespace Unary.Core
     {
         public float Delay;
         public float Range;
-        public int Pool;
+        public int PoolId;
+        public int SlotId;
     }
 
     public interface IProcess
@@ -42,7 +43,7 @@ namespace Unary.Core
 
     public sealed class DelayedUnit(float delay)
     {
-        private readonly List<Action<float>>[] _updaters = CreatePools();
+        private readonly SlotMap<Action<float>>[] _updaters = CreatePools();
         private int _subscribeIndex = 0;
         private readonly float _delay = delay;
 
@@ -50,13 +51,13 @@ namespace Unary.Core
         private bool _processing = false;
         private int _processingCount = 0;
 
-        private static List<Action<float>>[] CreatePools()
+        private static SlotMap<Action<float>>[] CreatePools()
         {
-            var pools = new List<Action<float>>[Updater.PoolCount];
+            var pools = new SlotMap<Action<float>>[Updater.PoolCount];
 
             for (int i = 0; i < pools.Length; i++)
             {
-                pools[i] = [];
+                pools[i] = new();
             }
 
             return pools;
@@ -76,7 +77,7 @@ namespace Unary.Core
             }
             else
             {
-                var span = CollectionsMarshal.AsSpan(_updaters[_processingCount]);
+                var span = _updaters[_processingCount].AsSpan();
 
                 for (int i = 0; i < span.Length; i++)
                 {
@@ -94,29 +95,22 @@ namespace Unary.Core
             }
         }
 
-        public int Subscribe(Action<float> action)
+        public (int PoolId, int SlotId) Subscribe(Action<float> action)
         {
-            _updaters[_subscribeIndex].Add(action);
-            int result = _subscribeIndex;
+            int poolId = _subscribeIndex;
+            int slotId = _updaters[poolId].Add(action);
 
             if (++_subscribeIndex == Updater.PoolCount)
             {
                 _subscribeIndex = 0;
             }
 
-            return result;
+            return (poolId, slotId);
         }
 
-        public void Unsubscribe(Action<float> action, int pool)
+        public void Unsubscribe(int slotId, int poolId)
         {
-            var list = _updaters[pool];
-            int idx = list.IndexOf(action);
-            if (idx >= 0)
-            {
-                // Swap with the last element and remove the last element to avoid shifting the list
-                list[idx] = list[^1];
-                list.RemoveAt(list.Count - 1);
-            }
+            _updaters[poolId].Remove(slotId);
         }
     }
 
@@ -130,8 +124,8 @@ namespace Unary.Core
             Ending
         };
 
-        private readonly List<Action<float>>[] _starters = CreatePools();
-        private readonly List<Action<float>>[] _enders = CreatePools();
+        private readonly SlotMap<Action<float>>[] _starters = CreatePools();
+        private readonly SlotMap<Action<float>>[] _enders = CreatePools();
         private int _subscribeIndex = 0;
         private readonly float _delay = delay;
 
@@ -141,13 +135,13 @@ namespace Unary.Core
         private State _state = State.PreStarting;
         private readonly float _range = range;
 
-        private static List<Action<float>>[] CreatePools()
+        private static SlotMap<Action<float>>[] CreatePools()
         {
-            var pools = new List<Action<float>>[Updater.PoolCount];
+            var pools = new SlotMap<Action<float>>[Updater.PoolCount];
 
             for (int i = 0; i < pools.Length; i++)
             {
-                pools[i] = [];
+                pools[i] = new();
             }
 
             return pools;
@@ -171,7 +165,7 @@ namespace Unary.Core
                     }
                 case State.Starting:
                     {
-                        var span = CollectionsMarshal.AsSpan(_starters[_processingCount]);
+                        var span = _starters[_processingCount].AsSpan();
 
                         for (int i = 0; i < span.Length; i++)
                         {
@@ -198,7 +192,7 @@ namespace Unary.Core
                     }
                 case State.Ending:
                     {
-                        var span = CollectionsMarshal.AsSpan(_enders[_processingCount]);
+                        var span = _enders[_processingCount].AsSpan();
 
                         for (int i = 0; i < span.Length; i++)
                         {
@@ -218,39 +212,24 @@ namespace Unary.Core
             }
         }
 
-        public int Subscribe(Action<float> starting, Action<float> ending)
+        public (int PoolId, int SlotId) Subscribe(Action<float> starting, Action<float> ending)
         {
-            _starters[_subscribeIndex].Add(starting);
-            _enders[_subscribeIndex].Add(ending);
-            int result = _subscribeIndex;
+            int poolId = _subscribeIndex;
+            int slotId = _starters[poolId].Add(starting);
+            _enders[poolId].Add(ending);
 
             if (++_subscribeIndex == Updater.PoolCount)
             {
                 _subscribeIndex = 0;
             }
 
-            return result;
+            return (poolId, slotId);
         }
 
-        public void Unsubscribe(Action<float> starting, Action<float> ending, int pool)
+        public void Unsubscribe(int slotId, int poolId)
         {
-            var starterList = _starters[pool];
-            int idx = starterList.IndexOf(starting);
-            if (idx >= 0)
-            {
-                // Swap with the last element and remove the last element to avoid shifting the list
-                starterList[idx] = starterList[^1];
-                starterList.RemoveAt(starterList.Count - 1);
-            }
-
-            var enderList = _enders[pool];
-            idx = enderList.IndexOf(ending);
-            if (idx >= 0)
-            {
-                // Swap with the last element and remove the last element to avoid shifting the list
-                enderList[idx] = enderList[^1];
-                enderList.RemoveAt(enderList.Count - 1);
-            }
+            _starters[poolId].Remove(slotId);
+            _enders[poolId].Remove(slotId);
         }
     }
 
@@ -259,22 +238,22 @@ namespace Unary.Core
         public float Delay;
         public float Range;
 
-        public bool Equals(UpdaterUnitKey other)
+        public readonly bool Equals(UpdaterUnitKey other)
         {
             return Delay == other.Delay && Range == other.Range;
         }
 
-        public override bool Equals(object obj)
+        public override readonly bool Equals(object obj)
         {
             return obj is UpdaterUnitKey other && Equals(other);
         }
 
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(Delay, Range);
         }
 
-        public override string ToString()
+        public override readonly string ToString()
         {
             return $"(Delay: {Delay}, Range: {Range})";
         }
@@ -287,7 +266,7 @@ namespace Unary.Core
         where TSubscriber : class
         where TInvoker : IUpdateInvoker<TSubscriber>
     {
-        private readonly List<TSubscriber> _subscribers = [];
+        private readonly SlotMap<TSubscriber> _subscribers = new();
 
         private readonly Dictionary<UpdaterUnitKey, DelayedUnit> _delayedDictionary = [];
         private readonly List<DelayedUnit> _delayedList = [];
@@ -299,7 +278,7 @@ namespace Unary.Core
 
         public void Update(float delta)
         {
-            var subscriberSpan = CollectionsMarshal.AsSpan(_subscribers);
+            var subscriberSpan = _subscribers.AsSpan();
 
             for (int i = 0; i < subscriberSpan.Length; i++)
             {
@@ -321,18 +300,9 @@ namespace Unary.Core
             }
         }
 
-        public void Subscribe(TSubscriber subscriber) => _subscribers.Add(subscriber);
+        public int Subscribe(TSubscriber subscriber) => _subscribers.Add(subscriber);
 
-        public void Unsubscribe(TSubscriber subscriber)
-        {
-            int idx = _subscribers.IndexOf(subscriber);
-
-            if (idx >= 0)
-            {
-                _subscribers[idx] = _subscribers[^1];
-                _subscribers.RemoveAt(_subscribers.Count - 1);
-            }
-        }
+        public void Unsubscribe(int slotId) => _subscribers.Remove(slotId);
 
         public UpdaterHandle SubscribeDelayed(float delay, Action<float> action)
         {
@@ -346,11 +316,14 @@ namespace Unary.Core
                 _delayedList.Add(unit);
             }
 
+            var (poolId, slotId) = unit.Subscribe(action);
+
             return new()
             {
                 Delay = delay,
                 Range = 0.0f,
-                Pool = unit.Subscribe(action)
+                PoolId = poolId,
+                SlotId = slotId
             };
         }
 
@@ -366,33 +339,36 @@ namespace Unary.Core
                 _rangesList.Add(unit);
             }
 
+            var (poolId, slotId) = unit.Subscribe(starter, ending);
+
             return new()
             {
                 Delay = delay,
                 Range = range,
-                Pool = unit.Subscribe(starter, ending)
+                PoolId = poolId,
+                SlotId = slotId
             };
         }
 
-        public void UnsubscribeDelayed(UpdaterHandle handle, Action<float> action)
+        public void UnsubscribeDelayed(UpdaterHandle handle)
         {
             _key.Delay = handle.Delay;
             _key.Range = handle.Range;
 
             if (_delayedDictionary.TryGetValue(_key, out var unit))
             {
-                unit.Unsubscribe(action, handle.Pool);
+                unit.Unsubscribe(handle.SlotId, handle.PoolId);
             }
         }
 
-        public void UnsubscribeRange(UpdaterHandle handle, Action<float> starter, Action<float> ending)
+        public void UnsubscribeRange(UpdaterHandle handle)
         {
             _key.Delay = handle.Delay;
             _key.Range = handle.Range;
 
             if (_rangesDictionary.TryGetValue(_key, out var unit))
             {
-                unit.Unsubscribe(starter, ending, handle.Pool);
+                unit.Unsubscribe(handle.SlotId, handle.PoolId);
             }
         }
     }
