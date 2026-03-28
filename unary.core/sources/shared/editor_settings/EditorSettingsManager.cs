@@ -13,6 +13,7 @@ namespace Unary.Core
 
 #if TOOLS
         private static readonly List<EditorSettingBase> _entries = [];
+        private static readonly List<FieldInfo> _settingFields = [];
 
         public static IEnumerable<EditorSettingBase> GetEntries()
         {
@@ -25,7 +26,7 @@ namespace Unary.Core
 
             foreach (var type in types)
             {
-                FieldInfo[] properties = type.GetFields(BindingFlags.NonPublic | BindingFlags.Static);
+                FieldInfo[] properties = type.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
 
                 foreach (var property in properties)
                 {
@@ -34,6 +35,8 @@ namespace Unary.Core
                     {
                         continue;
                     }
+
+                    _settingFields.Add(property);
 
                     EditorSettingVariableBase fieldBase = (EditorSettingVariableBase)property.GetValue(null);
 
@@ -151,8 +154,23 @@ namespace Unary.Core
                     entry.Wrapper.Free();
                     entry.Wrapper = null;
                 }
+
+                if (entry is EditorSettingVariableBase variable)
+                {
+                    variable.Inspector = null;
+                }
+                else if (entry is EditorSettingAction action)
+                {
+                    action.MethodInfo = null;
+                }
             }
 
+            foreach (var field in _settingFields)
+            {
+                field.SetValue(null, null);
+            }
+
+            _settingFields.Clear();
             _entries.Clear();
             _initialized = false;
         }

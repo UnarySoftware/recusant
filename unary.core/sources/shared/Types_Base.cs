@@ -151,6 +151,7 @@ namespace Unary.Core
         {
             _types = null;
             _attributeTypes = null;
+            _typesToAttributes = null;
             _baseTypes = null;
         }
     }

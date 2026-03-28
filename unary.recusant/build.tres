@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="BuildManifest" format=3]
+[gd_resource type="Resource" script_class="BuildManifest" format=3 uid="uid://cg583sn4ogf7t"]
 
-[ext_resource type="Script" path="res://unary.core/sources/resources/BuildManifest.cs" id="1_qoqrp"]
+[ext_resource type="Script" uid="uid://nnokt5rj1oox" path="res://unary.core/sources/resources/BuildManifest.cs" id="1_qoqrp"]
 
 [resource]
 script = ExtResource("1_qoqrp")
-BuildNumber = 65
-BuildData = "26.03.2026 04:32:25"
+BuildNumber = 151
+BuildData = "29.03.2026 02:04:15"

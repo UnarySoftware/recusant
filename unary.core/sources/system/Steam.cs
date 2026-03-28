@@ -10,7 +10,7 @@ namespace Unary.Core
     [GlobalClass]
     public partial class Steam : Node, ICoreSystem
     {
-        private static readonly EditorSettingVariable<bool> _enabled = new()
+        private static EditorSettingVariable<bool> _enabled = new()
         {
             EditorDefault = false,
             RuntimeDefault = true

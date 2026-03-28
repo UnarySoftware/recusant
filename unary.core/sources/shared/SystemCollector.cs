@@ -204,6 +204,11 @@ namespace Unary.Core
             {
                 T target = _systemsList[i];
                 target.Deinitialize();
+
+                if (target is IDisposable disposable)
+                {
+                    disposable.Dispose();
+                }
             }
         }
     }

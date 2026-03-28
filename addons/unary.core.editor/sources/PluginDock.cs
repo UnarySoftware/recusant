@@ -5,139 +5,158 @@ using Godot;
 
 namespace Unary.Core.Editor
 {
-	[Tool]
-	public partial class PluginDock : IPluginSystem
-	{
-		private Dictionary<string, Control> _docks = [];
-		private Dictionary<EditorSettingVariableBase, VBoxContainer> _editors = [];
+    [Tool]
+    public partial class PluginDock : IPluginSystem
+    {
+        private Dictionary<string, EditorDock> _docks = [];
+        private Dictionary<EditorSettingVariableBase, VBoxContainer> _editors = [];
+        private readonly List<(GodotObject source, StringName signal, Callable callable)> _signalConnections = [];
 
-		public void UpdateInspector(EditorSettingVariableBase variable)
-		{
-			if (_editors.TryGetValue(variable, out var storage))
-			{
-				UpdateVariable(storage, variable);
-			}
-		}
+        public void UpdateInspector(EditorSettingVariableBase variable)
+        {
+            if (_editors.TryGetValue(variable, out var storage))
+            {
+                UpdateVariable(storage, variable);
+            }
+        }
 
-		private void UpdateVariable(VBoxContainer container, EditorSettingVariableBase variableBase)
-		{
-			if (_editors.TryGetValue(variableBase, out var storage))
-			{
-				storage.GetChild(1).QueueFree();
-			}
+        private void UpdateVariable(VBoxContainer container, EditorSettingVariableBase variableBase)
+        {
+            if (_editors.TryGetValue(variableBase, out var storage))
+            {
+                storage.GetChild(1).QueueFree();
+            }
 
-			_editors[variableBase] = container;
+            _editors[variableBase] = container;
 
-			EditorProperty editor = EditorInspector.InstantiatePropertyEditor(variableBase.Wrapper, variableBase.VariantValue.VariantType,
-			nameof(EditorSettingWrapper.Value), variableBase.PropertyHint,
-			variableBase.HintText, (uint)PropertyUsageFlags.Editor, true);
+            EditorProperty editor = EditorInspector.InstantiatePropertyEditor(variableBase.Wrapper, variableBase.VariantValue.VariantType,
+            nameof(EditorSettingWrapper.Value), variableBase.PropertyHint,
+            variableBase.HintText, (uint)PropertyUsageFlags.Editor, true);
 
-			variableBase.Inspector = editor;
+            variableBase.Inspector = editor;
 
-			editor.SetObjectAndProperty(variableBase.Wrapper, nameof(EditorSettingWrapper.Value));
-			editor.Label = variableBase.Name;
-			editor.PropertyChanged += (property, value, field, changing) =>
-			{
-				variableBase.Wrapper.Value = value;
-				editor.UpdateProperty();
-			};
-			editor.UpdateProperty();
+            editor.SetObjectAndProperty(variableBase.Wrapper, nameof(EditorSettingWrapper.Value));
+            editor.Label = variableBase.Name;
 
-			container.AddChild(editor);
-		}
+            var callable = Callable.From((StringName property, Variant value, StringName field, bool changing) =>
+            {
+                variableBase.Wrapper.Value = value;
+                editor.UpdateProperty();
+            });
+            editor.Connect(EditorProperty.SignalName.PropertyChanged, callable);
+            _signalConnections.Add((editor, EditorProperty.SignalName.PropertyChanged, callable));
 
-		private void InitializeControl(VBoxContainer container, EditorSettingBase entry)
-		{
-			if (entry.Type == EditorSettingType.Variable)
-			{
-				UpdateVariable(container, (EditorSettingVariableBase)entry);
-			}
-			else if (entry.Type == EditorSettingType.Action)
-			{
-				EditorSettingAction action = (EditorSettingAction)entry;
-				Button newButton = new();
-				newButton.Text = entry.Name;
-				newButton.Pressed += () =>
-				{
-					action.MethodInfo.Invoke(null, null);
-				};
+            editor.UpdateProperty();
 
-				container.AddChild(newButton);
-			}
-		}
+            container.AddChild(editor);
+        }
 
-		private void InitializeGroups(EditorPlugin plugin)
-		{
-			Dictionary<string, Dictionary<string, List<EditorSettingBase>>> sorted = [];
+        private void InitializeControl(VBoxContainer container, EditorSettingBase entry)
+        {
+            if (entry.Type == EditorSettingType.Variable)
+            {
+                UpdateVariable(container, (EditorSettingVariableBase)entry);
+            }
+            else if (entry.Type == EditorSettingType.Action)
+            {
+                EditorSettingAction action = (EditorSettingAction)entry;
+                Button newButton = new();
+                newButton.Text = entry.Name;
 
-			foreach (var entry in EditorSettingsManager.GetEntries())
-			{
-				if (!sorted.TryGetValue(entry.ModId, out var groups))
-				{
-					groups = [];
-					sorted.Add(entry.ModId, groups);
-				}
+                var callable = Callable.From(() =>
+                {
+                    action.MethodInfo.Invoke(null, null);
+                });
+                newButton.Connect(BaseButton.SignalName.Pressed, callable);
+                _signalConnections.Add((newButton, BaseButton.SignalName.Pressed, callable));
 
-				if (!groups.TryGetValue(entry.Group, out var entries))
-				{
-					entries = [];
-					groups.Add(entry.Group, entries);
-				}
+                container.AddChild(newButton);
+            }
+        }
 
-				entries.Add(entry);
-			}
+        private void InitializeGroups(EditorPlugin plugin)
+        {
+            Dictionary<string, Dictionary<string, List<EditorSettingBase>>> sorted = [];
 
-			foreach (var modId in sorted)
-			{
-				Control dock = new();
-				dock.SetAnchorsPreset(Control.LayoutPreset.FullRect);
-				dock.Name = modId.Key.Replace('.', ' ');
+            foreach (var entry in EditorSettingsManager.GetEntries())
+            {
+                if (!sorted.TryGetValue(entry.ModId, out var groups))
+                {
+                    groups = [];
+                    sorted.Add(entry.ModId, groups);
+                }
 
-				_docks.Add(modId.Key, dock);
+                if (!groups.TryGetValue(entry.Group, out var entries))
+                {
+                    entries = [];
+                    groups.Add(entry.Group, entries);
+                }
 
-				VBoxContainer dockEntries = new();
-				dockEntries.SetAnchorsPreset(Control.LayoutPreset.FullRect);
-				dock.AddChild(dockEntries);
+                entries.Add(entry);
+            }
 
-				foreach (var group in modId.Value)
-				{
-					VBoxContainer groupContainer = new();
-					dockEntries.AddChild(groupContainer);
+            foreach (var modId in sorted)
+            {
+                VBoxContainer dockEntries = new();
+                dockEntries.SetAnchorsPreset(Control.LayoutPreset.FullRect);
 
-					Label groupLabel = new();
-					groupContainer.AddChild(groupLabel);
-					groupLabel.Text = group.Key;
-					groupLabel.HorizontalAlignment = HorizontalAlignment.Center;
+                foreach (var group in modId.Value)
+                {
+                    VBoxContainer groupContainer = new();
+                    dockEntries.AddChild(groupContainer);
 
-					foreach (var entry in group.Value)
-					{
-						InitializeControl(groupContainer, entry);
-					}
-				}
+                    Label groupLabel = new();
+                    groupContainer.AddChild(groupLabel);
+                    groupLabel.Text = group.Key;
+                    groupLabel.HorizontalAlignment = HorizontalAlignment.Center;
 
-				plugin.AddControlToDock(EditorPlugin.DockSlot.RightUl, dock);
-			}
-		}
+                    foreach (var entry in group.Value)
+                    {
+                        InitializeControl(groupContainer, entry);
+                    }
+                }
 
-		bool ISystem.PostInitialize()
-		{
-			InitializeGroups(this.GetPlugin());
-			return true;
-		}
+                EditorDock editorDock = new()
+                {
+                    Title = modId.Key.Replace('.', ' '),
+                    DefaultSlot = EditorDock.DockSlot.RightUl
+                };
+                editorDock.AddChild(dockEntries);
 
-		void ISystem.Deinitialize()
-		{
-			var plugin = this.GetPlugin();
+                plugin.AddDock(editorDock);
 
-			foreach (var dock in _docks)
-			{
-				plugin.RemoveControlFromDocks(dock.Value);
-				dock.Value.Free();
-			}
+                _docks.Add(modId.Key, editorDock);
+            }
+        }
 
-			_docks.Clear();
-			_editors.Clear();
-		}
-	}
+        bool ISystem.PostInitialize()
+        {
+            InitializeGroups(this.GetPlugin());
+            return true;
+        }
+
+        void ISystem.Deinitialize()
+        {
+            foreach (var (source, signal, callable) in _signalConnections)
+            {
+                if (GodotObject.IsInstanceValid(source) && source.IsConnected(signal, callable))
+                {
+                    source.Disconnect(signal, callable);
+                }
+            }
+            _signalConnections.Clear();
+
+            var plugin = this.GetPlugin();
+
+            foreach (var dock in _docks)
+            {
+                plugin.RemoveDock(dock.Value);
+                dock.Value.Free();
+            }
+
+            _docks.Clear();
+            _editors.Clear();
+        }
+    }
 }
 #endif

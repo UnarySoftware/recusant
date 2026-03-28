@@ -9,14 +9,11 @@ namespace Unary.Recusant
     [GlobalClass]
     public partial class UiInfoUnit : UiUnit<UiGameplayState>
     {
+        [UiElement("%Label1")]
         private Label _label1;
-        private Label _label2;
 
-        public override void Initialize()
-        {
-            _label1 = Root.GetNode<Label>("%Label1");
-            _label2 = Root.GetNode<Label>("%Label2");
-        }
+        [UiElement("%Label2")]
+        private Label _label2;
 
         public override void Process(float delta)
         {

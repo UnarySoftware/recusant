@@ -41,7 +41,7 @@ namespace Unary.Core
 
             if (!_systems.Initialize(["unary.core"], this,
             [typeof(BuildBumper), typeof(ResourceManager), typeof(Resources), typeof(ContentSwapper)],
-            [typeof(ModSystems)]))
+            [typeof(ModSystems), typeof(UiManager)]))
             {
                 Quit(1);
                 return;

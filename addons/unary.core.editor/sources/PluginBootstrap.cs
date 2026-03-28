@@ -57,7 +57,7 @@ namespace Unary.Core.Editor
 
         public HashSet<string> EnabledPlugins { get; private set; } = null;
 
-        public void Initialize()
+        public override void _EnterTree()
         {
             Singleton = this;
 
@@ -83,23 +83,8 @@ namespace Unary.Core.Editor
             }
         }
 
-        double _currentDelta = 0.0;
-        double _initDelta = 0.33;
-
         public override void _Process(double delta)
         {
-            _currentDelta += delta;
-
-            if (Singleton == null && _currentDelta >= _initDelta)
-            {
-                Initialize();
-            }
-
-            if (!_systems.Initialized)
-            {
-                return;
-            }
-
             foreach (var system in _systems.Systems)
             {
                 system.Process((float)delta);

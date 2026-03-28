@@ -61,15 +61,16 @@ namespace Unary.Core
 
         private struct AsyncEntry
         {
-            public Action<Resource> Result;
+            public Action<Resource, object> Result;
             public Action<float> Progress;
             public Godot.Collections.Array FloatStorage;
+            public object Data;
         }
 
         private readonly ConcurrentDictionary<string, AsyncEntry> _asyncEntries = [];
         private readonly ConcurrentBag<string> _deleteEntries = [];
 
-        public void LoadPatchedAsync(string path, Action<Resource> result, Action<float> progress, string typeHint = "")
+        public void LoadPatchedAsync(string path, Action<Resource, object> result, Action<float> progress, string typeHint = "", object data = null)
         {
             RuntimeLogger.OnLog.StartQueue();
 
@@ -77,8 +78,9 @@ namespace Unary.Core
 
             if (error != Error.Ok)
             {
+                this.Error($"Failed to load a resource at \"{path}\"");
                 progress(0.0f);
-                result(null);
+                result(null, null);
                 return;
             }
 
@@ -86,7 +88,8 @@ namespace Unary.Core
             {
                 Result = result,
                 Progress = progress,
-                FloatStorage = []
+                FloatStorage = [],
+                Data = data
             };
         }
 
@@ -106,14 +109,14 @@ namespace Unary.Core
                 {
                     Resource result = ResourceLoader.Singleton.LoadThreadedGet(entry.Key);
 
-                    entry.Value.Result(result);
+                    entry.Value.Result(result, entry.Value.Data);
                     entry.Value.Progress(1.0f);
 
                     _deleteEntries.Add(entry.Key);
                 }
                 else
                 {
-                    entry.Value.Result(null);
+                    entry.Value.Result(null, null);
                     entry.Value.Progress(0.0f);
 
                     this.Error($"Failed to get a level load status due to an error \"{status}\"");

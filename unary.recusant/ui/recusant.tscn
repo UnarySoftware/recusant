@@ -1,0 +1,131 @@
+[gd_scene format=3 uid="uid://y7f5t4vvy6me"]
+
+[ext_resource type="Texture2D" uid="uid://bhk3wtvwuik2s" path="res://unary.recusant/ui/spinner_foreground.png" id="1_82q5o"]
+[ext_resource type="Texture2D" uid="uid://b1tpw407d1xuu" path="res://unary.recusant/ui/spinner_background.png" id="2_vq7i2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_es08t"]
+paragraph_spacing = -10.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_vq7i2"]
+paragraph_spacing = -10.0
+font_color = Color(1, 0.6, 0.10980392, 1)
+
+[node name="Recusant" type="Control" unique_id=540448942]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Loading" type="Control" parent="." unique_id=1106591963]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="LoadingForeground" type="TextureRect" parent="Loading" unique_id=1350525863]
+unique_name_in_owner = true
+editor_description = "Clockwise spin (Rotation goes up)"
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -128.0
+offset_bottom = 128.0
+grow_horizontal = 0
+pivot_offset = Vector2(64, 64)
+texture = ExtResource("1_82q5o")
+expand_mode = 1
+
+[node name="LoadingBackground" type="TextureRect" parent="Loading" unique_id=782259491]
+unique_name_in_owner = true
+editor_description = "Counter-Clockwise spin (Rotation goes down)"
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -128.0
+offset_bottom = 128.0
+grow_horizontal = 0
+pivot_offset = Vector2(64, 64)
+texture = ExtResource("2_vq7i2")
+expand_mode = 1
+
+[node name="LoadingLabel" type="Label" parent="Loading" unique_id=272464374]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -152.0
+offset_top = 108.0
+offset_right = -87.0
+offset_bottom = 154.0
+grow_horizontal = 0
+text = "4234235
+5324"
+label_settings = SubResource("LabelSettings_es08t")
+horizontal_alignment = 2
+
+[node name="Saving" type="Control" parent="." unique_id=220834223]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="SavingForeground" type="TextureRect" parent="Saving" unique_id=1710363332]
+unique_name_in_owner = true
+editor_description = "Clockwise spin (Rotation goes up)"
+modulate = Color(1, 0.6, 0.10980392, 1)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -256.0
+offset_right = -128.0
+offset_bottom = 128.0
+grow_horizontal = 0
+pivot_offset = Vector2(64, 64)
+texture = ExtResource("1_82q5o")
+expand_mode = 1
+
+[node name="SavingBackground" type="TextureRect" parent="Saving" unique_id=526033139]
+unique_name_in_owner = true
+editor_description = "Counter-Clockwise spin (Rotation goes down)"
+modulate = Color(1, 0.6, 0.10980392, 1)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -256.0
+offset_right = -128.0
+offset_bottom = 128.0
+grow_horizontal = 0
+pivot_offset = Vector2(64, 64)
+texture = ExtResource("2_vq7i2")
+expand_mode = 1
+
+[node name="SavingLabel" type="Label" parent="Saving" unique_id=1013383991]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -320.0
+offset_top = 20.0
+offset_right = -255.0
+offset_bottom = 66.0
+grow_horizontal = 0
+text = "4234235
+5324"
+label_settings = SubResource("LabelSettings_vq7i2")
+horizontal_alignment = 2

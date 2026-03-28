@@ -8,7 +8,7 @@ namespace Unary.Recusant
     [GlobalClass]
     public partial class NetworkManager : Node, IModSystem
     {
-        public static readonly EditorSettingVariable<string[]> BannedExtensions = new()
+        public static EditorSettingVariable<string[]> BannedExtensions = new()
         {
             EditorDefault = [".gdignore", ".patch", ".fgd", ".vmt", ".vtf", "gameinfo.txt", ".vmf", ".vmx", ".cs", ".uid", ".import"],
             RuntimeDefault = [],

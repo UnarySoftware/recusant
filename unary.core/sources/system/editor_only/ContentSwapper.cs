@@ -10,14 +10,14 @@ namespace Unary.Core
     [GlobalClass]
     public partial class ContentSwapper : Node, ICoreSystem
     {
-        private static readonly EditorSettingVariable<bool> _swapContent = new()
+        private static EditorSettingVariable<bool> _swapContent = new()
         {
             EditorDefault = true,
             // No need for runtime swapping, we only need this for editor time
             RuntimeDefault = false
         };
 
-        public static readonly EditorSettingVariable<string[]> BannedExtensions = new()
+        public static EditorSettingVariable<string[]> BannedExtensions = new()
         {
             EditorDefault = [".gdignore", ".patch", ".fgd", ".vmt", ".vtf", "gameinfo.txt", ".vmf", ".vmx", ".cs", ".uid", ".import"],
             RuntimeDefault = [],

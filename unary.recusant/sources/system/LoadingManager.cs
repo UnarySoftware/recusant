@@ -11,15 +11,16 @@ namespace Unary.Recusant
     {
         public bool IsLoading { get; private set; } = false;
 
-        private enum LoadingJobType
+        public enum LoadingJobType
         {
             None,
             Bool,
             Float
         };
 
-        private struct LoadingJob
+        public struct LoadingJob
         {
+            public string Name;
             public LoadingJobType Type;
             public Func<bool> ValueBool;
             public Func<float> ValueFloat;
@@ -27,24 +28,23 @@ namespace Unary.Recusant
         }
 
         private Type _switchState = null;
-        private readonly HashSet<string> _removeQueue = new();
-        private readonly Dictionary<string, LoadingJob> _jobs = new();
+        private readonly HashSet<uint> _removeQueue = [];
+        private readonly Dictionary<uint, LoadingJob> _jobs = [];
 
         // Normalized from 0.0 to 1.0
         public float _currentValue = 0.0f;
         public float GlobalValue { get; private set; } = 0.0f;
 
-        public List<string> GetJobs()
+        private uint _jobId = 0;
+
+        public struct JobData
         {
-            List<string> jobs = [];
-
-            foreach (var job in _jobs)
-            {
-                jobs.Add(job.Key);
-            }
-
-            return jobs;
+            public uint Id;
+            public LoadingJob Job;
         }
+
+        public EventFunc<JobData> OnJobAdded { get; } = new();
+        public EventFunc<JobData> OnJobFinished { get; } = new();
 
         public void AddJob(string name, Func<float> value, Func<float> max)
         {
@@ -53,12 +53,21 @@ namespace Unary.Recusant
                 IsLoading = true;
             }
 
-            _jobs[name] = new()
+            _jobs[_jobId] = new()
             {
+                Name = name,
                 Type = LoadingJobType.Float,
                 ValueFloat = value,
                 MaxFloat = max
             };
+
+            OnJobAdded.Publish(new()
+            {
+                Id = _jobId,
+                Job = _jobs[_jobId]
+            });
+
+            _jobId++;
         }
 
         public void AddJob(string name, Func<float> value)
@@ -68,12 +77,21 @@ namespace Unary.Recusant
                 IsLoading = true;
             }
 
-            _jobs[name] = new()
+            _jobs[_jobId] = new()
             {
+                Name = name,
                 Type = LoadingJobType.Float,
                 ValueFloat = value,
                 MaxFloat = () => { return 1.0f; }
             };
+
+            OnJobAdded.Publish(new()
+            {
+                Id = _jobId,
+                Job = _jobs[_jobId]
+            });
+
+            _jobId++;
         }
 
         public void AddJob(string name, Func<bool> value)
@@ -83,11 +101,20 @@ namespace Unary.Recusant
                 IsLoading = true;
             }
 
-            _jobs[name] = new()
+            _jobs[_jobId] = new()
             {
+                Name = name,
                 Type = LoadingJobType.Bool,
                 ValueBool = value
             };
+
+            OnJobAdded.Publish(new()
+            {
+                Id = _jobId,
+                Job = _jobs[_jobId]
+            });
+
+            _jobId++;
         }
 
         public void AddJob(string name)
@@ -97,10 +124,19 @@ namespace Unary.Recusant
                 IsLoading = true;
             }
 
-            _jobs[name] = new()
+            _jobs[_jobId] = new()
             {
+                Name = name,
                 Type = LoadingJobType.None
             };
+
+            OnJobAdded.Publish(new()
+            {
+                Id = _jobId,
+                Job = _jobs[_jobId]
+            });
+
+            _jobId++;
         }
 
         // Automatically switches to switchStateOnDone UI-wise when done
@@ -130,6 +166,21 @@ namespace Unary.Recusant
             {
                 return;
             }
+
+            foreach (var job in _removeQueue)
+            {
+                if (_jobs.TryGetValue(job, out LoadingJob value))
+                {
+                    OnJobFinished.Publish(new()
+                    {
+                        Id = job,
+                        Job = value
+                    });
+                    _jobs.Remove(job);
+                }
+            }
+
+            _removeQueue.Clear();
 
             float calculatedValue = 0.0f;
             float calculatedMax = 0.0f;
@@ -201,16 +252,6 @@ namespace Unary.Recusant
 
             _currentValue = calculatedValue.Remap(0.0f, calculatedMax, 0.0f, 1.0f);
             GlobalValue = Mathf.Lerp(GlobalValue, _currentValue, 0.33f);
-
-            foreach (var job in _removeQueue)
-            {
-                if (_jobs.ContainsKey(job))
-                {
-                    _jobs.Remove(job);
-                }
-            }
-
-            _removeQueue.Clear();
         }
     }
 }

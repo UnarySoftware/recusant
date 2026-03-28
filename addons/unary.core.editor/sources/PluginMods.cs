@@ -20,7 +20,7 @@ namespace Unary.Core.Editor
             }
         }
 
-        private static readonly EditorSettingVariableBase _selectedMods = new()
+        private static EditorSettingVariableBase _selectedMods = new()
         {
             VariantEditorDefault = 1,
             PropertyHint = PropertyHint.Flags,

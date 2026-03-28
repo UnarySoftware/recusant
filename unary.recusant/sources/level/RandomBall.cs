@@ -7,12 +7,17 @@ namespace Unary.Recusant
     public partial class RandomBall : RigidBody3D
     {
         [Export]
-        public double Timer = 1.0f;
+        public double Timer = 0.25f;
 
         [Export]
-        public float ImpulseForce = 40.0f;
+        public float ImpulseForce = 15.0f;
 
         private double _timer = 0.0f;
+
+        public override void _Ready()
+        {
+            _timer = GD.RandRange(0.0f, Timer);
+        }
 
         public Vector3 RandomSphere()
         {

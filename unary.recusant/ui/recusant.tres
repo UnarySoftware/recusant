@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="UiStateManifest" format=3 uid="uid://cw81owjwn8uh5"]
+
+[ext_resource type="Script" uid="uid://d182yuar3h6wo" path="res://unary.core/sources/resources/LazyResource.cs" id="1_nflqt"]
+[ext_resource type="Script" uid="uid://dbbpp2heal5os" path="res://unary.core/sources/resources/UiStateManifest.cs" id="1_sqcu5"]
+[ext_resource type="Script" uid="uid://j7t2gc45eqvw" path="res://unary.core/sources/resources/TypeResource.cs" id="1_ugg5l"]
+
+[sub_resource type="Resource" id="Resource_vxa1w"]
+script = ExtResource("1_nflqt")
+TargetValue = "uid://y7f5t4vvy6me"
+metadata/_custom_type_script = "uid://d182yuar3h6wo"
+
+[sub_resource type="Resource" id="Resource_nflqt"]
+script = ExtResource("1_ugg5l")
+TargetValue = "uid://4dwk5jl82qbv"
+metadata/_custom_type_script = "uid://j7t2gc45eqvw"
+
+[resource]
+script = ExtResource("1_sqcu5")
+Type = SubResource("Resource_nflqt")
+AlwaysEnabled = true
+Underlaying = []
+Overlaying = []
+Scene = SubResource("Resource_vxa1w")
+metadata/_custom_type_script = "uid://dbbpp2heal5os"
