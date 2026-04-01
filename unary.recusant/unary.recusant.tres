@@ -1,7 +1,6 @@
 [gd_resource type="Resource" script_class="ModManifest" format=3 uid="uid://b8t3hrncrlp0p"]
 
 [ext_resource type="Script" uid="uid://ccj3txuv365ew" path="res://unary.core/sources/resources/ModManifestDependency.cs" id="1_65lsn"]
-[ext_resource type="Resource" path="res://unary.recusant/build.tres" id="1_jm5yp"]
 [ext_resource type="Script" uid="uid://b6blro5hl3a4t" path="res://unary.core/sources/resources/ModManifest.cs" id="1_psvlh"]
 
 [sub_resource type="Resource" id="Resource_65lsn"]
@@ -15,6 +14,5 @@ metadata/_custom_type_script = "uid://ccj3txuv365ew"
 script = ExtResource("1_psvlh")
 ModId = "unary.recusant"
 Version = "0.0.1"
-BuildManifest = ExtResource("1_jm5yp")
 Dependencies = [SubResource("Resource_65lsn")]
 metadata/_custom_type_script = "uid://b6blro5hl3a4t"

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" format=3 uid="uid://daqabhs0llyri"]
+[gd_resource type="Resource" script_class="ModManifest" format=3 uid="uid://daqabhs0llyri"]
 
 [ext_resource type="Script" uid="uid://b6blro5hl3a4t" path="res://unary.core/sources/resources/ModManifest.cs" id="1_4v5s3"]
 [ext_resource type="Script" uid="uid://ccj3txuv365ew" path="res://unary.core/sources/resources/ModManifestDependency.cs" id="1_ujfwh"]
@@ -14,6 +14,5 @@ metadata/_custom_type_script = "uid://ccj3txuv365ew"
 script = ExtResource("1_4v5s3")
 ModId = "unary.testmod1"
 Version = "0.0.1"
-BuildManifest = null
 Dependencies = [SubResource("Resource_i48rc")]
 metadata/_custom_type_script = "uid://b6blro5hl3a4t"

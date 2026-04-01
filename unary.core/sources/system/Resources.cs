@@ -68,7 +68,7 @@ namespace Unary.Core
         }
 
         private readonly ConcurrentDictionary<string, AsyncEntry> _asyncEntries = [];
-        private readonly ConcurrentBag<string> _deleteEntries = [];
+        private readonly ConcurrentHashSet<string> _deleteEntries = [];
 
         public void LoadPatchedAsync(string path, Action<Resource, object> result, Action<float> progress, string typeHint = "", object data = null)
         {

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 using Godot;
 
 namespace Unary.Core
@@ -67,12 +68,6 @@ namespace Unary.Core
                     continue;
                 }
 
-                // Prevent self-addition
-                if (parts[1] == ResourceTypesManager.ManifestFile)
-                {
-                    continue;
-                }
-
                 // Skip overrides folder
                 if (parts[1] == ContentSwapper.OverrideFolder)
                 {
@@ -117,9 +112,9 @@ namespace Unary.Core
             {
                 string modId = mod.Key;
 
-                string manifestPath = "res://" + modId + '/' + ResourceTypesManager.ManifestFile;
+                string manifestPath = modId + '/' + modId + ResourceTypesManifest.Extension;
 
-                if (!ResourceLoader.Exists(manifestPath))
+                if (!File.Exists(manifestPath))
                 {
                     ResourceTypesManifest manifest = new();
 
@@ -149,11 +144,11 @@ namespace Unary.Core
                         }
                     }
 
-                    ResourceSaver.Save(manifest, manifestPath);
+                    File.WriteAllText(manifestPath, JsonSerializer.Serialize(manifest));
                 }
                 else
                 {
-                    ResourceTypesManifest manifest = ResourceLoader.Load<ResourceTypesManifest>(manifestPath);
+                    ResourceTypesManifest manifest = JsonSerializer.Deserialize<ResourceTypesManifest>(File.ReadAllText(manifestPath));
 
                     manifest.Paths ??= [];
                     manifest.Types ??= [];
@@ -194,7 +189,7 @@ namespace Unary.Core
                         writeCounter++;
                     }
 
-                    ResourceSaver.Save(manifest, manifestPath);
+                    File.WriteAllText(manifestPath, JsonSerializer.Serialize(manifest));
                 }
             }
 

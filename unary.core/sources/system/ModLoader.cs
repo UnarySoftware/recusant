@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 using Godot;
 
 namespace Unary.Core
@@ -55,15 +56,31 @@ namespace Unary.Core
 
                 if (manifest == null)
                 {
-                    this.Critical($"Failed to load mod manifest at path \"{target}\"");
-                    return false;
+                    return this.Critical($"Failed to load mod manifest at path \"{target}\"");
                 }
 
                 if (AllMods.ContainsKey(manifest.ModId))
                 {
-                    this.Critical($"Failed to load mod \"{manifest.ModId}\" since its already loaded");
-                    return false;
+                    return this.Critical($"Failed to load mod \"{manifest.ModId}\" since its already loaded");
                 }
+
+                string buildPath = modId + '/' + modId + BuildManifest.Extension;
+
+#if !TOOLS
+
+                if (!File.Exists(buildPath))
+                {
+                    return this.Critical($"Mod \"{modId}\" is missing a build manifest");
+                }
+
+#else
+
+                if (File.Exists(buildPath))
+                {
+                    manifest.BuildManifest = JsonSerializer.Deserialize<BuildManifest>(File.ReadAllText(buildPath));
+                }
+
+#endif
 
                 manifest.PathInfo = new()
                 {

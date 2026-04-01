@@ -49,11 +49,10 @@ namespace Unary.Core
                     _changes[change.Key] = ChangeType.Added;
                 }
 
-                Parallel.ForEach(state, new ParallelOptions
+                Parallel.ForEach(state, new() { MaxDegreeOfParallelism = System.Environment.ProcessorCount }, entry =>
                 {
-                    MaxDegreeOfParallelism = System.Environment.ProcessorCount
-                }, entry =>
-                { result.TryAdd(entry.Key, ChangeType.Added); });
+                    result.TryAdd(entry.Key, ChangeType.Added);
+                });
             }
         }
 
@@ -61,16 +60,16 @@ namespace Unary.Core
         {
             string root = Directory.GetCurrentDirectory();
 
-            ConcurrentBag<string> targetFiles = [];
+            ConcurrentHashSet<string> targetFiles = [];
 
             {
-                ConcurrentBag<string> unsortedFiles = [];
+                ConcurrentHashSet<string> unsortedFiles = [];
                 List<string> ignoreDirectory = [];
                 object locker = new();
 
                 string[] directories = Directory.GetDirectories(root, "*", SearchOption.TopDirectoryOnly);
 
-                Parallel.ForEach(directories, new ParallelOptions { MaxDegreeOfParallelism = System.Environment.ProcessorCount }, directory =>
+                Parallel.ForEach(directories, new() { MaxDegreeOfParallelism = System.Environment.ProcessorCount }, directory =>
                 {
                     if (System.IO.Path.GetFileName(directory).StartsWith('.'))
                     {
@@ -92,18 +91,11 @@ namespace Unary.Core
                             }
                         }
 
-                        string relativePath = System.IO.Path.GetRelativePath(root, file);
-
-                        if (relativePath.Count(System.IO.Path.DirectorySeparatorChar) == 1 && fileName == EditorPaths.BuildManifestPath)
-                        {
-                            continue;
-                        }
-
                         unsortedFiles.Add(file);
                     }
                 });
 
-                Parallel.ForEach(unsortedFiles, new ParallelOptions { MaxDegreeOfParallelism = System.Environment.ProcessorCount }, file =>
+                Parallel.ForEach(unsortedFiles, new() { MaxDegreeOfParallelism = System.Environment.ProcessorCount }, file =>
                 {
                     foreach (var ignore in ignoreDirectory)
                     {
@@ -123,10 +115,7 @@ namespace Unary.Core
             root += System.IO.Path.DirectorySeparatorChar;
             int rootLength = root.Length;
 
-            Parallel.ForEach(targetFiles, new ParallelOptions
-            {
-                MaxDegreeOfParallelism = System.Environment.ProcessorCount
-            }, filePath =>
+            Parallel.ForEach(targetFiles, new() { MaxDegreeOfParallelism = System.Environment.ProcessorCount }, filePath =>
             {
                 try
                 {
@@ -188,15 +177,12 @@ namespace Unary.Core
             return _changes;
         }
 
-        public ConcurrentBag<string> GetChangedMods()
+        public ConcurrentHashSet<string> GetChangedMods()
         {
-            ConcurrentBag<string> result = [];
+            ConcurrentHashSet<string> result = [];
             ConcurrentDictionary<string, ChangeType> changes = GetDelta();
 
-            Parallel.ForEach(changes, new ParallelOptions
-            {
-                MaxDegreeOfParallelism = System.Environment.ProcessorCount
-            }, entry =>
+            Parallel.ForEach(changes, new() { MaxDegreeOfParallelism = System.Environment.ProcessorCount }, entry =>
             {
                 string[] parts = entry.Key.Split(System.IO.Path.DirectorySeparatorChar);
 
@@ -239,10 +225,7 @@ namespace Unary.Core
                 previousState = ReadState(binaryReader);
             }
 
-            Parallel.ForEach(state, new ParallelOptions
-            {
-                MaxDegreeOfParallelism = System.Environment.ProcessorCount
-            }, entry =>
+            Parallel.ForEach(state, new() { MaxDegreeOfParallelism = System.Environment.ProcessorCount }, entry =>
             {
                 if (previousState.TryGetValue(entry.Key, out ulong previousMd5))
                 {
@@ -257,10 +240,7 @@ namespace Unary.Core
                 }
             });
 
-            Parallel.ForEach(previousState, new ParallelOptions
-            {
-                MaxDegreeOfParallelism = System.Environment.ProcessorCount
-            }, previousEntry =>
+            Parallel.ForEach(previousState, new() { MaxDegreeOfParallelism = System.Environment.ProcessorCount }, previousEntry =>
             {
                 if (!state.ContainsKey(previousEntry.Key))
                 {

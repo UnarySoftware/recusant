@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Text.Json;
 using Godot;
 
 namespace Unary.Core
@@ -17,30 +19,34 @@ namespace Unary.Core
 
             var mods = ModLoader.Singleton.AllMods;
 
-            foreach (var changedId in changedMods)
+            foreach (var mod in mods)
             {
-                if (!mods.TryGetValue(changedId, out var manifest))
-                {
-                    continue;
-                }
+                string buildPath = mod.Key + '/' + mod.Key + BuildManifest.Extension;
 
-                string buildPath = "res://" + changedId + '/' + EditorPaths.BuildManifestPath;
                 BuildManifest buildManifest;
 
-                if (!ResourceLoader.Exists(buildPath))
+                if (File.Exists(buildPath))
                 {
-                    ResourceSaver.Save(new BuildManifest(), buildPath);
+                    if (!changedMods.Contains(mod.Key))
+                    {
+                        continue;
+                    }
+
+                    buildManifest = JsonSerializer.Deserialize<BuildManifest>(File.ReadAllText(buildPath));
+                }
+                else
+                {
+                    buildManifest = new();
                 }
 
-                buildManifest = (BuildManifest)ResourceLoader.Load(buildPath, nameof(BuildManifest));
                 buildManifest.BuildNumber++;
                 buildManifest.BuildData = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
-                ResourceSaver.Save(buildManifest, buildPath);
 
-                if (manifest.BuildManifest != buildManifest)
+                File.WriteAllText(buildPath, JsonSerializer.Serialize(buildManifest));
+
+                if (mod.Value.BuildManifest == null)
                 {
-                    manifest.BuildManifest = buildManifest;
-                    ResourceSaver.Save(manifest, manifest.ResourcePath);
+                    mod.Value.BuildManifest = buildManifest;
                 }
             }
 

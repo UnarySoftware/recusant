@@ -13,7 +13,6 @@ namespace Unary.Core
         [Export]
         public string Version;
 
-        [Export]
         public BuildManifest BuildManifest;
 
         [Export]

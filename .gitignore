@@ -30,3 +30,5 @@ unary.core/analyzers/obj
 *.ogg
 *.mp3
 *.depren
+*.build
+*.types

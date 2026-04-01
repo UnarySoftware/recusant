@@ -137,10 +137,6 @@ namespace Unary.Recusant.Editor
 
             PluginLogger.Critical(targetNode, "Navigation baked successfully.");
         }
-
-
-
-
     }
 }
 

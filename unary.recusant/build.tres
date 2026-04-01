@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="BuildManifest" format=3]
-
-[ext_resource type="Script" path="res://unary.core/sources/resources/BuildManifest.cs" id="1_qoqrp"]
-
-[resource]
-script = ExtResource("1_qoqrp")
-BuildNumber = 437
-BuildData = "01.04.2026 21:26:34"

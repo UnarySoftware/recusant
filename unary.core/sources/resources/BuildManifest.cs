@@ -1,22 +1,9 @@
-using Godot;
-using Godot.Collections;
-
 namespace Unary.Core
 {
-    [Tool]
-    [GlobalClass]
-    public partial class BuildManifest : BaseResource
+    public class BuildManifest
     {
-        [Export]
-        public ulong BuildNumber = 0;
-
-        [Export]
-        public string BuildData = "Unknown";
-
-        public override void _ValidateProperty(Dictionary property)
-        {
-            property.MakeReadOnly(PropertyName.BuildNumber, PropertyName.BuildData);
-            base._ValidateProperty(property);
-        }
+        public const string Extension = ".build";
+        public ulong BuildNumber { get; set; } = 0;
+        public string BuildData { get; set; } = "Unknown";
     }
 }

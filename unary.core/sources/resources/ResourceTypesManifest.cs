@@ -1,24 +1,11 @@
-using System;
-using Godot;
-using Godot.Collections;
+using System.Collections.Generic;
 
 namespace Unary.Core
 {
-    [Tool]
-    [GlobalClass]
-    [Icon("res://addons/unary.core.editor/icons/ResourceManifest.svg")]
-    public partial class ResourceTypesManifest : BaseResource
+    public class ResourceTypesManifest
     {
-        [Export]
-        public string[] Paths = null;
-
-        [Export]
-        public string[] Types = null;
-
-        public override void _ValidateProperty(Dictionary property)
-        {
-            property.MakeReadOnly(PropertyName.Paths, PropertyName.Types);
-            base._ValidateProperty(property);
-        }
+        public const string Extension = ".types";
+        public string[] Paths { get; set; }
+        public string[] Types { get; set; }
     }
 }
