@@ -59,43 +59,45 @@ anchor_right = 0.64500004
 grow_horizontal = 2
 text = "%VERSION TEXT% "
 
-[node name="LeftSide" type="VBoxContainer" parent="." unique_id=2124201547]
+[node name="ConsoleRoot" type="VBoxContainer" parent="." unique_id=2124201547]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.5
 anchor_bottom = 1.0
 grow_vertical = 2
+mouse_filter = 0
 
-[node name="Counters" type="HBoxContainer" parent="LeftSide" unique_id=2129095278]
+[node name="Counters" type="HBoxContainer" parent="ConsoleRoot" unique_id=2129095278]
 layout_mode = 2
 
-[node name="LogCounter" type="MarginContainer" parent="LeftSide/Counters" unique_id=1040323704]
+[node name="LogCounter" type="MarginContainer" parent="ConsoleRoot/Counters" unique_id=1040323704]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 
-[node name="Background" type="ColorRect" parent="LeftSide/Counters/LogCounter" unique_id=1604894415]
+[node name="Background" type="ColorRect" parent="ConsoleRoot/Counters/LogCounter" unique_id=1604894415]
 show_behind_parent = true
 layout_mode = 2
 color = Color(0, 0, 0, 0.39215687)
 
-[node name="InnerMargin" type="MarginContainer" parent="LeftSide/Counters/LogCounter" unique_id=786973777]
+[node name="InnerMargin" type="MarginContainer" parent="ConsoleRoot/Counters/LogCounter" unique_id=786973777]
 layout_mode = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="Horizontal" type="HBoxContainer" parent="LeftSide/Counters/LogCounter/InnerMargin" unique_id=1638706822]
+[node name="Horizontal" type="HBoxContainer" parent="ConsoleRoot/Counters/LogCounter/InnerMargin" unique_id=1638706822]
 layout_mode = 2
 
-[node name="Texture" type="TextureRect" parent="LeftSide/Counters/LogCounter/InnerMargin/Horizontal" unique_id=108683753]
+[node name="Texture" type="TextureRect" parent="ConsoleRoot/Counters/LogCounter/InnerMargin/Horizontal" unique_id=108683753]
 layout_mode = 2
 texture = ExtResource("1_0m1jr")
 
-[node name="LogCounterText" type="Label" parent="LeftSide/Counters/LogCounter/InnerMargin/Horizontal" unique_id=1555008420]
+[node name="LogCounterText" type="Label" parent="ConsoleRoot/Counters/LogCounter/InnerMargin/Horizontal" unique_id=1555008420]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(55, 0)
 layout_mode = 2
@@ -103,33 +105,33 @@ text = "111"
 label_settings = SubResource("LabelSettings_oh8pw")
 horizontal_alignment = 1
 
-[node name="WarningCounter" type="MarginContainer" parent="LeftSide/Counters" unique_id=560539317]
+[node name="WarningCounter" type="MarginContainer" parent="ConsoleRoot/Counters" unique_id=560539317]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 
-[node name="Background" type="ColorRect" parent="LeftSide/Counters/WarningCounter" unique_id=1564582768]
+[node name="Background" type="ColorRect" parent="ConsoleRoot/Counters/WarningCounter" unique_id=1564582768]
 show_behind_parent = true
 layout_mode = 2
 color = Color(0, 0, 0, 0.39215687)
 
-[node name="InnerMargin" type="MarginContainer" parent="LeftSide/Counters/WarningCounter" unique_id=105807029]
+[node name="InnerMargin" type="MarginContainer" parent="ConsoleRoot/Counters/WarningCounter" unique_id=105807029]
 layout_mode = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="Horizontal" type="HBoxContainer" parent="LeftSide/Counters/WarningCounter/InnerMargin" unique_id=1120932002]
+[node name="Horizontal" type="HBoxContainer" parent="ConsoleRoot/Counters/WarningCounter/InnerMargin" unique_id=1120932002]
 layout_mode = 2
 
-[node name="Texture" type="TextureRect" parent="LeftSide/Counters/WarningCounter/InnerMargin/Horizontal" unique_id=1773756309]
+[node name="Texture" type="TextureRect" parent="ConsoleRoot/Counters/WarningCounter/InnerMargin/Horizontal" unique_id=1773756309]
 layout_mode = 2
 texture = ExtResource("2_ehbmy")
 
-[node name="WarningCounterText" type="Label" parent="LeftSide/Counters/WarningCounter/InnerMargin/Horizontal" unique_id=734887024]
+[node name="WarningCounterText" type="Label" parent="ConsoleRoot/Counters/WarningCounter/InnerMargin/Horizontal" unique_id=734887024]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(55, 0)
 layout_mode = 2
@@ -137,33 +139,33 @@ text = "111"
 label_settings = SubResource("LabelSettings_n52op")
 horizontal_alignment = 1
 
-[node name="ErrorCounter" type="MarginContainer" parent="LeftSide/Counters" unique_id=1145214557]
+[node name="ErrorCounter" type="MarginContainer" parent="ConsoleRoot/Counters" unique_id=1145214557]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 
-[node name="Background" type="ColorRect" parent="LeftSide/Counters/ErrorCounter" unique_id=1864597257]
+[node name="Background" type="ColorRect" parent="ConsoleRoot/Counters/ErrorCounter" unique_id=1864597257]
 show_behind_parent = true
 layout_mode = 2
 color = Color(0, 0, 0, 0.39215687)
 
-[node name="InnerMargin" type="MarginContainer" parent="LeftSide/Counters/ErrorCounter" unique_id=2013970364]
+[node name="InnerMargin" type="MarginContainer" parent="ConsoleRoot/Counters/ErrorCounter" unique_id=2013970364]
 layout_mode = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="Horizontal" type="HBoxContainer" parent="LeftSide/Counters/ErrorCounter/InnerMargin" unique_id=1112797707]
+[node name="Horizontal" type="HBoxContainer" parent="ConsoleRoot/Counters/ErrorCounter/InnerMargin" unique_id=1112797707]
 layout_mode = 2
 
-[node name="Texture" type="TextureRect" parent="LeftSide/Counters/ErrorCounter/InnerMargin/Horizontal" unique_id=525649189]
+[node name="Texture" type="TextureRect" parent="ConsoleRoot/Counters/ErrorCounter/InnerMargin/Horizontal" unique_id=525649189]
 layout_mode = 2
 texture = ExtResource("3_oh8pw")
 
-[node name="ErrorCounterText" type="Label" parent="LeftSide/Counters/ErrorCounter/InnerMargin/Horizontal" unique_id=746161035]
+[node name="ErrorCounterText" type="Label" parent="ConsoleRoot/Counters/ErrorCounter/InnerMargin/Horizontal" unique_id=746161035]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(55, 0)
 layout_mode = 2
@@ -171,7 +173,7 @@ text = "111"
 label_settings = SubResource("LabelSettings_h22bl")
 horizontal_alignment = 1
 
-[node name="ConsoleHeader" type="MarginContainer" parent="LeftSide/Counters" unique_id=717521676]
+[node name="ConsoleHeader" type="MarginContainer" parent="ConsoleRoot/Counters" unique_id=717521676]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -179,104 +181,104 @@ theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 
-[node name="Background" type="ColorRect" parent="LeftSide/Counters/ConsoleHeader" unique_id=410358466]
+[node name="Background" type="ColorRect" parent="ConsoleRoot/Counters/ConsoleHeader" unique_id=410358466]
 show_behind_parent = true
 layout_mode = 2
 color = Color(0, 0, 0, 0.39215687)
 
-[node name="InnerMargin" type="MarginContainer" parent="LeftSide/Counters/ConsoleHeader" unique_id=1814205917]
+[node name="InnerMargin" type="MarginContainer" parent="ConsoleRoot/Counters/ConsoleHeader" unique_id=1814205917]
 layout_mode = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="Label" type="Label" parent="LeftSide/Counters/ConsoleHeader/InnerMargin" unique_id=852565097]
+[node name="Label" type="Label" parent="ConsoleRoot/Counters/ConsoleHeader/InnerMargin" unique_id=852565097]
 custom_minimum_size = Vector2(55, 0)
 layout_mode = 2
 text = "Console"
 label_settings = SubResource("LabelSettings_mrxvf")
 horizontal_alignment = 1
 
-[node name="FontIncrease" type="MarginContainer" parent="LeftSide/Counters" unique_id=634631865]
+[node name="FontIncrease" type="MarginContainer" parent="ConsoleRoot/Counters" unique_id=634631865]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 
-[node name="Background" type="ColorRect" parent="LeftSide/Counters/FontIncrease" unique_id=500046031]
+[node name="Background" type="ColorRect" parent="ConsoleRoot/Counters/FontIncrease" unique_id=500046031]
 show_behind_parent = true
 layout_mode = 2
 color = Color(0, 0, 0, 0.39215687)
 
-[node name="InnerMargin" type="MarginContainer" parent="LeftSide/Counters/FontIncrease" unique_id=2031272999]
+[node name="InnerMargin" type="MarginContainer" parent="ConsoleRoot/Counters/FontIncrease" unique_id=2031272999]
 layout_mode = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="FontIncreaseButton" type="Button" parent="LeftSide/Counters/FontIncrease/InnerMargin" unique_id=1439517648]
+[node name="FontIncreaseButton" type="Button" parent="ConsoleRoot/Counters/FontIncrease/InnerMargin" unique_id=1439517648]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Font +"
 
-[node name="FontDecrease" type="MarginContainer" parent="LeftSide/Counters" unique_id=926288419]
+[node name="FontDecrease" type="MarginContainer" parent="ConsoleRoot/Counters" unique_id=926288419]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 
-[node name="Background" type="ColorRect" parent="LeftSide/Counters/FontDecrease" unique_id=695778598]
+[node name="Background" type="ColorRect" parent="ConsoleRoot/Counters/FontDecrease" unique_id=695778598]
 show_behind_parent = true
 layout_mode = 2
 color = Color(0, 0, 0, 0.39215687)
 
-[node name="InnerMargin" type="MarginContainer" parent="LeftSide/Counters/FontDecrease" unique_id=652318527]
+[node name="InnerMargin" type="MarginContainer" parent="ConsoleRoot/Counters/FontDecrease" unique_id=652318527]
 layout_mode = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="FontDecreaseButton" type="Button" parent="LeftSide/Counters/FontDecrease/InnerMargin" unique_id=835886652]
+[node name="FontDecreaseButton" type="Button" parent="ConsoleRoot/Counters/FontDecrease/InnerMargin" unique_id=835886652]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Font -"
 
-[node name="Close" type="MarginContainer" parent="LeftSide/Counters" unique_id=22738082]
+[node name="Close" type="MarginContainer" parent="ConsoleRoot/Counters" unique_id=22738082]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 
-[node name="Background" type="ColorRect" parent="LeftSide/Counters/Close" unique_id=838347381]
+[node name="Background" type="ColorRect" parent="ConsoleRoot/Counters/Close" unique_id=838347381]
 show_behind_parent = true
 layout_mode = 2
 color = Color(0, 0, 0, 0.39215687)
 
-[node name="InnerMargin" type="MarginContainer" parent="LeftSide/Counters/Close" unique_id=925488143]
+[node name="InnerMargin" type="MarginContainer" parent="ConsoleRoot/Counters/Close" unique_id=925488143]
 layout_mode = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="CloseButton" type="Button" parent="LeftSide/Counters/Close/InnerMargin" unique_id=590018359]
+[node name="CloseButton" type="Button" parent="ConsoleRoot/Counters/Close/InnerMargin" unique_id=590018359]
 unique_name_in_owner = true
 layout_mode = 2
 text = "  X  "
 
-[node name="ConsoleBackground" type="ColorRect" parent="LeftSide" unique_id=2114097306]
+[node name="ConsoleBackground" type="ColorRect" parent="ConsoleRoot" unique_id=2114097306]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 color = Color(0, 0, 0, 0.43529412)
 
-[node name="ConsoleScroll" type="ScrollContainer" parent="LeftSide/ConsoleBackground" unique_id=163831399]
+[node name="ConsoleScroll" type="ScrollContainer" parent="ConsoleRoot/ConsoleBackground" unique_id=163831399]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -285,13 +287,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ConsoleEntries" type="VBoxContainer" parent="LeftSide/ConsoleBackground/ConsoleScroll" unique_id=1083079431]
+[node name="ConsoleEntries" type="VBoxContainer" parent="ConsoleRoot/ConsoleBackground/ConsoleScroll" unique_id=1083079431]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="ConsoleEntry" type="MarginContainer" parent="LeftSide/ConsoleBackground/ConsoleScroll/ConsoleEntries" unique_id=864414796]
+[node name="ConsoleEntry" type="MarginContainer" parent="ConsoleRoot/ConsoleBackground/ConsoleScroll/ConsoleEntries" unique_id=864414796]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/margin_left = 3
@@ -299,7 +301,7 @@ theme_override_constants/margin_top = 1
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 1
 
-[node name="Text" type="Label" parent="LeftSide/ConsoleBackground/ConsoleScroll/ConsoleEntries/ConsoleEntry" unique_id=535274856]
+[node name="Text" type="Label" parent="ConsoleRoot/ConsoleBackground/ConsoleScroll/ConsoleEntries/ConsoleEntry" unique_id=535274856]
 custom_minimum_size = Vector2(0, 8)
 layout_mode = 2
 mouse_filter = 0

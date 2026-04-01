@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="ResourceTypesManifest" format=3 uid="uid://c5nxawaeubjne"]
+[gd_resource type="Resource" script_class="ResourceTypesManifest" format=3]
 
-[ext_resource type="Script" uid="uid://npsq52ljwbnp" path="res://unary.core/sources/resources/ResourceTypesManifest.cs" id="1_36fem"]
+[ext_resource type="Script" path="res://unary.core/sources/resources/ResourceTypesManifest.cs" id="1_36fem"]
 
 [resource]
 script = ExtResource("1_36fem")
-Paths = PackedStringArray("res://unary.recusant/resources/web/recusant_rewards.tres", "res://unary.recusant/unary.recusant.tres", "res://unary.recusant/levels/LevelDef.tres", "res://unary.recusant/ui/loading.tres", "res://unary.recusant/ui/main_menu.tres", "res://unary.recusant/ui/gameplay.tres", "res://unary.recusant/levels/background1.tres", "res://unary.recusant/ui/recusant.tres", "res://unary.recusant/levels/quarry.tres")
-Types = PackedStringArray("WebDataRewards", "ModManifest", "LevelDefinition", "UiStateManifest", "UiStateManifest", "UiStateManifest", "LevelDefinition", "UiStateManifest", "LevelDefinition")
+Paths = PackedStringArray("res://unary.recusant/resources/web/recusant_rewards.tres", "res://unary.recusant/unary.recusant.tres", "res://unary.recusant/levels/LevelDef.tres", "res://unary.recusant/ui/loading.tres", "res://unary.recusant/ui/main_menu.tres", "res://unary.recusant/ui/gameplay.tres", "res://unary.recusant/levels/background1.tres", "res://unary.recusant/ui/recusant.tres", "res://unary.recusant/levels/streets.tres", "res://unary.recusant/resources/pools/player_pool.tres")
+Types = PackedStringArray("WebDataRewards", "ModManifest", "LevelDefinition", "UiStateManifest", "UiStateManifest", "UiStateManifest", "LevelDefinition", "UiStateManifest", "LevelDefinition", "PoolDeclaration")

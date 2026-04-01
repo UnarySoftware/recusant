@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://f6kx848g5bco"]
+
+[ext_resource type="Script" uid="uid://df4tkmvtbeimi" path="res://unary.recusant/sources/ecs/player/Player.cs" id="1_ib3fy"]
+[ext_resource type="Script" uid="uid://ccbwwwt2a8r67" path="res://unary.core/sources/ecs/Entity.cs" id="1_ysajs"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_24kai"]
+margin = 0.01
+height = 1.803
+radius = 0.406
+
+[node name="Entity" type="Node3D" unique_id=999209273]
+script = ExtResource("1_ysajs")
+metadata/_custom_type_script = "uid://ccbwwwt2a8r67"
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=298709646]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=1908305889]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.902, 0)
+shape = SubResource("CylinderShape3D_24kai")
+debug_color = Color(0, 18.892157, 0, 1)
+
+[node name="HeadOriginalPosition" type="Node3D" parent="CharacterBody3D" unique_id=1498628712]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.575, 0)
+
+[node name="Head" type="Node3D" parent="CharacterBody3D/HeadOriginalPosition" unique_id=62175382]
+unique_name_in_owner = true
+
+[node name="CameraSmooth" type="Node3D" parent="CharacterBody3D/HeadOriginalPosition/Head" unique_id=1988579880]
+unique_name_in_owner = true
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/HeadOriginalPosition/Head/CameraSmooth" unique_id=736167811]
+unique_name_in_owner = true
+
+[node name="SpotLight3D" type="SpotLight3D" parent="CharacterBody3D/HeadOriginalPosition/Head/CameraSmooth/Camera3D" unique_id=1674309651]
+light_energy = 10.0
+shadow_enabled = true
+spot_range = 12.0
+spot_angle = 38.67
+spot_angle_attenuation = 0.6372791
+
+[node name="StairsAheadRayCast3D" type="RayCast3D" parent="CharacterBody3D" unique_id=944350341]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.552223, -0.5059353)
+target_position = Vector3(0, -0.55, 0)
+
+[node name="StairsBelowRayCast3D" type="RayCast3D" parent="CharacterBody3D" unique_id=1565623768]
+unique_name_in_owner = true
+
+[node name="Player" type="Node" parent="." unique_id=1638530866 node_paths=PackedStringArray("Body", "CollisionShape3D", "Camera3D", "CameraSmooth", "StairsBelowRayCast3D", "StairsAheadRayCast3D", "Head")]
+script = ExtResource("1_ib3fy")
+Body = NodePath("../CharacterBody3D")
+CollisionShape3D = NodePath("../CharacterBody3D/CollisionShape3D")
+Camera3D = NodePath("../CharacterBody3D/HeadOriginalPosition/Head/CameraSmooth/Camera3D")
+CameraSmooth = NodePath("../CharacterBody3D/HeadOriginalPosition/Head/CameraSmooth")
+StairsBelowRayCast3D = NodePath("../CharacterBody3D/StairsBelowRayCast3D")
+StairsAheadRayCast3D = NodePath("../CharacterBody3D/StairsAheadRayCast3D")
+Head = NodePath("../CharacterBody3D/HeadOriginalPosition/Head")
+metadata/_custom_type_script = "uid://df4tkmvtbeimi"

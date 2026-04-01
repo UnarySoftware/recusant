@@ -49,13 +49,14 @@ folder_colors={
 "res://unary.testmod1/": "teal"
 }
 
+[global_group]
+
+LevelRoot=""
+
 [godot_vmf]
 
-materials/target_folder="res://hammer/materials/"
 materials/ignore=["unary.core/tools/no_draw", "unary.core/tools/trigger"]
-import/instances_folder=""
-import/entities_folder=""
-import/geometry_folder=""
+import/geometry_folder="res://hammer/geometry"
 import/entity_aliases={
 "brush": "uid://dov7a7jgmgccw",
 "detail": "uid://c23w6hgskshfd",
@@ -63,6 +64,11 @@ import/entity_aliases={
 "editor_text": "uid://ixbijsjhrlqv",
 "trigger": "uid://by8dj33sr5qf3"
 }
+import/scale=0.0254
+models/target_folder=""
+import/instances_folder=""
+import/entities_folder="res://addons/godotvmf/entities/"
+materials/target_folder="res://hammer/materials"
 
 [input]
 
@@ -124,6 +130,11 @@ ui_back={
 3d_physics/layer_1="All"
 3d_physics/layer_2="Player"
 3d_physics/layer_3="Npc"
+
+[navigation]
+
+3d/default_cell_size=0.2
+3d/default_cell_height=0.2
 
 [physics]
 

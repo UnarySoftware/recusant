@@ -10,7 +10,7 @@ namespace Unary.Core.Editor
     {
         private Dictionary<string, EditorDock> _docks = [];
         private Dictionary<EditorSettingVariableBase, VBoxContainer> _editors = [];
-        private readonly List<(GodotObject source, StringName signal, Callable callable)> _signalConnections = [];
+        private readonly List<(GodotObject source, StringName signal, Callable callable, GodotObject handler)> _signalConnections = [];
 
         public void UpdateInspector(EditorSettingVariableBase variable)
         {
@@ -38,13 +38,11 @@ namespace Unary.Core.Editor
             editor.SetObjectAndProperty(variableBase.Wrapper, nameof(EditorSettingWrapper.Value));
             editor.Label = variableBase.Name;
 
-            var callable = Callable.From((StringName property, Variant value, StringName field, bool changing) =>
-            {
-                variableBase.Wrapper.Value = value;
-                editor.UpdateProperty();
-            });
+            var handler = new PluginDockVariableHandler();
+            handler.Setup(variableBase, editor);
+            var callable = new Callable(handler, PluginDockVariableHandler.MethodName.OnPropertyChanged);
             editor.Connect(EditorProperty.SignalName.PropertyChanged, callable);
-            _signalConnections.Add((editor, EditorProperty.SignalName.PropertyChanged, callable));
+            _signalConnections.Add((editor, EditorProperty.SignalName.PropertyChanged, callable, handler));
 
             editor.UpdateProperty();
 
@@ -63,12 +61,11 @@ namespace Unary.Core.Editor
                 Button newButton = new();
                 newButton.Text = entry.Name;
 
-                var callable = Callable.From(() =>
-                {
-                    action.MethodInfo.Invoke(null, null);
-                });
+                var handler = new PluginDockActionHandler();
+                handler.Setup(action);
+                var callable = new Callable(handler, PluginDockActionHandler.MethodName.OnPressed);
                 newButton.Connect(BaseButton.SignalName.Pressed, callable);
-                _signalConnections.Add((newButton, BaseButton.SignalName.Pressed, callable));
+                _signalConnections.Add((newButton, BaseButton.SignalName.Pressed, callable, handler));
 
                 container.AddChild(newButton);
             }
@@ -137,7 +134,7 @@ namespace Unary.Core.Editor
 
         void ISystem.Deinitialize()
         {
-            foreach (var (source, signal, callable) in _signalConnections)
+            foreach (var (source, signal, callable, _) in _signalConnections)
             {
                 if (GodotObject.IsInstanceValid(source) && source.IsConnected(signal, callable))
                 {

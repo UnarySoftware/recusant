@@ -6,15 +6,25 @@ namespace Unary.Core
     [GlobalClass, Icon("res://addons/unary.core.editor/icons/Component.svg")]
     public partial class Component : Node
     {
-        private Entity _entity;
+        private Entity _entityCache;
 
         public Entity Entity
         {
             get
             {
-                _entity ??= Entity.Find(this);
-                return _entity;
+                _entityCache ??= Entity.Find(this);
+                return _entityCache;
             }
+        }
+
+        public virtual void Initialize()
+        {
+
+        }
+
+        public virtual void Deinitialize()
+        {
+
         }
     }
 }

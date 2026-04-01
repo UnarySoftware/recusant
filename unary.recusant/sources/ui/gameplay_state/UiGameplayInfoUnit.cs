@@ -19,7 +19,7 @@ namespace Unary.Recusant
         {
             if (Player.Instance != null)
             {
-                _label1.Text = Player.Instance.Velocity.Length().ToString("0.0 m/s");
+                _label1.Text = Player.Instance.Body.Velocity.Length().ToString("0.0 m/s");
                 _label2.Text = Player.Instance.Damage + " dmg";
             }
 

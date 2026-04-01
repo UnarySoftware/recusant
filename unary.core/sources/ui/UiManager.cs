@@ -299,6 +299,7 @@ namespace Unary.Core
                 UiState newUiState = (UiState)Activator.CreateInstance(type);
                 newUiState.Name = type.Name.FilterTreeName();
                 newUiState.SetAnchorsPreset(Control.LayoutPreset.FullRect);
+                newUiState.MouseFilter = Control.MouseFilterEnum.Ignore;
                 namespaceNode.AddChild(newUiState);
                 newUiState.ZIndex = order;
 

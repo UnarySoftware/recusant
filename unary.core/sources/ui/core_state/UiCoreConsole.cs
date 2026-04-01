@@ -13,6 +13,9 @@ namespace Unary.Core
     {
         private bool _enabled = false;
 
+        [UiElement("%ConsoleRoot")]
+        private VBoxContainer _consoleRoot;
+
         [UiElement("%ConsoleHeader")]
         private MarginContainer _consoleHeader;
 
@@ -61,6 +64,15 @@ namespace Unary.Core
 
         private void ToggleVisibility(bool newValue)
         {
+            if (newValue)
+            {
+                _consoleRoot.MouseFilter = Control.MouseFilterEnum.Stop;
+            }
+            else
+            {
+                _consoleRoot.MouseFilter = Control.MouseFilterEnum.Ignore;
+            }
+
             _consoleHeader.Visible = newValue;
             _fontIncrease.Visible = newValue;
             _fontDecrease.Visible = newValue;

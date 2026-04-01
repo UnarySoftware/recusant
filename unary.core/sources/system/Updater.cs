@@ -1,3 +1,5 @@
+global using SlotHandle = System.Int32;
+
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -300,9 +302,9 @@ namespace Unary.Core
             }
         }
 
-        public int Subscribe(TSubscriber subscriber) => _subscribers.Add(subscriber);
+        public SlotHandle Subscribe(TSubscriber subscriber) => _subscribers.Add(subscriber);
 
-        public void Unsubscribe(int slotId) => _subscribers.Remove(slotId);
+        public void Unsubscribe(SlotHandle slotId) => _subscribers.Remove(slotId);
 
         public UpdaterHandle SubscribeDelayed(float delay, Action<float> action)
         {

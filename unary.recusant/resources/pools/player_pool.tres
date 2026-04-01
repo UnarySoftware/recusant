@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PoolDeclaration" format=3 uid="uid://c16iylkg5pp3i"]
+
+[ext_resource type="Script" uid="uid://d182yuar3h6wo" path="res://unary.core/sources/resources/LazyResource.cs" id="1_gt2rt"]
+[ext_resource type="Script" uid="uid://djfc1uqxppcr1" path="res://unary.recusant/sources/resources/PoolDeclaration.cs" id="1_ukgyc"]
+
+[sub_resource type="Resource" id="Resource_22cqj"]
+script = ExtResource("1_gt2rt")
+TargetValue = "uid://f6kx848g5bco"
+metadata/_custom_type_script = "uid://d182yuar3h6wo"
+
+[resource]
+script = ExtResource("1_ukgyc")
+Scene = SubResource("Resource_22cqj")
+InfluencedCount = {}
+metadata/_custom_type_script = "uid://djfc1uqxppcr1"

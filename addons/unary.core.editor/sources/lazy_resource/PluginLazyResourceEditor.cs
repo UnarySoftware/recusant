@@ -10,6 +10,10 @@ namespace Unary.Core.Editor
 
         private string _current_path;
 
+        public PluginLazyResourceEditor()
+        {
+        }
+
         public PluginLazyResourceEditor(string baseType)
         {
             _picker = new();

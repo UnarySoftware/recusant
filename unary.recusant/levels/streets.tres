@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LevelDefinition" format=3 uid="uid://yo7m5l2tx5s2"]
+
+[ext_resource type="Script" uid="uid://dxj680v60xb1e" path="res://unary.recusant/sources/resources/LevelDefinition.cs" id="1_a4x71"]
+[ext_resource type="Script" uid="uid://d182yuar3h6wo" path="res://unary.core/sources/resources/LazyResource.cs" id="1_jc8e7"]
+
+[sub_resource type="Resource" id="Resource_ls44m"]
+script = ExtResource("1_jc8e7")
+TargetValue = "uid://dk2rsmoisql84"
+metadata/_custom_type_script = "uid://d182yuar3h6wo"
+
+[resource]
+script = ExtResource("1_a4x71")
+Name = "Streets"
+Scene = SubResource("Resource_ls44m")
+metadata/_custom_type_script = "uid://dxj680v60xb1e"

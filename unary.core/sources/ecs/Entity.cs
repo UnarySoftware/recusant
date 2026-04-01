@@ -6,24 +6,32 @@ namespace Unary.Core
 {
     [Tool]
     [GlobalClass, Icon("res://addons/unary.core.editor/icons/Entity.svg")]
-    public partial class Entity : Node
+    public partial class Entity : Node3D, IPoolable
     {
+        public enum EntityType
+        {
+            Level,
+            Pooled
+        };
+
+        [Export]
+        public EntityType Type;
+
         private readonly Dictionary<Type, Component> _typeCache = [];
         private readonly List<Component> _componentCache = [];
-        private bool _initialized = false;
 
         public override void _Ready()
         {
-
-        }
-
-        private void TryInitialize()
-        {
-            if (_initialized)
+            if (Engine.Singleton.IsEditorHint())
             {
                 return;
             }
 
+            EntityManager.Singleton.Add(this);
+        }
+
+        public void Initialize()
+        {
             var children = GetChildren();
 
             foreach (var child in children)
@@ -35,13 +43,22 @@ namespace Unary.Core
                 }
             }
 
-            _initialized = true;
+            foreach (var component in _componentCache)
+            {
+                component.Initialize();
+            }
+        }
+
+        public void Deinitialize()
+        {
+            foreach (var component in _componentCache)
+            {
+                component.Deinitialize();
+            }
         }
 
         public T GetComponent<T>() where T : Component
         {
-            TryInitialize();
-
             Type type = typeof(T);
 
             if (_typeCache.TryGetValue(type, out var entry))
@@ -96,6 +113,28 @@ namespace Unary.Core
             RuntimeLogger.Warning(typeof(Entity), $"{nameof(Entity)}.{nameof(Find)} failed to find anything from {node.GetPath()}");
 
             return null;
+        }
+
+        public void Aquire()
+        {
+            foreach (var component in _componentCache)
+            {
+                if (component is IPoolable poolable)
+                {
+                    poolable.Aquire();
+                }
+            }
+        }
+
+        public void Release()
+        {
+            foreach (var component in _componentCache)
+            {
+                if (component is IPoolable poolable)
+                {
+                    poolable.Release();
+                }
+            }
         }
     }
 }

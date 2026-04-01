@@ -11,8 +11,17 @@ namespace Unary.Recusant
     {
         private readonly Dictionary<string, LevelDefinition> _levels = [];
 
-        public LevelDefinition CurrentLevel { get; private set; }
-        public LevelRoot LevelRoot { get; private set; }
+        public LevelRoot Root { get; private set; }
+        public LevelDefinition Definition { get; private set; }
+
+        public struct LevelInfo
+        {
+            public LevelRoot Root;
+            public LevelDefinition Definition;
+        }
+
+        public EventFunc<LevelInfo> OnLoaded { get; private set; } = new();
+        public EventFunc<LevelInfo> OnUnloaded { get; private set; } = new();
 
         public LevelDefinition GetDefinition(string levelName)
         {
@@ -26,19 +35,40 @@ namespace Unary.Recusant
 
         bool ISystem.Initialize()
         {
-            List<LevelDefinition> levels = ResourceTypesManager.Singleton.LoadResourcesOfType<LevelDefinition>(true);
+            List<LevelDefinition> levels = ResourceTypesManager.Singleton.LoadResourcesOfType<LevelDefinition>();
 
             foreach (var level in levels)
             {
                 _levels[level.Name] = level;
-                this.Log(level.Name);
             }
+
+            OnLoaded.Subscribe(OnLevelLoaded, this);
+            OnUnloaded.Subscribe(OnLevelUnloaded, this);
+
             return true;
+        }
+
+        private bool OnLevelLoaded(ref LevelInfo data)
+        {
+            EntityManager.Singleton.Initialize(Entity.EntityType.Level);
+            return true;
+        }
+
+        private bool OnLevelUnloaded(ref LevelInfo data)
+        {
+            EntityManager.Singleton.Deinitialize(Entity.EntityType.Level);
+            return true;
+        }
+
+        void ISystem.Deinitialize()
+        {
+            OnLoaded.Unsubscribe(this);
+            OnUnloaded.Unsubscribe(this);
         }
 
         bool ISystem.PostInitialize()
         {
-            LoadLevel("Quarry");
+            LoadLevel("Streets");
             return true;
         }
 
@@ -53,21 +83,40 @@ namespace Unary.Recusant
                 return;
             }
 
-            LevelRoot?.QueueFree();
+            if (Root != null)
+            {
+                OnUnloaded.Publish(new()
+                {
+                    Root = Root,
+                    Definition = Definition,
+                });
+
+                Root.QueueFree();
+                Root = null;
+            }
 
             _loadDefinition = definition;
 
-            LoadingManager.Singleton.ShowLoading(typeof(UiGameplayState));
+            if (_loadDefinition.Background)
+            {
+                LoadingManager.Singleton.ShowLoading(typeof(UiMainMenuState));
+            }
+            else
+            {
+                LoadingManager.Singleton.ShowLoading(typeof(UiGameplayState));
+            }
+
+
             LoadingManager.Singleton.AddJob($"Loading {definition.Name}", GetProgress);
 
-            Resources.Singleton.LoadPatchedAsync(_loadDefinition.Scene.TargetValue, OnLoaded, OnProgress, nameof(PackedScene));
+            Resources.Singleton.LoadPatchedAsync(_loadDefinition.Scene.TargetValue, OnLevelLoaded, OnProgress, nameof(PackedScene));
         }
 
-        private void OnLoaded(Resource resource, object data)
+        private void OnLevelLoaded(Resource resource, object data)
         {
             if (resource == null)
             {
-                CurrentLevel = null;
+                Definition = null;
                 this.Error($"Failed to load a level \"{_loadDefinition.Name}\"");
                 return;
             }
@@ -77,8 +126,8 @@ namespace Unary.Recusant
 
             AddChild(levelRoot);
 
-            LevelRoot = levelRoot;
-            CurrentLevel = _loadDefinition;
+            Root = levelRoot;
+            Definition = _loadDefinition;
 
             Progress = 1.0f;
         }
