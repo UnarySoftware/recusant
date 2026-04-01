@@ -28,3 +28,5 @@ unary.recusant/resources/web/
 unary.core/analyzers/bin
 unary.core/analyzers/obj
 *.ogg
+*.mp3
+*.depren
