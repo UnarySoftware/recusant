@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Text.Json;
 using Godot;
@@ -44,10 +45,7 @@ namespace Unary.Core
 
                 File.WriteAllText(buildPath, JsonSerializer.Serialize(buildManifest));
 
-                if (mod.Value.BuildManifest == null)
-                {
-                    mod.Value.BuildManifest = buildManifest;
-                }
+                mod.Value.BuildManifest = buildManifest;
             }
 
             return true;

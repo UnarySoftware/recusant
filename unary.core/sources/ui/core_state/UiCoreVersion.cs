@@ -20,9 +20,9 @@ namespace Unary.Core
                 result.Append('\"').Append(mod.ModId).Append("\" changed: ").Append(mod.BuildManifest.BuildData).Append(" (build ").Append(mod.BuildManifest.BuildNumber).Append(")\n");
             }
 
-            string code = result.ToString().GetAudibleHash();
+            (string adjective, string noun) = result.ToString().GetAudibleHash();
 
-            result.Prepend($"Mod list (Hash Code \"{code.Capitalize()}\"):\n");
+            result.Prepend($"Mod list (Hash Code \"{adjective.Capitalize()} {noun.Capitalize()}\"):\n");
 
             Root.GetNode<Label>("%VersionText").Text = result.ToString();
         }

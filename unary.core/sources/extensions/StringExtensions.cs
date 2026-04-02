@@ -107,33 +107,55 @@ namespace Unary.Core
             return header.Substring(valueStart, valueEnd - valueStart);
         }
 
-        private static readonly string[] _audibleHashes =
+        private static readonly string[] _hashNouns =
         [
             "dog","cat","bird","fish","cow","pig","horse","sheep","goat","frog","bear","lion","tiger",
-            "fox","wolf","deer","mouse","rat","ape","monkey","camel","goat","seal","whale","shark","crab",
+            "fox","wolf","deer","mouse","rat","ape","monkey","camel","elk","seal","whale","shark","crab",
             "snail","beetle","tree","plant","flower","grass","rock","soil","bread","butter","cheese","milk",
-            "egg","meat","fish","rice","corn","potato","apple","banana","orange","grape","peach","berry","tomato",
+            "egg","meat","tuna","rice","corn","potato","apple","banana","orange","grape","peach","berry","tomato",
             "onion","carrot","pepper","soup","cake","salt","sugar","tea","coffee","juice","water","breadstick","yogurt",
             "house","home","room","door","window","chair","table","bed","lamp","rug","shelf","stove","sink","towel",
-            "mirror","clock","book","lamp","computer","phone","bag","chair","bench","cup","plate","spoon","fork","knife",
-            "fridge","closet","garden","broom","soap","soap","towel","television","lamp","sofa","man","woman","child","friend",
+            "mirror","clock","book","vase","computer","phone","bag","stool","bench","cup","plate","spoon","fork","knife",
+            "fridge","closet","garden","broom","soap","brush","sponge","mat","sofa","man","woman","child","friend",
             "teacher","student","parent","sister","brother","boy","girl","doctor","nurse","chef","lawyer","driver","painter",
-            "singer","actor","farmer","farmer","pilot","editor","driver","waiter","manager","nurse","engineer","scientist",
-            "clerk","police","guard","shirt","pants","coat","hat","shoe","sock","dress","coat","jacket","belt","scarf","glove",
-            "ring","bag","cap","sandal","car","bus","train","bike","plane","boat","ship","driver","camera","phone","computer",
-            "engine","wheel","road","map","light","rocket","cable","book","lesson","test","note","idea","fact","theory","art",
-            "music","math","science","history","language","word","sentence","paragraph","quiz","homework","library","pencil",
-            "eraser","desk","graph","table","love","fear","joy","pride","hope","envy","calm","thrill","pain","relief","anger",
-            "smile","laugh","dream","sleep","breath","hype","day","night","morning","evening","year","week","moment","second",
-            "hour","sun","rain","snow","wind","cloud","storm","light","dark","space","place","scene","level","town","city",
-            "country","world","road","street","park","mall","water","fire","stone","metal","glass","wood","paper","plastic",
-            "pill","hair","skin","blood","muscle","bone","breath","seed","leaf","root","sky","moon","sun","star","rain","tide"
+            "singer","actor","farmer","baker","pilot","editor","miner","waiter","manager","medic","engineer","scientist",
+            "clerk","police","guard","shirt","pants","coat","hat","shoe","sock","vest","jacket","belt","scarf","glove",
+            "ring","pouch","cap","sandal","car","bus","train","bike","plane","boat","ship","mechanic","camera","radio","tablet",
+            "engine","wheel","road","map","light","rocket","cable","scroll","lesson","test","note","idea","fact","theory","art",
+            "music","math","science","history","word","quiz","library","pencil","eraser","desk","graph","chart","love","fear",
+            "joy","pride","hope","envy","calm","thrill","pain","relief","anger","smile","laugh","dream","sleep","breath","hype",
+            "day","night","morning","evening","year","week","moment","second","hour","sun","rain","snow","wind","cloud","storm",
+            "glow","dark","space","place","scene","level","town","city","country","world","path","street","park","mall","river",
+            "fire","stone","metal","glass","wood","paper","plastic","pill","hair","skin","blood","muscle","bone","pulse","seed",
+            "leaf","root","sky","moon","comet","star","frost","tide"
         ];
 
-        public static string GetAudibleHash(this string input)
+        private static readonly string[] _hashAdjectives =
+        [
+            "bright","calm","happy","quick","silent","warm","friendly","gentle","brave","kind","smooth","loud","fancy","fresh",
+            "golden","sweet","jolly","sharp","large","mild","nice","old","pink","quiet","rare","shiny","tall","urban","vast","cool",
+            "young","zany","awesome","brisk","clear","deep","eager","swift","graceful","huge","icy","mellow","keen","light","merry",
+            "neat","open","proud","lush","rich","silly","tasty","unique","vivid","soft","xenial","yellow","pure","active","pale",
+            "clean","daring","elegant","slim","rosy","cheery","inventive","tame","fine","lively","flat","free","orange","peaceful",
+            "wise","roaring","wild","trusty","stern","vibrant","trim","youthful","zealous","adorable","breezy","cheerful","dazzling",
+            "sleek","famous","glossy","rugged","perky","snappy","plucky","luminous","mighty","nifty","spry","sturdy","savvy","radiant","simple",
+            "tender","serene","scenic","witty","plush","wiry","silky","artful","brilliant","crisp","stark","stout","frosty","lucid",
+            "handsome","ideal","jovial","kindly","lithe","supple","noble","ordinary","polished","agile","robust","zippy","nimble","lanky",
+            "husky","earthy","rustic","minty","zesty","spicy","bold","smoky","delightful","cozy","snug","glad","mossy","sandy",
+            "leafy","rocky","piney","fizzy","fluffy","fuzzy","gaudy","gutsy","handy","hardy","hasty","hefty","humid","inky","jumpy","juicy",
+            "lofty","amazing","lowly","lucky","lumpy","macho","meek","messy","misty","muddy","musty","nippy","nutty","pasty","patchy",
+            "punchy","quirky","regal","rowdy","ruddy","rusty","salty","sassy","scruffy","shaggy","slinky","slick","snazzy","soggy",
+            "solid","somber","sooty","spunky","stale","steady","sticky","stony","stormy","subtle","svelte","brawny","burly","catchy",
+            "chilly","chunky","classy","clever","cloudy","crafty","creamy","crunchy","curly","curvy","dainty","dusty","feisty","fiery",
+            "flaky","flinty","foamy","folksy","frisky","frothy","funky","gloomy","grainy","grassy","gritty","groovy","gruff","grumpy","hazy",
+            "herby","homey","jazzy","jaunty","lean","limber","loopy","lusty","murky","natty","nervy","oaken","peppy","pithy","plain",
+            "plump","prime","reedy","seedy","shady","soapy","spiky","tangy","tawny"
+        ];
+
+        public static (string adjective, string noun) GetAudibleHash(this string input)
         {
             byte[] code = BitConverter.GetBytes(input.GetDeterministicHashCode());
-            return _audibleHashes[code[3]];
+            return (_hashAdjectives[code[3]], _hashNouns[code[2]]);
         }
     }
 }

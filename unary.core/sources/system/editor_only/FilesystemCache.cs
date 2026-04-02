@@ -105,6 +105,11 @@ namespace Unary.Core
                         }
                     }
 
+                    if (file.EndsWith(BuildManifest.Extension))
+                    {
+                        return;
+                    }
+
                     targetFiles.Add(file);
                 });
             }

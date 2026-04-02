@@ -93,27 +93,14 @@ namespace Unary.Core
 
                     Type namedType = Types.GetTypeOfName(scriptType);
 
-                    if (namedType == null)
+                    // Type is either invalid or a basic .tres Resource
+                    if (namedType == null || !baseTypes.Contains(namedType))
                     {
-                        this.Warning($"Tried adding an unknown type \"{scriptType}\" which does not have a [GlobalClass] attribute on it to the resource manifest, skipping");
-
-#if TOOLS
-                        Debug.Assert(false);
-#endif
-                        continue;
-                    }
-                    else if (!baseTypes.Contains(namedType))
-                    {
-                        this.Warning($"Tried adding a type \"{namedType.FullName}\" which does not inherit Unary.Core.BaseResource to the resource manifest, skipping");
-
-#if TOOLS
-                        Debug.Assert(false);
-#endif
-
                         continue;
                     }
 
-                    entries[path] = (change.Value, path.GetScriptType());
+
+                    entries[path] = (change.Value, scriptType);
                 }
             }
 
