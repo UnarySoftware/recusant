@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 using Godot;
@@ -95,11 +96,20 @@ namespace Unary.Core
                     if (namedType == null)
                     {
                         this.Warning($"Tried adding an unknown type \"{scriptType}\" which does not have a [GlobalClass] attribute on it to the resource manifest, skipping");
+
+#if TOOLS
+                        Debug.Assert(false);
+#endif
                         continue;
                     }
                     else if (!baseTypes.Contains(namedType))
                     {
                         this.Warning($"Tried adding a type \"{namedType.FullName}\" which does not inherit Unary.Core.BaseResource to the resource manifest, skipping");
+
+#if TOOLS
+                        Debug.Assert(false);
+#endif
+
                         continue;
                     }
 

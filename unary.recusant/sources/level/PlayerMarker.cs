@@ -39,7 +39,39 @@ namespace Unary.Recusant
             }
 
             PlayerManager.Singleton.AddMarker(this);
+
+            if (RuntimeGizmos.Singleton.Test)
+            {
+                AddGizmo();
+            }
+
+            RuntimeGizmos.Singleton.OnTestChanged += OnGizmoChange;
         }
+
+        private void AddGizmo()
+        {
+            _gizmo = RuntimeGizmos.Singleton.Aquire();
+            _gizmo.SetBox(new(PlayerConstants.PlayerRadius * 2.0f, PlayerConstants.PlayerHeight, PlayerConstants.PlayerRadius * 2.0f), new Color(1.0f, 0.0f, 0.0f, 1.0f));
+        }
+
+        private void RemoveGizmo()
+        {
+            RuntimeGizmos.Singleton.Release(_gizmo);
+        }
+
+        private void OnGizmoChange(bool value)
+        {
+            if (value)
+            {
+                AddGizmo();
+            }
+            else
+            {
+                RemoveGizmo();
+            }
+        }
+
+        private RuntimeGizmo _gizmo;
 
         public override void _ExitTree()
         {
@@ -48,12 +80,21 @@ namespace Unary.Recusant
                 return;
             }
 
+            RuntimeGizmos.Singleton.OnTestChanged -= OnGizmoChange;
+
             PlayerManager.Singleton.RemoveMarker(this);
         }
 
 #if TOOLS
         public override void _Process(double delta)
         {
+            if (_gizmo != null)
+            {
+                Vector3 position = Position;
+                position.Y += PlayerConstants.PlayerHeight / 2.0f;
+                _gizmo?.SetPositionRotation(position, Rotation);
+            }
+
             if (!Engine.IsEditorHint())
             {
                 return;

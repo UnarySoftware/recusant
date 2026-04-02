@@ -4,7 +4,7 @@ namespace Unary.Core
 {
     public class LazyResource<T> where T : Resource
     {
-        private T _cache;
+        public T Cache { get; private set; }
 
         public string TargetValue { get; private set; } = string.Empty;
 
@@ -20,13 +20,7 @@ namespace Unary.Core
 
         public void Precache()
         {
-            _cache ??= (T)Resources.Singleton.LoadPatched(TargetValue);
-        }
-
-        public T Load()
-        {
-            Precache();
-            return _cache;
+            Cache ??= (T)Resources.Singleton.LoadPatched(TargetValue);
         }
 
         public T LoadWithoutCache()

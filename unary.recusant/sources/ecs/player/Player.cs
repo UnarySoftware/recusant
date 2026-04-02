@@ -640,8 +640,8 @@ namespace Unary.Recusant
         Vector3 _previousVelocity;
         bool InAir = false;
 
-        private float fallBase = 3.0f;
-        private float fallPow = 2.1f;
+        private float fallBase = 1.0f;
+        private float fallPow = 1.5f;
 
         private float GetDamage(float verticalVelocity, float minVelocity)
         {

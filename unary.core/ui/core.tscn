@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dl0q61n85kv8m"]
 
 [ext_resource type="Texture2D" uid="uid://odnt6j4mcrw1" path="res://unary.core/textures/InfoPrint.png" id="1_0m1jr"]
+[ext_resource type="FontFile" uid="uid://cius06hh32p1r" path="res://unary.core/fonts/consola.ttf" id="1_n52op"]
 [ext_resource type="Texture2D" uid="uid://byp4owx5ipk2f" path="res://unary.core/textures/WarnPrint.png" id="2_ehbmy"]
 [ext_resource type="Texture2D" uid="uid://dntdocykh121b" path="res://unary.core/textures/ErrorPrint.png" id="3_oh8pw"]
 
@@ -18,6 +19,11 @@ corner_detail = 5
 
 [sub_resource type="Theme" id="Theme_oh8pw"]
 TooltipPanel/styles/panel = SubResource("StyleBoxFlat_oh8pw")
+
+[sub_resource type="LabelSettings" id="LabelSettings_gt7q5"]
+font = ExtResource("1_n52op")
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_oh8pw"]
 outline_size = 5
@@ -53,11 +59,14 @@ theme = SubResource("Theme_oh8pw")
 [node name="VersionText" type="Label" parent="." unique_id=169660075]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.64500004
-anchor_right = 0.64500004
-grow_horizontal = 2
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -132.0
+offset_bottom = 17.0
+grow_horizontal = 0
 text = "%VERSION TEXT% "
+label_settings = SubResource("LabelSettings_gt7q5")
 
 [node name="ConsoleRoot" type="VBoxContainer" parent="." unique_id=2124201547]
 unique_name_in_owner = true

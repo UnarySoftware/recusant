@@ -17,12 +17,12 @@ namespace Unary.Core
 
             foreach (var mod in mods)
             {
-                result.Append(mod.ModId).Append(' ').Append(mod.BuildManifest.BuildData).Append(" (").Append(mod.BuildManifest.BuildNumber).Append(")\n");
+                result.Append('\"').Append(mod.ModId).Append("\" changed: ").Append(mod.BuildManifest.BuildData).Append(" (build ").Append(mod.BuildManifest.BuildNumber).Append(")\n");
             }
 
             string code = result.ToString().GetAudibleHash();
 
-            result.Prepend($"Code: \"{code.Capitalize()}\"\n");
+            result.Prepend($"Mod list (Hash Code \"{code.Capitalize()}\"):\n");
 
             Root.GetNode<Label>("%VersionText").Text = result.ToString();
         }

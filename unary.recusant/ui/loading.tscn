@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://bptr8nlpd32mm"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2agys"]
+
 [sub_resource type="LabelSettings" id="LabelSettings_2vwpm"]
-font_size = 24
+font_size = 32
 
 [node name="Loading" type="Control" unique_id=1464814751]
 layout_mode = 3
@@ -32,7 +34,7 @@ alignment = 1
 
 [node name="Label" type="Label" parent="Root" unique_id=1058410885]
 layout_mode = 2
-theme_override_font_sizes/font_size = 128
+theme_override_font_sizes/font_size = 64
 text = "Loading..."
 horizontal_alignment = 1
 
@@ -40,6 +42,7 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 64
+theme_override_styles/fill = SubResource("StyleBoxFlat_2agys")
 max_value = 1.0
 
 [node name="LoadingEntries" type="VBoxContainer" parent="Root" unique_id=959454509]

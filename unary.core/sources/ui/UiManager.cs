@@ -219,6 +219,7 @@ namespace Unary.Core
             }
 
             int order = 0;
+            int alwaysOrder = (int)RenderingServer.CanvasItemZMax;
 
             Dictionary<string, Node> namespaceNodes = [];
 
@@ -301,7 +302,17 @@ namespace Unary.Core
                 newUiState.SetAnchorsPreset(Control.LayoutPreset.FullRect);
                 newUiState.MouseFilter = Control.MouseFilterEnum.Ignore;
                 namespaceNode.AddChild(newUiState);
-                newUiState.ZIndex = order;
+
+                if (manifest.AlwaysEnabled)
+                {
+                    newUiState.ZIndex = alwaysOrder;
+                    alwaysOrder--;
+                }
+                else
+                {
+                    newUiState.ZIndex = order;
+                    order++;
+                }
 
                 PackedScene scene = manifest.Scene.LoadWithoutCache<PackedScene>();
 
@@ -320,7 +331,7 @@ namespace Unary.Core
                 newUiState.AddChild(control);
                 Resolve(newUiState, control);
 
-                order++;
+
 
                 List<UiUnitBase> unitsList = [];
                 Dictionary<Type, UiUnitBase> unitsDictionary = [];

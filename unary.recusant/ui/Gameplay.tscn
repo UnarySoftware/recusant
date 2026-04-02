@@ -1,13 +1,20 @@
 [gd_scene format=3 uid="uid://cpfgixxhm77iu"]
 
-[ext_resource type="Texture2D" uid="uid://b4vml0ea05vif" path="res://unary.recusant/ui/Crosshair.png" id="1_kagta"]
+[ext_resource type="Texture2D" uid="uid://bs33taplglftb" path="res://unary.recusant/ui/Crosshair1.png" id="1_iwta5"]
+[ext_resource type="FontFile" uid="uid://cius06hh32p1r" path="res://unary.core/fonts/consola.ttf" id="2_iwta5"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kagta"]
+font = ExtResource("2_iwta5")
 font_size = 36
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_iwta5"]
+font = ExtResource("2_iwta5")
 font_size = 36
 font_color = Color(1, 0, 0, 1)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Gameplay" type="Control" unique_id=1299453935]
 layout_mode = 3
@@ -32,28 +39,13 @@ offset_right = 32.0
 offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_kagta")
+texture = ExtResource("1_iwta5")
 
 [node name="Control" type="Control" parent="." unique_id=1754220647]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="ColorRect" type="ColorRect" parent="Control" unique_id=1117208758]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -2.0
-offset_top = -2.0
-offset_right = 2.0
-offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -65,10 +57,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -56.5
-offset_top = -180.0
-offset_right = 56.5
-offset_bottom = -76.0
+offset_left = -94.0
+offset_top = 70.0
+offset_right = 94.0
+offset_bottom = 233.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
