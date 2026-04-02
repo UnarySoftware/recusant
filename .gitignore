@@ -32,3 +32,4 @@ unary.core/analyzers/obj
 *.depren
 *.build
 *.types
+*.ttf
