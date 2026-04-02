@@ -34,9 +34,9 @@ unique_name_in_owner = true
 [node name="SpotLight3D" type="SpotLight3D" parent="CharacterBody3D/HeadOriginalPosition/Head/CameraSmooth/Camera3D" unique_id=1674309651]
 light_energy = 10.0
 shadow_enabled = true
-spot_range = 12.0
-spot_angle = 38.67
-spot_angle_attenuation = 0.6372791
+spot_range = 25.0
+spot_angle = 40.0
+spot_angle_attenuation = 0.65
 
 [node name="StairsAheadRayCast3D" type="RayCast3D" parent="CharacterBody3D" unique_id=944350341]
 unique_name_in_owner = true
