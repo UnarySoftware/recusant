@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Text.Json;
 using Godot;
 
@@ -7,24 +8,22 @@ namespace Unary.Core
 {
     public partial class ModLoader : Node, ICoreSystem
     {
-        public const string ModLoaderManifestFile = nameof(LoadOrderManifest) + ".tres";
-
-        public LoadOrderManifest LoadOrder { get; private set; }
+        public ModLoadManifest LoadManifest { get; private set; }
 
         public Dictionary<string, ModManifest> AllMods { get; private set; } = [];
         public List<ModManifest> EnabledMods { get; private set; } = [];
 
         private bool FetchLoadOrder()
         {
-            if (!File.Exists(ModLoaderManifestFile))
+            if (!File.Exists(ModLoadManifest.Path))
             {
-                this.Critical($"Missing {ModLoaderManifestFile}, we cant launch a game without it.");
+                this.Critical($"Missing {ModLoadManifest.Path}, we cant launch the game without it.");
                 return false;
             }
 
-            LoadOrder = (LoadOrderManifest)ResourceLoader.Singleton.Load(ModLoaderManifestFile, nameof(LoadOrderManifest));
+            LoadManifest = JsonSerializer.Deserialize<ModLoadManifest>(File.ReadAllText(ModLoadManifest.Path));
 
-            if (LoadOrder == null || LoadOrder.Enabled.Length == 0)
+            if (LoadManifest == null || LoadManifest.Enabled.Count == 0)
             {
                 return this.Critical("Failed to acquire a load order");
             }
@@ -82,9 +81,9 @@ namespace Unary.Core
 
 #endif
 
-                manifest.PathInfo = new()
+                manifest.LoadInfo = new()
                 {
-                    Type = ModPathInfo.ModPathType.EditorFilesystem,
+                    Type = ModLoadInfo.ModPathType.Filesystem,
                     Path = manifest.ModId
                 };
 
@@ -150,9 +149,32 @@ namespace Unary.Core
 
             List<TopoSortItem<string>> sortedMods = [.. modIds.TopoSort(x => x.Target, x => x.Dependencies)];
 
+            Dictionary<ModLoadInfo, string> infoToModId = [];
+
             foreach (var mod in sortedMods)
             {
-                EnabledMods.Add(AllMods[mod.Target]);
+                var targetMod = AllMods[mod.Target];
+
+                // If we have managed to remove a mod from the load order - it is present and should be added as enabled
+                if (LoadManifest.Enabled.Remove(targetMod.LoadInfo))
+                {
+                    EnabledMods.Add(AllMods[mod.Target]);
+                }
+            }
+
+            // If some mods failed to be removed from the load manifest in the loop above - they are missing
+            if (LoadManifest.Enabled.Count > 0)
+            {
+                StringBuilder builder = new();
+
+                builder.Append("Failed to aquire mods listed in the load order:");
+
+                foreach (var missing in LoadManifest.Enabled)
+                {
+                    builder.Append("\nPath: \"").Append(missing.Path).Append("\" from ").Append(missing.Type);
+                }
+
+                return this.Critical(builder.ToString());
             }
 
             return true;

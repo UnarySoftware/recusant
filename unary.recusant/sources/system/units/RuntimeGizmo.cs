@@ -8,16 +8,17 @@ namespace Unary.Recusant
 {
     public class RuntimeGizmo : IPoolable
     {
-        private static SurfaceTool tool = new();
+        private static readonly SurfaceTool tool = new();
 
-        private MeshInstance3D _meshInstance;
+        private readonly MeshInstance3D _meshInstance;
 
         public RuntimeGizmo(Node root, ShaderMaterial material)
         {
             _meshInstance = new()
             {
                 MaterialOverride = material,
-                Visible = true
+                Visible = true,
+                CastShadow = GeometryInstance3D.ShadowCastingSetting.Off
             };
 
             root.AddChild(_meshInstance);

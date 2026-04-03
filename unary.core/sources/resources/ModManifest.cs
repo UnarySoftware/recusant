@@ -28,7 +28,7 @@ namespace Unary.Core
         public ModManifestResolution[] Resolutions = [];
 
         // Resolved at game runtime
-        public ModPathInfo PathInfo;
+        public ModLoadInfo LoadInfo;
 
         public override void _ValidateProperty(Dictionary property)
         {
