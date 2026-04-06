@@ -47,7 +47,7 @@ namespace Unary.Recusant
 
         private static StringName color = nameof(color);
 
-        public void SetBox(Vector3 size, Color newColor)
+        public RuntimeGizmo SetBox(Vector3 size, Color newColor)
         {
             BoxMesh mesh = new()
             {
@@ -55,9 +55,10 @@ namespace Unary.Recusant
             };
             _meshInstance.Mesh = mesh;
             _material.SetShaderParameter(color, newColor);
+            return this;
         }
 
-        public void SetWireframeBox(Vector3 size, Color color)
+        public RuntimeGizmo SetWireframeBox(Vector3 size, Color color)
         {
             size.X /= 2.0f;
             size.Y /= 2.0f;
@@ -82,6 +83,7 @@ namespace Unary.Recusant
             SetLine(new(-size.X, size.Y, -size.Z), new(-size.X, size.Y, size.Z), color);
 
             _meshInstance.Mesh = tool.Commit();
+            return this;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

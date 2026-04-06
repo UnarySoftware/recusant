@@ -14,19 +14,12 @@ namespace Unary.Recusant
         private int _polyCount;
         private Vector3I[] _polyIndices;
         private readonly Dictionary<Vector3, int[]> _boundToPolys = [];
-        private RuntimeGizmo[] _gizmo = new RuntimeGizmo[3];
+
 
         bool ISystem.Initialize()
         {
             LevelManager.Singleton.OnLoaded.Subscribe(OnLoaded, this);
             LevelManager.Singleton.OnUnloaded.Subscribe(OnUnloaded, this);
-
-            for (int i = 0; i < 3; i++)
-            {
-                _gizmo[i] = RuntimeGizmos.Singleton.Aquire();
-                _gizmo[i].SetBox(new Vector3(0.05f, 0.05f, 0.05f), new Color(0.0f, 1.0f, 0.0f, 1.0f));
-            }
-
             return true;
         }
 
@@ -34,11 +27,6 @@ namespace Unary.Recusant
         {
             LevelManager.Singleton.OnLoaded.Unsubscribe(this);
             LevelManager.Singleton.OnUnloaded.Unsubscribe(this);
-
-            for (int i = 0; i < 3; i++)
-            {
-                RuntimeGizmos.Singleton.Release(_gizmo[i]);
-            }
         }
 
         private bool OnLoaded(ref LevelManager.LevelInfo data)
@@ -113,10 +101,6 @@ namespace Unary.Recusant
                 // Mathf.IsEqualApprox is giving off false positives here... I know, crazy right?
                 if (distance == 0.0f)
                 {
-                    _gizmo[0].SetPosition(x);
-                    _gizmo[1].SetPosition(y);
-                    _gizmo[2].SetPosition(z);
-
                     Vector3 barycentric = Triangle.GetPointInside(x, y, z, position);
 
                     if (barycentric != default)

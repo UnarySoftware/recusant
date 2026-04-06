@@ -4,6 +4,7 @@
 # Ignore the static web subrepo
 unary.recusant/resources/web/.git/
 # Ignore local cache
+*.csproj.user
 .unary/
 .vs/
 *.import

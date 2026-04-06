@@ -14,7 +14,6 @@ namespace Unary.Recusant
         public float Flow = -1.0f;
 
         private Rid _navRid;
-        private RuntimeGizmo _gizmo;
         private UpdaterHandle _handle;
         private static readonly CylinderShape3D _castShape = new()
         {
@@ -45,8 +44,6 @@ namespace Unary.Recusant
             Instance = this;
             _handle = Updater.Singleton.PhysicsProcess.SubscribeDelayed(0.05f, PhysicsProcessDelayed);
             _navRid = LevelManager.Singleton.Root.NavigationRegion.GetNavigationMap();
-            _gizmo = RuntimeGizmos.Singleton.Aquire();
-            _gizmo.SetBox(new(0.25f, 0.25f, 0.25f), new Color(1.0f, 0.0f, 0.0f, 1.0f));
             _cast.Enabled = true;
         }
 
@@ -54,7 +51,6 @@ namespace Unary.Recusant
         {
             Instance = null;
             Updater.Singleton.PhysicsProcess.UnsubscribeDelayed(_handle);
-            RuntimeGizmos.Singleton.Release(_gizmo);
             _cast.Enabled = false;
         }
 
@@ -72,8 +68,6 @@ namespace Unary.Recusant
             }
 
             Vector3 target = NavigationServer3D.Singleton.MapGetClosestPoint(_navRid, _cast.GetCollisionPoint(0));
-
-            _gizmo.SetPosition(target);
 
             float newFlow = NavMeshManager.Singleton.GetFlow(target);
 
