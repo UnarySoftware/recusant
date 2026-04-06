@@ -30134,7 +30134,7 @@ script = ExtResource("10_28dih")
 metadata/_custom_type_script = "uid://7cuhmyk16wy6"
 
 [node name="PlayerStart3" type="Node3D" parent="." unique_id=527676826 groups=["PlayerMarker"]]
-transform = Transform3D(-0.9946706, 0, 0.10309368, 0, 1.0000002, 0, -0.103094, 0, -0.9946676, 59.998714, 11.604626, -131.54128)
+transform = Transform3D(-0.9946706, 0, 0.10309366, 0, 1.0000002, 0, -0.103094, 0, -0.9946674, 59.998714, 11.604626, -131.54128)
 script = ExtResource("10_28dih")
 metadata/_custom_type_script = "uid://7cuhmyk16wy6"
 
