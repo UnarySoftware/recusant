@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://df4tkmvtbeimi" path="res://unary.recusant/sources/ecs/player/Player.cs" id="1_ib3fy"]
 [ext_resource type="Script" uid="uid://ccbwwwt2a8r67" path="res://unary.core/sources/ecs/Entity.cs" id="1_ysajs"]
+[ext_resource type="Script" uid="uid://kwagcll6xbsf" path="res://unary.recusant/sources/ecs/player/PlayerFlow.cs" id="3_5guud"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_24kai"]
 margin = 0.01
@@ -13,6 +14,7 @@ script = ExtResource("1_ysajs")
 metadata/_custom_type_script = "uid://ccbwwwt2a8r67"
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=298709646]
+unique_name_in_owner = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=1908305889]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.902, 0)
@@ -56,3 +58,8 @@ StairsBelowRayCast3D = NodePath("../CharacterBody3D/StairsBelowRayCast3D")
 StairsAheadRayCast3D = NodePath("../CharacterBody3D/StairsAheadRayCast3D")
 Head = NodePath("../CharacterBody3D/HeadOriginalPosition/Head")
 metadata/_custom_type_script = "uid://df4tkmvtbeimi"
+
+[node name="PlayerFlow" type="Node" parent="." unique_id=489091830 node_paths=PackedStringArray("body")]
+script = ExtResource("3_5guud")
+body = NodePath("../CharacterBody3D")
+metadata/_custom_type_script = "uid://kwagcll6xbsf"

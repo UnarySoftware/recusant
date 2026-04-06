@@ -1,7 +1,6 @@
 #if TOOLS
 
 using Godot;
-using System;
 using System.Collections.Generic;
 using Unary.Core;
 
@@ -11,11 +10,6 @@ namespace Unary.Recusant
     [GlobalClass]
     public partial class RuntimeGizmos : Node, IModSystem
     {
-        public Action<bool> OnTestChanged;
-
-        [Export]
-        public bool Test { get { return field; } set { field = value; OnTestChanged(value); } } = true;
-
         private readonly LazyResource<ShaderMaterial> _material = new("uid://5kb2d1tm58yv");
 
         private readonly Queue<RuntimeGizmo> _entries = [];

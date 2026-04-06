@@ -19,6 +19,7 @@ namespace Unary.Core
         }
 
         private StringName ui_back = new(nameof(ui_back));
+        private StringName ui_mouse_release = new(nameof(ui_mouse_release));
 
         private readonly Dictionary<Type, UiStateData> _states = [];
         private Type _currentState;
@@ -102,6 +103,7 @@ namespace Unary.Core
             }
         }
 
+        [InitializeExplicit(typeof(ModSystems))]
         bool ISystem.Initialize()
         {
             List<UiStateManifest> states = ResourceTypesManager.Singleton.LoadResourcesOfType<UiStateManifest>();
@@ -464,6 +466,19 @@ namespace Unary.Core
             {
                 GoBack();
             }
+
+            if (Input.Singleton.IsActionJustReleased(ui_mouse_release))
+            {
+                if (Input.Singleton.MouseMode == Input.MouseModeEnum.Captured)
+                {
+                    Input.Singleton.MouseMode = Input.MouseModeEnum.Visible;
+                }
+                else if (Input.Singleton.MouseMode == Input.MouseModeEnum.Visible)
+                {
+                    Input.Singleton.MouseMode = Input.MouseModeEnum.Captured;
+                }
+            }
+
         }
 
         void ISystem.Deinitialize()

@@ -300,7 +300,7 @@ size = Vector3(0.1, 15, 1.4)
 [sub_resource type="BoxShape3D" id="BoxShape3D_youqv"]
 size = Vector3(1.4, 15, 0.8)
 
-[node name="LevelRoot" type="Node" unique_id=853860172 groups=["LevelRoot"]]
+[node name="LevelRoot" type="Node" unique_id=853860172]
 script = ExtResource("22_hhmrk")
 metadata/_custom_type_script = "uid://dku88wftngf3g"
 

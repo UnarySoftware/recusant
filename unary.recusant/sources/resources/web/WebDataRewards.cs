@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using System.Xml;
 using Godot;
+using Unary.Core;
 
-namespace Unary.Core
+namespace Unary.Recusant
 {
     [Tool]
     [GlobalClass]

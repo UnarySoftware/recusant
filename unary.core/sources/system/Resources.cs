@@ -12,6 +12,7 @@ namespace Unary.Core
 
         private ResourceInterceptor _interceptor;
 
+        [InitializeExplicit(typeof(ResourceManager))]
         bool ISystem.Initialize()
         {
             List<ResourcePatch> patches = ResourceTypesManager.Singleton.LoadResourcesOfType<ResourcePatch>(false);

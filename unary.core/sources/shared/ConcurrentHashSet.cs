@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Unary.Core
 {
@@ -40,6 +41,11 @@ namespace Unary.Core
         {
             Comparer = comparer ?? EqualityComparer<T>.Default;
             _dict = new(concurrencyLevel, capacity, Comparer);
+        }
+
+        public T[] ToArray()
+        {
+            return _dict.Keys.ToArray();
         }
 
         public int Count => _dict.Count;

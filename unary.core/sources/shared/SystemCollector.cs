@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Godot;
 
 namespace Unary.Core
@@ -52,7 +53,7 @@ namespace Unary.Core
             return system.instance;
         }
 
-        public bool Initialize(HashSet<string> enabledNamespaces, Node root, List<Type> orderedFirst = null, List<Type> orderedLast = null)
+        public bool Initialize(HashSet<string> enabledNamespaces, Node root)
         {
             _root = root;
 
@@ -85,6 +86,8 @@ namespace Unary.Core
                 }
             }
 
+            Dictionary<Type, HashSet<Type>> explicitDependencies = [];
+
             foreach (var type in types)
             {
                 if (type == typeof(T) || type.IsInterface)
@@ -95,6 +98,38 @@ namespace Unary.Core
                 if (!enabledNamespaces.Contains(type.Namespace.ToLower()))
                 {
                     continue;
+                }
+
+                if (!explicitDependencies.TryGetValue(type, out var dependencies))
+                {
+                    dependencies = [];
+                    explicitDependencies[type] = dependencies;
+                }
+
+                MethodInfo method = null;
+
+                var interfaceMap = type.GetInterfaceMap(typeof(ISystem));
+                for (int i = 0; i < interfaceMap.InterfaceMethods.Length; i++)
+                {
+                    if (interfaceMap.InterfaceMethods[i].Name == nameof(RuntimeLogger.Initialize))
+                    {
+                        method = interfaceMap.TargetMethods[i];
+                        break;
+                    }
+                }
+
+                if (method != null)
+                {
+                    foreach (var attribute in method.GetCustomAttributes())
+                    {
+                        if (attribute is InitializeExplicitAttribute target)
+                        {
+                            foreach (var entry in target.Dependencies)
+                            {
+                                dependencies.Add(entry);
+                            }
+                        }
+                    }
                 }
 
                 T newSystem = (T)Activator.CreateInstance(type);
@@ -114,51 +149,22 @@ namespace Unary.Core
                 _systemsDictionary.Add(type, new(newSystem, false));
             }
 
-            if (orderedFirst != null)
-            {
-                foreach (var system in orderedFirst)
-                {
-                    GetSystem(system);
+            List<TopoSortItem<Type>> preSortedTypes = [];
 
-                    if (!Initialized)
-                    {
-                        break;
-                    }
-                }
+            foreach (var dependencySet in explicitDependencies)
+            {
+                preSortedTypes.Add(new TopoSortItem<Type>(dependencySet.Key, [.. dependencySet.Value]));
             }
 
-            foreach (var system in _systemsDictionary)
+            List<TopoSortItem<Type>> sortedTypes = [.. preSortedTypes.TopoSort(x => x.Target, x => x.Dependencies)];
+
+            foreach (var targetType in sortedTypes)
             {
-                Type targetType = system.Key;
-
-                if (orderedFirst != null && orderedFirst.Contains(targetType))
-                {
-                    continue;
-                }
-
-                if (orderedLast != null && orderedLast.Contains(targetType))
-                {
-                    continue;
-                }
-
-                GetSystem(system.Key);
+                GetSystem(targetType.Target);
 
                 if (!Initialized)
                 {
                     break;
-                }
-            }
-
-            if (orderedLast != null)
-            {
-                foreach (var system in orderedLast)
-                {
-                    GetSystem(system);
-
-                    if (!Initialized)
-                    {
-                        break;
-                    }
                 }
             }
 

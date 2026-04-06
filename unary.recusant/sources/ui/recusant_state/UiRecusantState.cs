@@ -1,7 +1,8 @@
 using System;
 using Godot;
+using Unary.Core;
 
-namespace Unary.Core
+namespace Unary.Recusant
 {
     [Tool]
     [GlobalClass]
@@ -14,7 +15,7 @@ namespace Unary.Core
 
         public override void Process(float delta)
         {
-            
+
         }
     }
 }

@@ -15,14 +15,21 @@ namespace Unary.Recusant
         [UiElement("%Label2")]
         private Label _label2;
 
+        [UiElement("%Label3")]
+        private Label _label3;
+
         public override void Process(float delta)
         {
             if (Player.Instance != null)
             {
                 _label1.Text = Player.Instance.Body.Velocity.Length().ToString("0.0 m/s");
                 _label2.Text = Player.Instance.Damage + " dmg";
-            }
 
+                if (PlayerFlow.Instance != null)
+                {
+                    _label3.Text = "Flow: " + PlayerFlow.Instance.Flow;
+                }
+            }
         }
     }
 }

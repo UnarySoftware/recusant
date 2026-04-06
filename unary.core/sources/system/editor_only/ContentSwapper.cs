@@ -120,6 +120,7 @@ namespace Unary.Core
             return true;
         }
 
+        [InitializeExplicit(typeof(ResourceManager), typeof(Resources))]
         bool ISystem.Initialize()
         {
             if (!TryRevertSwap(RuntimeLogger.Critical))

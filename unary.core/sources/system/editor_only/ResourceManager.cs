@@ -12,6 +12,7 @@ namespace Unary.Core
     [GlobalClass]
     public partial class ResourceManager : Node, ICoreSystem
     {
+        [InitializeExplicit(typeof(BuildBumper))]
         bool ISystem.Initialize()
         {
 #if !TOOLS

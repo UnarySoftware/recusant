@@ -19,7 +19,7 @@ namespace Unary.Core
         }
 
         public Action OnFinishInitialization;
-        
+
         public bool FinishedInitialization { get; private set; }
 
         public static void Dummy()
@@ -31,29 +31,35 @@ namespace Unary.Core
 
         public override void _Ready()
         {
-            OnFinishInitialization = Dummy;
-
-            RuntimeLogger.Initialize();
-
-            Singleton = this;
-
-            Types.Initialize(RuntimeLogger.Critical);
-
-            if (!_systems.Initialize(["unary.core"], this,
-            [typeof(BuildBumper), typeof(ResourceManager), typeof(Resources), typeof(ContentSwapper)],
-            [typeof(ModSystems), typeof(UiManager)]))
+            try
             {
-                Quit(1);
-                return;
+                OnFinishInitialization = Dummy;
+
+                RuntimeLogger.Initialize();
+
+                Singleton = this;
+
+                Types.Initialize(RuntimeLogger.Critical);
+
+                if (!_systems.Initialize(["unary.core"], this))
+                {
+                    Quit(1);
+                    return;
+                }
+
+                FinishedInitialization = true;
+                OnFinishInitialization();
+
+                if (!_systems.PostInitialize())
+                {
+                    Quit(1);
+                    return;
+                }
             }
-
-            FinishedInitialization = true;
-            OnFinishInitialization();
-
-            if (!_systems.PostInitialize())
+            catch (Exception ex)
             {
+                RuntimeLogger.Critical(this, ex.Message + '\n' + ex.StackTrace);
                 Quit(1);
-                return;
             }
         }
 

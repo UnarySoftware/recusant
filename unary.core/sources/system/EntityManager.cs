@@ -6,7 +6,7 @@ namespace Unary.Core
 {
     [Tool]
     [GlobalClass]
-    public partial class EntityManager : Node, IModSystem
+    public partial class EntityManager : Node, ICoreSystem
     {
         private readonly HashSet<Entity> _levelEntities = [];
         private readonly HashSet<Entity> _pooledEntities = [];

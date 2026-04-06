@@ -1,7 +1,6 @@
 using Godot;
-using Godot.Collections;
 
-namespace Unary.Core
+namespace Unary.Recusant
 {
     [Tool]
     [GlobalClass]

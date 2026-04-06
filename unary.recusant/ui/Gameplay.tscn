@@ -16,6 +16,13 @@ font_color = Color(1, 0, 0, 1)
 outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_gw5u4"]
+font = ExtResource("2_iwta5")
+font_size = 36
+font_color = Color(0, 0.8627451, 1, 1)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
 [node name="Gameplay" type="Control" unique_id=1299453935]
 layout_mode = 3
 anchors_preset = 15
@@ -77,4 +84,11 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "0.0 dmg"
 label_settings = SubResource("LabelSettings_iwta5")
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="Control/VBoxContainer" unique_id=878571101]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0.0"
+label_settings = SubResource("LabelSettings_gw5u4")
 horizontal_alignment = 1

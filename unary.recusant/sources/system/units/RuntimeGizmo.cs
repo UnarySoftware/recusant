@@ -11,9 +11,11 @@ namespace Unary.Recusant
         private static readonly SurfaceTool tool = new();
 
         private readonly MeshInstance3D _meshInstance;
+        private readonly ShaderMaterial _material;
 
         public RuntimeGizmo(Node root, ShaderMaterial material)
         {
+            _material = material;
             _meshInstance = new()
             {
                 MaterialOverride = material,
@@ -43,7 +45,19 @@ namespace Unary.Recusant
             tool.AddVertex(finish);
         }
 
-        public void SetBox(Vector3 size, Color color)
+        private static StringName color = nameof(color);
+
+        public void SetBox(Vector3 size, Color newColor)
+        {
+            BoxMesh mesh = new()
+            {
+                Size = size
+            };
+            _meshInstance.Mesh = mesh;
+            _material.SetShaderParameter(color, newColor);
+        }
+
+        public void SetWireframeBox(Vector3 size, Color color)
         {
             size.X /= 2.0f;
             size.Y /= 2.0f;

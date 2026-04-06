@@ -1,8 +1,9 @@
 using System;
 using Godot;
 using Godot.Collections;
+using Unary.Core;
 
-namespace Unary.Core
+namespace Unary.Recusant
 {
     [Tool]
     [GlobalClass]
