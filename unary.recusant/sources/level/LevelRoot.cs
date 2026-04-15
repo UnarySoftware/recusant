@@ -25,21 +25,39 @@ namespace Unary.Recusant
                 CallDeferred(MethodName.InitializeNodes);
             }
         }
-
 #endif
 
         private bool Initialized = false;
 
-        [Export(PropertyHint.Range, "10.0,50.0,1.0")]
+        [Export(PropertyHint.Range, "15.0,50.0,1.0")]
         public float BoundsSize = 15.0f;
 
         // Used to visualize path from start to finish on a map
         // Not saved, only used for the editor visualization
         public Vector3[] Points;
 
+        // Vertex related info
+
         // Flow distance to the end of the map of each vertex
         [Export]
         public float[] VertexDistance;
+
+        // Poly related info
+
+        // Polys, 3 vertex entry per poly
+        // These are sorted by flow, so we never use NavMesh GetPolygon() method ever at runtime
+        [Export]
+        public int[] Polys;
+
+        [Export]
+        // Stores NavBrush.AiNavType
+        public int[] PolyTypes;
+
+        [Export]
+        // Stores NavBrush.AiNavFlags
+        public int[] PolyFlags;
+
+        // Bound related info
 
         // Declaration of boundaries that are used to BVH all triangles in the level
         [Export]
@@ -49,7 +67,7 @@ namespace Unary.Recusant
         [Export]
         public int[] BoundsCount;
 
-        // References a poly that gets aquired with a NavigationMesh GetPolygon() method
+        // References a poly that gets aquired from a Poly array
         [Export]
         public int[] BoundsPolys;
 

@@ -1,7 +1,7 @@
 @tool
-class_name Trigger extends VMFEntityNode
+class_name BrushNav extends VMFEntityNode
 
-var brush_entity = preload("res://unary.core/sources/ecs/BrushEntity.cs")
+var nav_brush = preload("res://unary.recusant/sources/level/NavBrush.cs")
 
 func _entity_setup(_entity: VMFEntity):
 	var mesh = get_mesh();
@@ -9,9 +9,6 @@ func _entity_setup(_entity: VMFEntity):
 	if !mesh or mesh.get_surface_count() == 0:
 		queue_free();
 		return;
-	
-	var group = _entity.data.get("groupname") as String
-	$Area3D.add_to_group.call_deferred(group, true)
 
 	var color = _entity.data.get("rendercolor")
 	
@@ -27,5 +24,7 @@ func _entity_setup(_entity: VMFEntity):
 	box.size = aabb.size
 	$Area3D/CollisionShape3D.shape = box
 	
-	self.set_script(brush_entity)
+	set_script.call_deferred(nav_brush)
+	set.call_deferred("Type", _entity.data.get("type"))
+	set.call_deferred("Flags", _entity.data.get("spawnflags"))
 	call_deferred("_ready")

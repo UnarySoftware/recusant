@@ -8,8 +8,10 @@ namespace Unary.Core
     [GlobalClass]
     public partial class EntityManager : Node, ICoreSystem
     {
-        private readonly HashSet<Entity> _levelEntities = [];
-        private readonly HashSet<Entity> _pooledEntities = [];
+        private readonly Dictionary<ushort, Entity> _levelEntities = [];
+        private readonly Dictionary<ushort, Entity> _pooledEntities = [];
+        private ushort _idCounter = 0;
+        private ushort _lastPooledId = 0;
 
         public void Add(Entity entity)
         {
@@ -17,15 +19,23 @@ namespace Unary.Core
             {
                 case Entity.EntityType.Level:
                     {
-                        _levelEntities.Add(entity);
+                        _levelEntities[_idCounter] = entity;
                         break;
                     }
                 case Entity.EntityType.Pooled:
                     {
-                        _pooledEntities.Add(entity);
+                        _pooledEntities[_idCounter] = entity;
                         break;
                     }
             }
+
+            entity.Id = _idCounter;
+            _idCounter++;
+        }
+
+        public void FinishedPooling()
+        {
+            _lastPooledId = _idCounter;
         }
 
         public void Initialize(Entity.EntityType type)
@@ -36,7 +46,7 @@ namespace Unary.Core
                     {
                         foreach (var entity in _levelEntities)
                         {
-                            entity.Initialize();
+                            entity.Value.Initialize();
                         }
                         break;
                     }
@@ -44,7 +54,7 @@ namespace Unary.Core
                     {
                         foreach (var entity in _pooledEntities)
                         {
-                            entity.Initialize();
+                            entity.Value.Initialize();
                         }
                         break;
                     }
@@ -59,10 +69,11 @@ namespace Unary.Core
                     {
                         foreach (var entity in _levelEntities)
                         {
-                            entity.Deinitialize();
+                            entity.Value.Deinitialize();
                         }
 
                         _levelEntities.Clear();
+                        _idCounter = _lastPooledId;
 
                         break;
                     }
@@ -70,7 +81,7 @@ namespace Unary.Core
                     {
                         foreach (var entity in _pooledEntities)
                         {
-                            entity.Deinitialize();
+                            entity.Value.Deinitialize();
                         }
                         break;
                     }

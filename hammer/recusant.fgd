@@ -57,10 +57,60 @@
 	rendercolor(color255) : "Debug Color (R G B)" : "255 255 255" : "Color used by the debug visualizations."
 ]
 
+@BaseClass = NavData
+[
+	type(choices) : "Type" : 0 =
+	[
+		0 : "None"
+		1 : "Start"
+		2 : "End"
+	]
+]
+
 @SolidClass base(Targetname, Origin, Default, Brush, Group) = brush : 
 	"A brush entity that's designed to be referenced by scripts."
 [
 	
+]
+
+@SolidClass base(Origin, NavData, DebugColor) = nav_brush : 
+	"A brush entity that's designed to be influencing the navigation data."
+[
+	spawnflags(flags) =
+	[
+		         1 : "Placeholder Flag 1" : 0
+		         2 : "Placeholder Flag 2" : 0
+		         4 : "Placeholder Flag 3" : 0
+		         8 : "Placeholder Flag 4" : 0
+		        16 : "Placeholder Flag 5" : 0
+		        32 : "Placeholder Flag 6" : 0
+		        64 : "Placeholder Flag 7" : 0
+		       128 : "Placeholder Flag 8" : 0
+		       256 : "Placeholder Flag 9" : 0
+		       512 : "Placeholder Flag 10" : 0
+		      1024 : "Placeholder Flag 11" : 0
+		      2048 : "Placeholder Flag 12" : 0
+		      4096 : "Placeholder Flag 13" : 0
+		      8192 : "Placeholder Flag 14" : 0
+		     16384 : "Placeholder Flag 15" : 0
+		     32768 : "Placeholder Flag 16" : 0
+		     65536 : "Placeholder Flag 17" : 0
+		    131072 : "Placeholder Flag 18" : 0
+		    262144 : "Placeholder Flag 19" : 0
+		    524288 : "Placeholder Flag 20" : 0
+		   1048576 : "Placeholder Flag 21" : 0
+		   2097152 : "Placeholder Flag 22" : 0
+		   4194304 : "Placeholder Flag 23" : 0
+		   8388608 : "Placeholder Flag 24" : 0
+		  16777216 : "Placeholder Flag 25" : 0
+		  33554432 : "Placeholder Flag 26" : 0
+		  67108864 : "Placeholder Flag 27" : 0
+		 134217728 : "Placeholder Flag 28" : 0
+		 268435456 : "Placeholder Flag 29" : 0
+		 536870912 : "Placeholder Flag 30" : 0
+		1073741824 : "Placeholder Flag 31" : 0
+		2147483648 : "Placeholder Flag 32" : 0
+	]
 ]
 
 @SolidClass base(Targetname, Origin, Group, DebugColor) = trigger : 

@@ -1,6 +1,5 @@
 using Godot;
 using System.Collections.Generic;
-using System.Linq;
 using Unary.Core;
 
 namespace Unary.Recusant
@@ -9,12 +8,19 @@ namespace Unary.Recusant
     [GlobalClass]
     public partial class NavMeshManager : Node, IModSystem
     {
+        private struct PolyData
+        {
+            public Vector3I Vertex;
+            public NavBrush.AiNavType Type;
+            public NavBrush.AiNavFlags Flags;
+        }
+
+
         private LevelRoot _levelRoot;
         private Vector3[] _vertices;
         private int _polyCount;
-        private Vector3I[] _polyIndices;
+        private PolyData[] _polyData;
         private readonly Dictionary<Vector3, int[]> _boundToPolys = [];
-
 
         bool ISystem.Initialize()
         {
@@ -34,18 +40,25 @@ namespace Unary.Recusant
             _levelRoot = data.Root;
             _vertices = _levelRoot.NavigationMesh.GetVertices();
             _polyCount = _levelRoot.NavigationMesh.GetPolygonCount();
-            _polyIndices = new Vector3I[_polyCount];
+            _polyData = new PolyData[_polyCount];
+
+            int polyReader = 0;
 
             for (int i = 0; i < _polyCount; i++)
             {
-                var indices = _levelRoot.NavigationMesh.GetPolygon(i);
-
-                _polyIndices[i] = new()
+                _polyData[i] = new()
                 {
-                    X = indices[0],
-                    Y = indices[1],
-                    Z = indices[2],
+                    Vertex = new()
+                    {
+                        X = _levelRoot.Polys[polyReader],
+                        Y = _levelRoot.Polys[polyReader + 1],
+                        Z = _levelRoot.Polys[polyReader + 2],
+                    },
+                    Type = (NavBrush.AiNavType)_levelRoot.PolyTypes[i],
+                    Flags = (NavBrush.AiNavFlags)_levelRoot.PolyFlags[i],
                 };
+
+                polyReader += 3;
             }
 
             int entryCounter = 0;
@@ -68,12 +81,12 @@ namespace Unary.Recusant
             return true;
         }
 
-        public float GetFlow(Vector3 position)
+        public (float flow, NavBrush.AiNavType type, NavBrush.AiNavFlags flags) GetFlow(Vector3 position)
         {
             if (_levelRoot == null)
             {
                 this.Error("Requested flow while we failed to aquire a level root");
-                return -1.0f;
+                return (-1.0f, NavBrush.AiNavType.None, NavBrush.AiNavFlags.None);
             }
 
             Vector3 key = new()
@@ -85,16 +98,16 @@ namespace Unary.Recusant
 
             if (!_boundToPolys.TryGetValue(key, out var entries))
             {
-                return -1.0f;
+                return (-1.0f, NavBrush.AiNavType.None, NavBrush.AiNavFlags.None);
             }
 
             foreach (var entry in entries)
             {
-                var indices = _polyIndices[entry];
+                var data = _polyData[entry];
 
-                Vector3 x = _vertices[indices.X];
-                Vector3 y = _vertices[indices.Y];
-                Vector3 z = _vertices[indices.Z];
+                Vector3 x = _vertices[data.Vertex.X];
+                Vector3 y = _vertices[data.Vertex.Y];
+                Vector3 z = _vertices[data.Vertex.Z];
 
                 float distance = Triangle.GetPointDistance(x, y, z, position);
 
@@ -105,14 +118,15 @@ namespace Unary.Recusant
 
                     if (barycentric != default)
                     {
-                        return barycentric.X * _levelRoot.VertexDistance[indices.X] +
-                            barycentric.Y * _levelRoot.VertexDistance[indices.Y] +
-                            barycentric.Z * _levelRoot.VertexDistance[indices.Z];
+                        return (barycentric.X * _levelRoot.VertexDistance[data.Vertex.X] +
+                            barycentric.Y * _levelRoot.VertexDistance[data.Vertex.Y] +
+                            barycentric.Z * _levelRoot.VertexDistance[data.Vertex.Z],
+                            data.Type, data.Flags);
                     }
                 }
             }
 
-            return -1.0f;
+            return (-1.0f, NavBrush.AiNavType.None, NavBrush.AiNavFlags.None);
         }
 
         private bool OnUnloaded(ref LevelManager.LevelInfo data)
@@ -120,7 +134,7 @@ namespace Unary.Recusant
             _levelRoot = null;
             _vertices = null;
             _polyCount = 0;
-            _polyIndices = null;
+            _polyData = null;
             _boundToPolys.Clear();
             return true;
         }

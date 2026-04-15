@@ -17,6 +17,19 @@ namespace Unary.Core
         [Export]
         public EntityType Type;
 
+        [Flags]
+        public enum EntityFlags
+        {
+            None = 0,
+            Networked = 1 << 0,
+            PlayerControlled = Networked | (1 << 1)
+        };
+
+        [Export]
+        public EntityFlags Flags = EntityFlags.None;
+
+        public ushort Id = 0;
+
         private readonly Dictionary<Type, Component> _typeCache = [];
         private readonly List<Component> _componentCache = [];
 

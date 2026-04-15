@@ -27,7 +27,7 @@ namespace Unary.Recusant
 
                 if (PlayerFlow.Instance != null)
                 {
-                    _label3.Text = "Flow: " + PlayerFlow.Instance.Flow;
+                    _label3.Text = "Flow: " + PlayerFlow.Instance.Flow + " ( " + PlayerFlow.Instance.Type + " , " + PlayerFlow.Instance.Flags + " )";
                 }
             }
         }

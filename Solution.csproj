@@ -15,8 +15,10 @@
     <Compile Remove="**/patch/**" />
     <Compile Remove="**/*.original.cs" />
     <Compile Remove="unary.core/analyzers/**" />
+    <Compile Remove="unary.recusant/analyzers/**" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="unary.core\analyzers\unary.core.analyzers.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="unary.core/analyzers/unary.core.analyzers.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="unary.recusant/analyzers/unary.recusant.analyzers.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 </Project>

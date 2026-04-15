@@ -86,6 +86,7 @@ namespace Unary.Recusant
                 _groups[pool.Key] = new(pool.Value.Count, pool.Key, this, pool.Value.Scene.LoadWithoutCache<PackedScene>());
             }
 
+            EntityManager.Singleton.FinishedPooling();
             EntityManager.Singleton.Initialize(Entity.EntityType.Pooled);
 
             return true;

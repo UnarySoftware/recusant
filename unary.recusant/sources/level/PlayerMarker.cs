@@ -6,11 +6,9 @@ namespace Unary.Recusant
     [GlobalClass]
     public partial class PlayerMarker : Node3D
     {
-
         public enum MarkerType
         {
-            Start,
-            End
+            Start
         };
 
         [Export]

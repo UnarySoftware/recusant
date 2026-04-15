@@ -51,13 +51,14 @@ folder_colors={
 
 [godot_vmf]
 
-materials/ignore=["unary.core/tools/no_draw", "unary.core/tools/trigger"]
+materials/ignore=["unary.core/tools/no_draw"]
 import/geometry_folder="res://hammer/geometry"
 import/entity_aliases={
 "brush": "uid://dov7a7jgmgccw",
 "detail": "uid://c23w6hgskshfd",
 "editor": "uid://dm6uv2u6wtt6b",
 "editor_text": "uid://ixbijsjhrlqv",
+"nav_brush": "uid://bm154jrcuaeky",
 "trigger": "uid://by8dj33sr5qf3"
 }
 import/scale=0.0254
@@ -147,4 +148,5 @@ common/physics_interpolation=true
 rendering_device/fallback_to_vulkan=false
 rendering_device/fallback_to_d3d12=false
 rendering_device/fallback_to_opengl3=false
+lights_and_shadows/positional_shadow/soft_shadow_filter_quality=3
 occlusion_culling/use_occlusion_culling=true

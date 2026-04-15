@@ -1,7 +1,4 @@
 using Godot;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Unary.Core;
 using Unary.Core.Editor;
 
@@ -143,11 +140,6 @@ namespace Unary.Recusant.Editor
             switch (marker.Type)
             {
                 case PlayerMarker.MarkerType.Start:
-                    {
-                        targetMaterial.AlbedoColor = red;
-                        break;
-                    }
-                case PlayerMarker.MarkerType.End:
                     {
                         targetMaterial.AlbedoColor = green;
                         break;

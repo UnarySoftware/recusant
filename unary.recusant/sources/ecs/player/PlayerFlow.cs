@@ -12,6 +12,8 @@ namespace Unary.Recusant
         public CharacterBody3D body;
 
         public float Flow = -1.0f;
+        public NavBrush.AiNavType Type = NavBrush.AiNavType.None;
+        public NavBrush.AiNavFlags Flags = NavBrush.AiNavFlags.None;
 
         private Rid _navRid;
         private UpdaterHandle _handle;
@@ -69,11 +71,13 @@ namespace Unary.Recusant
 
             Vector3 target = NavigationServer3D.Singleton.MapGetClosestPoint(_navRid, _cast.GetCollisionPoint(0));
 
-            float newFlow = NavMeshManager.Singleton.GetFlow(target);
+            (float flow, NavBrush.AiNavType type, NavBrush.AiNavFlags flags) = NavMeshManager.Singleton.GetFlow(target);
 
-            if (newFlow > -1.0f)
+            if (flow > -1.0f)
             {
-                Flow = newFlow;
+                Flow = flow;
+                Type = type;
+                Flags = flags;
             }
         }
     }
