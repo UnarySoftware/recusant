@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://q2a5jrovkjp1"]
+
+[ext_resource type="Script" uid="uid://7cuhmyk16wy6" path="res://unary.recusant/sources/level/PlayerMarker.cs" id="1_drpua"]
+
+[node name="PlayerMarker" type="Node3D" unique_id=1387024827 groups=["PlayerMarker"]]
+script = ExtResource("1_drpua")
+metadata/_custom_type_script = "uid://7cuhmyk16wy6"

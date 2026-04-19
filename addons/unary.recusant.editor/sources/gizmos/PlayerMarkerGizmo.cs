@@ -144,6 +144,11 @@ namespace Unary.Recusant.Editor
                         targetMaterial.AlbedoColor = green;
                         break;
                     }
+                case PlayerMarker.MarkerType.End:
+                    {
+                        targetMaterial.AlbedoColor = red;
+                        break;
+                    }
             }
 
             gizmo.AddMesh(mesh, targetMaterial, transform);

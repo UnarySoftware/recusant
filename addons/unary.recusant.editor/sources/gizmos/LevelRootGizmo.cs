@@ -39,7 +39,8 @@ namespace Unary.Recusant.Editor
             Red,
             Orange,
             Yellow,
-            Green
+            Green,
+            White
         };
 
         private static Dictionary<ColorType, (Color color, string name)> _colors = new()
@@ -48,6 +49,7 @@ namespace Unary.Recusant.Editor
             { ColorType.Orange, (new(1.0f, 0.7f, 0.0f, 1.0f), nameof(ColorType.Orange)) },
             { ColorType.Yellow, (new(1.0f, 1.0f, 0.0f, 1.0f), nameof(ColorType.Yellow)) },
             { ColorType.Green, (new(0.0f, 1.0f, 0.0f, 1.0f), nameof(ColorType.Green)) },
+            { ColorType.White, (new(1.0f, 1.0f, 1.0f, 1.0f), nameof(ColorType.White)) },
         };
 
         public LevelRootGizmo()
@@ -76,9 +78,27 @@ namespace Unary.Recusant.Editor
 
             LevelRoot levelRoot = (LevelRoot)gizmo.GetNode3D();
 
-            if (levelRoot.Points != null && levelRoot.Points.Length > 0)
+            Vector3 pointBox = new(0.2f, 0.2f, 0.2f);
+
+            if (levelRoot.VisualPaths != null && levelRoot.VisualPaths.Count > 0)
             {
-                gizmo.AddLinePath(levelRoot.Points, GetMaterial(ColorType.Green));
+                foreach (var entry in levelRoot.VisualPaths)
+                {
+                    if (entry.Points != null && entry.Points.Length > 0)
+                    {
+                        gizmo.AddLinePath(entry.Points, GetMaterial(ColorType.Green));
+                    }
+
+                    gizmo.AddBoxWithSize(entry.RealStart, pointBox, GetMaterial(ColorType.Green));
+                    gizmo.AddBoxWithSize(entry.ResolvedStart, pointBox, GetMaterial(ColorType.Red));
+                }
+            }
+
+            if (levelRoot.FromStartToFinish != null && levelRoot.FromStartToFinish.Length > 0)
+            {
+                gizmo.AddBoxWithSize(levelRoot.FromStartToFinish[0], pointBox, GetMaterial(ColorType.Yellow));
+                gizmo.AddBoxWithSize(levelRoot.FromStartToFinish[^1], pointBox, GetMaterial(ColorType.Yellow));
+                gizmo.AddLinePath(levelRoot.FromStartToFinish, GetMaterial(ColorType.Yellow));
             }
 
             Vector3 size = new(levelRoot.BoundsSize / 2.0f, levelRoot.BoundsSize / 2.0f, levelRoot.BoundsSize / 2.0f);
@@ -87,7 +107,7 @@ namespace Unary.Recusant.Editor
             {
                 foreach (var bound in levelRoot.Bounds)
                 {
-                    gizmo.AddBoxWithSize(bound, size, GetMaterial(ColorType.Red));
+                    gizmo.AddBoxWithSize(bound, size, GetMaterial(ColorType.White));
                 }
             }
         }

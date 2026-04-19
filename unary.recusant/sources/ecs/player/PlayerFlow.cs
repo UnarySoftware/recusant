@@ -12,8 +12,8 @@ namespace Unary.Recusant
         public CharacterBody3D body;
 
         public float Flow = -1.0f;
-        public NavBrush.AiNavType Type = NavBrush.AiNavType.None;
-        public NavBrush.AiNavFlags Flags = NavBrush.AiNavFlags.None;
+        public NavBrush.Flag Flags;
+        public int Triangle = -1;
 
         private Rid _navRid;
         private UpdaterHandle _handle;
@@ -26,6 +26,7 @@ namespace Unary.Recusant
         public static PlayerFlow Instance;
 
         private ShapeCast3D _cast;
+        private RayCast3D _rayCast;
 
         public override void Initialize()
         {
@@ -35,11 +36,22 @@ namespace Unary.Recusant
                 TargetPosition = new(0.0f, -20.0f, 0.0f),
                 MaxResults = 1,
                 Enabled = false,
+                Position = new Vector3(0.0f, 0.01f, 0.0f),
+                ExcludeParent = true
             };
-            _cast.AddException(body);
+            body.AddChild(_cast);
 
-            AddChild(_cast);
+            _rayCast = new()
+            {
+                TargetPosition = new(0.0f, -2.0f, 0.0f),
+                Enabled = false,
+                Position = new Vector3(0.0f, 0.01f, 0.0f),
+                ExcludeParent = true
+            };
+            body.AddChild(_rayCast);
         }
+
+        private RuntimeGizmo _gizmo;
 
         void IPoolable.Aquire()
         {
@@ -47,6 +59,9 @@ namespace Unary.Recusant
             _handle = Updater.Singleton.PhysicsProcess.SubscribeDelayed(0.05f, PhysicsProcessDelayed);
             _navRid = LevelManager.Singleton.Root.NavigationRegion.GetNavigationMap();
             _cast.Enabled = true;
+            _rayCast.Enabled = true;
+            _gizmo = RuntimeGizmos.Singleton.Aquire();
+            _gizmo.SetBox(new Vector3(0.2f, 0.2f, 0.2f), new Color(1.0f, 0.0f, 0.0f, 1.0f));
         }
 
         void IPoolable.Release()
@@ -54,30 +69,43 @@ namespace Unary.Recusant
             Instance = null;
             Updater.Singleton.PhysicsProcess.UnsubscribeDelayed(_handle);
             _cast.Enabled = false;
+            _rayCast.Enabled = false;
+            RuntimeGizmos.Singleton.Release(_gizmo);
         }
 
         private void PhysicsProcessDelayed(float delta)
         {
-            Vector3 newPosition = body.Position;
-            newPosition.Y += 0.01f;
-            _cast.Position = newPosition;
+            Vector3 collision;
 
-            _cast.ForceShapecastUpdate();
+            _rayCast.ForceRaycastUpdate();
 
-            if (!_cast.IsColliding())
+            if (_rayCast.IsColliding())
             {
-                return;
+                collision = _rayCast.GetCollisionPoint();
+            }
+            else
+            {
+                _cast.ForceShapecastUpdate();
+
+                if (!_cast.IsColliding())
+                {
+                    return;
+                }
+
+                collision = _cast.GetCollisionPoint(0);
             }
 
-            Vector3 target = NavigationServer3D.Singleton.MapGetClosestPoint(_navRid, _cast.GetCollisionPoint(0));
+            Vector3 target = NavigationServer3D.Singleton.MapGetClosestPoint(_navRid, collision);
 
-            (float flow, NavBrush.AiNavType type, NavBrush.AiNavFlags flags) = NavMeshManager.Singleton.GetFlow(target);
+            _gizmo.SetPosition(target);
+
+            (float flow, NavBrush.Flag flags, int triangle) = NavMeshManager.Singleton.GetFlow(target);
 
             if (flow > -1.0f)
             {
                 Flow = flow;
-                Type = type;
                 Flags = flags;
+                Triangle = triangle;
             }
         }
     }

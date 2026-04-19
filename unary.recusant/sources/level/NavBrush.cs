@@ -9,13 +9,6 @@ namespace Unary.Recusant
     {
         public static StringName NavBrushGroup { get; } = new(nameof(NavBrush));
 
-        public enum AiNavType : int
-        {
-            None = 0,
-            Start,
-            End
-        }
-
         private BoxShape3D _collisionShape;
 
         private Aabb _aabb;
@@ -44,21 +37,17 @@ namespace Unary.Recusant
             return _aabb;
         }
 
-        [Export]
-        public AiNavType Type;
-
         [Flags]
-        public enum AiNavFlags : int
+        public enum Flag : int
         {
-            None = 0,
-            Placeholder1 = 1 << 0,
-            Placeholder2 = 1 << 1,
+            Start = 1 << 0,
+            End = 1 << 1,
             Placeholder3 = 1 << 2,
             Placeholder4 = 1 << 3,
         }
 
         [Export]
-        public AiNavFlags Flags;
+        public Flag Flags;
 
         private void InitializeGroup()
         {
@@ -76,6 +65,7 @@ namespace Unary.Recusant
                 return;
             }
 
+            // TODO Add brush management to NavMeshManager
             //PlayerManager.Singleton.AddMarker(this);
         }
 

@@ -1,7 +1,6 @@
 #if TOOLS
 
 using Godot;
-using System.Runtime.CompilerServices;
 
 namespace Unary.Recusant.Editor
 {
@@ -67,17 +66,58 @@ namespace Unary.Recusant.Editor
 
         public static void AddLinePath(this EditorNode3DGizmo value, Vector3[] points, Material material)
         {
-            Vector3[] lines = new Vector3[(points.Length - 1) * 2];
+            int segCount = points.Length - 1;
+            int writeCount = 16;
+
+            Vector3[] lines = new Vector3[(segCount) * writeCount];
 
             int readIndex = 0;
             int writeIndex = 0;
 
             while (true)
             {
-                lines[writeIndex] = points[readIndex];
-                writeIndex++;
-                lines[writeIndex] = points[readIndex + 1];
-                writeIndex++;
+                Vector3 start = points[readIndex];
+                Vector3 end = points[readIndex + 1];
+
+                lines[writeIndex++] = start;
+                lines[writeIndex++] = end;
+
+                Vector3 mid = (start + end) * 0.5f;
+                Vector3 forward = (end - start).Normalized();
+
+                Vector3 up = Mathf.Abs(forward.Dot(Vector3.Up)) < 0.99f
+                                ? forward.Cross(Vector3.Up).Normalized()
+                                : forward.Cross(Vector3.Right).Normalized();
+
+                Vector3 right = forward.Cross(up).Normalized();
+
+                float distance = start.DistanceTo(end);
+
+                float s = distance * 0.1f;
+
+                Vector3 arrowTip = mid + forward * s;
+                Vector3 arrowBase = mid - forward * s;
+
+                lines[writeIndex++] = arrowBase;
+                lines[writeIndex++] = arrowTip;
+
+                lines[writeIndex++] = arrowTip;
+                lines[writeIndex++] = arrowBase + right * s;
+
+                lines[writeIndex++] = arrowTip;
+                lines[writeIndex++] = arrowBase - right * s;
+
+                lines[writeIndex++] = arrowBase + right * s;
+                lines[writeIndex++] = arrowBase - right * s;
+
+                lines[writeIndex++] = arrowTip;
+                lines[writeIndex++] = arrowBase + up * s;
+
+                lines[writeIndex++] = arrowTip;
+                lines[writeIndex++] = arrowBase - up * s;
+
+                lines[writeIndex++] = arrowBase + up * s;
+                lines[writeIndex++] = arrowBase - up * s;
 
                 readIndex++;
 
