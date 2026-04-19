@@ -4,8 +4,9 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Unary.Core;
 using Unary.Core.Editor;
@@ -76,15 +77,20 @@ namespace Unary.Recusant
 
             AddChild(light);
             light.Owner = owner;
+
+            EditorInterface.Singleton.MarkSceneAsUnsaved();
         }
 
-        public void InitializeNodes()
+        public void AddGroup()
         {
             if (!IsInGroup(LevelRootGroup))
             {
                 AddToGroup(LevelRootGroup, true);
             }
+        }
 
+        public void InitializeNodes()
+        {
             if (GetChildCount() > 0)
             {
                 return;
@@ -121,10 +127,64 @@ namespace Unary.Recusant
 
         private NavigationRegion3D _region;
 
-        public async void BuildNavigation()
+        public void BuildNavigation()
         {
+            Task.Run(StartBuildNavigation);
+        }
+
+        public void ResetNavigation()
+        {
+            Task.Run(StartResetNavigation);
+        }
+
+        private async Task StartResetNavigation()
+        {
+            await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
+            AddGroup();
+
+            await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
+            _region = GetNodeOrNull<NavigationRegion3D>("Navigation");
+
+            if (_region == null)
+            {
+                PluginLogger.Critical(this, $"Failed to aquire a {nameof(NavigationRegion3D)} node to reset navigation");
+                return;
+            }
+
+            VisualPaths.Clear();
+            FromStartToFinish = null;
+
+            VertexDistance = null;
+            Polys = null;
+            PolyFlags = null;
+            Bounds = null;
+            BoundsCount = null;
+            BoundsPolys = null;
+
+            _region.NavigationMesh.Clear();
+            ResourceSaver.Singleton.Save(_region.NavigationMesh);
+
+            await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+
+            _region.UpdateGizmos();
+            UpdateGizmos();
+
+            EditorInterface.Singleton.MarkSceneAsUnsaved();
+        }
+
+        private async Task StartBuildNavigation()
+        {
+            await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
+            AddGroup();
+
+            await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
             _region = null;
-            Points = null;
+            VisualPaths.Clear();
+            FromStartToFinish = null;
 
             _region = GetNodeOrNull<NavigationRegion3D>("Navigation");
 
@@ -134,40 +194,37 @@ namespace Unary.Recusant
                 return;
             }
 
-            _region.NavigationMesh.Clear();
-
-            ResourceSaver.Singleton.Save(_region.NavigationMesh);
-
             _region.BakeFinished += OnBakeFinished;
-            // Setting this to true seems to be causing weird ordering issues
-            // Even though we are using the callback on completion some data is still being changed afterwards
-            // Probably an engine bug
-            _region.BakeNavigationMesh(false);
+            _region.BakeNavigationMesh(true);
         }
 
         private void Failed(string why)
         {
-            Points = null;
+            VisualPaths.Clear();
             _region?.UpdateGizmos();
             PluginLogger.Critical(this, $"Failed to build navigation data.\nReason: {why}");
+            EditorInterface.Singleton.MarkSceneAsUnsaved();
         }
 
         private void OnBakeFinished()
         {
             _region.BakeFinished -= OnBakeFinished;
-            CallDeferred(MethodName.OnBakeFinishedAsync);
+            Task.Run(OnBakeFinishedAsync);
         }
 
         private int OriginalPolyCount = 0;
         private int ResultPolyCount = 0;
         private int MaxPolyPerBound = 0;
         private int InvalidatedGroups = 0;
+        private int Groups = 0;
+
+        private readonly Lock ValidGroupLock = new();
+        private readonly Lock InvalidGroupLock = new();
 
         private struct PolyData : IComparable<PolyData>
         {
             public Vector3I Vertexes;
             public Aabb Box;
-            public int Type;
             public int Flag;
 
             public float AverageFlow;
@@ -178,21 +235,75 @@ namespace Unary.Recusant
             }
         }
 
-        private async void OnBakeFinishedAsync()
+        private async Task OnBakeFinishedAsync()
         {
             await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
 
-            ResourceSaver.Singleton.Save(_region.NavigationMesh);
+            Rid map = _region.GetNavigationMap();
+            NavigationMesh navMesh = _region.NavigationMesh;
+
+            Godot.Collections.Array<Node> markerNodes = GetTree().GetNodesInGroup(PlayerMarker.PlayerMarkerGroup);
+
+            List<PlayerMarker> markers = [];
+            List<PlayerMarker> startMarkers = [];
+            List<PlayerMarker> endMarkers = [];
+
+            foreach (var markerNode in markerNodes)
+            {
+                if (markerNode is PlayerMarker marker)
+                {
+                    markers.Add(marker);
+
+                    if (marker.Type == PlayerMarker.MarkerType.Start)
+                    {
+                        startMarkers.Add(marker);
+                    }
+                    else if (marker.Type == PlayerMarker.MarkerType.End)
+                    {
+                        endMarkers.Add(marker);
+                    }
+                }
+            }
+
+            if (markers.Count == 0)
+            {
+                Failed("Missing PlayerMarkers on a level");
+                return;
+            }
+
+            if (startMarkers.Count == 0)
+            {
+                Failed("Missing PlayerMarker with a Start type");
+                return;
+            }
+
+            if (endMarkers.Count == 0)
+            {
+                Failed("Missing PlayerMarker with an End type");
+                return;
+            }
 
             Godot.Collections.Array<Node> navBrushNodes = GetTree().GetNodesInGroup(NavBrush.NavBrushGroup);
 
             List<NavBrush> brushes = [];
+            List<NavBrush> startBrushes = [];
+            List<NavBrush> endBrushes = [];
 
-            foreach (var navBrush in navBrushNodes)
+            foreach (var navBrushNode in navBrushNodes)
             {
-                if (navBrush is NavBrush brush)
+                if (navBrushNode is NavBrush brush)
                 {
                     brushes.Add(brush);
+
+                    if (brush.Flags.HasFlag(NavBrush.Flag.Start))
+                    {
+                        startBrushes.Add(brush);
+                    }
+
+                    if (brush.Flags.HasFlag(NavBrush.Flag.End))
+                    {
+                        endBrushes.Add(brush);
+                    }
                 }
             }
 
@@ -202,129 +313,85 @@ namespace Unary.Recusant
                 return;
             }
 
-            bool gotStart = false;
-
-            foreach (var brush in brushes)
-            {
-                if (brush.Type == NavBrush.AiNavType.Start)
-                {
-                    gotStart = true;
-                    break;
-                }
-            }
-
-            if (!gotStart)
+            if (startBrushes.Count == 0)
             {
                 Failed("Missing NavBrush with a Start type");
                 return;
             }
 
-            bool gotEnd = false;
-
-            foreach (var brush in brushes)
-            {
-                if (brush.Type == NavBrush.AiNavType.End)
-                {
-                    gotEnd = true;
-                    break;
-                }
-            }
-
-            if (!gotEnd)
+            if (endBrushes.Count == 0)
             {
                 Failed("Missing NavBrush with an End type");
                 return;
             }
-
-            Rid map = _region.GetNavigationMap();
-
-            var navMesh = _region.NavigationMesh;
 
             Vector3[] vertices = navMesh.GetVertices();
 
             int polyCount = navMesh.GetPolygonCount();
             OriginalPolyCount = polyCount;
             InvalidatedGroups = 0;
+            Groups = 0;
 
-            PolyData[] polygons = new PolyData[polyCount];
+            if (OriginalPolyCount == 0)
+            {
+                Failed("Failed to get polygons out of the NavMesh");
+                return;
+            }
 
-            List<int> startIndexes = [];
-            List<int> endIndexes = [];
+            Vector3I[] polygons = new Vector3I[polyCount];
 
             for (int i = 0; i < polyCount; i++)
             {
                 var polygon = navMesh.GetPolygon(i);
-
-                PolyData newData = new()
-                {
-                    Vertexes = new(polygon[0], polygon[1], polygon[2]),
-                    AverageFlow = -1.0f
-                };
-
-                Aabb polyAabb = new(vertices[newData.Vertexes.X], Vector3.Zero);
-                polyAabb = polyAabb.Expand(vertices[newData.Vertexes.Y]);
-                polyAabb = polyAabb.Expand(vertices[newData.Vertexes.Z]);
-
-                newData.Box = polyAabb;
-
-                foreach (var brush in brushes)
-                {
-                    if (polyAabb.Intersects(brush.GetAabb()))
-                    {
-                        if (brush.Type == NavBrush.AiNavType.Start)
-                        {
-                            startIndexes.Add(i);
-                        }
-                        else if (brush.Type == NavBrush.AiNavType.End)
-                        {
-                            endIndexes.Add(i);
-                        }
-
-                        if (newData.Type == 0 && brush.Type != NavBrush.AiNavType.None)
-                        {
-                            newData.Type = (int)brush.Type;
-                        }
-
-                        newData.Flag |= (int)brush.Flags;
-                    }
-                }
-
-                polygons[i] = newData;
+                polygons[i] = new(polygon[0], polygon[1], polygon[2]);
             }
 
-            if (startIndexes.Count == 0)
+            GD.Seed((ulong)startMarkers.Count);
+            PlayerMarker startIndex = startMarkers[GD.RandRange(0, startMarkers.Count - 1)];
+
+            GD.Seed((ulong)endMarkers.Count);
+            PlayerMarker endIndex = endMarkers[GD.RandRange(0, endMarkers.Count - 1)];
+
+            Vector3 startPosition = startIndex.GlobalPosition;
+            Vector3 startPositionResolved = NavigationServer3D.Singleton.MapGetClosestPoint(map, startPosition);
+
+            if (startPosition.DistanceTo(startPositionResolved) > PlayerConstants.PlayerRadius * 2.0f)
             {
-                Failed("Failed to find any overlaping triangles with a NavBrush with a Start type");
+                FromStartToFinish =
+                [
+                    startPosition,
+                    startPositionResolved
+                ];
+
+                Failed($"PlayerMarker \"{startIndex.Name}\" with a Start type is too far away from a NavMesh");
+                UpdateGizmos();
+                _region.UpdateGizmos();
                 return;
             }
 
-            if (endIndexes.Count == 0)
+            Vector3 endPosition = endIndex.GlobalPosition;
+            Vector3 endPositionResolved = NavigationServer3D.Singleton.MapGetClosestPoint(map, endPosition);
+
+            if (endPosition.DistanceTo(endPositionResolved) > PlayerConstants.PlayerRadius * 2.0f)
             {
-                Failed("Failed to find any overlaping triangles with a NavBrush with an End type");
+                FromStartToFinish =
+                [
+                    endPosition,
+                    endPositionResolved
+                ];
+
+                Failed($"PlayerMarker \"{endIndex.Name}\" with an End type is too far away from a NavMesh");
+                UpdateGizmos();
+                _region.UpdateGizmos();
                 return;
             }
-
-            GD.Seed((ulong)startIndexes.Count);
-            int startIndex = startIndexes[GD.RandRange(0, startIndexes.Count - 1)];
-
-            GD.Seed((ulong)endIndexes.Count);
-            int endIndex = endIndexes[GD.RandRange(0, endIndexes.Count - 1)];
-
-            Vector3I startPoly = polygons[startIndex].Vertexes;
-            Vector3 startPosition = (vertices[startPoly.X] + vertices[startPoly.Y] + vertices[startPoly.Z]) / 3.0f;
-
-            Vector3I endPoly = polygons[endIndex].Vertexes;
-            Vector3 endPosition = (vertices[endPoly.X] + vertices[endPoly.Y] + vertices[endPoly.Z]) / 3.0f;
-
-            startPosition = NavigationServer3D.Singleton.MapGetClosestPoint(map, startPosition);
-            endPosition = NavigationServer3D.Singleton.MapGetClosestPoint(map, endPosition);
 
             NavigationPathQueryParameters3D pathParams = new()
             {
                 Map = map,
                 PathSearchMaxPolygons = 0,
-                StartPosition = startPosition,
-                TargetPosition = endPosition,
+                StartPosition = startPositionResolved,
+                TargetPosition = endPositionResolved,
                 SimplifyPath = true,
                 PathPostprocessing = NavigationPathQueryParameters3D.PathPostProcessing.Corridorfunnel
             };
@@ -339,9 +406,15 @@ namespace Unary.Recusant
                 return;
             }
 
-            Points = result.Path;
+            FromStartToFinish = result.Path;
 
-            if (result.Path[^1].DistanceTo(endPosition) > (PlayerConstants.PlayerRadius * 2.0f))
+            for (int i = 0; i < FromStartToFinish.Length; i++)
+            {
+                FromStartToFinish[i].Y += 0.01f;
+            }
+
+            if (result.Path[0].DistanceTo(startPositionResolved) > PathMargin ||
+                result.Path[^1].DistanceTo(endPositionResolved) > PathMargin)
             {
                 Failed("Failed to find a path from a start to the end");
                 UpdateGizmos();
@@ -350,6 +423,7 @@ namespace Unary.Recusant
             }
 
             var filteredPolygons = new List<PolyData>();
+            Vector3[] newVerticesArray;
 
             {
                 // Step 1: Partition all triangles into connected groups in order to do a connectivity check
@@ -370,9 +444,9 @@ namespace Unary.Recusant
                 for (int i = 0; i < polyCount; i++)
                 {
                     var poly = polygons[i];
-                    AddVertex(poly.Vertexes.X, i);
-                    AddVertex(poly.Vertexes.Y, i);
-                    AddVertex(poly.Vertexes.Z, i);
+                    AddVertex(poly.X, i);
+                    AddVertex(poly.Y, i);
+                    AddVertex(poly.Z, i);
                 }
 
                 // Build adjacency list for polygons
@@ -436,30 +510,82 @@ namespace Unary.Recusant
                 // Step 2: Check each group by taking a random member and trying to path from it to the end, if no path - the entire group is invalid
                 bool[] invalidatedIndexes = new bool[polyCount];
 
-                for (int i = 0; i < polygonGroups.Count; i++)
+                Multi.Thread(0, polygonGroups.Count, (i, state) =>
                 {
                     List<int> entries = polygonGroups[i];
 
                     if (entries.Count == 0)
                     {
-                        continue;
+                        return;
                     }
 
-                    Vector3I poly = polygons[entries[0]].Vertexes;
+                    Vector3I poly = polygons[entries[0]];
 
-                    pathParams.StartPosition = (vertices[poly.X] + vertices[poly.Y] + vertices[poly.Z]) / 3.0f;
+                    Vector3 realStart = (vertices[poly.X] + vertices[poly.Y] + vertices[poly.Z]) / 3.0f;
+                    Vector3 resolvedStart = NavigationServer3D.Singleton.MapGetClosestPoint(map, realStart);
 
-                    NavigationServer3D.Singleton.QueryPath(pathParams, result);
-
-                    if (result.Path == null || result.Path.Length == 0 || result.Path[^1].DistanceTo(endPosition) > (PlayerConstants.PlayerRadius * 2.0f))
+                    if (realStart.DistanceTo(resolvedStart) > PathMargin)
                     {
-                        InvalidatedGroups++;
                         foreach (var entry in entries)
                         {
                             invalidatedIndexes[entry] = true;
                         }
+
+                        lock (InvalidGroupLock)
+                        {
+                            InvalidatedGroups++;
+                        }
+
+                        return;
                     }
-                }
+
+                    NavigationPathQueryParameters3D input = new()
+                    {
+                        Map = map,
+                        PathSearchMaxPolygons = 0,
+                        StartPosition = resolvedStart,
+                        TargetPosition = endPositionResolved,
+                        SimplifyPath = true,
+                        PathPostprocessing = NavigationPathQueryParameters3D.PathPostProcessing.Corridorfunnel
+                    };
+
+                    NavigationPathQueryResult3D output = new();
+
+                    NavigationServer3D.Singleton.QueryPath(input, output);
+
+                    if (output.Path == null ||
+                    output.Path.Length == 0 ||
+                    output.Path[0].DistanceTo(resolvedStart) > PathMargin ||
+                    output.Path[^1].DistanceTo(endPositionResolved) > PathMargin)
+                    {
+                        foreach (var entry in entries)
+                        {
+                            invalidatedIndexes[entry] = true;
+                        }
+
+                        lock (InvalidGroupLock)
+                        {
+                            InvalidatedGroups++;
+                        }
+                    }
+                    else
+                    {
+                        resolvedStart.Y += 0.01f;
+
+                        VisualPath newPath = new()
+                        {
+                            Points = output.Path,
+                            RealStart = realStart,
+                            ResolvedStart = resolvedStart
+                        };
+
+                        lock (ValidGroupLock)
+                        {
+                            VisualPaths.Add(newPath);
+                            Groups++;
+                        }
+                    }
+                });
 
                 // Step 3: Collect referenced vertices
                 HashSet<int> referencedIndices = [];
@@ -469,9 +595,9 @@ namespace Unary.Recusant
                     if (!invalidatedIndexes[i])
                     {
                         var poly = polygons[i];
-                        referencedIndices.Add(poly.Vertexes.X);
-                        referencedIndices.Add(poly.Vertexes.Y);
-                        referencedIndices.Add(poly.Vertexes.Z);
+                        referencedIndices.Add(poly.X);
+                        referencedIndices.Add(poly.Y);
+                        referencedIndices.Add(poly.Z);
                     }
                 }
 
@@ -488,7 +614,7 @@ namespace Unary.Recusant
 
                 // Step 5: Filter vertices
                 // Create a new array of vertices based on referenced indices
-                Vector3[] newVerticesArray = new Vector3[referencedIndices.Count];
+                newVerticesArray = new Vector3[referencedIndices.Count];
 
                 for (int i = 0; i < refIndices.Length; i++)
                 {
@@ -502,69 +628,66 @@ namespace Unary.Recusant
                     {
                         var poly = polygons[i];
 
-                        poly.Vertexes = new Vector3I(
-                            oldToNewIndexMap[poly.Vertexes.X],
-                            oldToNewIndexMap[poly.Vertexes.Y],
-                            oldToNewIndexMap[poly.Vertexes.Z]
-                        );
+                        PolyData data = new()
+                        {
+                            AverageFlow = -1.0f,
+                            Vertexes =
+                            new(oldToNewIndexMap[poly.X],
+                            oldToNewIndexMap[poly.Y],
+                            oldToNewIndexMap[poly.Z]),
+                        };
 
-                        filteredPolygons.Add(poly);
+                        Aabb polyAabb = new(newVerticesArray[data.Vertexes.X], Vector3.Zero);
+                        polyAabb = polyAabb.Expand(newVerticesArray[data.Vertexes.Y]);
+                        polyAabb = polyAabb.Expand(newVerticesArray[data.Vertexes.Z]);
+
+                        data.Box = polyAabb;
+
+                        filteredPolygons.Add(data);
                     }
                 }
 
-                await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
-
-                navMesh.Clear();
-
-                navMesh.SetVertices(newVerticesArray);
-
-                ResultPolyCount = filteredPolygons.Count;
-
-                int[] passed = new int[3];
-
-                for (int i = 0; i < filteredPolygons.Count; i++)
-                {
-                    var poly = filteredPolygons[i];
-                    passed[0] = poly.Vertexes.X;
-                    passed[1] = poly.Vertexes.Y;
-                    passed[2] = poly.Vertexes.Z;
-
-                    navMesh.AddPolygon(passed);
-                }
-
-                await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
-
                 VertexDistance = new float[newVerticesArray.Length];
 
-                Parallel.For(0, newVerticesArray.Length, i =>
+                Multi.Thread(0, newVerticesArray.Length, (i, state) =>
                 {
                     Vector3 vertex = newVerticesArray[i];
+                    Vector3 resolvedStart = NavigationServer3D.Singleton.MapGetClosestPoint(map, vertex);
 
-                    NavigationPathQueryParameters3D pathParams = new()
+                    if (vertex.DistanceTo(resolvedStart) > PathMargin)
+                    {
+                        VertexDistance[i] = -1.0f;
+                        return;
+                    }
+
+                    NavigationPathQueryParameters3D input = new()
                     {
                         Map = map,
                         PathSearchMaxPolygons = 0,
-                        StartPosition = vertex,
-                        TargetPosition = endPosition,
+                        StartPosition = resolvedStart,
+                        TargetPosition = endPositionResolved,
                         SimplifyPath = true,
                         PathPostprocessing = NavigationPathQueryParameters3D.PathPostProcessing.Corridorfunnel
                     };
 
-                    NavigationPathQueryResult3D result = new();
+                    NavigationPathQueryResult3D output = new();
 
-                    NavigationServer3D.Singleton.QueryPath(pathParams, result);
+                    NavigationServer3D.Singleton.QueryPath(input, output);
 
-                    if (result.Path == null || result.Path.Length == 0 || result.Path[^1].DistanceTo(endPosition) > (PlayerConstants.PlayerRadius * 2.0f))
+                    if (output.Path == null ||
+                    output.Path.Length == 0 ||
+                    output.Path[0].DistanceTo(resolvedStart) > PathMargin ||
+                    output.Path[^1].DistanceTo(endPositionResolved) > PathMargin)
                     {
                         VertexDistance[i] = -1.0f;
                     }
                     else
                     {
-                        VertexDistance[i] = result.PathLength;
+                        VertexDistance[i] = output.PathLength;
                     }
                 });
 
-                Parallel.For(0, filteredPolygons.Count, i =>
+                for (int i = 0; i < filteredPolygons.Count; i++)
                 {
                     PolyData data = filteredPolygons[i];
 
@@ -592,29 +715,27 @@ namespace Unary.Recusant
                     data.AverageFlow = (vertexFlow1 + vertexFlow2 + vertexFlow3) / 3.0f;
 
                     filteredPolygons[i] = data;
-                });
+                }
 
                 filteredPolygons.Sort();
-            }
 
-            Polys = new int[filteredPolygons.Count * 3];
-            PolyTypes = new int[filteredPolygons.Count];
-            PolyFlags = new int[filteredPolygons.Count];
+                navMesh.Clear();
 
-            int polyWriteIndex = 0;
+                navMesh.SetVertices(newVerticesArray);
 
-            for (int i = 0; i < filteredPolygons.Count; i++)
-            {
-                var target = filteredPolygons[i];
+                ResultPolyCount = filteredPolygons.Count;
 
-                Polys[polyWriteIndex] = target.Vertexes.X;
-                Polys[polyWriteIndex + 1] = target.Vertexes.Y;
-                Polys[polyWriteIndex + 2] = target.Vertexes.Z;
+                int[] passed = new int[3];
 
-                PolyTypes[i] = target.Type;
-                PolyFlags[i] = target.Flag;
+                for (int i = 0; i < filteredPolygons.Count; i++)
+                {
+                    var poly = filteredPolygons[i];
+                    passed[0] = poly.Vertexes.X;
+                    passed[1] = poly.Vertexes.Y;
+                    passed[2] = poly.Vertexes.Z;
 
-                polyWriteIndex += 3;
+                    navMesh.AddPolygon(passed);
+                }
             }
 
             Aabb aabb = NavigationServer3D.Singleton.RegionGetBounds(_region.GetRid());
@@ -643,14 +764,12 @@ namespace Unary.Recusant
                     {
                         Vector3 position = new(x, y, z);
 
-                        Vector3 aabbPosition = new()
+                        Aabb probeBox = new(new()
                         {
                             X = position.X - BoundsSize / 2.0f,
                             Y = position.Y - BoundsSize / 2.0f,
                             Z = position.Z - BoundsSize / 2.0f,
-                        };
-
-                        Aabb probeBox = new(aabbPosition, sizeBox);
+                        }, sizeBox);
 
                         for (int i = 0; i < filteredPolygons.Count; i++)
                         {
@@ -663,6 +782,39 @@ namespace Unary.Recusant
                                 }
 
                                 entries.Add(i);
+                            }
+                        }
+
+                        // This bound has no triangles associated with it, skipping
+                        if (!boundToPoly.TryGetValue(position, out var addedEntries))
+                        {
+                            continue;
+                        }
+
+                        foreach (var brush in brushes)
+                        {
+                            // Current brush does not intersect with this probe, skip it
+                            if (!probeBox.Intersects(brush.GetAabb()))
+                            {
+                                continue;
+                            }
+
+                            foreach (var polyEntry in addedEntries)
+                            {
+                                var poly = filteredPolygons[polyEntry];
+
+                                // This poly does not intersect with this brush, skip it
+                                if (!Triangle.IntersectsBounds(newVerticesArray[poly.Vertexes.X],
+                                newVerticesArray[poly.Vertexes.Y],
+                                newVerticesArray[poly.Vertexes.Z],
+                                brush.GetAabb()))
+                                {
+                                    continue;
+                                }
+
+                                poly.Flag |= (int)brush.Flags;
+
+                                filteredPolygons[polyEntry] = poly;
                             }
                         }
                     }
@@ -695,7 +847,23 @@ namespace Unary.Recusant
 
             BoundsPolys = [.. polyIndexes];
 
-            await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+            Polys = new int[filteredPolygons.Count * 3];
+            PolyFlags = new int[filteredPolygons.Count];
+
+            int polyWriteIndex = 0;
+
+            for (int i = 0; i < filteredPolygons.Count; i++)
+            {
+                var target = filteredPolygons[i];
+
+                Polys[polyWriteIndex] = target.Vertexes.X;
+                Polys[polyWriteIndex + 1] = target.Vertexes.Y;
+                Polys[polyWriteIndex + 2] = target.Vertexes.Z;
+
+                PolyFlags[i] = target.Flag;
+
+                polyWriteIndex += 3;
+            }
 
             ResourceSaver.Singleton.Save(_region.NavigationMesh);
 
@@ -704,10 +872,21 @@ namespace Unary.Recusant
 
             int percentage = ResultPolyCount * 100 / OriginalPolyCount;
 
+            string additionalMessage = string.Empty;
+
+            if (OriginalPolyCount == ResultPolyCount)
+            {
+                additionalMessage = "\n\nIt seems that the post processing failed to decimate any unnecessary polys from the NavMesh indicating a timing issue" +
+                    " with the algoritm yet again. Please report this on GitHub.";
+            }
+
             PluginLogger.Critical(this, $"Successfully build navigation!\n" +
                 $"Poly count reduction result: {OriginalPolyCount} - {OriginalPolyCount - ResultPolyCount} = {ResultPolyCount} (-{100 - percentage}%)\n" +
-                $"Invalidated island groups: {InvalidatedGroups}\n" +
-                $"Bound count: {Bounds.Length} Max polygons per bound: {MaxPolyPerBound}");
+                $"Remaining groups: {Groups} Invalidated groups: {InvalidatedGroups}\n" +
+                $"Bound count: {Bounds.Length} Max polygons per bound: {MaxPolyPerBound}" +
+                additionalMessage);
+
+            EditorInterface.Singleton.MarkSceneAsUnsaved();
         }
     }
 }

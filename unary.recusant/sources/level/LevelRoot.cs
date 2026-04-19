@@ -1,4 +1,5 @@
 using Godot;
+using System.Collections.Generic;
 using Unary.Core;
 
 namespace Unary.Recusant
@@ -13,9 +14,17 @@ namespace Unary.Recusant
         [ExportToolButton("Build Navigation")]
         public Callable BuildNavigationCall => Callable.From(OnBuildNavigation);
 
+        [ExportToolButton("Reset Navigation")]
+        public Callable ResetNavigationCall => Callable.From(OnResetNavigation);
+
         private void OnBuildNavigation()
         {
             CallDeferred(MethodName.BuildNavigation);
+        }
+
+        private void OnResetNavigation()
+        {
+            CallDeferred(MethodName.ResetNavigation);
         }
 
         public override void _Ready()
@@ -32,9 +41,20 @@ namespace Unary.Recusant
         [Export(PropertyHint.Range, "15.0,50.0,1.0")]
         public float BoundsSize = 15.0f;
 
+        [Export(PropertyHint.Range, "0.01f,1.0f,0.000001f")]
+        public float PathMargin = 0.01f;
+
+        public struct VisualPath
+        {
+            public Vector3[] Points;
+            public Vector3 RealStart;
+            public Vector3 ResolvedStart;
+        }
+
         // Used to visualize path from start to finish on a map
         // Not saved, only used for the editor visualization
-        public Vector3[] Points;
+        public List<VisualPath> VisualPaths = [];
+        public Vector3[] FromStartToFinish;
 
         // Vertex related info
 
@@ -50,11 +70,7 @@ namespace Unary.Recusant
         public int[] Polys;
 
         [Export]
-        // Stores NavBrush.AiNavType
-        public int[] PolyTypes;
-
-        [Export]
-        // Stores NavBrush.AiNavFlags
+        // Stores NavBrush.Flag for each poly
         public int[] PolyFlags;
 
         // Bound related info
@@ -73,7 +89,12 @@ namespace Unary.Recusant
 
         public override void _ValidateProperty(Godot.Collections.Dictionary property)
         {
-            property.MakeReadOnly(PropertyName.VertexDistance, PropertyName.Bounds, PropertyName.BoundsCount, PropertyName.BoundsPolys);
+            property.MakeReadOnly(PropertyName.VertexDistance,
+                PropertyName.Polys,
+                PropertyName.PolyFlags,
+                PropertyName.Bounds,
+                PropertyName.BoundsCount,
+                PropertyName.BoundsPolys);
             base._ValidateProperty(property);
         }
 

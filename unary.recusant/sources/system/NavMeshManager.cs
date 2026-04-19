@@ -11,10 +11,8 @@ namespace Unary.Recusant
         private struct PolyData
         {
             public Vector3I Vertex;
-            public NavBrush.AiNavType Type;
-            public NavBrush.AiNavFlags Flags;
+            public NavBrush.Flag Flags;
         }
-
 
         private LevelRoot _levelRoot;
         private Vector3[] _vertices;
@@ -54,8 +52,7 @@ namespace Unary.Recusant
                         Y = _levelRoot.Polys[polyReader + 1],
                         Z = _levelRoot.Polys[polyReader + 2],
                     },
-                    Type = (NavBrush.AiNavType)_levelRoot.PolyTypes[i],
-                    Flags = (NavBrush.AiNavFlags)_levelRoot.PolyFlags[i],
+                    Flags = (NavBrush.Flag)_levelRoot.PolyFlags[i],
                 };
 
                 polyReader += 3;
@@ -81,12 +78,12 @@ namespace Unary.Recusant
             return true;
         }
 
-        public (float flow, NavBrush.AiNavType type, NavBrush.AiNavFlags flags) GetFlow(Vector3 position)
+        public (float flow, NavBrush.Flag flags, int triangle) GetFlow(Vector3 position)
         {
             if (_levelRoot == null)
             {
                 this.Error("Requested flow while we failed to aquire a level root");
-                return (-1.0f, NavBrush.AiNavType.None, NavBrush.AiNavFlags.None);
+                return (-1.0f, 0, -1);
             }
 
             Vector3 key = new()
@@ -98,7 +95,7 @@ namespace Unary.Recusant
 
             if (!_boundToPolys.TryGetValue(key, out var entries))
             {
-                return (-1.0f, NavBrush.AiNavType.None, NavBrush.AiNavFlags.None);
+                return (-1.0f, 0, -1);
             }
 
             foreach (var entry in entries)
@@ -114,19 +111,19 @@ namespace Unary.Recusant
                 // Mathf.IsEqualApprox is giving off false positives here... I know, crazy right?
                 if (distance == 0.0f)
                 {
-                    Vector3 barycentric = Triangle.GetPointInside(x, y, z, position);
+                    Vector3 barycentric = Triangle.GetBarycentricCoords(x, y, z, position);
 
                     if (barycentric != default)
                     {
                         return (barycentric.X * _levelRoot.VertexDistance[data.Vertex.X] +
                             barycentric.Y * _levelRoot.VertexDistance[data.Vertex.Y] +
                             barycentric.Z * _levelRoot.VertexDistance[data.Vertex.Z],
-                            data.Type, data.Flags);
+                            data.Flags, entry);
                     }
                 }
             }
 
-            return (-1.0f, NavBrush.AiNavType.None, NavBrush.AiNavFlags.None);
+            return (-1.0f, 0, -1);
         }
 
         private bool OnUnloaded(ref LevelManager.LevelInfo data)

@@ -25,6 +25,5 @@ func _entity_setup(_entity: VMFEntity):
 	$Area3D/CollisionShape3D.shape = box
 	
 	set_script.call_deferred(nav_brush)
-	set.call_deferred("Type", _entity.data.get("type"))
 	set.call_deferred("Flags", _entity.data.get("spawnflags"))
 	call_deferred("_ready")

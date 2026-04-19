@@ -8,7 +8,8 @@ namespace Unary.Recusant
     {
         public enum MarkerType
         {
-            Start
+            Start,
+            End
         };
 
         [Export]
