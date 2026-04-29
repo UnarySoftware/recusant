@@ -1,11 +1,12 @@
+using Godot;
 using System;
 using System.Collections.Generic;
-using Godot;
 
 namespace Unary.Core
 {
     [Tool]
-    [GlobalClass, Icon("res://addons/unary.core.editor/icons/Entity.svg")]
+    [GlobalClass]
+    [Icon("res://addons/unary.core.editor/icons/Entity.svg")]
     public partial class Entity : Node3D, IPoolable
     {
         public enum EntityType

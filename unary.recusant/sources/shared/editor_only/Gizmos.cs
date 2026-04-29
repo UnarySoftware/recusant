@@ -1,12 +1,31 @@
 #if TOOLS
 
 using Godot;
+using System.Collections.Generic;
 
-namespace Unary.Recusant.Editor
+namespace Unary.Recusant
 {
-    public static class EditorNode3DGizmoExtensions
+    public static class Gizmos
     {
-        private static Vector3[] CreateBox(Vector3 size, Vector3 origin)
+        private static Dictionary<Vector3, Mesh> _boxMeshes = [];
+
+        public static Mesh GetBoxMesh(Vector3 size)
+        {
+            if (_boxMeshes.TryGetValue(size, out var result))
+            {
+                return result;
+            }
+
+            BoxMesh mesh = new()
+            {
+                Size = size
+            };
+
+            _boxMeshes[size] = mesh;
+            return mesh;
+        }
+
+        public static Vector3[] CreateBox(Vector3 size, Vector3 origin)
         {
             Vector3[] lines =
             [
@@ -38,33 +57,24 @@ namespace Unary.Recusant.Editor
 
             for (int i = 0; i < lines.Length; i++)
             {
-                lines[i].X += origin.X;
-                lines[i].Y += origin.Y;
-                lines[i].Z += origin.Z;
+                lines[i] += origin;
             }
 
             return lines;
         }
 
-        public static void AddBoxWithSize(this EditorNode3DGizmo value, Vector3 origin, Vector3 size, Material material)
+        public static (Vector3 center, Vector3 size) DecomposeBox(Aabb box)
         {
-            value.AddLines(CreateBox(size, origin), material);
+            Vector3 corner1 = box.Position;
+            Vector3 corner2 = box.Position + box.Size;
+
+            Vector3 center = (corner1 + corner2) / 2.0f;
+            Vector3 size = (corner2 - corner1) / 2.0f;
+
+            return (center, size);
         }
 
-        public static void AddAabbBox(this EditorNode3DGizmo value, Aabb box, Material material)
-        {
-            value.AddBoxFromCorners(box.Position, box.End, material);
-        }
-
-        public static void AddBoxFromCorners(this EditorNode3DGizmo value, Vector3 largest, Vector3 smallest, Material material)
-        {
-            Vector3 center = (largest + smallest) / 2.0f;
-            Vector3 size = (largest - smallest) / 2.0f;
-
-            value.AddLines(CreateBox(size, center), material);
-        }
-
-        public static void AddLinePath(this EditorNode3DGizmo value, Vector3[] points, Material material)
+        public static Vector3[] CreatePath(Vector3[] points)
         {
             int segCount = points.Length - 1;
             int writeCount = 16;
@@ -127,7 +137,7 @@ namespace Unary.Recusant.Editor
                 }
             }
 
-            value.AddLines(lines, material);
+            return lines;
         }
     }
 }

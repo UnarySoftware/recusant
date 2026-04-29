@@ -4,6 +4,7 @@ namespace Unary.Recusant
 {
     [Tool]
     [GlobalClass]
+    [ScenePlaceable]
     public partial class PlayerMarker : Node3D
     {
         public enum MarkerType

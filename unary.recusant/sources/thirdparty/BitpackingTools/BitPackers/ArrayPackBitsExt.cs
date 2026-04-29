@@ -1,4 +1,4 @@
-﻿/*
+/*
 * The MIT License (MIT)
 * 
 * Copyright (c) 2018-2019 Davin Carten (emotitron) (davincarten@gmail.com)
@@ -29,268 +29,268 @@
 
 namespace emotitron.Compression
 {
-	/// <summary>
-	/// Experimental packers, that counts number of used bits for serialization. Effective for values that hover close to zero.
-	/// </summary>
-	public static class ArrayPackBitsExt
-	{
-		#region Primary Write Packed
+    /// <summary>
+    /// Experimental packers, that counts number of used bits for serialization. Effective for values that hover close to zero.
+    /// </summary>
+    public static class ArrayPackBitsExt
+    {
+        #region Primary Write Packed
 
-		/// <summary>
-		/// EXPERIMENTAL: Primary UNSAFE WritePacked Method.
-		/// </summary>
-		/// <param name="countbits"></param>
-		public unsafe static void WritePackedBits(ulong* uPtr, ulong value, ref int bitposition, int bits)
-		{
-			if (bits == 0)
-				return;
-      
-      // Clear bits in value that are outside of the specified bits (mask)
-      value &= ulong.MaxValue >> 64 - bits;
-      
-			int valuebits = value.UsedBitCount();
-			int sizebits = bits.UsedBitCount();
-			ArraySerializeUnsafe.Write(uPtr, (uint)(valuebits), ref bitposition, sizebits);
-			ArraySerializeUnsafe.Write(uPtr, value, ref bitposition, valuebits);
+        /// <summary>
+        /// EXPERIMENTAL: Primary UNSAFE WritePacked Method.
+        /// </summary>
+        /// <param name="countbits"></param>
+        public unsafe static void WritePackedBits(ulong* uPtr, ulong value, ref int bitposition, int bits)
+        {
+            if (bits == 0)
+                return;
 
-			//UnityEngine.Debug.Log("Write Unsafe PBits " + value + " = " + sizebits + " : " + valuebits);
-		}
+            // Clear bits in value that are outside of the specified bits (mask)
+            value &= ulong.MaxValue >> 64 - bits;
 
-		/// <summary>
-		/// EXPERIMENTAL: Primary WritePacked Method
-		/// </summary>
-		/// <param name="countbits"></param>
-		public static void WritePackedBits(this ulong[] buffer, ulong value, ref int bitposition, int bits)
-		{
-			if (bits == 0)
-				return;
+            int valuebits = value.UsedBitCount();
+            int sizebits = bits.UsedBitCount();
+            ArraySerializeUnsafe.Write(uPtr, (uint)(valuebits), ref bitposition, sizebits);
+            ArraySerializeUnsafe.Write(uPtr, value, ref bitposition, valuebits);
 
-      // Clear bits in value that are outside of the specified bits (mask)
-      value &= ulong.MaxValue >> 64 - bits;
-      
-			int valuebits = value.UsedBitCount();
-			int sizebits = bits.UsedBitCount();
-			buffer.Write((uint)(valuebits), ref bitposition, (int)sizebits);
-			buffer.Write(value, ref bitposition, valuebits);
+            //UnityEngine.Debug.Log("Write Unsafe PBits " + value + " = " + sizebits + " : " + valuebits);
+        }
 
-			//UnityEngine.Debug.Log("Write ulong[] PBits " + value + " = " + sizebits + " : " + valuebits);
-		}
+        /// <summary>
+        /// EXPERIMENTAL: Primary WritePacked Method
+        /// </summary>
+        /// <param name="countbits"></param>
+        public static void WritePackedBits(this ulong[] buffer, ulong value, ref int bitposition, int bits)
+        {
+            if (bits == 0)
+                return;
 
-		/// <summary>
-		/// EXPERIMENTAL: Primary WritePacked Method
-		/// </summary>
-		/// <param name="countbits"></param>
-		public static void WritePackedBits(this uint[] buffer, ulong value, ref int bitposition, int bits)
-		{
-			if (bits == 0)
-				return;
-      
-      // Clear bits in value that are outside of the specified bits (mask)
-      value &= ulong.MaxValue >> 64 - bits;
-      
-			int valuebits = value.UsedBitCount();
-			int sizebits = bits.UsedBitCount();
-			buffer.Write((ulong)(valuebits), ref bitposition, (int)sizebits);
-			buffer.Write(value, ref bitposition, valuebits);
+            // Clear bits in value that are outside of the specified bits (mask)
+            value &= ulong.MaxValue >> 64 - bits;
 
-			//UnityEngine.Debug.Log("Write uint[] PBits " + value + " = " + sizebits + " : " + valuebits);
-		}
-		/// <summary>
-		/// EXPERIMENTAL: Primary WritePacked Method
-		/// </summary>
-		/// <param name="countbits"></param>
-		public static void WritePackedBits(this byte[] buffer, ulong value, ref int bitposition, int bits)
-		{
-      // Clear bits in value that are outside of the specified bits (mask)
-      value &= ulong.MaxValue >> 64 - bits;
-      
-			int valuebits = value.UsedBitCount();
-			int sizebits = bits.UsedBitCount();
-			buffer.Write((uint)(valuebits), ref bitposition, (int)sizebits);
-			buffer.Write(value, ref bitposition, valuebits);
+            int valuebits = value.UsedBitCount();
+            int sizebits = bits.UsedBitCount();
+            buffer.Write((uint)(valuebits), ref bitposition, (int)sizebits);
+            buffer.Write(value, ref bitposition, valuebits);
 
-			//UnityEngine.Debug.Log("Write byte[] PBits " + value + " = " + sizebits + " : " + valuebits);
-		}
+            //UnityEngine.Debug.Log("Write ulong[] PBits " + value + " = " + sizebits + " : " + valuebits);
+        }
 
-		#endregion
+        /// <summary>
+        /// EXPERIMENTAL: Primary WritePacked Method
+        /// </summary>
+        /// <param name="countbits"></param>
+        public static void WritePackedBits(this uint[] buffer, ulong value, ref int bitposition, int bits)
+        {
+            if (bits == 0)
+                return;
 
-		#region Primary Read Packed
+            // Clear bits in value that are outside of the specified bits (mask)
+            value &= ulong.MaxValue >> 64 - bits;
 
-		/// <summary>
-		/// Primary UNSAFE Reader for PackedBits.
-		/// </summary>
-		public unsafe static ulong ReadPackedBits(ulong* uPtr, ref int bitposition, int bits)
-		{
-			if (bits == 0)
-				return 0;
+            int valuebits = value.UsedBitCount();
+            int sizebits = bits.UsedBitCount();
+            buffer.Write((ulong)(valuebits), ref bitposition, (int)sizebits);
+            buffer.Write(value, ref bitposition, valuebits);
 
-			int sizebits = bits.UsedBitCount();
-			int valuebits = (int)ArraySerializeUnsafe.Read(uPtr, ref bitposition, sizebits);
-			//UnityEngine.Debug.Log("Read Packedunsafe sizer/value : " + sizebits + " : " + valuebits);
-			return ArraySerializeUnsafe.Read(uPtr, ref bitposition, valuebits);
-		}
+            //UnityEngine.Debug.Log("Write uint[] PBits " + value + " = " + sizebits + " : " + valuebits);
+        }
+        /// <summary>
+        /// EXPERIMENTAL: Primary WritePacked Method
+        /// </summary>
+        /// <param name="countbits"></param>
+        public static void WritePackedBits(this byte[] buffer, ulong value, ref int bitposition, int bits)
+        {
+            // Clear bits in value that are outside of the specified bits (mask)
+            value &= ulong.MaxValue >> 64 - bits;
 
-		/// <summary>
-		/// Primary Reader for PackedBits.
-		/// </summary>
-		public static ulong ReadPackedBits(this ulong[] buffer, ref int bitposition, int bits)
-		{
-			if (bits == 0)
-				return 0;
+            int valuebits = value.UsedBitCount();
+            int sizebits = bits.UsedBitCount();
+            buffer.Write((uint)(valuebits), ref bitposition, (int)sizebits);
+            buffer.Write(value, ref bitposition, valuebits);
 
-			int sizebits = bits.UsedBitCount();
-			int valuebits = (int)buffer.Read(ref bitposition, sizebits);
-			ulong value = buffer.Read(ref bitposition, valuebits);
-			//UnityEngine.Debug.Log("Read Packed ulong[] " + value + " sizer/value : " + sizebits + " : " + valuebits);
-			return value;
-		}
-		/// <summary>
-		/// Primary Reader for PackedBits.
-		/// </summary>
-		public static ulong ReadPackedBits(this uint[] buffer, ref int bitposition, int bits)
-		{
-			if (bits == 0)
-				return 0;
+            //UnityEngine.Debug.Log("Write byte[] PBits " + value + " = " + sizebits + " : " + valuebits);
+        }
 
-			int sizebits = bits.UsedBitCount();
-			int valuebits = (int)buffer.Read(ref bitposition, sizebits);
-			ulong value = buffer.Read(ref bitposition, valuebits);
-			//UnityEngine.Debug.Log("Read Packed uint[] " + value + " sizer/value : " + sizebits + " : " + valuebits);
+        #endregion
 
-			return value;
+        #region Primary Read Packed
 
+        /// <summary>
+        /// Primary UNSAFE Reader for PackedBits.
+        /// </summary>
+        public unsafe static ulong ReadPackedBits(ulong* uPtr, ref int bitposition, int bits)
+        {
+            if (bits == 0)
+                return 0;
 
-		}
-		/// <summary>
-		/// Primary Reader for PackedBits.
-		/// </summary>
-		public static ulong ReadPackedBits(this byte[] buffer, ref int bitposition, int bits)
-		{
-			if (bits == 0)
-				return 0;
+            int sizebits = bits.UsedBitCount();
+            int valuebits = (int)ArraySerializeUnsafe.Read(uPtr, ref bitposition, sizebits);
+            //UnityEngine.Debug.Log("Read Packedunsafe sizer/value : " + sizebits + " : " + valuebits);
+            return ArraySerializeUnsafe.Read(uPtr, ref bitposition, valuebits);
+        }
 
-			int sizebits = bits.UsedBitCount();
-			int valuebits = (int)buffer.Read(ref bitposition, sizebits);
-			ulong value = buffer.Read(ref bitposition, valuebits);
-			//UnityEngine.Debug.Log("Read Packed byte[] " + value + " sizer/value : " + sizebits + " : " + valuebits);
-			return value;
-		}
+        /// <summary>
+        /// Primary Reader for PackedBits.
+        /// </summary>
+        public static ulong ReadPackedBits(this ulong[] buffer, ref int bitposition, int bits)
+        {
+            if (bits == 0)
+                return 0;
 
-		#endregion
+            int sizebits = bits.UsedBitCount();
+            int valuebits = (int)buffer.Read(ref bitposition, sizebits);
+            ulong value = buffer.Read(ref bitposition, valuebits);
+            //UnityEngine.Debug.Log("Read Packed ulong[] " + value + " sizer/value : " + sizebits + " : " + valuebits);
+            return value;
+        }
+        /// <summary>
+        /// Primary Reader for PackedBits.
+        /// </summary>
+        public static ulong ReadPackedBits(this uint[] buffer, ref int bitposition, int bits)
+        {
+            if (bits == 0)
+                return 0;
 
-		#region Packed Signed
+            int sizebits = bits.UsedBitCount();
+            int valuebits = (int)buffer.Read(ref bitposition, sizebits);
+            ulong value = buffer.Read(ref bitposition, valuebits);
+            //UnityEngine.Debug.Log("Read Packed uint[] " + value + " sizer/value : " + sizebits + " : " + valuebits);
 
-		// Unsafe
-
-		/// <summary>
-		/// EXPERIMENTAL: Primary UNSAFE Write packed signed value. ZigZag is employed to move the sign to the rightmost position.
-		/// Packed values work best for serializing fields that have a large possible range, but are mostly hover closer to zero in value.
-		/// </summary>
-		public unsafe static void WriteSignedPackedBits(ulong* uPtr, int value, ref int bitposition, int bits)
-		{
-			uint zigzag = (uint)((value << 1) ^ (value >> 31));
-			WritePackedBits(uPtr, zigzag, ref bitposition, bits);
-		}
-
-		/// <summary>
-		/// EXPERIMENTAL: Primary UNSAFE Read packed signed value. ZigZag is employed to move the sign to the rightmost position.
-		/// Packed values work best for serializing fields that have a large possible range, but are mostly hover closer to zero in value.
-		/// </summary>
-		public unsafe static int ReadSignedPackedBits(ulong* buffer, ref int bitposition, int bits)
-		{
-			uint value = (uint)ReadPackedBits(buffer, ref bitposition, bits);
-			int zagzig = (int)((value >> 1) ^ (-(int)(value & 1)));
-			return zagzig;
-		}
-		// ulong[]
-
-		/// <summary>
-		/// EXPERIMENTAL: Primary Write packed signed value. ZigZag is employed to move the sign to the rightmost position.
-		/// Packed values work best for serializing fields that have a large possible range, but are mostly hover closer to zero in value.
-		/// </summary>
-		public static void WriteSignedPackedBits(this ulong[] buffer, int value, ref int bitposition, int bits)
-		{
-			uint zigzag = (uint)((value << 1) ^ (value >> 31));
-			buffer.WritePackedBits(zigzag, ref bitposition, bits);
-		}
-		/// <summary>
-		/// EXPERIMENTAL: Primary Read packed signed value. ZigZag is employed to move the sign to the rightmost position.
-		/// Packed values work best for serializing fields that have a large possible range, but are mostly hover closer to zero in value.
-		/// </summary>
-		public static int ReadSignedPackedBits(this ulong[] buffer, ref int bitposition, int bits)
-		{
-			uint value = (uint)buffer.ReadPackedBits(ref bitposition, bits);
-			int zagzig = (int)((value >> 1) ^ (-(int)(value & 1)));
-			return zagzig;
-		}
-
-		//uint[]
-
-		/// <summary>
-		/// EXPERIMENTAL: Primary Write packed signed value. ZigZag is employed to move the sign to the rightmost position.
-		/// Packed values work best for serializing fields that have a large possible range, but are mostly hover closer to zero in value.
-		/// </summary>
-		public static void WriteSignedPackedBits(this uint[] buffer, int value, ref int bitposition, int bits)
-		{
-			uint zigzag = (uint)((value << 1) ^ (value >> 31));
-			buffer.WritePackedBits(zigzag, ref bitposition, bits);
-		}
-		/// <summary>
-		/// EXPERIMENTAL: Primary Read packed signed value. ZigZag is employed to move the sign to the rightmost position.
-		/// Packed values work best for serializing fields that have a large possible range, but are mostly hover closer to zero in value.
-		/// </summary>
-		public static int ReadSignedPackedBits(this uint[] buffer, ref int bitposition, int bits)
-		{
-			uint value = (uint)buffer.ReadPackedBits(ref bitposition, bits);
-			int zagzig = (int)((value >> 1) ^ (-(int)(value & 1)));
-			return zagzig;
-
-		}
-
-		// byte[]
-
-		/// <summary>
-		/// EXPERIMENTAL: Primary Write packed signed value. ZigZag is employed to move the sign to the rightmost position.
-		/// Packed values work best for serializing fields that have a large possible range, but are mostly hover closer to zero in value.
-		/// </summary>
-		public static void WriteSignedPackedBits(this byte[] buffer, int value, ref int bitposition, int bits)
-		{
-			uint zigzag = (uint)((value << 1) ^ (value >> 31));
-			buffer.WritePackedBits(zigzag, ref bitposition, bits);
-		}
-		/// <summary>
-		/// EXPERIMENTAL: Primary Read packed signed value. ZigZag is employed to move the sign to the rightmost position.
-		/// Packed values work best for serializing fields that have a large possible range, but are mostly hover closer to zero in value.
-		/// </summary>
-		public static int ReadSignedPackedBits(this byte[] buffer, ref int bitposition, int bits)
-		{
-			uint value = (uint)buffer.ReadPackedBits(ref bitposition, bits);
-			int zagzig = (int)((value >> 1) ^ (-(int)(value & 1)));
-			return zagzig;
-		}
+            return value;
 
 
-		/// <summary>
-		/// EXPERIMENTAL: Primary Write packed signed value. ZigZag is employed to move the sign to the rightmost position.
-		/// Packed values work best for serializing fields that have a large possible range, but are mostly hover closer to zero in value.
-		/// </summary>
-		public static void WriteSignedPackedBits64(this byte[] buffer, long value, ref int bitposition, int bits)
-		{
-			ulong zig = (ulong)((value << 1) ^ (value >> 63));
-			buffer.WritePackedBits(zig, ref bitposition, bits);
-		}
-		/// <summary>
-		/// EXPERIMENTAL: Primary Read packed signed value. ZigZag is employed to move the sign to the rightmost position.
-		/// Packed values work best for serializing fields that have a large possible range, but are mostly hover closer to zero in value.
-		/// </summary>
-		public static long ReadSignedPackedBits64(this byte[] buffer, ref int bitposition, int bits)
-		{
-			ulong zig = buffer.ReadPackedBits(ref bitposition, bits);
-			long zag = (long)((long)(zig >> 1) ^ (-(long)(zig & 1)));
-			return zag;
-		}
+        }
+        /// <summary>
+        /// Primary Reader for PackedBits.
+        /// </summary>
+        public static ulong ReadPackedBits(this byte[] buffer, ref int bitposition, int bits)
+        {
+            if (bits == 0)
+                return 0;
 
-		#endregion
-	}
+            int sizebits = bits.UsedBitCount();
+            int valuebits = (int)buffer.Read(ref bitposition, sizebits);
+            ulong value = buffer.Read(ref bitposition, valuebits);
+            //UnityEngine.Debug.Log("Read Packed byte[] " + value + " sizer/value : " + sizebits + " : " + valuebits);
+            return value;
+        }
+
+        #endregion
+
+        #region Packed Signed
+
+        // Unsafe
+
+        /// <summary>
+        /// EXPERIMENTAL: Primary UNSAFE Write packed signed value. ZigZag is employed to move the sign to the rightmost position.
+        /// Packed values work best for serializing fields that have a large possible range, but are mostly hover closer to zero in value.
+        /// </summary>
+        public unsafe static void WriteSignedPackedBits(ulong* uPtr, int value, ref int bitposition, int bits)
+        {
+            uint zigzag = (uint)((value << 1) ^ (value >> 31));
+            WritePackedBits(uPtr, zigzag, ref bitposition, bits);
+        }
+
+        /// <summary>
+        /// EXPERIMENTAL: Primary UNSAFE Read packed signed value. ZigZag is employed to move the sign to the rightmost position.
+        /// Packed values work best for serializing fields that have a large possible range, but are mostly hover closer to zero in value.
+        /// </summary>
+        public unsafe static int ReadSignedPackedBits(ulong* buffer, ref int bitposition, int bits)
+        {
+            uint value = (uint)ReadPackedBits(buffer, ref bitposition, bits);
+            int zagzig = (int)((value >> 1) ^ (-(int)(value & 1)));
+            return zagzig;
+        }
+        // ulong[]
+
+        /// <summary>
+        /// EXPERIMENTAL: Primary Write packed signed value. ZigZag is employed to move the sign to the rightmost position.
+        /// Packed values work best for serializing fields that have a large possible range, but are mostly hover closer to zero in value.
+        /// </summary>
+        public static void WriteSignedPackedBits(this ulong[] buffer, int value, ref int bitposition, int bits)
+        {
+            uint zigzag = (uint)((value << 1) ^ (value >> 31));
+            buffer.WritePackedBits(zigzag, ref bitposition, bits);
+        }
+        /// <summary>
+        /// EXPERIMENTAL: Primary Read packed signed value. ZigZag is employed to move the sign to the rightmost position.
+        /// Packed values work best for serializing fields that have a large possible range, but are mostly hover closer to zero in value.
+        /// </summary>
+        public static int ReadSignedPackedBits(this ulong[] buffer, ref int bitposition, int bits)
+        {
+            uint value = (uint)buffer.ReadPackedBits(ref bitposition, bits);
+            int zagzig = (int)((value >> 1) ^ (-(int)(value & 1)));
+            return zagzig;
+        }
+
+        //uint[]
+
+        /// <summary>
+        /// EXPERIMENTAL: Primary Write packed signed value. ZigZag is employed to move the sign to the rightmost position.
+        /// Packed values work best for serializing fields that have a large possible range, but are mostly hover closer to zero in value.
+        /// </summary>
+        public static void WriteSignedPackedBits(this uint[] buffer, int value, ref int bitposition, int bits)
+        {
+            uint zigzag = (uint)((value << 1) ^ (value >> 31));
+            buffer.WritePackedBits(zigzag, ref bitposition, bits);
+        }
+        /// <summary>
+        /// EXPERIMENTAL: Primary Read packed signed value. ZigZag is employed to move the sign to the rightmost position.
+        /// Packed values work best for serializing fields that have a large possible range, but are mostly hover closer to zero in value.
+        /// </summary>
+        public static int ReadSignedPackedBits(this uint[] buffer, ref int bitposition, int bits)
+        {
+            uint value = (uint)buffer.ReadPackedBits(ref bitposition, bits);
+            int zagzig = (int)((value >> 1) ^ (-(int)(value & 1)));
+            return zagzig;
+
+        }
+
+        // byte[]
+
+        /// <summary>
+        /// EXPERIMENTAL: Primary Write packed signed value. ZigZag is employed to move the sign to the rightmost position.
+        /// Packed values work best for serializing fields that have a large possible range, but are mostly hover closer to zero in value.
+        /// </summary>
+        public static void WriteSignedPackedBits(this byte[] buffer, int value, ref int bitposition, int bits)
+        {
+            uint zigzag = (uint)((value << 1) ^ (value >> 31));
+            buffer.WritePackedBits(zigzag, ref bitposition, bits);
+        }
+        /// <summary>
+        /// EXPERIMENTAL: Primary Read packed signed value. ZigZag is employed to move the sign to the rightmost position.
+        /// Packed values work best for serializing fields that have a large possible range, but are mostly hover closer to zero in value.
+        /// </summary>
+        public static int ReadSignedPackedBits(this byte[] buffer, ref int bitposition, int bits)
+        {
+            uint value = (uint)buffer.ReadPackedBits(ref bitposition, bits);
+            int zagzig = (int)((value >> 1) ^ (-(int)(value & 1)));
+            return zagzig;
+        }
+
+
+        /// <summary>
+        /// EXPERIMENTAL: Primary Write packed signed value. ZigZag is employed to move the sign to the rightmost position.
+        /// Packed values work best for serializing fields that have a large possible range, but are mostly hover closer to zero in value.
+        /// </summary>
+        public static void WriteSignedPackedBits64(this byte[] buffer, long value, ref int bitposition, int bits)
+        {
+            ulong zig = (ulong)((value << 1) ^ (value >> 63));
+            buffer.WritePackedBits(zig, ref bitposition, bits);
+        }
+        /// <summary>
+        /// EXPERIMENTAL: Primary Read packed signed value. ZigZag is employed to move the sign to the rightmost position.
+        /// Packed values work best for serializing fields that have a large possible range, but are mostly hover closer to zero in value.
+        /// </summary>
+        public static long ReadSignedPackedBits64(this byte[] buffer, ref int bitposition, int bits)
+        {
+            ulong zig = buffer.ReadPackedBits(ref bitposition, bits);
+            long zag = (long)((long)(zig >> 1) ^ (-(long)(zig & 1)));
+            return zag;
+        }
+
+        #endregion
+    }
 }
 

@@ -1,7 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
 using Godot;
+using System;
 
 namespace Unary.Core
 {
@@ -22,10 +20,7 @@ namespace Unary.Core
 
         public bool FinishedInitialization { get; private set; }
 
-        public static void Dummy()
-        {
-
-        }
+        public static void Dummy() { }
 
         private bool _quitting = false;
 

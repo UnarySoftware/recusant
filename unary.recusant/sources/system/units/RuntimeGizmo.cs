@@ -1,108 +1,92 @@
 #if TOOLS
 
 using Godot;
-using System.Runtime.CompilerServices;
 using Unary.Core;
 
 namespace Unary.Recusant
 {
-    public class RuntimeGizmo : IPoolable
+    [Tool]
+    [GlobalClass]
+    public partial class RuntimeGizmo : MeshInstance3D, IPoolable
     {
         private static readonly SurfaceTool tool = new();
 
-        private readonly MeshInstance3D _meshInstance;
-        private readonly ShaderMaterial _material;
+        private ShaderMaterial _material;
 
-        public RuntimeGizmo(Node root, ShaderMaterial material)
+        public void Init(ShaderMaterial material)
         {
-            _material = material;
-            _meshInstance = new()
-            {
-                MaterialOverride = material,
-                Visible = true,
-                CastShadow = GeometryInstance3D.ShadowCastingSetting.Off
-            };
-
-            root.AddChild(_meshInstance);
+            MaterialOverride = material;
+            _material = (ShaderMaterial)MaterialOverride;
+            Visible = false;
+            CastShadow = ShadowCastingSetting.Off;
         }
 
         public void Aquire()
         {
-            _meshInstance?.Visible = true;
+            Visible = true;
         }
 
         public void Release()
         {
-            _meshInstance?.Visible = false;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void SetLine(Vector3 start, Vector3 finish, Color color)
-        {
-            tool.SetColor(color);
-            tool.AddVertex(start);
-            tool.SetColor(color);
-            tool.AddVertex(finish);
+            Visible = false;
+            Position = Vector3.Zero;
+            Rotation = Vector3.Zero;
         }
 
         private static StringName color = nameof(color);
 
-        public RuntimeGizmo SetBox(Vector3 size, Color newColor)
+        public void IDrawBox(Vector3 origin, Vector3 size, Color newColor)
         {
-            BoxMesh mesh = new()
-            {
-                Size = size
-            };
-            _meshInstance.Mesh = mesh;
+            Mesh = Gizmos.GetBoxMesh(size);
             _material.SetShaderParameter(color, newColor);
-            return this;
+            Position = origin;
         }
 
-        public RuntimeGizmo SetWireframeBox(Vector3 size, Color color)
+        public void IDrawBox(Aabb box, Color newColor)
         {
-            size.X /= 2.0f;
-            size.Y /= 2.0f;
-            size.Z /= 2.0f;
+            (Vector3 center, Vector3 size) = Gizmos.DecomposeBox(box);
+            Mesh = Gizmos.GetBoxMesh(size);
+            _material.SetShaderParameter(color, newColor);
+            Position = center;
+        }
+
+        public void IDrawBoxWireframe(Aabb box, Color color)
+        {
+            (Vector3 center, Vector3 size) = Gizmos.DecomposeBox(box);
+            IDrawBoxWireframe(center, size, color);
+        }
+
+        public void IDrawBoxWireframe(Vector3 origin, Vector3 size, Color color)
+        {
+            Vector3[] points = Gizmos.CreateBox(size, Vector3.Zero);
 
             tool.Clear();
             tool.Begin(Mesh.PrimitiveType.Lines);
 
-            SetLine(new(-size.X, -size.Y, -size.Z), new(size.X, -size.Y, -size.Z), color);
-            SetLine(new(size.X, -size.Y, -size.Z), new(size.X, size.Y, -size.Z), color);
-            SetLine(new(size.X, size.Y, -size.Z), new(-size.X, size.Y, -size.Z), color);
-            SetLine(new(-size.X, size.Y, -size.Z), new(-size.X, -size.Y, -size.Z), color);
+            foreach (var point in points)
+            {
+                tool.SetColor(color);
+                tool.AddVertex(point);
+            }
 
-            SetLine(new(-size.X, -size.Y, size.Z), new(size.X, -size.Y, size.Z), color);
-            SetLine(new(size.X, -size.Y, size.Z), new(size.X, size.Y, size.Z), color);
-            SetLine(new(size.X, size.Y, size.Z), new(-size.X, size.Y, size.Z), color);
-            SetLine(new(-size.X, size.Y, size.Z), new(-size.X, -size.Y, size.Z), color);
-
-            SetLine(new(-size.X, -size.Y, -size.Z), new(-size.X, -size.Y, size.Z), color);
-            SetLine(new(size.X, -size.Y, -size.Z), new(size.X, -size.Y, size.Z), color);
-            SetLine(new(size.X, size.Y, -size.Z), new(size.X, size.Y, size.Z), color);
-            SetLine(new(-size.X, size.Y, -size.Z), new(-size.X, size.Y, size.Z), color);
-
-            _meshInstance.Mesh = tool.Commit();
-            return this;
+            Mesh = tool.Commit();
+            Position = origin;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetPosition(Vector3 position)
+        public void IDrawPath(Vector3[] points, Color color)
         {
-            _meshInstance.Position = position;
-        }
+            Vector3[] result = Gizmos.CreatePath(points);
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetRotation(Vector3 rotation)
-        {
-            _meshInstance.Rotation = rotation;
-        }
+            tool.Clear();
+            tool.Begin(Mesh.PrimitiveType.Lines);
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetPositionRotation(Vector3 position, Vector3 rotation)
-        {
-            SetPosition(position);
-            SetRotation(rotation);
+            foreach (var point in result)
+            {
+                tool.SetColor(color);
+                tool.AddVertex(point);
+            }
+
+            Mesh = tool.Commit();
         }
     }
 }

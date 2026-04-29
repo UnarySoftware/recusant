@@ -1,14 +1,14 @@
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Godot;
 
 namespace Unary.Core
 {
     public static class StringExtensions
     {
-        static int GetDeterministicHashCode(this string str)
+        public static int GetDeterministicHashCode(this string str)
         {
             unchecked
             {
@@ -32,6 +32,11 @@ namespace Unary.Core
         public static string ToHumanReadable(this string source)
         {
             return source.Trim('_').ToSnakeCase().Capitalize();
+        }
+
+        public static string ToPath(this string source)
+        {
+            return source.Replace(' ', '_').ToSnakeCase();
         }
 
         public static Guid ToGuid(this string source)

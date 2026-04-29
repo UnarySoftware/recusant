@@ -1,5 +1,3 @@
-
-using System;
 using Godot;
 using Unary.Core;
 
@@ -27,8 +25,8 @@ namespace Unary.Recusant
 
                 if (PlayerFlow.Instance != null)
                 {
-                    _label3.Text = "Flow: " + PlayerFlow.Instance.Flow + "\n" +
-                        "Flags: " + PlayerFlow.Instance.Flags + "\n" +
+                    _label3.Text = "Flow: " + PlayerFlow.Instance.Flow.ToString("0.0") + "\n" +
+                        "Flags: " + PlayerFlow.Instance.Flags.ToStringPretty() + "\n" +
                         "Triangle: " + PlayerFlow.Instance.Triangle;
                 }
             }

@@ -1,29 +1,25 @@
+#if TOOLS
+
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Godot;
-#if TOOLS
-using Unary.Core.Editor;
-#endif
 
 namespace Unary.Core
 {
-    public class EditorSettingsManager
+    public class EditorSettingManager
     {
-
-#if TOOLS
         private static readonly List<EditorSettingBase> _entries = [];
         private static readonly List<FieldInfo> _settingFields = [];
 
         public static IEnumerable<EditorSettingBase> GetEntries()
         {
+            Initialize();
             return _entries;
         }
 
         private static void InitializeVariables(Type[] types)
         {
-            EditorSettings settings = EditorInterface.Singleton.GetEditorSettings();
-
             foreach (var type in types)
             {
                 FieldInfo[] properties = type.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
@@ -40,17 +36,42 @@ namespace Unary.Core
 
                     EditorSettingVariableBase fieldBase = (EditorSettingVariableBase)property.GetValue(null);
 
+                    string groupVisual;
+                    string groupPath;
+
+                    if (fieldBase.CustomGroup != string.Empty)
+                    {
+                        groupVisual = fieldBase.CustomGroup;
+                        groupPath = fieldBase.CustomGroup.ToPath();
+                    }
+                    else
+                    {
+                        groupVisual = type.Name.ToHumanReadable();
+                        groupPath = type.Name.Trim('_').ToSnakeCase();
+                    }
+
+                    string nameVisual;
+                    string namePath;
+
+                    if (fieldBase.CustomName != string.Empty)
+                    {
+                        nameVisual = fieldBase.CustomName;
+                        namePath = fieldBase.CustomName.ToPath();
+                    }
+                    else
+                    {
+                        nameVisual = property.Name.ToHumanReadable();
+                        namePath = property.Name.Trim('_').ToSnakeCase();
+                    }
+
                     fieldBase.ModId = type.GetModId();
-                    fieldBase.Group = type.Name.ToHumanReadable();
-                    fieldBase.Name = property.Name.ToHumanReadable();
+                    fieldBase.Group = groupVisual;
+                    fieldBase.Name = nameVisual;
 
                     fieldBase.Path = fieldBase.ModId.ToSnakeCase().Replace(".", "_");
-                    fieldBase.Path += '/' + type.Name.Trim('_').ToSnakeCase() + '/' + property.Name.Trim('_').ToSnakeCase();
+                    fieldBase.Path += '/' + groupPath + '/' + namePath;
 
-                    if (!settings.HasSetting(fieldBase.Path))
-                    {
-                        settings.SetInitialValue(fieldBase.Path, fieldBase.VariantValue, true);
-                    }
+                    EditorSettingSaver.Singleton.SetVariable(fieldBase.Path, fieldBase.VariantValue, true);
 
                     fieldBase.Wrapper = new()
                     {
@@ -60,8 +81,6 @@ namespace Unary.Core
                     _entries.Add(fieldBase);
                 }
             }
-
-
         }
 
         private static void InitializeActions(Type[] types)
@@ -86,12 +105,36 @@ namespace Unary.Core
                             continue;
                         }
 
+                        EditorSettingActionAttribute casted = (EditorSettingActionAttribute)attribute;
+
+                        string groupVisual;
+
+                        if (casted.CustomGroup != "")
+                        {
+                            groupVisual = casted.CustomGroup;
+                        }
+                        else
+                        {
+                            groupVisual = type.Name.ToHumanReadable();
+                        }
+
+                        string nameVisual;
+
+                        if (casted.CustomName != "")
+                        {
+                            nameVisual = casted.CustomName;
+                        }
+                        else
+                        {
+                            nameVisual = method.Name.ToHumanReadable();
+                        }
+
                         EditorSettingAction newAction = new()
                         {
                             MethodInfo = method,
                             ModId = type.GetModId(),
-                            Group = type.Name.ToHumanReadable(),
-                            Name = method.Name.ToHumanReadable()
+                            Group = groupVisual,
+                            Name = nameVisual
                         };
 
                         _entries.Add(newAction);
@@ -111,32 +154,10 @@ namespace Unary.Core
 
             _initialized = true;
 
-            Type[] types = typeof(EditorSettingsManager).Assembly.GetTypes();
+            Type[] types = typeof(EditorSettingManager).Assembly.GetTypes();
 
             InitializeVariables(types);
             InitializeActions(types);
-        }
-
-        public static void Reset()
-        {
-            foreach (var variable in _entries)
-            {
-                if (variable.Type == EditorSettingType.Variable)
-                {
-                    ((EditorSettingVariableBase)variable).Reset();
-                }
-            }
-        }
-
-        public static void Restore()
-        {
-            foreach (var variable in _entries)
-            {
-                if (variable.Type == EditorSettingType.Variable)
-                {
-                    ((EditorSettingVariableBase)variable).Restore();
-                }
-            }
         }
 
         public static void Deinitialize()
@@ -174,6 +195,7 @@ namespace Unary.Core
             _entries.Clear();
             _initialized = false;
         }
-#endif
     }
 }
+
+#endif

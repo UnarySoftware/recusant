@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using Unary.Core;
 
 namespace Unary.Recusant
@@ -60,8 +59,8 @@ namespace Unary.Recusant
             _navRid = LevelManager.Singleton.Root.NavigationRegion.GetNavigationMap();
             _cast.Enabled = true;
             _rayCast.Enabled = true;
-            _gizmo = RuntimeGizmos.Singleton.Aquire();
-            _gizmo.SetBox(new Vector3(0.2f, 0.2f, 0.2f), new Color(1.0f, 0.0f, 0.0f, 1.0f));
+            //_gizmo = RuntimeGizmos.Singleton.Aquire();
+            //_gizmo.SetBox(new Vector3(0.2f, 0.2f, 0.2f), new Color(1.0f, 0.0f, 0.0f, 1.0f));
         }
 
         void IPoolable.Release()
@@ -70,7 +69,7 @@ namespace Unary.Recusant
             Updater.Singleton.PhysicsProcess.UnsubscribeDelayed(_handle);
             _cast.Enabled = false;
             _rayCast.Enabled = false;
-            RuntimeGizmos.Singleton.Release(_gizmo);
+            //RuntimeGizmos.Singleton.Release(_gizmo);
         }
 
         private void PhysicsProcessDelayed(float delta)
@@ -97,7 +96,7 @@ namespace Unary.Recusant
 
             Vector3 target = NavigationServer3D.Singleton.MapGetClosestPoint(_navRid, collision);
 
-            _gizmo.SetPosition(target);
+            //_gizmo.SetPosition(target);
 
             (float flow, NavBrush.Flag flags, int triangle) = NavMeshManager.Singleton.GetFlow(target);
 

@@ -4,6 +4,7 @@ using Unary.Core.Editor;
 
 namespace Unary.Recusant.Editor
 {
+    // TODO Cleanup this code and move to a base gizmo class for everyone to handle material creation
     [Tool]
     [GlobalClass]
     public partial class PlayerMarkerGizmo : EditorNode3DGizmoPlugin, IPluginSystem
@@ -29,7 +30,8 @@ namespace Unary.Recusant.Editor
             return node is PlayerMarker;
         }
 
-        private const string material = "material";
+        private const string redMaterial = "redMaterial";
+        private const string greenMaterial = "greenMaterial";
         private const string arrow = "arrow";
         private const string arrowAdditional = "arrowAdditional";
         private static CylinderMesh mesh;
@@ -45,7 +47,8 @@ namespace Unary.Recusant.Editor
 
         public PlayerMarkerGizmo()
         {
-            CreateMaterial(material, new Color());
+            CreateMaterial(redMaterial, new Color());
+            CreateMaterial(greenMaterial, new Color());
             CreateMaterial(arrow, arrowColorMain);
             CreateMaterial(arrowAdditional, arrowColorAdditional);
 
@@ -123,7 +126,12 @@ namespace Unary.Recusant.Editor
 
             PlayerMarker marker = (PlayerMarker)gizmo.GetNode3D();
 
-            StandardMaterial3D targetMaterial = GetMaterial(material);
+            StandardMaterial3D redMaterialTarget = GetMaterial(redMaterial);
+            redMaterialTarget.AlbedoColor = red;
+
+            StandardMaterial3D greenMaterialTarget = GetMaterial(greenMaterial);
+            greenMaterialTarget.AlbedoColor = green;
+
             StandardMaterial3D arrowMaterial = GetMaterial(arrow);
             StandardMaterial3D arrowMaterialAdditional = GetMaterial(arrowAdditional);
 
@@ -141,17 +149,16 @@ namespace Unary.Recusant.Editor
             {
                 case PlayerMarker.MarkerType.Start:
                     {
-                        targetMaterial.AlbedoColor = green;
+                        gizmo.AddMesh(mesh, greenMaterialTarget, transform);
                         break;
                     }
                 case PlayerMarker.MarkerType.End:
                     {
-                        targetMaterial.AlbedoColor = red;
+                        gizmo.AddMesh(mesh, redMaterialTarget, transform);
                         break;
                     }
             }
 
-            gizmo.AddMesh(mesh, targetMaterial, transform);
             gizmo.AddCollisionTriangles(triangleMesh);
             gizmo.AddLines(arrowLinesMain, arrowMaterial);
             gizmo.AddLines(arrowLinesAdditional, arrowMaterialAdditional);

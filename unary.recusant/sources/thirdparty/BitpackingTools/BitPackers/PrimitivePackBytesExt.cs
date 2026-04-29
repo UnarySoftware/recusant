@@ -1,4 +1,4 @@
-﻿/*
+/*
 * The MIT License (MIT)
 * 
 * Copyright (c) 2018-2019 Davin Carten (emotitron) (davincarten@gmail.com)
@@ -25,127 +25,127 @@
 namespace emotitron.Compression
 {
 
-	/// <summary>
-	/// Experimental packers, that counts number of used bits for serialization. Effective for values that hover close to zero.
-	/// </summary>
-	public static class PrimitivePackBytesExt
-	{
+    /// <summary>
+    /// Experimental packers, that counts number of used bits for serialization. Effective for values that hover close to zero.
+    /// </summary>
+    public static class PrimitivePackBytesExt
+    {
 
-		#region Primary Write / Inject Packed
+        #region Primary Write / Inject Packed
 
-		/// <summary>
-		/// EXPERIMENTAL: Primary Write Method.
-		/// </summary>
-		public static ulong WritePackedBytes(this ulong buffer, ulong value, ref int bitposition, int bits)
-		{
-			int bytes = (bits + 7) >> 3;
-			int sizebits = bytes.UsedBitCount();
-			int valuebytes = value.UsedByteCount();
+        /// <summary>
+        /// EXPERIMENTAL: Primary Write Method.
+        /// </summary>
+        public static ulong WritePackedBytes(this ulong buffer, ulong value, ref int bitposition, int bits)
+        {
+            int bytes = (bits + 7) >> 3;
+            int sizebits = bytes.UsedBitCount();
+            int valuebytes = value.UsedByteCount();
 
-			buffer = buffer.Write((uint)(valuebytes), ref bitposition, (int)sizebits);
-			buffer = buffer.Write(value, ref bitposition, valuebytes << 3);
+            buffer = buffer.Write((uint)(valuebytes), ref bitposition, (int)sizebits);
+            buffer = buffer.Write(value, ref bitposition, valuebytes << 3);
 
-			//UnityEngine.Debug.Log(value + " buff:" + buffer + "bytes " + bytes + 
-			//	" = [" + (int)sizebits  + " : " + (valuebytes << 3) + "]  total bits: " + ((int)sizebits + (valuebytes << 3)));
+            //UnityEngine.Debug.Log(value + " buff:" + buffer + "bytes " + bytes + 
+            //	" = [" + (int)sizebits  + " : " + (valuebytes << 3) + "]  total bits: " + ((int)sizebits + (valuebytes << 3)));
 
-			return buffer;
-		}
-		/// <summary>
-		/// EXPERIMENTAL: Primary Write Method.
-		/// </summary>
-		public static uint WritePackedBytes(this uint buffer, uint value, ref int bitposition, int bits)
-		{
-			int bytes = (bits + 7) >> 3;
-			int sizebits = bytes.UsedBitCount();
-			int valuebytes = value.UsedByteCount();
+            return buffer;
+        }
+        /// <summary>
+        /// EXPERIMENTAL: Primary Write Method.
+        /// </summary>
+        public static uint WritePackedBytes(this uint buffer, uint value, ref int bitposition, int bits)
+        {
+            int bytes = (bits + 7) >> 3;
+            int sizebits = bytes.UsedBitCount();
+            int valuebytes = value.UsedByteCount();
 
-			buffer = buffer.Write((uint)(valuebytes), ref bitposition, sizebits);
-			buffer = buffer.Write(value, ref bitposition, valuebytes << 3);
+            buffer = buffer.Write((uint)(valuebytes), ref bitposition, sizebits);
+            buffer = buffer.Write(value, ref bitposition, valuebytes << 3);
 
-			//UnityEngine.Debug.Log(value + " buff:" + buffer + "bytes " + bytes + 
-			//	" = [" + (int)sizebits + " : " + (valuebytes << 3) + "]  total bits: " + ((int)sizebits + (valuebytes << 3)));
+            //UnityEngine.Debug.Log(value + " buff:" + buffer + "bytes " + bytes + 
+            //	" = [" + (int)sizebits + " : " + (valuebytes << 3) + "]  total bits: " + ((int)sizebits + (valuebytes << 3)));
 
-			return buffer;
-		}
+            return buffer;
+        }
 
-		/// <summary>
-		/// EXPERIMENTAL: Primary Write Method.
-		/// </summary>
-		public static void InjectPackedBytes(this  ulong value, ref ulong buffer,ref int bitposition, int bits)
-		{
-			int bytes = (bits + 7) >> 3;
-			int sizebits = bytes.UsedBitCount();
-			int valuebytes = value.UsedByteCount();
+        /// <summary>
+        /// EXPERIMENTAL: Primary Write Method.
+        /// </summary>
+        public static void InjectPackedBytes(this ulong value, ref ulong buffer, ref int bitposition, int bits)
+        {
+            int bytes = (bits + 7) >> 3;
+            int sizebits = bytes.UsedBitCount();
+            int valuebytes = value.UsedByteCount();
 
-			buffer = buffer.Write((uint)(valuebytes), ref bitposition, (int)sizebits);
-			buffer = buffer.Write(value, ref bitposition, valuebytes << 3);
+            buffer = buffer.Write((uint)(valuebytes), ref bitposition, (int)sizebits);
+            buffer = buffer.Write(value, ref bitposition, valuebytes << 3);
 
-			//UnityEngine.Debug.Log(value + " buff:" + buffer + "bytes " + bytes +
-			//	" = [" + (int)sizebits + " : " + (valuebytes << 3) + "]  total bits: " + ((int)sizebits + (valuebytes << 3)));
-		}
-		/// <summary>
-		/// EXPERIMENTAL: Primary Write Method.
-		/// </summary>
-		public static void InjectPackedBytes(this uint value, ref uint buffer, ref int bitposition, int bits)
-		{
-			int bytes = (bits + 7) >> 3;
-			int sizebits = bytes.UsedBitCount();
-			int valuebytes = value.UsedByteCount();
+            //UnityEngine.Debug.Log(value + " buff:" + buffer + "bytes " + bytes +
+            //	" = [" + (int)sizebits + " : " + (valuebytes << 3) + "]  total bits: " + ((int)sizebits + (valuebytes << 3)));
+        }
+        /// <summary>
+        /// EXPERIMENTAL: Primary Write Method.
+        /// </summary>
+        public static void InjectPackedBytes(this uint value, ref uint buffer, ref int bitposition, int bits)
+        {
+            int bytes = (bits + 7) >> 3;
+            int sizebits = bytes.UsedBitCount();
+            int valuebytes = value.UsedByteCount();
 
-			buffer = buffer.Write((uint)(valuebytes), ref bitposition, sizebits);
-			buffer = buffer.Write(value, ref bitposition, valuebytes << 3);
+            buffer = buffer.Write((uint)(valuebytes), ref bitposition, sizebits);
+            buffer = buffer.Write(value, ref bitposition, valuebytes << 3);
 
-			//UnityEngine.Debug.Log(value + " buff:" + buffer + "bytes " + bytes +
-			//	" = [" + (int)sizebits + " : " + (valuebytes << 3) + "]  total bits: " + ((int)sizebits + (valuebytes << 3)));
-		}
+            //UnityEngine.Debug.Log(value + " buff:" + buffer + "bytes " + bytes +
+            //	" = [" + (int)sizebits + " : " + (valuebytes << 3) + "]  total bits: " + ((int)sizebits + (valuebytes << 3)));
+        }
 
-		#endregion
+        #endregion
 
-		#region Primary Read Packed
+        #region Primary Read Packed
 
-		/// <summary>
-		/// Primary Reader for PackedBytes.
-		/// </summary>
-		public static ulong ReadPackedBytes(this ulong buffer, ref int bitposition, int bits)
-		{
-			int bytes = (bits + 7) >> 3;
-			int sizebits = bytes.UsedBitCount();
-			int valuebytes = (int)buffer.Read(ref bitposition, sizebits);
-			return buffer.Read(ref bitposition, valuebytes << 3);
-		}
-		/// <summary>
-		/// Primary Reader for PackedBytes.
-		/// </summary>
-		public static uint ReadPackedBytes(this uint buffer, ref int bitposition, int bits)
-		{
-			int bytes = (bits + 7) >> 3;
-			int sizebits = bytes.UsedBitCount();
-			int valuebytes = (int)buffer.Read(ref bitposition, sizebits);
-			return buffer.Read(ref bitposition, valuebytes << 3);
-		}
+        /// <summary>
+        /// Primary Reader for PackedBytes.
+        /// </summary>
+        public static ulong ReadPackedBytes(this ulong buffer, ref int bitposition, int bits)
+        {
+            int bytes = (bits + 7) >> 3;
+            int sizebits = bytes.UsedBitCount();
+            int valuebytes = (int)buffer.Read(ref bitposition, sizebits);
+            return buffer.Read(ref bitposition, valuebytes << 3);
+        }
+        /// <summary>
+        /// Primary Reader for PackedBytes.
+        /// </summary>
+        public static uint ReadPackedBytes(this uint buffer, ref int bitposition, int bits)
+        {
+            int bytes = (bits + 7) >> 3;
+            int sizebits = bytes.UsedBitCount();
+            int valuebytes = (int)buffer.Read(ref bitposition, sizebits);
+            return buffer.Read(ref bitposition, valuebytes << 3);
+        }
 
-		#endregion
+        #endregion
 
-		#region Packed Signed
+        #region Packed Signed
 
-		/// <summary>
-		/// EXPERIMENTAL: Primary Write signed value as PackedByte. 
-		/// </summary>
-		public static ulong WriteSignedPackedBytes(this ulong buffer, int value, ref int bitposition, int bits)
-		{
-			uint zigzag = (uint)((value << 1) ^ (value >> 31));
-			return buffer.WritePackedBytes(zigzag, ref bitposition, bits);
-		}
-		/// <summary>
-		/// EXPERIMENTAL: Read signed value from PackedByte. 
-		/// </summary>
-		public static int ReadSignedPackedBytes(this ulong buffer, ref int bitposition, int bits)
-		{
-			uint value = (uint)buffer.ReadPackedBytes(ref bitposition, bits);
-			int zagzig = (int)((value >> 1) ^ (-(int)(value & 1)));
-			return zagzig;
-		}
-		#endregion
-	}
+        /// <summary>
+        /// EXPERIMENTAL: Primary Write signed value as PackedByte. 
+        /// </summary>
+        public static ulong WriteSignedPackedBytes(this ulong buffer, int value, ref int bitposition, int bits)
+        {
+            uint zigzag = (uint)((value << 1) ^ (value >> 31));
+            return buffer.WritePackedBytes(zigzag, ref bitposition, bits);
+        }
+        /// <summary>
+        /// EXPERIMENTAL: Read signed value from PackedByte. 
+        /// </summary>
+        public static int ReadSignedPackedBytes(this ulong buffer, ref int bitposition, int bits)
+        {
+            uint value = (uint)buffer.ReadPackedBytes(ref bitposition, bits);
+            int zagzig = (int)((value >> 1) ^ (-(int)(value & 1)));
+            return zagzig;
+        }
+        #endregion
+    }
 }
 

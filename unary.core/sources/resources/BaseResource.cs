@@ -7,6 +7,6 @@ namespace Unary.Core
     [GlobalClass]
     public abstract partial class BaseResource : Resource
     {
-        
+
     }
 }

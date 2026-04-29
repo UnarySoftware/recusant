@@ -1,3 +1,4 @@
+#if TOOLS
 
 namespace Unary.Core
 {
@@ -7,3 +8,5 @@ namespace Unary.Core
         Action
     }
 }
+
+#endif

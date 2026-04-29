@@ -8,13 +8,12 @@ namespace Unary.Core.Editor
     {
         bool ISystem.Initialize()
         {
-            EditorSettingsManager.Initialize();
             return true;
         }
 
         void ISystem.Deinitialize()
         {
-            EditorSettingsManager.Deinitialize();
+            EditorSettingManager.Deinitialize();
         }
     }
 }

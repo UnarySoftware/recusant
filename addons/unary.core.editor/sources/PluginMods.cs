@@ -1,8 +1,8 @@
 #if TOOLS
 
+using Godot;
 using System.Collections.Generic;
 using System.IO;
-using Godot;
 
 namespace Unary.Core.Editor
 {
@@ -140,7 +140,6 @@ namespace Unary.Core.Editor
             EditorFileSystem engineFilesystem = EditorInterface.Singleton.GetResourceFilesystem();
 
             HashSet<ModManifest> newManifests = [];
-            HashSet<string> deletedManifests = [];
 
             string[] directories = Directory.GetDirectories(".", "*.*", SearchOption.TopDirectoryOnly);
 
@@ -158,19 +157,12 @@ namespace Unary.Core.Editor
 
                 if (!ResourceLoader.Singleton.Exists(manifestPath, nameof(ModManifest)))
                 {
-                    deletedManifests.Add(modId);
                     continue;
                 }
 
                 string resourceType = manifestPath.GetScriptType();
 
                 if (resourceType != nameof(ModManifest))
-                {
-                    deletedManifests.Add(modId);
-                    continue;
-                }
-
-                if (AllModsDictionary.ContainsKey(modId))
                 {
                     continue;
                 }
@@ -187,19 +179,31 @@ namespace Unary.Core.Editor
 
             foreach (var newManifest in newManifests)
             {
-                listChanged = true;
-                AllModsList.Add(newManifest);
-                AllModsDictionary.Add(newManifest.ModId, newManifest);
+                if (!AllModsDictionary.TryGetValue(newManifest.ModId, out var value))
+                {
+                    // This is a new manifest
+                    AllModsList.Add(newManifest);
+                    AllModsDictionary.Add(newManifest.ModId, newManifest);
+                    listChanged = true;
+                }
             }
 
-            foreach (var deletedManifest in deletedManifests)
+            List<string> removeList = [];
+
+            foreach (var oldManifest in AllModsDictionary)
             {
-                if (AllModsDictionary.TryGetValue(deletedManifest, out var manifest))
+                if (!newManifests.Contains(oldManifest.Value))
                 {
+                    // This manifest is present in the list but is missing on reparse - its gone now
+                    AllModsList.Remove(oldManifest.Value);
+                    removeList.Add(oldManifest.Key);
                     listChanged = true;
-                    AllModsList.Remove(manifest);
-                    AllModsDictionary.Remove(deletedManifest);
                 }
+            }
+
+            foreach (var entry in removeList)
+            {
+                AllModsDictionary.Remove(entry);
             }
 
             if (!listChanged)

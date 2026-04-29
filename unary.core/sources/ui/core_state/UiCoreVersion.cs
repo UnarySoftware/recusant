@@ -1,7 +1,5 @@
-
-using System;
-using System.Text;
 using Godot;
+using System.Text;
 
 namespace Unary.Core
 {

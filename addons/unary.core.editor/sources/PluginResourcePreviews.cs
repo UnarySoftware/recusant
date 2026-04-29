@@ -1,8 +1,8 @@
 #if TOOLS
 
-using System;
 using Godot;
 using Godot.Collections;
+using System;
 
 namespace Unary.Core.Editor
 {

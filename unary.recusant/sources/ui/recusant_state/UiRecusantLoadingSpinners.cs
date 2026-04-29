@@ -1,6 +1,5 @@
-using System;
-using System.Text;
 using Godot;
+using System.Text;
 using Unary.Core;
 
 namespace Unary.Recusant

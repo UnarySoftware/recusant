@@ -1,10 +1,11 @@
+#if TOOLS
+
+using Godot;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
-using Godot;
 
 namespace Unary.Core
 {
@@ -15,10 +16,6 @@ namespace Unary.Core
         [InitializeExplicit(typeof(BuildBumper))]
         bool ISystem.Initialize()
         {
-#if !TOOLS
-            return true;
-#endif
-
             HashSet<string> mods = [];
 
             var targetMods = ModLoader.Singleton.EnabledMods;
@@ -195,3 +192,5 @@ namespace Unary.Core
         }
     }
 }
+
+#endif

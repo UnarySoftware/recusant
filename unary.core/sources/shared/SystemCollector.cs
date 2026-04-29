@@ -1,7 +1,7 @@
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Godot;
 
 namespace Unary.Core
 {
@@ -210,11 +210,6 @@ namespace Unary.Core
             {
                 T target = _systemsList[i];
                 target.Deinitialize();
-
-                if (target is IDisposable disposable)
-                {
-                    disposable.Dispose();
-                }
             }
         }
     }

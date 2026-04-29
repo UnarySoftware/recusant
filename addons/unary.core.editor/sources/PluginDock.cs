@@ -1,37 +1,87 @@
 #if TOOLS
-using System;
-using System.Collections.Generic;
+
 using Godot;
+using System.Collections.Generic;
 
 namespace Unary.Core.Editor
 {
     [Tool]
     public partial class PluginDock : IPluginSystem
     {
-        private Dictionary<string, EditorDock> _docks = [];
-        private Dictionary<EditorSettingVariableBase, VBoxContainer> _editors = [];
+        private sealed class EditorEntry
+        {
+            public VBoxContainer Root;
+            public int Index;
+            public string ModId = string.Empty;
+            public string Group = string.Empty;
+            public ulong EditorId;
+        }
+
+        private readonly Dictionary<string, EditorDock> _docks = [];
+        private readonly Dictionary<string, Dictionary<string, GroupEntry>> _modIdToEntries = [];
+        private readonly Dictionary<EditorSettingVariableBase, EditorEntry> _editors = [];
         private readonly List<(GodotObject source, StringName signal, Callable callable, GodotObject handler)> _signalConnections = [];
+
+        private struct Entry
+        {
+            public string Name;
+            public Control Control;
+        }
+
+        private struct GroupEntry
+        {
+            public string Name;
+            public Control Control;
+            public List<Entry> Entries;
+        }
+
+        public void Filter(string modId, string text)
+        {
+            if (!_modIdToEntries.TryGetValue(modId, out var groups))
+            {
+                return;
+            }
+
+            foreach (var group in groups)
+            {
+                bool groupMatches = text.IsSubsequenceOfN(group.Key);
+
+                bool anyEntryVisible = false;
+                foreach (var entry in group.Value.Entries)
+                {
+                    bool visible = groupMatches || text.IsSubsequenceOfN(entry.Name);
+                    entry.Control.Visible = visible;
+                    anyEntryVisible |= visible;
+                }
+
+                group.Value.Control.Visible = groupMatches || anyEntryVisible;
+            }
+        }
 
         public void UpdateInspector(EditorSettingVariableBase variable)
         {
             if (_editors.TryGetValue(variable, out var storage))
             {
-                UpdateVariable(storage, variable);
+                CreateVariable(storage.Root, storage.Index, storage.ModId, storage.Group, variable, new());
             }
         }
 
-        private void UpdateVariable(VBoxContainer container, EditorSettingVariableBase variableBase)
+        private void CreateVariable(VBoxContainer container, int index, string modId, string group, EditorSettingVariableBase variableBase, GroupEntry groupEntry)
         {
             if (_editors.TryGetValue(variableBase, out var storage))
             {
-                storage.GetChild(1).QueueFree();
+                if (GodotObject.InstanceFromId(storage.EditorId) is EditorProperty target)
+                {
+                    target.QueueFree();
+                }
+
+                // Use a local variable to make intent explicit and avoid mutation of the copy
+                int entryIndex = storage.Index - 1;
+                _modIdToEntries[storage.ModId][group].Entries.RemoveAt(entryIndex);
             }
 
-            _editors[variableBase] = container;
-
             EditorProperty editor = EditorInspector.InstantiatePropertyEditor(variableBase.Wrapper, variableBase.VariantValue.VariantType,
-            nameof(EditorSettingWrapper.Value), variableBase.PropertyHint,
-            variableBase.HintText, (uint)PropertyUsageFlags.Editor, true);
+            nameof(EditorSettingWrapper.Value), variableBase.PropertyHint, variableBase.HintText, (uint)PropertyUsageFlags.Editor, true);
 
             variableBase.Inspector = editor;
 
@@ -47,19 +97,38 @@ namespace Unary.Core.Editor
             editor.UpdateProperty();
 
             container.AddChild(editor);
+
+            handler.CallDeferred(nameof(PluginDockVariableHandler.MethodName.MoveNode), container, editor, index);
+
+            _editors[variableBase] = new()
+            {
+                Root = container,
+                Index = index,
+                ModId = modId,
+                Group = group,
+                EditorId = editor.GetInstanceId()
+            };
+
+            groupEntry.Entries?.Add(new Entry
+            {
+                Name = variableBase.Name,
+                Control = editor
+            });
         }
 
-        private void InitializeControl(VBoxContainer container, EditorSettingBase entry)
+        private void InitializeControl(VBoxContainer container, EditorSettingBase entry, int counter, string modId, string group, GroupEntry groupEntry)
         {
             if (entry.Type == EditorSettingType.Variable)
             {
-                UpdateVariable(container, (EditorSettingVariableBase)entry);
+                CreateVariable(container, counter, modId, group, (EditorSettingVariableBase)entry, groupEntry);
             }
             else if (entry.Type == EditorSettingType.Action)
             {
                 EditorSettingAction action = (EditorSettingAction)entry;
-                Button newButton = new();
-                newButton.Text = entry.Name;
+                Button newButton = new()
+                {
+                    Text = entry.Name
+                };
 
                 var handler = new PluginDockActionHandler();
                 handler.Setup(action);
@@ -68,6 +137,12 @@ namespace Unary.Core.Editor
                 _signalConnections.Add((newButton, BaseButton.SignalName.Pressed, callable, handler));
 
                 container.AddChild(newButton);
+
+                groupEntry.Entries.Add(new()
+                {
+                    Name = entry.Name,
+                    Control = newButton,
+                });
             }
         }
 
@@ -75,7 +150,7 @@ namespace Unary.Core.Editor
         {
             Dictionary<string, Dictionary<string, List<EditorSettingBase>>> sorted = [];
 
-            foreach (var entry in EditorSettingsManager.GetEntries())
+            foreach (var entry in EditorSettingManager.GetEntries())
             {
                 if (!sorted.TryGetValue(entry.ModId, out var groups))
                 {
@@ -97,20 +172,57 @@ namespace Unary.Core.Editor
                 VBoxContainer dockEntries = new();
                 dockEntries.SetAnchorsPreset(Control.LayoutPreset.FullRect);
 
+                LineEdit lineEdit = new()
+                {
+                    PlaceholderText = "Search..."
+                };
+                dockEntries.AddChild(lineEdit);
+                dockEntries.GrowHorizontal = Control.GrowDirection.Both;
+
+                if (!_modIdToEntries.TryGetValue(modId.Key, out var entries))
+                {
+                    entries = [];
+                    _modIdToEntries[modId.Key] = entries;
+                }
+
+                PluginDockFilterHandler handler = new();
+                handler.Setup(this, modId.Key);
+
+                var callable = new Callable(handler, PluginDockFilterHandler.MethodName.OnTextChanged);
+                lineEdit.Connect(LineEdit.SignalName.TextChanged, callable);
+                _signalConnections.Add((lineEdit, LineEdit.SignalName.TextChanged, callable, handler));
+
                 foreach (var group in modId.Value)
                 {
                     VBoxContainer groupContainer = new();
                     dockEntries.AddChild(groupContainer);
 
-                    Label groupLabel = new();
+                    string groupName = group.Key;
+
+                    GroupEntry groupEntry = new()
+                    {
+                        Name = groupName,
+                        Control = groupContainer,
+                        Entries = []
+                    };
+
+                    Label groupLabel = new()
+                    {
+                        Text = group.Key,
+                        HorizontalAlignment = HorizontalAlignment.Center
+                    };
                     groupContainer.AddChild(groupLabel);
-                    groupLabel.Text = group.Key;
-                    groupLabel.HorizontalAlignment = HorizontalAlignment.Center;
+
+                    // We start from 1 since index 0 is reserved for the label representing the groups name
+                    int counter = 1;
 
                     foreach (var entry in group.Value)
                     {
-                        InitializeControl(groupContainer, entry);
+                        InitializeControl(groupContainer, entry, counter, modId.Key, groupName, groupEntry);
+                        counter++;
                     }
+
+                    entries.Add(groupName, groupEntry);
                 }
 
                 EditorDock editorDock = new()
@@ -153,7 +265,9 @@ namespace Unary.Core.Editor
 
             _docks.Clear();
             _editors.Clear();
+            _modIdToEntries.Clear();
         }
     }
 }
+
 #endif

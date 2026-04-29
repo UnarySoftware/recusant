@@ -1,3 +1,5 @@
+#if TOOLS
+
 using System.Reflection;
 
 namespace Unary.Core
@@ -12,3 +14,5 @@ namespace Unary.Core
         }
     }
 }
+
+#endif

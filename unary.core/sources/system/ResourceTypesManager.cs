@@ -1,8 +1,8 @@
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using Godot;
 
 namespace Unary.Core
 {

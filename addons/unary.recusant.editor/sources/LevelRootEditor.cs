@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Unary.Core;
@@ -153,8 +152,8 @@ namespace Unary.Recusant
                 return;
             }
 
-            VisualPaths.Clear();
-            FromStartToFinish = null;
+            VisualPaths.Value = null;
+            FromStartToFinish.Value = null;
 
             VertexDistance = null;
             Polys = null;
@@ -183,8 +182,8 @@ namespace Unary.Recusant
             await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
             _region = null;
-            VisualPaths.Clear();
-            FromStartToFinish = null;
+            VisualPaths.Value = null;
+            FromStartToFinish.Value = null;
 
             _region = GetNodeOrNull<NavigationRegion3D>("Navigation");
 
@@ -200,7 +199,7 @@ namespace Unary.Recusant
 
         private void Failed(string why)
         {
-            VisualPaths.Clear();
+            VisualPaths.Value = null;
             _region?.UpdateGizmos();
             PluginLogger.Critical(this, $"Failed to build navigation data.\nReason: {why}");
             EditorInterface.Singleton.MarkSceneAsUnsaved();
@@ -357,7 +356,7 @@ namespace Unary.Recusant
 
             if (startPosition.DistanceTo(startPositionResolved) > PlayerConstants.PlayerRadius * 2.0f)
             {
-                FromStartToFinish =
+                FromStartToFinish.Value =
                 [
                     startPosition,
                     startPositionResolved
@@ -374,7 +373,7 @@ namespace Unary.Recusant
 
             if (endPosition.DistanceTo(endPositionResolved) > PlayerConstants.PlayerRadius * 2.0f)
             {
-                FromStartToFinish =
+                FromStartToFinish.Value =
                 [
                     endPosition,
                     endPositionResolved
@@ -406,12 +405,14 @@ namespace Unary.Recusant
                 return;
             }
 
-            FromStartToFinish = result.Path;
+            Vector3[] points = result.Path;
 
-            for (int i = 0; i < FromStartToFinish.Length; i++)
+            for (int i = 0; i < points.Length; i++)
             {
-                FromStartToFinish[i].Y += 0.01f;
+                points[i].Y += 0.01f;
             }
+
+            FromStartToFinish.Value = points;
 
             if (result.Path[0].DistanceTo(startPositionResolved) > PathMargin ||
                 result.Path[^1].DistanceTo(endPositionResolved) > PathMargin)
@@ -510,6 +511,8 @@ namespace Unary.Recusant
                 // Step 2: Check each group by taking a random member and trying to path from it to the end, if no path - the entire group is invalid
                 bool[] invalidatedIndexes = new bool[polyCount];
 
+                List<VisualPath> ValidPaths = new();
+
                 Multi.Thread(0, polygonGroups.Count, (i, state) =>
                 {
                     List<int> entries = polygonGroups[i];
@@ -581,11 +584,13 @@ namespace Unary.Recusant
 
                         lock (ValidGroupLock)
                         {
-                            VisualPaths.Add(newPath);
+                            ValidPaths.Add(newPath);
                             Groups++;
                         }
                     }
                 });
+
+                VisualPaths.Value = ValidPaths;
 
                 // Step 3: Collect referenced vertices
                 HashSet<int> referencedIndices = [];

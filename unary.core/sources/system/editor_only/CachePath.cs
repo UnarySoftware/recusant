@@ -1,5 +1,7 @@
-using System.IO;
+#if TOOLS
+
 using Godot;
+using System.IO;
 
 namespace Unary.Core
 {
@@ -35,3 +37,5 @@ namespace Unary.Core
         }
     }
 }
+
+#endif

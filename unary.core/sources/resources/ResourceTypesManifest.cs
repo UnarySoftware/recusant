@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Unary.Core
 {
     public class ResourceTypesManifest

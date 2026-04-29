@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bnn02hbb6kf31"]
+
+[ext_resource type="Texture2D" uid="uid://do8k6tu1t3o5n" path="res://hammer/materials/unary.recusant/marking.png" id="1_1hoem"]
+
+[resource]
+transparency = 1
+albedo_texture = ExtResource("1_1hoem")

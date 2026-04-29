@@ -1,5 +1,5 @@
-using System;
 using Godot;
+using System;
 using Unary.Core.Editor;
 
 namespace Unary.Core
@@ -15,37 +15,75 @@ namespace Unary.Core
 
         public Func<Variant, Variant, Variant> CustomSetter;
 
+        public string CustomGroup = string.Empty;
+        public string CustomName = string.Empty;
+
         public Type GenericType;
         public string Path;
-        private Variant _savedValue;
-        public Variant VariantEditorDefault;
-        public Variant VariantRuntimeDefault;
+
+        private bool _gotHash = false;
+
+        public int Hash
+        {
+            get
+            {
+                if (!_gotHash)
+                {
+                    _gotHash = true;
+                    field = Path.GetDeterministicHashCode();
+                }
+
+                return field;
+            }
+        }
+
+        private bool _gotValue = false;
+
+        private static void Dummy(EditorSettingVariableBase value)
+        {
+
+        }
+
+        public Action<EditorSettingVariableBase> OnValueChanged = Dummy;
+
         public Variant VariantValue
         {
             get
             {
+                if (!_gotValue)
+                {
+                    _gotValue = true;
 #if TOOLS
-                if (Engine.Singleton.IsEditorHint())
-                {
-                    EditorSettings settings = EditorInterface.Singleton.GetEditorSettings();
-
-                    if (!settings.HasSetting(Path))
+                    if (Engine.Singleton.IsEditorHint())
                     {
-                        return VariantEditorDefault;
+                        EditorSettingManager.Initialize();
+
+                        EditorSettingSaver.Singleton.GetVariable(Path, out Variant result, out bool found);
+
+                        if (!found)
+                        {
+                            field = VariantEditorDefault;
+                            return field;
+                        }
+
+                        field = result;
                     }
-                    return settings.GetSetting(Path);
-                }
-                else
-                {
-                    return VariantEditorDefault;
-                }
+                    else
+                    {
+                        field = VariantEditorDefault;
+                    }
 #else
-                return VariantRuntimeDefault;
+                    field = VariantRuntimeDefault;
 #endif
+                }
+
+                return field;
             }
             set
             {
 #if TOOLS
+                Variant newValue = value;
+
                 if (Engine.Singleton.IsEditorHint())
                 {
                     if (Path == null)
@@ -54,30 +92,33 @@ namespace Unary.Core
                         return;
                     }
 
-                    Variant newValue = value;
-
                     if (CustomSetter != null)
                     {
                         newValue = CustomSetter(VariantValue, newValue);
                     }
 
-                    EditorSettings settings = EditorInterface.Singleton.GetEditorSettings();
-                    settings.SetSetting(Path, newValue);
+                    EditorSettingSaver.Singleton.SetVariable(Path, newValue, false);
+                    EditorSettingSaver.Singleton.Save();
                 }
+
+                field = newValue;
+                OnSetValue(newValue);
+                OnValueChanged(this);
 #endif
             }
         }
 
-        public void Reset()
+        public virtual bool IsDefault()
         {
-            _savedValue = VariantValue;
-            VariantValue = VariantEditorDefault;
+            return true;
         }
 
-        public void Restore()
+        public virtual void OnSetValue(Variant value)
         {
-            VariantValue = _savedValue;
+
         }
+
+        public Variant VariantEditorDefault;
+        public Variant VariantRuntimeDefault;
     }
-
 }

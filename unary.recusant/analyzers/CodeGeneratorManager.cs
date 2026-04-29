@@ -1,8 +1,7 @@
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Collections.Generic;
+using System.Linq;
 using Unary.Core.Analyzers;
 
 namespace Unary.Recusant.Analyzers

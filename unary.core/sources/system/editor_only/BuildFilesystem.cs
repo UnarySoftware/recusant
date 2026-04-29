@@ -1,3 +1,5 @@
+#if TOOLS
+
 using Godot;
 
 namespace Unary.Core
@@ -8,22 +10,16 @@ namespace Unary.Core
 
         bool ISystem.Initialize()
         {
-#if !TOOLS
-            return true;
-#endif
-
             Filesystem.Initialize();
             return true;
         }
 
         bool ISystem.PostInitialize()
         {
-#if !TOOLS
-            return true;
-#endif
-
             Filesystem.ResetChanges();
             return true;
         }
     }
 }
+
+#endif

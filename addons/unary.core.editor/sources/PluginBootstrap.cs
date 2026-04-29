@@ -1,9 +1,9 @@
 #if TOOLS
 
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Godot;
 
 namespace Unary.Core.Editor
 {
@@ -88,6 +88,14 @@ namespace Unary.Core.Editor
             foreach (var system in _systems.Systems)
             {
                 system.Process((float)delta);
+            }
+        }
+
+        public override void _PhysicsProcess(double delta)
+        {
+            foreach (var system in _systems.Systems)
+            {
+                system.PhysicsProcess((float)delta);
             }
         }
 

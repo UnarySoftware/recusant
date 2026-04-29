@@ -1,6 +1,5 @@
 #if TOOLS
 using Godot;
-using System;
 using System.Collections.Generic;
 
 namespace Unary.Core.Editor

@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using Godot;
+using System.Collections.Generic;
 using Unary.Core;
 
 namespace Unary.Recusant

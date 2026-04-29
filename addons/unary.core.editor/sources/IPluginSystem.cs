@@ -1,7 +1,5 @@
 #if TOOLS
 
-using Godot;
-
 namespace Unary.Core.Editor
 {
     [SingletonProvider("Unary.Core.Editor.PluginBootstrap.Singleton.GetSystem")]

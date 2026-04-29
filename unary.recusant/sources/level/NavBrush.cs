@@ -80,4 +80,17 @@ namespace Unary.Recusant
         }
 
     }
+
+    public static class NavBrushFlagExtension
+    {
+        public static string ToStringPretty(this NavBrush.Flag flag)
+        {
+            if (flag == 0)
+            {
+                return "None";
+            }
+
+            return flag.ToString();
+        }
+    }
 }

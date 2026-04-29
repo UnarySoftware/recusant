@@ -1,8 +1,10 @@
+#if TOOLS
+
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Godot;
 
 namespace Unary.Core
 {
@@ -201,3 +203,5 @@ namespace Unary.Core
         }
     }
 }
+
+#endif

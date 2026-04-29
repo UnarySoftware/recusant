@@ -1,10 +1,11 @@
+#if TOOLS
+
+using Godot;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
-using Godot;
 
 namespace Unary.Core
 {
@@ -264,3 +265,5 @@ namespace Unary.Core
 
     }
 }
+
+#endif

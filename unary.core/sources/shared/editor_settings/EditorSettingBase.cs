@@ -1,4 +1,4 @@
-using Godot;
+#if TOOLS
 
 namespace Unary.Core
 {
@@ -11,3 +11,5 @@ namespace Unary.Core
         public string Name;
     }
 }
+
+#endif

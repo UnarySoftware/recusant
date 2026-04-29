@@ -1,4 +1,4 @@
-﻿/*
+/*
 * The MIT License (MIT)
 * 
 * Copyright (c) 2018-2019 Davin Carten (emotitron) (davincarten@gmail.com)
@@ -28,264 +28,264 @@
 
 namespace emotitron.Compression
 {
-	/// <summary>
-	/// Experimental packers, that counts number of used bits for serialization. Effective for values that hover close to zero.
-	/// </summary>
-	public static class ArrayPackBytesExt
-	{
-		#region Primary Write Packed
+    /// <summary>
+    /// Experimental packers, that counts number of used bits for serialization. Effective for values that hover close to zero.
+    /// </summary>
+    public static class ArrayPackBytesExt
+    {
+        #region Primary Write Packed
 
-		/// <summary>
-		/// EXPERIMENTAL: Primary UNSAFE Write Method.
-		/// </summary>
-		public unsafe static void WritePackedBytes(ulong* uPtr, ulong value, ref int bitposition, int bits)
-		{
-			if (bits == 0)
-				return;
+        /// <summary>
+        /// EXPERIMENTAL: Primary UNSAFE Write Method.
+        /// </summary>
+        public unsafe static void WritePackedBytes(ulong* uPtr, ulong value, ref int bitposition, int bits)
+        {
+            if (bits == 0)
+                return;
 
-			int bytes = (bits + 7) >> 3;
-			int sizebits = bytes.UsedBitCount();
-			int valuebytes = value.UsedByteCount();
+            int bytes = (bits + 7) >> 3;
+            int sizebits = bytes.UsedBitCount();
+            int valuebytes = value.UsedByteCount();
 
-			ArraySerializeUnsafe.Write(uPtr, (uint)(valuebytes), ref bitposition, (int)sizebits);
-			ArraySerializeUnsafe.Write(uPtr, value, ref bitposition, valuebytes << 3);
+            ArraySerializeUnsafe.Write(uPtr, (uint)(valuebytes), ref bitposition, (int)sizebits);
+            ArraySerializeUnsafe.Write(uPtr, value, ref bitposition, valuebytes << 3);
 
-			//UnityEngine.Debug.Log(value + " buff:" + buffer + "bytes " + bytes +
-			//	" = [" + (int)sizebits + " : " + (valuebytes << 3) + "]  total bits: " + ((int)sizebits + (valuebytes << 3)));
-		}
+            //UnityEngine.Debug.Log(value + " buff:" + buffer + "bytes " + bytes +
+            //	" = [" + (int)sizebits + " : " + (valuebytes << 3) + "]  total bits: " + ((int)sizebits + (valuebytes << 3)));
+        }
 
-		/// <summary>
-		/// EXPERIMENTAL: Primary Write Method.
-		/// </summary>
-		public static void WritePackedBytes(this ulong[] buffer, ulong value, ref int bitposition, int bits)
-		{
-			if (bits == 0)
-				return;
+        /// <summary>
+        /// EXPERIMENTAL: Primary Write Method.
+        /// </summary>
+        public static void WritePackedBytes(this ulong[] buffer, ulong value, ref int bitposition, int bits)
+        {
+            if (bits == 0)
+                return;
 
-      // Clear bits in value that are outside of the specified bits (mask)
-      value &= ulong.MaxValue >> 64 - bits;
-      
-			int bytes = (bits + 7) >> 3;
-			int sizebits = bytes.UsedBitCount();
-			int valuebytes = value.UsedByteCount();
+            // Clear bits in value that are outside of the specified bits (mask)
+            value &= ulong.MaxValue >> 64 - bits;
 
-			buffer.Write((uint)(valuebytes), ref bitposition, (int)sizebits);
-			buffer.Write(value, ref bitposition, valuebytes << 3);
+            int bytes = (bits + 7) >> 3;
+            int sizebits = bytes.UsedBitCount();
+            int valuebytes = value.UsedByteCount();
 
-      // Debug.Log($"Used Bytes in {value} : {valuebytes << 3} -- pos after write {bitposition} - sizerSize:{sizebits}");
+            buffer.Write((uint)(valuebytes), ref bitposition, (int)sizebits);
+            buffer.Write(value, ref bitposition, valuebytes << 3);
 
-			//UnityEngine.Debug.Log(value + " buff:" + buffer + "bytes " + bytes +
-			//	" = [" + (int)sizebits + " : " + (valuebytes << 3) + "]  total bits: " + ((int)sizebits + (valuebytes << 3)));
-		}
-		/// <summary>
-		/// EXPERIMENTAL: Primary Write Method.
-		/// </summary>
-		public static void WritePackedBytes(this uint[] buffer, ulong value, ref int bitposition, int bits)
-		{
-			if (bits == 0)
-				return;
-      // Clear bits in value that are outside of the specified bits (mask)
-      value &= ulong.MaxValue >> 64 - bits;
-      
-			int bytes = (bits + 7) >> 3;
-			int sizebits = bytes.UsedBitCount();
-			int valuebytes = value.UsedByteCount();
+            // Debug.Log($"Used Bytes in {value} : {valuebytes << 3} -- pos after write {bitposition} - sizerSize:{sizebits}");
 
-			buffer.Write((uint)(valuebytes), ref bitposition, sizebits);
-			buffer.Write(value, ref bitposition, valuebytes << 3);
+            //UnityEngine.Debug.Log(value + " buff:" + buffer + "bytes " + bytes +
+            //	" = [" + (int)sizebits + " : " + (valuebytes << 3) + "]  total bits: " + ((int)sizebits + (valuebytes << 3)));
+        }
+        /// <summary>
+        /// EXPERIMENTAL: Primary Write Method.
+        /// </summary>
+        public static void WritePackedBytes(this uint[] buffer, ulong value, ref int bitposition, int bits)
+        {
+            if (bits == 0)
+                return;
+            // Clear bits in value that are outside of the specified bits (mask)
+            value &= ulong.MaxValue >> 64 - bits;
 
-			//UnityEngine.Debug.Log(value + " buff:" + buffer + "bytes " + bytes +
-			//	" = [" + (int)sizebits + " : " + (valuebits << 3) + "]  total bits: " + ((int)sizebits + (valuebits << 3)));
-		}
-		/// <summary>
-		/// EXPERIMENTAL: Primary Write Method.
-		/// </summary>
-		public static void WritePackedBytes(this byte[] buffer, ulong value, ref int bitposition, int bits)
-		{
-			if (bits == 0)
-				return;
-      
-      // Clear bits in value that are outside of the specified bits (mask)
-      value &= ulong.MaxValue >> 64 - bits;
-      
-			int bytes = (bits + 7) >> 3;
-			int sizebits = bytes.UsedBitCount();
-			int valuebytes = value.UsedByteCount();
+            int bytes = (bits + 7) >> 3;
+            int sizebits = bytes.UsedBitCount();
+            int valuebytes = value.UsedByteCount();
 
-			buffer.Write((uint)(valuebytes), ref bitposition, sizebits);
-			buffer.Write(value, ref bitposition, valuebytes << 3);
+            buffer.Write((uint)(valuebytes), ref bitposition, sizebits);
+            buffer.Write(value, ref bitposition, valuebytes << 3);
 
-      // UnityEngine.Debug.Log($"Used Bytes in {value} : size(B): {valuebytes} -- pos after write {bitposition} - bytes:{bytes} sizerSize:{sizebits}");
-			
-      //UnityEngine.Debug.Log(value + " buff:" + buffer + "bytes " + bytes +
-			//	" = [" + (int)sizebits + " : " + (valuebits << 3) + "]  total bits: " + ((int)sizebits + (valuebits << 3)));
-		}
+            //UnityEngine.Debug.Log(value + " buff:" + buffer + "bytes " + bytes +
+            //	" = [" + (int)sizebits + " : " + (valuebits << 3) + "]  total bits: " + ((int)sizebits + (valuebits << 3)));
+        }
+        /// <summary>
+        /// EXPERIMENTAL: Primary Write Method.
+        /// </summary>
+        public static void WritePackedBytes(this byte[] buffer, ulong value, ref int bitposition, int bits)
+        {
+            if (bits == 0)
+                return;
 
-		#endregion
+            // Clear bits in value that are outside of the specified bits (mask)
+            value &= ulong.MaxValue >> 64 - bits;
 
-		#region Primary Read Packed
+            int bytes = (bits + 7) >> 3;
+            int sizebits = bytes.UsedBitCount();
+            int valuebytes = value.UsedByteCount();
 
-		/// <summary>
-		/// Primary UNSAFE Reader for PackedBytes.
-		/// </summary>
-		public unsafe static ulong ReadPackedBytes(ulong* uPtr, ref int bitposition, int bits)
-		{
-			if (bits == 0)
-				return 0;
+            buffer.Write((uint)(valuebytes), ref bitposition, sizebits);
+            buffer.Write(value, ref bitposition, valuebytes << 3);
 
-			int bytes = (bits + 7) >> 3;
-			int sizebits = bytes.UsedBitCount();
-			int valuebits = (int)ArraySerializeUnsafe.Read(uPtr, ref bitposition, sizebits) << 3;
-			return ArraySerializeUnsafe.Read(uPtr, ref bitposition, valuebits);
-		}
-		/// <summary>
-		/// Primary Reader for PackedBytes.
-		/// </summary>
-		public static ulong ReadPackedBytes(this ulong[] buffer, ref int bitposition, int bits)
-		{
-			if (bits == 0)
-				return 0;
+            // UnityEngine.Debug.Log($"Used Bytes in {value} : size(B): {valuebytes} -- pos after write {bitposition} - bytes:{bytes} sizerSize:{sizebits}");
 
-			int bytes     = (bits + 7) >> 3;
-			int sizebits  = bytes.UsedBitCount();
-			int valuebits = (int)buffer.Read(ref bitposition, sizebits) << 3;
-      
-      var val       = buffer.Read(ref bitposition, valuebits);
-      // Debug.Log($"READ {val} Used Bytes : {valuebits} -- pos after read {bitposition} - siderSize:{sizebits}");
-			return val;
-		}
-		/// <summary>
-		/// Primary Reader for PackedBytes.
-		/// </summary>
-		public static ulong ReadPackedBytes(this uint[] buffer, ref int bitposition, int bits)
-		{
-			if (bits == 0)
-				return 0;
+            //UnityEngine.Debug.Log(value + " buff:" + buffer + "bytes " + bytes +
+            //	" = [" + (int)sizebits + " : " + (valuebits << 3) + "]  total bits: " + ((int)sizebits + (valuebits << 3)));
+        }
 
-			int bytes = (bits + 7) >> 3;
-			int sizebits = bytes.UsedBitCount();
-			int valuebits = (int)buffer.Read(ref bitposition, sizebits) << 3;
-			return buffer.Read(ref bitposition, valuebits);
-		}
-		/// <summary>
-		/// Primary Reader for PackedBytes.
-		/// </summary>
-		public static ulong ReadPackedBytes(this byte[] buffer, ref int bitposition, int bits)
-		{
-			if (bits == 0)
-				return 0;
+        #endregion
 
-			int bytes     = (bits + 7) >> 3;
-			int sizebits  = bytes.UsedBitCount();
-			int valuebits = (int)buffer.Read(ref bitposition, sizebits) << 3;
-      var val       = buffer.Read(ref bitposition, valuebits);
-      // UnityEngine.Debug.Log($"READ {val} Used Bytes : {valuebits} -- pos after read {bitposition} - siderSize:{sizebits}");
-      return val;
+        #region Primary Read Packed
 
+        /// <summary>
+        /// Primary UNSAFE Reader for PackedBytes.
+        /// </summary>
+        public unsafe static ulong ReadPackedBytes(ulong* uPtr, ref int bitposition, int bits)
+        {
+            if (bits == 0)
+                return 0;
+
+            int bytes = (bits + 7) >> 3;
+            int sizebits = bytes.UsedBitCount();
+            int valuebits = (int)ArraySerializeUnsafe.Read(uPtr, ref bitposition, sizebits) << 3;
+            return ArraySerializeUnsafe.Read(uPtr, ref bitposition, valuebits);
+        }
+        /// <summary>
+        /// Primary Reader for PackedBytes.
+        /// </summary>
+        public static ulong ReadPackedBytes(this ulong[] buffer, ref int bitposition, int bits)
+        {
+            if (bits == 0)
+                return 0;
+
+            int bytes = (bits + 7) >> 3;
+            int sizebits = bytes.UsedBitCount();
+            int valuebits = (int)buffer.Read(ref bitposition, sizebits) << 3;
+
+            var val = buffer.Read(ref bitposition, valuebits);
+            // Debug.Log($"READ {val} Used Bytes : {valuebits} -- pos after read {bitposition} - siderSize:{sizebits}");
+            return val;
+        }
+        /// <summary>
+        /// Primary Reader for PackedBytes.
+        /// </summary>
+        public static ulong ReadPackedBytes(this uint[] buffer, ref int bitposition, int bits)
+        {
+            if (bits == 0)
+                return 0;
+
+            int bytes = (bits + 7) >> 3;
+            int sizebits = bytes.UsedBitCount();
+            int valuebits = (int)buffer.Read(ref bitposition, sizebits) << 3;
+            return buffer.Read(ref bitposition, valuebits);
+        }
+        /// <summary>
+        /// Primary Reader for PackedBytes.
+        /// </summary>
+        public static ulong ReadPackedBytes(this byte[] buffer, ref int bitposition, int bits)
+        {
+            if (bits == 0)
+                return 0;
+
+            int bytes = (bits + 7) >> 3;
+            int sizebits = bytes.UsedBitCount();
+            int valuebits = (int)buffer.Read(ref bitposition, sizebits) << 3;
+            var val = buffer.Read(ref bitposition, valuebits);
+            // UnityEngine.Debug.Log($"READ {val} Used Bytes : {valuebits} -- pos after read {bitposition} - siderSize:{sizebits}");
+            return val;
+
+        }
+
+        #endregion
+
+        #region Packed Signed
+
+        // Unsafe
+
+        /// <summary>
+        /// EXPERIMENTAL: Primary UNSAFE Write signed value as PackedByte. 
+        /// </summary>
+        public unsafe static void WriteSignedPackedBytes(ulong* uPtr, int value, ref int bitposition, int bits)
+        {
+            uint zigzag = (uint)((value << 1) ^ (value >> 31));
+            WritePackedBytes(uPtr, zigzag, ref bitposition, bits);
+        }
+        /// <summary>
+        /// EXPERIMENTAL: Primary UNSAFE Read signed value from PackedByte. 
+        /// </summary>
+        public unsafe static int ReadSignedPackedBytes(ulong* uPtr, ref int bitposition, int bits)
+        {
+            uint value = (uint)ReadPackedBytes(uPtr, ref bitposition, bits);
+            int zagzig = (int)((value >> 1) ^ (-(int)(value & 1)));
+            return zagzig;
+        }
+
+        // ulong[]
+
+        /// <summary>
+        /// EXPERIMENTAL: Primary Write signed value as PackedByte. 
+        /// </summary>
+        public static void WriteSignedPackedBytes(this ulong[] buffer, int value, ref int bitposition, int bits)
+        {
+            uint zigzag = (uint)((value << 1) ^ (value >> 31));
+            buffer.WritePackedBytes(zigzag, ref bitposition, bits);
+        }
+        /// <summary>
+        /// EXPERIMENTAL: Read signed value from PackedByte. 
+        /// </summary>
+        public static int ReadSignedPackedBytes(this ulong[] buffer, ref int bitposition, int bits)
+        {
+            uint value = (uint)buffer.ReadPackedBytes(ref bitposition, bits);
+            int zagzig = (int)((value >> 1) ^ (-(int)(value & 1)));
+            return zagzig;
+        }
+
+        // uint[]
+
+        /// <summary>
+        /// EXPERIMENTAL: Primary Write signed value as PackedByte. 
+        /// </summary>
+        public static void WriteSignedPackedBytes(this uint[] buffer, int value, ref int bitposition, int bits)
+        {
+            uint zigzag = (uint)((value << 1) ^ (value >> 31));
+            buffer.WritePackedBytes(zigzag, ref bitposition, bits);
+        }
+        /// <summary>
+        /// EXPERIMENTAL: Read signed value from PackedByte. 
+        /// </summary>
+        public static int ReadSignedPackedBytes(this uint[] buffer, ref int bitposition, int bits)
+        {
+            uint value = (uint)buffer.ReadPackedBytes(ref bitposition, bits);
+            int zagzig = (int)((value >> 1) ^ (-(int)(value & 1)));
+            return zagzig;
+        }
+
+        // byte[]
+
+        /// <summary>
+        /// EXPERIMENTAL: Primary Write signed value as PackedByte. 
+        /// </summary>
+        public static void WriteSignedPackedBytes(this byte[] buffer, int value, ref int bitposition, int bits)
+        {
+            uint zigzag = (uint)((value << 1) ^ (value >> 31));
+            buffer.WritePackedBytes(zigzag, ref bitposition, bits);
+        }
+        /// <summary>
+        /// EXPERIMENTAL: Read signed value from PackedByte. 
+        /// </summary>
+        public static int ReadSignedPackedBytes(this byte[] buffer, ref int bitposition, int bits)
+        {
+            uint value = (uint)buffer.ReadPackedBytes(ref bitposition, bits);
+            int zagzig = (int)((value >> 1) ^ (-(int)(value & 1)));
+            return zagzig;
+        }
+
+        /// <summary>
+        /// EXPERIMENTAL: Primary Write signed value as PackedByte. 
+        /// </summary>
+        public static void WriteSignedPackedBytes64(this byte[] buffer, long value, ref int bitposition, int bits)
+        {
+            ulong zig = (ulong)((value << 1) ^ (value >> 63));
+            buffer.WritePackedBytes(zig, ref bitposition, bits);
+        }
+        /// <summary>
+        /// EXPERIMENTAL: Read signed value from PackedByte. 
+        /// </summary>
+        public static long ReadSignedPackedBytes64(this byte[] buffer, ref int bitposition, int bits)
+        {
+            ulong zig = buffer.ReadPackedBytes(ref bitposition, bits);
+            long zag = (long)((long)(zig >> 1) ^ (-(long)(zig & 1)));
+            return zag;
+        }
+
+        #endregion
     }
-
-		#endregion
-
-		#region Packed Signed
-
-		// Unsafe
-
-		/// <summary>
-		/// EXPERIMENTAL: Primary UNSAFE Write signed value as PackedByte. 
-		/// </summary>
-		public unsafe static void WriteSignedPackedBytes(ulong* uPtr, int value, ref int bitposition, int bits)
-		{
-			uint zigzag = (uint)((value << 1) ^ (value >> 31));
-			WritePackedBytes(uPtr, zigzag, ref bitposition, bits);
-		}
-		/// <summary>
-		/// EXPERIMENTAL: Primary UNSAFE Read signed value from PackedByte. 
-		/// </summary>
-		public unsafe static int ReadSignedPackedBytes(ulong* uPtr, ref int bitposition, int bits)
-		{
-			uint value = (uint)ReadPackedBytes(uPtr, ref bitposition, bits);
-			int zagzig = (int)((value >> 1) ^ (-(int)(value & 1)));
-			return zagzig;
-		}
-
-		// ulong[]
-
-		/// <summary>
-		/// EXPERIMENTAL: Primary Write signed value as PackedByte. 
-		/// </summary>
-		public static void WriteSignedPackedBytes(this ulong[] buffer, int value, ref int bitposition, int bits)
-		{
-			uint zigzag = (uint)((value << 1) ^ (value >> 31));
-			buffer.WritePackedBytes(zigzag, ref bitposition, bits);
-		}
-		/// <summary>
-		/// EXPERIMENTAL: Read signed value from PackedByte. 
-		/// </summary>
-		public static int ReadSignedPackedBytes(this ulong[] buffer, ref int bitposition, int bits)
-		{
-			uint value = (uint)buffer.ReadPackedBytes(ref bitposition, bits);
-			int zagzig = (int)((value >> 1) ^ (-(int)(value & 1)));
-			return zagzig;
-		}
-
-		// uint[]
-
-		/// <summary>
-		/// EXPERIMENTAL: Primary Write signed value as PackedByte. 
-		/// </summary>
-		public static void WriteSignedPackedBytes(this uint[] buffer, int value, ref int bitposition, int bits)
-		{
-			uint zigzag = (uint)((value << 1) ^ (value >> 31));
-			buffer.WritePackedBytes(zigzag, ref bitposition, bits);
-		}
-		/// <summary>
-		/// EXPERIMENTAL: Read signed value from PackedByte. 
-		/// </summary>
-		public static int ReadSignedPackedBytes(this uint[] buffer, ref int bitposition, int bits)
-		{
-			uint value = (uint)buffer.ReadPackedBytes(ref bitposition, bits);
-			int zagzig = (int)((value >> 1) ^ (-(int)(value & 1)));
-			return zagzig;
-		}
-
-		// byte[]
-
-		/// <summary>
-		/// EXPERIMENTAL: Primary Write signed value as PackedByte. 
-		/// </summary>
-		public static void WriteSignedPackedBytes(this byte[] buffer, int value, ref int bitposition, int bits)
-		{
-			uint zigzag = (uint)((value << 1) ^ (value >> 31));
-			buffer.WritePackedBytes(zigzag, ref bitposition, bits);
-		}
-		/// <summary>
-		/// EXPERIMENTAL: Read signed value from PackedByte. 
-		/// </summary>
-		public static int ReadSignedPackedBytes(this byte[] buffer, ref int bitposition, int bits)
-		{
-			uint value = (uint)buffer.ReadPackedBytes(ref bitposition, bits);
-			int zagzig = (int)((value >> 1) ^ (-(int)(value & 1)));
-			return zagzig;
-		}
-
-		/// <summary>
-		/// EXPERIMENTAL: Primary Write signed value as PackedByte. 
-		/// </summary>
-		public static void WriteSignedPackedBytes64(this byte[] buffer, long value, ref int bitposition, int bits)
-		{
-			ulong zig = (ulong)((value << 1) ^ (value >> 63));
-			buffer.WritePackedBytes(zig, ref bitposition, bits);
-		}
-		/// <summary>
-		/// EXPERIMENTAL: Read signed value from PackedByte. 
-		/// </summary>
-		public static long ReadSignedPackedBytes64(this byte[] buffer, ref int bitposition, int bits)
-		{
-			ulong zig = buffer.ReadPackedBytes(ref bitposition, bits);
-			long zag = (long)((long)(zig >> 1) ^ (-(long)(zig & 1)));
-			return zag;
-		}
-
-		#endregion
-	}
 }
