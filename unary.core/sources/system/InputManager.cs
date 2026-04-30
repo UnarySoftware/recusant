@@ -34,17 +34,6 @@ namespace Unary.Core
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool IsMouseVisible()
-        {
-            return Input.Singleton.MouseMode == Input.MouseModeEnum.Visible;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool IsMouseCaptured()
-        {
-            return Input.Singleton.MouseMode == Input.MouseModeEnum.Captured;
-        }
-
         public bool HasScope<T>(T scope) where T : struct, IConvertible
         {
             int intScope = Convert.ToInt32(scope);
@@ -54,9 +43,7 @@ namespace Unary.Core
 
         public bool IsActionJustReleased<T>(StringName action, T scope) where T : struct, IConvertible
         {
-            int intScope = Convert.ToInt32(scope);
-
-            if ((_scope & intScope) != intScope)
+            if (!HasScope(scope))
             {
                 return false;
             }
@@ -66,9 +53,7 @@ namespace Unary.Core
 
         public bool IsActionJustPressed<T>(StringName action, T scope) where T : struct, IConvertible
         {
-            int intScope = Convert.ToInt32(scope);
-
-            if ((_scope & intScope) != intScope)
+            if (!HasScope(scope))
             {
                 return false;
             }
@@ -78,9 +63,7 @@ namespace Unary.Core
 
         public bool IsActionPressed<T>(StringName action, T scope) where T : struct, IConvertible
         {
-            int intScope = Convert.ToInt32(scope);
-
-            if ((_scope & intScope) != intScope)
+            if (!HasScope(scope))
             {
                 return false;
             }
@@ -90,9 +73,7 @@ namespace Unary.Core
 
         public float GetActionStrength<T>(StringName action, T scope) where T : struct, IConvertible
         {
-            int intScope = Convert.ToInt32(scope);
-
-            if ((_scope & intScope) != intScope)
+            if (!HasScope(scope))
             {
                 return 0.0f;
             }
@@ -102,9 +83,7 @@ namespace Unary.Core
 
         public Vector2 GetVector<T>(StringName negativeX, StringName positiveX, StringName negativeY, StringName positiveY, T scope, float deadzone = -1.0f) where T : struct, IConvertible
         {
-            int intScope = Convert.ToInt32(scope);
-
-            if ((_scope & intScope) != intScope)
+            if (!HasScope(scope))
             {
                 return Vector2.Zero;
             }
@@ -114,9 +93,7 @@ namespace Unary.Core
 
         public bool IsKeyPressed<T>(Key key, T scope) where T : struct, IConvertible
         {
-            int intScope = Convert.ToInt32(scope);
-
-            if ((_scope & intScope) != intScope)
+            if (!HasScope(scope))
             {
                 return false;
             }
@@ -126,9 +103,7 @@ namespace Unary.Core
 
         public bool IsMouseButtonPressed<T>(MouseButton button, T scope) where T : struct, IConvertible
         {
-            int intScope = Convert.ToInt32(scope);
-
-            if ((_scope & intScope) != intScope)
+            if (!HasScope(scope))
             {
                 return false;
             }
