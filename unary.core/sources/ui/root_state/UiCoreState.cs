@@ -14,27 +14,27 @@ namespace Unary.Core
 
         public override void Process(float delta)
         {
-            if (Input.Singleton.IsActionJustReleased("ui_console"))
+            if (InputManager.Singleton.IsActionJustReleased("ui_console", 0))
             {
                 GetUnit<UiCoreConsole>().Toggle();
             }
 
-            if (Input.Singleton.IsKeyPressed(Key.F1))
+            if (InputManager.Singleton.IsKeyPressed(Key.F1, 0))
             {
                 RuntimeLogger.Log(this, "TEST");
             }
 
-            if (Input.Singleton.IsKeyPressed(Key.F2))
+            if (InputManager.Singleton.IsKeyPressed(Key.F2, 0))
             {
                 RuntimeLogger.Warning(this, "TEST");
             }
 
-            if (Input.Singleton.IsKeyPressed(Key.F3))
+            if (InputManager.Singleton.IsKeyPressed(Key.F3, 0))
             {
                 RuntimeLogger.Error(this, "TEST");
             }
 
-            if (Input.Singleton.IsKeyPressed(Key.F5))
+            if (InputManager.Singleton.IsKeyPressed(Key.F5, 0))
             {
                 int a = 1;
                 int b = 0;

@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://f6kx848g5bco"]
 
-[ext_resource type="Script" uid="uid://df4tkmvtbeimi" path="res://unary.recusant/sources/ecs/player/Player.cs" id="1_ib3fy"]
+[ext_resource type="Script" uid="uid://e6terw4dr0fb" path="res://unary.recusant/sources/ecs/player/PlayerMovement.cs" id="1_ib3fy"]
 [ext_resource type="Script" uid="uid://ccbwwwt2a8r67" path="res://unary.core/sources/ecs/Entity.cs" id="1_ysajs"]
 [ext_resource type="Script" uid="uid://kwagcll6xbsf" path="res://unary.recusant/sources/ecs/player/PlayerFlow.cs" id="3_5guud"]
+[ext_resource type="Script" uid="uid://c11t2j8iwtl68" path="res://unary.recusant/sources/ecs/player/PlayerCamera.cs" id="4_mfgvn"]
+[ext_resource type="Script" uid="uid://bue0h7gx0cndc" path="res://unary.recusant/sources/ecs/player/PlayerHealth.cs" id="5_c7x01"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_24kai"]
 margin = 0.01
@@ -48,18 +50,26 @@ target_position = Vector3(0, -0.55, 0)
 [node name="StairsBelowRayCast3D" type="RayCast3D" parent="CharacterBody3D" unique_id=1565623768]
 unique_name_in_owner = true
 
-[node name="Player" type="Node" parent="." unique_id=1638530866 node_paths=PackedStringArray("Body", "CollisionShape3D", "Camera3D", "CameraSmooth", "StairsBelowRayCast3D", "StairsAheadRayCast3D", "Head")]
+[node name="PlayerMovement" type="Node" parent="." unique_id=1638530866 node_paths=PackedStringArray("Body", "CollisionShape3D", "StairsBelowRayCast3D", "StairsAheadRayCast3D", "Head")]
 script = ExtResource("1_ib3fy")
 Body = NodePath("../CharacterBody3D")
 CollisionShape3D = NodePath("../CharacterBody3D/CollisionShape3D")
-Camera3D = NodePath("../CharacterBody3D/HeadOriginalPosition/Head/CameraSmooth/Camera3D")
-CameraSmooth = NodePath("../CharacterBody3D/HeadOriginalPosition/Head/CameraSmooth")
 StairsBelowRayCast3D = NodePath("../CharacterBody3D/StairsBelowRayCast3D")
 StairsAheadRayCast3D = NodePath("../CharacterBody3D/StairsAheadRayCast3D")
 Head = NodePath("../CharacterBody3D/HeadOriginalPosition/Head")
-metadata/_custom_type_script = "uid://df4tkmvtbeimi"
 
 [node name="PlayerFlow" type="Node" parent="." unique_id=489091830 node_paths=PackedStringArray("body")]
 script = ExtResource("3_5guud")
 body = NodePath("../CharacterBody3D")
 metadata/_custom_type_script = "uid://kwagcll6xbsf"
+
+[node name="PlayerCamera" type="Node" parent="." unique_id=1069604513 node_paths=PackedStringArray("Body", "Camera3D", "CameraSmooth")]
+script = ExtResource("4_mfgvn")
+Body = NodePath("../CharacterBody3D")
+Camera3D = NodePath("../CharacterBody3D/HeadOriginalPosition/Head/CameraSmooth/Camera3D")
+CameraSmooth = NodePath("../CharacterBody3D/HeadOriginalPosition/Head/CameraSmooth")
+metadata/_custom_type_script = "uid://c11t2j8iwtl68"
+
+[node name="PlayerHealth" type="Node" parent="." unique_id=2004345291]
+script = ExtResource("5_c7x01")
+metadata/_custom_type_script = "uid://bue0h7gx0cndc"

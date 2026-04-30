@@ -18,10 +18,10 @@ namespace Unary.Recusant
 
         public override void Process(float delta)
         {
-            if (Player.Instance != null)
+            if (PlayerMovement.Instance != null)
             {
-                _label1.Text = Player.Instance.Body.Velocity.Length().ToString("0.0 m/s");
-                _label2.Text = Player.Instance.Damage + " dmg";
+                _label1.Text = PlayerMovement.Instance.Body.Velocity.Length().ToString("0.0 m/s");
+                _label2.Text = PlayerHealth.Instance.Damage + " dmg";
 
                 if (PlayerFlow.Instance != null)
                 {

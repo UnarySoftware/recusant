@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Unary.Recusant;
 
 namespace Unary.Core
 {
@@ -462,23 +463,15 @@ namespace Unary.Core
                 }
             }
 
-            if (Input.Singleton.IsActionJustReleased(ui_back))
+            if (InputManager.Singleton.IsActionJustReleased(ui_back, 0))
             {
                 GoBack();
             }
 
-            if (Input.Singleton.IsActionJustReleased(ui_mouse_release))
+            if (InputManager.Singleton.IsActionJustReleased(ui_mouse_release, 0))
             {
-                if (Input.Singleton.MouseMode == Input.MouseModeEnum.Captured)
-                {
-                    Input.Singleton.MouseMode = Input.MouseModeEnum.Visible;
-                }
-                else if (Input.Singleton.MouseMode == Input.MouseModeEnum.Visible)
-                {
-                    Input.Singleton.MouseMode = Input.MouseModeEnum.Captured;
-                }
+                InputManager.Singleton.InvertMouseMode();
             }
-
         }
 
         void ISystem.Deinitialize()

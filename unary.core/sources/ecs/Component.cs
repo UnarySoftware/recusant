@@ -17,6 +17,11 @@ namespace Unary.Core
             }
         }
 
+        public T GetComponent<T>() where T : Component
+        {
+            return Entity.GetComponent<T>();
+        }
+
         public virtual void Initialize()
         {
 

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Unary.Recusant;
 
 namespace Unary.Core
 {
@@ -84,20 +85,28 @@ namespace Unary.Core
             _enabled = newValue;
         }
 
-        private Input.MouseModeEnum _mouseMode;
+        private Input.MouseModeEnum _savedMouseMode;
+        private InputScope _savedScope;
 
         public void Enable()
         {
             ToggleVisibility(true);
-            _mouseMode = Input.Singleton.MouseMode;
+
+            _savedMouseMode = Input.Singleton.MouseMode;
             Input.Singleton.MouseMode = Input.MouseModeEnum.Visible;
+
+            _savedScope = InputManager.Singleton.GetScope<InputScope>();
+            InputManager.Singleton.SetScope(InputScope.None);
         }
 
         public void Disable()
         {
             ToggleVisibility(false);
+
             _currentLabel = null;
-            Input.Singleton.MouseMode = _mouseMode;
+
+            Input.Singleton.MouseMode = _savedMouseMode;
+            InputManager.Singleton.SetScope(_savedScope);
         }
 
         public void Toggle()
@@ -133,7 +142,8 @@ namespace Unary.Core
                 return;
             }
 
-            if (!Input.IsMouseButtonPressed(MouseButton.Left) && !Input.IsMouseButtonPressed(MouseButton.Right))
+            if (!InputManager.Singleton.IsMouseButtonPressed(MouseButton.Left, InputScope.None) &&
+                !InputManager.Singleton.IsMouseButtonPressed(MouseButton.Right, InputScope.None))
             {
                 return;
             }

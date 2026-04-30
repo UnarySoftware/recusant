@@ -37,7 +37,7 @@ namespace Unary.Recusant
         {
             Entity entity = _playerPool.Aquire<Entity>(true);
 
-            entity.GetComponent<Player>().Body.GlobalPosition = GetMarker(PlayerMarker.MarkerType.Start).GlobalPosition;
+            entity.GetComponent<PlayerMovement>().Body.GlobalPosition = GetMarker(PlayerMarker.MarkerType.Start).GlobalPosition;
 
             _players.Add(entity);
             return true;
