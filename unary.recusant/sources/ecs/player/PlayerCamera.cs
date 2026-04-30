@@ -15,6 +15,9 @@ namespace Unary.Recusant
         public float MaxRoll = 30.0f;
 
         [Export]
+        public float RollMultiplier = 0.4f;
+
+        [Export]
         public float LookSensitivity = 0.002f;
 
         [Export]
@@ -72,6 +75,14 @@ namespace Unary.Recusant
         public Camera3D GetActiveCamera()
         {
             return Camera3D;
+        }
+
+        public void DoRoll(float force)
+        {
+            force *= RollMultiplier;
+            Vector3 rotation = Camera3D.RotationDegrees;
+            rotation.Z = force;
+            Camera3D.RotationDegrees = rotation;
         }
 
         public override void _Input(InputEvent @event)

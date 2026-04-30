@@ -110,8 +110,8 @@ namespace Unary.Recusant
         private List<Area3D> _ladders = [];
         private List<Area3D> _water = [];
 
-        Vector3 _previousVelocity;
-        bool InAir = false;
+        private Vector3 _previousVelocity;
+        private bool _wasInAir = false;
 
         public static PlayerMovement Instance;
 
@@ -594,21 +594,11 @@ namespace Unary.Recusant
                 {
                     if (Body.IsOnFloor() || _wasSnappedToStairs)
                     {
-                        if (InAir)
+                        if (_wasInAir)
                         {
-                            InAir = false;
-
-                            float Remap = Mathf.Remap(Mathf.Abs(_previousVelocity.Y), 0.0f, 75.0f, 0.0f, 30.0f);
-
-                            Vector3 rotation = _camera.Camera3D.RotationDegrees;
-                            rotation.Z = Remap;
-
-                            _camera.Camera3D.RotationDegrees = rotation;
-
-                            if (_previousVelocity.Y <= -9.9f)
-                            {
-                                _health.Damage = _health.GetDamage(_previousVelocity.Y, -9.9f);
-                            }
+                            _wasInAir = false;
+                            _camera.DoRoll(Mathf.Abs(_previousVelocity.Y));
+                            _health.DoFallDamage(Mathf.Abs(_previousVelocity.Y));
                         }
 
                         if (InputManager.Singleton.IsActionJustPressed(InputActions.Jump, InputScope.PlayerMovement) ||
@@ -623,7 +613,7 @@ namespace Unary.Recusant
                     else
                     {
                         HandleAirPhysics(delta);
-                        InAir = true;
+                        _wasInAir = true;
                         _previousVelocity = Body.Velocity;
                     }
                 }
