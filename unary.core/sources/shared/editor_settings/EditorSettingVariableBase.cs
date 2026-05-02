@@ -15,10 +15,6 @@ namespace Unary.Core
 
         public Func<Variant, Variant, Variant> CustomSetter;
 
-        public string CustomGroup = string.Empty;
-        public string CustomName = string.Empty;
-
-        public Type GenericType;
         public string Path;
 
         private bool _gotHash = false;

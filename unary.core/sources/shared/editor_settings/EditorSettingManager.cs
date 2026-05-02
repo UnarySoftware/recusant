@@ -39,10 +39,11 @@ namespace Unary.Core
                     string groupVisual;
                     string groupPath;
 
-                    if (fieldBase.CustomGroup != string.Empty)
+                    if (fieldBase.Group != null &&
+                        fieldBase.Group != string.Empty)
                     {
-                        groupVisual = fieldBase.CustomGroup;
-                        groupPath = fieldBase.CustomGroup.ToPath();
+                        groupVisual = fieldBase.Group;
+                        groupPath = fieldBase.Group.ToPath();
                     }
                     else
                     {
@@ -53,10 +54,11 @@ namespace Unary.Core
                     string nameVisual;
                     string namePath;
 
-                    if (fieldBase.CustomName != string.Empty)
+                    if (fieldBase.Name != null &&
+                        fieldBase.Name != string.Empty)
                     {
-                        nameVisual = fieldBase.CustomName;
-                        namePath = fieldBase.CustomName.ToPath();
+                        nameVisual = fieldBase.Name;
+                        namePath = fieldBase.Name.ToPath();
                     }
                     else
                     {

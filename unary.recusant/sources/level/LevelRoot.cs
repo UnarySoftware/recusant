@@ -63,16 +63,16 @@ namespace Unary.Recusant
         private static EditorSettingVariable<bool> _drawVisualPaths = new()
         {
             EditorDefault = true,
-            CustomGroup = "Gizmos",
-            CustomName = "LevelRoot Paths",
+            Group = "Gizmos",
+            Name = "LevelRoot Paths",
             Description = "Draws Visual Paths"
         };
 
         private static EditorSettingVariable<bool> _drawBounds = new()
         {
             EditorDefault = true,
-            CustomGroup = "Gizmos",
-            CustomName = "LevelRoot Bounds",
+            Group = "Gizmos",
+            Name = "LevelRoot Bounds",
         };
 
         private DebugData<List<VisualPath>> VisualPaths

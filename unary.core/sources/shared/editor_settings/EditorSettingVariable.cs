@@ -9,7 +9,6 @@ namespace Unary.Core
         public EditorSettingVariable()
         {
             Type = EditorSettingType.Variable;
-            GenericType = typeof(T);
         }
 
         private bool _gotValue = false;
