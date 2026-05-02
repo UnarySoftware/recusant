@@ -16,11 +16,11 @@ namespace Unary.Core
                     return default;
                 }
 
-                return Variable.VariantValue;
+                return Variable.GetField();
             }
             set
             {
-                Variable?.VariantValue = value;
+                Variable?.SetField(value);
             }
         }
     }

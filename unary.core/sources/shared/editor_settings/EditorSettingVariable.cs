@@ -21,7 +21,7 @@ namespace Unary.Core
                 if (!_gotValue)
                 {
                     _gotValue = true;
-                    field = VariantValue.As<T>();
+                    field = _field.As<T>();
                 }
 
                 return field;

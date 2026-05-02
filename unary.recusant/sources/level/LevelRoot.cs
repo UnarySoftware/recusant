@@ -65,6 +65,7 @@ namespace Unary.Recusant
             EditorDefault = true,
             CustomGroup = "Gizmos",
             CustomName = "LevelRoot Paths",
+            Description = "Draws Visual Paths"
         };
 
         private static EditorSettingVariable<bool> _drawBounds = new()

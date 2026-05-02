@@ -33,7 +33,7 @@ namespace Unary.Core
                 return;
             }
 
-            result.VariantValue = packet.Value;
+            result.SetField(packet.Value);
         }
     }
 }

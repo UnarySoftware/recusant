@@ -80,8 +80,14 @@ namespace Unary.Core.Editor
                 _modIdToEntries[storage.ModId][group].Entries.RemoveAt(entryIndex);
             }
 
-            EditorProperty editor = EditorInspector.InstantiatePropertyEditor(variableBase.Wrapper, variableBase.VariantValue.VariantType,
+            EditorProperty editor = EditorInspector.InstantiatePropertyEditor(variableBase.Wrapper, variableBase.GetField().VariantType,
             nameof(EditorSettingWrapper.Value), variableBase.PropertyHint, variableBase.HintText, (uint)PropertyUsageFlags.Editor, true);
+
+            if (variableBase.Description != null &&
+                !string.IsNullOrEmpty(variableBase.Description))
+            {
+                editor.TooltipText = variableBase.Description;
+            }
 
             variableBase.Inspector = editor;
 
@@ -125,10 +131,17 @@ namespace Unary.Core.Editor
             else if (entry.Type == EditorSettingType.Action)
             {
                 EditorSettingAction action = (EditorSettingAction)entry;
+
                 Button newButton = new()
                 {
-                    Text = entry.Name
+                    Text = entry.Name,
                 };
+
+                if (action.Description != null &&
+                    !string.IsNullOrEmpty(action.Description))
+                {
+                    newButton.TooltipText = action.Description;
+                }
 
                 var handler = new PluginDockActionHandler();
                 handler.Setup(action);

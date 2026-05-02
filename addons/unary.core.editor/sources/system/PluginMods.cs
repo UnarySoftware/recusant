@@ -9,7 +9,7 @@ namespace Unary.Core.Editor
     [Tool]
     public partial class PluginMods : IPluginSystem
     {
-        [EditorSettingAction]
+        [EditorSettingAction(description: "This prints all of the currently selected mods")]
         private static void PrintModsList()
         {
             List<ModManifest> mods = EnabledModsList;
@@ -60,7 +60,7 @@ namespace Unary.Core.Editor
             {
                 List<ModManifest> result = [];
 
-                uint value = _selectedMods.VariantValue.As<uint>();
+                uint value = _selectedMods.GetField().As<uint>();
                 int counter = 1;
 
                 foreach (var mod in AllModsList)
@@ -220,7 +220,7 @@ namespace Unary.Core.Editor
                 _currentMods.Add(mod.ModId);
             }
 
-            uint previousValue = _selectedMods.VariantValue.As<uint>();
+            uint previousValue = _selectedMods.GetField().As<uint>();
 
             (var newValue, var newString) = RemapFields(previousValue, _selectedMods.HintText, _currentMods);
 
@@ -229,7 +229,7 @@ namespace Unary.Core.Editor
                 return;
             }
 
-            _selectedMods.VariantValue = newValue;
+            _selectedMods.SetField(newValue);
             _selectedMods.HintText = newString;
             PluginDock.Singleton.UpdateInspector(_selectedMods);
         }

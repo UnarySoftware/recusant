@@ -46,66 +46,64 @@ namespace Unary.Core
 
         public Action<EditorSettingVariableBase> OnValueChanged = Dummy;
 
-        public Variant VariantValue
+        public override Variant GetField()
         {
-            get
+            if (!_gotValue)
             {
-                if (!_gotValue)
-                {
-                    _gotValue = true;
+                _gotValue = true;
 #if TOOLS
-                    if (Engine.Singleton.IsEditorHint())
-                    {
-                        EditorSettingManager.Initialize();
-
-                        EditorSettingSaver.Singleton.GetVariable(Path, out Variant result, out bool found);
-
-                        if (!found)
-                        {
-                            field = VariantEditorDefault;
-                            return field;
-                        }
-
-                        field = result;
-                    }
-                    else
-                    {
-                        field = VariantEditorDefault;
-                    }
-#else
-                    field = VariantRuntimeDefault;
-#endif
-                }
-
-                return field;
-            }
-            set
-            {
-#if TOOLS
-                Variant newValue = value;
-
                 if (Engine.Singleton.IsEditorHint())
                 {
-                    if (Path == null)
+                    EditorSettingManager.Initialize();
+
+                    EditorSettingSaver.Singleton.GetVariable(Path, out Variant result, out bool found);
+
+                    if (!found)
                     {
-                        PluginLogger.Error(this, "Path was null, you are not supposed to be setting your settings so early!");
-                        return;
+                        _field = VariantEditorDefault;
+                        return _field;
                     }
 
-                    if (CustomSetter != null)
-                    {
-                        newValue = CustomSetter(VariantValue, newValue);
-                    }
-
-                    EditorSettingSaver.Singleton.SetVariable(Path, newValue, false);
-                    EditorSettingSaver.Singleton.Save();
+                    _field = result;
                 }
-
-                field = newValue;
-                OnSetValue(newValue);
-                OnValueChanged(this);
+                else
+                {
+                    _field = VariantEditorDefault;
+                }
+#else
+                    _field = VariantRuntimeDefault;
 #endif
             }
+
+            return _field;
+        }
+
+        public override void SetField(Variant value)
+        {
+#if TOOLS
+            Variant newValue = value;
+
+            if (Engine.Singleton.IsEditorHint())
+            {
+                if (Path == null)
+                {
+                    PluginLogger.Error(this, "Path was null, you are not supposed to be setting your settings so early!");
+                    return;
+                }
+
+                if (CustomSetter != null)
+                {
+                    newValue = CustomSetter(_field, newValue);
+                }
+
+                EditorSettingSaver.Singleton.SetVariable(Path, newValue, false);
+                EditorSettingSaver.Singleton.Save();
+            }
+
+            _field = newValue;
+            OnSetValue(newValue);
+            OnValueChanged(this);
+#endif
         }
 
         public virtual bool IsDefault()

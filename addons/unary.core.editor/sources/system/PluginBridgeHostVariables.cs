@@ -66,7 +66,7 @@ namespace Unary.Core.Editor
 
                 EditorVariablePacket newPacket = new()
                 {
-                    Value = entry.Value.VariantValue,
+                    Value = entry.Value.GetField(),
                     VariableHash = entry.Key
                 };
 
@@ -80,7 +80,7 @@ namespace Unary.Core.Editor
 
             EditorVariablePacket newPacket = new()
             {
-                Value = variable.VariantValue,
+                Value = variable.GetField(),
                 VariableHash = hash
             };
 

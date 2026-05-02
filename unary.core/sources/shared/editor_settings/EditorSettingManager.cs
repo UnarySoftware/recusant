@@ -71,7 +71,7 @@ namespace Unary.Core
                     fieldBase.Path = fieldBase.ModId.ToSnakeCase().Replace(".", "_");
                     fieldBase.Path += '/' + groupPath + '/' + namePath;
 
-                    EditorSettingSaver.Singleton.SetVariable(fieldBase.Path, fieldBase.VariantValue, true);
+                    EditorSettingSaver.Singleton.SetVariable(fieldBase.Path, fieldBase.GetField(), true);
 
                     fieldBase.Wrapper = new()
                     {
@@ -109,9 +109,9 @@ namespace Unary.Core
 
                         string groupVisual;
 
-                        if (casted.CustomGroup != "")
+                        if (casted.Group != "")
                         {
-                            groupVisual = casted.CustomGroup;
+                            groupVisual = casted.Group;
                         }
                         else
                         {
@@ -120,9 +120,9 @@ namespace Unary.Core
 
                         string nameVisual;
 
-                        if (casted.CustomName != "")
+                        if (casted.Name != "")
                         {
-                            nameVisual = casted.CustomName;
+                            nameVisual = casted.Name;
                         }
                         else
                         {
@@ -134,7 +134,8 @@ namespace Unary.Core
                             MethodInfo = method,
                             ModId = type.GetModId(),
                             Group = groupVisual,
-                            Name = nameVisual
+                            Name = nameVisual,
+                            Description = casted.Description
                         };
 
                         _entries.Add(newAction);
@@ -184,11 +185,6 @@ namespace Unary.Core
                 {
                     action.MethodInfo = null;
                 }
-            }
-
-            foreach (var field in _settingFields)
-            {
-                field.SetValue(null, null);
             }
 
             _settingFields.Clear();
