@@ -12,6 +12,18 @@ namespace Unary.Core
     [GlobalClass]
     public partial class UiCoreConsole : UiUnit<UiCoreState>
     {
+        private static readonly InputAction _copyData = new()
+        {
+            Scope = InputScope.None,
+            ActionType = InputActionBase.InputActionType.FastPress,
+            AllowedActionTypes = InputActionBase.InputActionType.All,
+            MouseButton = MouseButton.Left,
+            Type = InputActionBase.InputType.Mouse,
+            Group = "Interface",
+            Name = "Copy Data From Console",
+            Toggle = false,
+        };
+
         private bool _enabled = false;
 
         [UiElement("%ConsoleRoot")]
@@ -142,8 +154,7 @@ namespace Unary.Core
                 return;
             }
 
-            if (!InputManager.Singleton.IsMouseButtonPressed(MouseButton.Left, InputScope.None) &&
-                !InputManager.Singleton.IsMouseButtonPressed(MouseButton.Right, InputScope.None))
+            if (!_copyData.Poll(delta))
             {
                 return;
             }

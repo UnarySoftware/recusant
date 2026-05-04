@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://ds6k02un5kca7"]
+
+[ext_resource type="Texture2D" uid="uid://bi7817limk6q" path="res://unary.recusant/ui/controls/mouse_left_default.png" id="1_3264u"]
+[ext_resource type="Texture2D" uid="uid://dptuphalmaylw" path="res://unary.recusant/ui/controls/mouse_half.png" id="1_fo2kf"]
+[ext_resource type="Texture2D" uid="uid://dcwlufogc2bra" path="res://unary.recusant/ui/controls/mouse_left_pressed.png" id="3_30lfk"]
+[ext_resource type="Texture2D" uid="uid://yqybddg1s4ry" path="res://unary.recusant/ui/controls/mouse_right_default.png" id="3_vbsma"]
+[ext_resource type="Texture2D" uid="uid://b6286il6s5rfw" path="res://unary.recusant/ui/controls/mouse_scroll_up_default.png" id="4_pwfwf"]
+[ext_resource type="Texture2D" uid="uid://ddhnlregw2x4q" path="res://unary.recusant/ui/controls/mouse_scroll_down_default.png" id="5_7el35"]
+[ext_resource type="Texture2D" uid="uid://dkdj5pjadioe5" path="res://unary.recusant/ui/controls/mouse_right_pressed.png" id="5_axlar"]
+[ext_resource type="Script" uid="uid://bnq7oseqjpdtb" path="res://unary.recusant/sources/ui/shared/UiMouseIcon.cs" id="6_gy5qo"]
+[ext_resource type="Texture2D" uid="uid://dxhkpjid57gv5" path="res://unary.recusant/ui/controls/mouse_scroll_up_pressed.png" id="7_myht6"]
+[ext_resource type="Texture2D" uid="uid://dcuy0w3qoyg6t" path="res://unary.recusant/ui/controls/mouse_scroll_up_gradient.png" id="8_vc6o8"]
+[ext_resource type="Texture2D" uid="uid://dqyall73a6cdl" path="res://unary.recusant/ui/controls/mouse_scroll_down_pressed.png" id="10_uuxmo"]
+[ext_resource type="Texture2D" uid="uid://d1n1inoyy3487" path="res://unary.recusant/ui/controls/mouse_scroll_down_gradient.png" id="11_mhyba"]
+
+[node name="Aspect" type="AspectRatioContainer" unique_id=1121165097]
+anchors_preset = -1
+anchor_right = 0.20500001
+anchor_bottom = 0.42700002
+offset_right = -0.50006104
+offset_bottom = -0.4000244
+
+[node name="UiMouseIcon" type="Control" parent="." unique_id=256597331]
+layout_mode = 2
+script = ExtResource("6_gy5qo")
+LeftDefault = ExtResource("1_3264u")
+LeftPressed = ExtResource("3_30lfk")
+RightDefault = ExtResource("3_vbsma")
+RightPressed = ExtResource("5_axlar")
+ScrollUpDefault = ExtResource("4_pwfwf")
+ScrollUpPressed = ExtResource("7_myht6")
+ScrollUpGradient = ExtResource("8_vc6o8")
+ScrollDownDefault = ExtResource("5_7el35")
+ScrollDownPressed = ExtResource("10_uuxmo")
+ScrollDownGradient = ExtResource("11_mhyba")
+metadata/_custom_type_script = "uid://bnq7oseqjpdtb"
+
+[node name="Bottom" type="TextureRect" parent="UiMouseIcon" unique_id=719578409]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.41000003
+anchor_right = 1.0
+anchor_bottom = 1.0020001
+offset_top = 0.07998657
+offset_bottom = -0.024047852
+texture = ExtResource("1_fo2kf")
+expand_mode = 1
+
+[node name="Left" type="TextureRect" parent="UiMouseIcon" unique_id=977805001]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.5
+anchor_bottom = 0.41000003
+offset_bottom = 0.07998657
+texture = ExtResource("1_3264u")
+expand_mode = 1
+
+[node name="Right" type="TextureRect" parent="UiMouseIcon" unique_id=1306418075]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.41000003
+offset_bottom = 0.07998657
+texture = ExtResource("3_vbsma")
+expand_mode = 1
+
+[node name="WheelUp" type="TextureRect" parent="UiMouseIcon" unique_id=1043580966]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.467
+anchor_top = 0.113000005
+anchor_right = 0.535
+anchor_bottom = 0.23600002
+offset_left = -0.104003906
+offset_top = 0.14399719
+offset_right = 0.07998657
+offset_bottom = 0.16799164
+texture = ExtResource("4_pwfwf")
+expand_mode = 1
+
+[node name="WheelDown" type="TextureRect" parent="UiMouseIcon" unique_id=272076729]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.467
+anchor_top = 0.23600002
+anchor_right = 0.535
+anchor_bottom = 0.35900003
+offset_left = -0.104003906
+offset_top = 0.16799164
+offset_right = 0.07998657
+offset_bottom = 0.19198608
+texture = ExtResource("5_7el35")
+expand_mode = 1

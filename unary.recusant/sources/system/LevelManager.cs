@@ -67,7 +67,7 @@ namespace Unary.Recusant
 
         bool ISystem.PostInitialize()
         {
-            LoadLevel("Streets");
+            LoadLevel("Test");
             return true;
         }
 

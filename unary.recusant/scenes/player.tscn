@@ -26,16 +26,16 @@ debug_color = Color(0, 18.892157, 0, 1)
 [node name="HeadOriginalPosition" type="Node3D" parent="CharacterBody3D" unique_id=1498628712]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.575, 0)
 
-[node name="Head" type="Node3D" parent="CharacterBody3D/HeadOriginalPosition" unique_id=62175382]
+[node name="CameraSmooth" type="Node3D" parent="CharacterBody3D/HeadOriginalPosition" unique_id=1988579880]
 unique_name_in_owner = true
 
-[node name="CameraSmooth" type="Node3D" parent="CharacterBody3D/HeadOriginalPosition/Head" unique_id=1988579880]
+[node name="Head" type="Node3D" parent="CharacterBody3D/HeadOriginalPosition/CameraSmooth" unique_id=62175382]
 unique_name_in_owner = true
 
-[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/HeadOriginalPosition/Head/CameraSmooth" unique_id=736167811]
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/HeadOriginalPosition/CameraSmooth/Head" unique_id=736167811]
 unique_name_in_owner = true
 
-[node name="SpotLight3D" type="SpotLight3D" parent="CharacterBody3D/HeadOriginalPosition/Head/CameraSmooth/Camera3D" unique_id=1674309651]
+[node name="SpotLight3D" type="SpotLight3D" parent="CharacterBody3D/HeadOriginalPosition/CameraSmooth/Head/Camera3D" unique_id=1674309651]
 light_energy = 10.0
 shadow_enabled = true
 spot_range = 25.0
@@ -56,18 +56,19 @@ Body = NodePath("../CharacterBody3D")
 CollisionShape3D = NodePath("../CharacterBody3D/CollisionShape3D")
 StairsBelowRayCast3D = NodePath("../CharacterBody3D/StairsBelowRayCast3D")
 StairsAheadRayCast3D = NodePath("../CharacterBody3D/StairsAheadRayCast3D")
-Head = NodePath("../CharacterBody3D/HeadOriginalPosition/Head")
+Head = NodePath("../CharacterBody3D/HeadOriginalPosition/CameraSmooth/Head")
 
 [node name="PlayerFlow" type="Node" parent="." unique_id=489091830 node_paths=PackedStringArray("body")]
 script = ExtResource("3_5guud")
 body = NodePath("../CharacterBody3D")
 metadata/_custom_type_script = "uid://kwagcll6xbsf"
 
-[node name="PlayerCamera" type="Node" parent="." unique_id=1069604513 node_paths=PackedStringArray("Body", "Camera3D", "CameraSmooth")]
+[node name="PlayerCamera" type="Node" parent="." unique_id=1069604513 node_paths=PackedStringArray("Body", "Camera3D", "Head", "CameraSmooth")]
 script = ExtResource("4_mfgvn")
 Body = NodePath("../CharacterBody3D")
-Camera3D = NodePath("../CharacterBody3D/HeadOriginalPosition/Head/CameraSmooth/Camera3D")
-CameraSmooth = NodePath("../CharacterBody3D/HeadOriginalPosition/Head/CameraSmooth")
+Camera3D = NodePath("../CharacterBody3D/HeadOriginalPosition/CameraSmooth/Head/Camera3D")
+Head = NodePath("../CharacterBody3D/HeadOriginalPosition/CameraSmooth/Head")
+CameraSmooth = NodePath("../CharacterBody3D/HeadOriginalPosition/CameraSmooth")
 metadata/_custom_type_script = "uid://c11t2j8iwtl68"
 
 [node name="PlayerHealth" type="Node" parent="." unique_id=2004345291]

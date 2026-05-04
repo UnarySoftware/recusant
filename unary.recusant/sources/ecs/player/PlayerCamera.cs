@@ -34,6 +34,9 @@ namespace Unary.Recusant
         public Camera3D Camera3D;
 
         [Export]
+        public Node3D Head;
+
+        [Export]
         public Node3D CameraSmooth;
 
         private Vector3? _savedCameraPosition = null;
@@ -42,6 +45,11 @@ namespace Unary.Recusant
         private SlotHandle _processSlot;
 
         private PlayerMovement _movement;
+
+        public Basis GetWishDir()
+        {
+            return CameraSmooth.Basis;
+        }
 
         public override void Initialize()
         {
@@ -94,18 +102,16 @@ namespace Unary.Recusant
 
             if (@event is InputEventMouseMotion mouseMotion)
             {
-                var camera3D = Camera3D;
+                CameraSmooth.RotateY(-mouseMotion.Relative.X * LookSensitivity);
 
-                Body.RotateY(-mouseMotion.Relative.X * LookSensitivity);
-
-                camera3D.RotateX(-mouseMotion.Relative.Y * LookSensitivity);
+                Head.RotateX(-mouseMotion.Relative.Y * LookSensitivity);
 
                 // Clamp the X rotation to prevent flipping
-                var degrees = camera3D.RotationDegrees;
+                var degrees = Head.RotationDegrees;
                 degrees.X = Mathf.Clamp(degrees.X, -89.9f, 89.9f);
                 degrees.Y = 0.0f;
-                degrees.Z = Mathf.Clamp(degrees.Z, 0.0f, 30.0f);
-                camera3D.RotationDegrees = degrees;
+                degrees.Z = 0.0f;
+                Head.RotationDegrees = degrees;
             }
 
             if (@event is InputEventMouseButton mouseButton && mouseButton.Pressed)
@@ -124,7 +130,7 @@ namespace Unary.Recusant
         public void HeadbobEffect(float delta)
         {
             _headbobTime += delta * Body.Velocity.Length();
-            var camera3D = Camera3D;
+            var camera3D = CameraSmooth;
             camera3D.Transform = new Transform3D(
                 camera3D.Transform.Basis,
                 new Vector3(

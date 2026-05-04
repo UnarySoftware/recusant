@@ -10,6 +10,102 @@ namespace Unary.Recusant
     [GlobalClass]
     public partial class PlayerMovement : Component, IPoolable, IPhysicsProcess
     {
+        private static readonly InputAction _forward = new()
+        {
+            Scope = InputScope.PlayerMovement,
+            ActionType = InputActionBase.InputActionType.Hold,
+            AllowedActionTypes = InputActionBase.InputActionType.All,
+            Key = Key.W,
+            Type = InputActionBase.InputType.Keyboard,
+            Group = "Movement",
+            Name = "Forward",
+            Toggle = false,
+        };
+
+        private static readonly InputAction _back = new()
+        {
+            Scope = InputScope.PlayerMovement,
+            ActionType = InputActionBase.InputActionType.Hold,
+            AllowedActionTypes = InputActionBase.InputActionType.All,
+            Key = Key.S,
+            Type = InputActionBase.InputType.Keyboard,
+            Group = "Movement",
+            Name = "Back",
+            Toggle = false,
+        };
+
+        private static readonly InputAction _left = new()
+        {
+            Scope = InputScope.PlayerMovement,
+            ActionType = InputActionBase.InputActionType.Hold,
+            AllowedActionTypes = InputActionBase.InputActionType.All,
+            Key = Key.A,
+            Type = InputActionBase.InputType.Keyboard,
+            Group = "Movement",
+            Name = "Left",
+            Toggle = false,
+        };
+
+        private static readonly InputAction _right = new()
+        {
+            Scope = InputScope.PlayerMovement,
+            ActionType = InputActionBase.InputActionType.Hold,
+            AllowedActionTypes = InputActionBase.InputActionType.All,
+            Key = Key.D,
+            Type = InputActionBase.InputType.Keyboard,
+            Group = "Movement",
+            Name = "Right",
+            Toggle = false,
+        };
+
+        private static readonly InputAction _sprint = new()
+        {
+            Scope = InputScope.PlayerMovement,
+            ActionType = InputActionBase.InputActionType.Hold,
+            AllowedActionTypes = InputActionBase.InputActionType.All,
+            Key = Key.Shift,
+            Type = InputActionBase.InputType.Keyboard,
+            Group = "Movement",
+            Name = "Sprint",
+            Toggle = false,
+        };
+
+        private static readonly InputAction _jump = new()
+        {
+            Scope = InputScope.PlayerMovement,
+            ActionType = InputActionBase.InputActionType.Hold,
+            AllowedActionTypes = InputActionBase.InputActionType.NoHold,
+            Key = Key.Space,
+            Type = InputActionBase.InputType.Keyboard,
+            Group = "Movement",
+            Name = "Jump",
+            Toggle = false,
+        };
+
+        private static readonly InputAction _crouch = new()
+        {
+            Scope = InputScope.PlayerMovement,
+            ActionType = InputActionBase.InputActionType.Hold,
+            AllowedActionTypes = InputActionBase.InputActionType.All,
+            Key = Key.C,
+            Type = InputActionBase.InputType.Keyboard,
+            Group = "Movement",
+            Name = "Crouch",
+            Toggle = false,
+        };
+
+        private static readonly InputAction _noclip = new()
+        {
+            Scope = InputScope.PlayerMovement,
+            ActionType = InputActionBase.InputActionType.Press,
+            AllowedActionTypes = InputActionBase.InputActionType.All,
+            Key = Key.N,
+            Type = InputActionBase.InputType.Keyboard,
+            Group = "Movement",
+            Name = "Noclip",
+            Toggle = false,
+        };
+
         [ExportGroup("Ground Movement")]
         [Export]
         public float WalkSpeed = 5.6f;
@@ -99,7 +195,7 @@ namespace Unary.Recusant
 
         private bool _isCrouched = false;
 
-        private bool _noclip = false;
+        private bool _isNoclip = false;
 
         private bool _wasSnappedToStairs = false;
         private ulong _wasFlooredFrame = 0;
@@ -172,14 +268,14 @@ namespace Unary.Recusant
             }
         }
 
-        public float GetMoveSpeed()
+        public float GetMoveSpeed(float delta)
         {
             if (_isCrouched)
             {
                 return WalkSpeed * CroushSpeedMultiplier;
             }
 
-            return InputManager.Singleton.IsActionPressed(InputActions.Sprint, InputScope.PlayerMovement) ? SprintSpeed : WalkSpeed;
+            return _sprint.Poll(delta) ? SprintSpeed : WalkSpeed;
         }
 
         private void SnapDownToStairsCheck()
@@ -250,7 +346,7 @@ namespace Unary.Recusant
             return false;
         }
 
-        private bool HandleLadderPhysics()
+        private bool HandleLadderPhysics(float delta)
         {
             var wasClimbing = _ladderClimbing != null && _ladderClimbing.OverlapsBody(Body);
 
@@ -273,15 +369,11 @@ namespace Unary.Recusant
             var ladderTransform = _ladderClimbing.GlobalTransform;
             var positionRelativeToLadder = ladderTransform.AffineInverse() * Body.GlobalPosition;
 
-            float forwardMove = InputManager.Singleton.GetActionStrength(InputActions.Up, InputScope.PlayerMovement) -
-                InputManager.Singleton.GetActionStrength(InputActions.Down, InputScope.PlayerMovement);
-
-            float sideMove = InputManager.Singleton.GetActionStrength(InputActions.Right, InputScope.PlayerMovement) -
-                InputManager.Singleton.GetActionStrength(InputActions.Left, InputScope.PlayerMovement);
+            Vector2 inputDir = InputManager.Singleton.GetVector(_left, _right, _forward, _back, InputScope.PlayerMovement, delta);
 
             var activeCamera = _camera.GetActiveCamera();
-            var ladderForwardMove = ladderTransform.AffineInverse().Basis * activeCamera.GlobalTransform.Basis * new Vector3(0.0f, 0.0f, -forwardMove);
-            var ladderSideMove = ladderTransform.AffineInverse().Basis * activeCamera.GlobalTransform.Basis * new Vector3(sideMove, 0.0f, 0.0f);
+            var ladderForwardMove = ladderTransform.AffineInverse().Basis * activeCamera.GlobalTransform.Basis * new Vector3(0.0f, 0.0f, inputDir.Y);
+            var ladderSideMove = ladderTransform.AffineInverse().Basis * activeCamera.GlobalTransform.Basis * new Vector3(inputDir.X, 0.0f, 0.0f);
 
             var ladderStrafeVelocity = ClimbSpeed * (ladderSideMove.X + ladderForwardMove.X);
             var ladderClimbVelocity = ClimbSpeed * -ladderSideMove.Z;
@@ -328,7 +420,7 @@ namespace Unary.Recusant
                 return false;
             }
 
-            if (wasClimbing && InputManager.Singleton.IsActionJustPressed(InputActions.Jump, InputScope.PlayerMovement))
+            if (wasClimbing && _jump.Poll(delta))
             {
                 Body.Velocity = _ladderClimbing.GlobalTransform.Basis.Z * JumpVelocity * ClimbEjectSpeedMultiplier;
                 _ladderClimbing = null;
@@ -367,9 +459,9 @@ namespace Unary.Recusant
                 Body.Velocity = new Vector3(Body.Velocity.X, Body.Velocity.Y - SwimGravity * delta, Body.Velocity.Z);
             }
 
-            Body.Velocity += _camAlignedWishDir * GetMoveSpeed() * delta;
+            Body.Velocity += _camAlignedWishDir * GetMoveSpeed(delta) * delta;
 
-            if (InputManager.Singleton.IsActionPressed(InputActions.Jump, InputScope.PlayerMovement))
+            if (_jump.Poll(delta))
             {
                 Body.Velocity = new Vector3(Body.Velocity.X, Body.Velocity.Y + SwimUpSpeed * delta, Body.Velocity.Z);
             }
@@ -383,7 +475,7 @@ namespace Unary.Recusant
         {
             var wasCrouched = _isCrouched;
 
-            if (InputManager.Singleton.IsActionPressed(InputActions.Crouch, InputScope.PlayerMovement))
+            if (_crouch.Poll(delta))
             {
                 _isCrouched = true;
             }
@@ -418,21 +510,21 @@ namespace Unary.Recusant
 
         private bool HandleNoclip(float delta)
         {
-            if (InputManager.Singleton.IsActionJustPressed(InputActions.Noclip, InputScope.PlayerMovement) && OS.HasFeature("debug"))
+            if (_noclip.Poll(delta))
             {
-                _noclip = !_noclip;
+                _isNoclip = !_isNoclip;
                 NoclipSpeedMultiplier = 3.0f;
             }
 
-            CollisionShape3D.Disabled = _noclip;
+            CollisionShape3D.Disabled = _isNoclip;
 
-            if (!_noclip)
+            if (!_isNoclip)
             {
                 return false;
             }
 
-            var speed = GetMoveSpeed() * NoclipSpeedMultiplier;
-            if (InputManager.Singleton.IsActionPressed(InputActions.Sprint, InputScope.PlayerMovement))
+            var speed = GetMoveSpeed(delta) * NoclipSpeedMultiplier;
+            if (_sprint.Poll(delta))
             {
                 speed *= 3.0f;
             }
@@ -503,9 +595,9 @@ namespace Unary.Recusant
             }
         }
 
-        private void ClampSpeed()
+        private void ClampSpeed(float delta)
         {
-            float maxSpeed = GetMoveSpeed();
+            float maxSpeed = GetMoveSpeed(delta);
             Vector2 velocityPlanar = new(Body.Velocity.X, Body.Velocity.Z);
 
             if (velocityPlanar.Length() > maxSpeed)
@@ -532,18 +624,18 @@ namespace Unary.Recusant
 
             var normalizedWishDir = _wishDir.Normalized();
             var speedWishDir = Body.Velocity.Dot(normalizedWishDir);
-            var addSpeedTillCap = GetMoveSpeed() - speedWishDir;
+            var addSpeedTillCap = GetMoveSpeed(delta) - speedWishDir;
 
             if (addSpeedTillCap > 0)
             {
-                var accelerationSpeed = GroundAccel * delta * GetMoveSpeed();
+                var accelerationSpeed = GroundAccel * delta * GetMoveSpeed(delta);
                 accelerationSpeed = Mathf.Min(accelerationSpeed, addSpeedTillCap);
                 Body.Velocity += accelerationSpeed * normalizedWishDir;
             }
 
             if (Mathf.IsZeroApprox(Body.Velocity.Y))
             {
-                ClampSpeed();
+                ClampSpeed(delta);
             }
 
             if (Body.Velocity.Length() > 1.0f)
@@ -581,14 +673,14 @@ namespace Unary.Recusant
                 _wasFlooredFrame = Engine.GetPhysicsFrames();
             }
 
-            Vector2 inputDir = InputManager.Singleton.GetVector(InputActions.Left, InputActions.Right, InputActions.Up, InputActions.Down, InputScope.PlayerMovement);
+            Vector2 inputDir = InputManager.Singleton.GetVector(_left, _right, _forward, _back, InputScope.PlayerMovement, delta);
 
-            _wishDir = Body.GlobalTransform.Basis * new Vector3(inputDir.X, 0.0f, inputDir.Y);
+            _wishDir = _camera.GetWishDir() * new Vector3(inputDir.X, 0.0f, inputDir.Y);
             _camAlignedWishDir = _camera.GetActiveCamera().GlobalTransform.Basis * new Vector3(inputDir.X, 0.0f, inputDir.Y);
 
             HandleCrouch(delta);
 
-            if (!HandleNoclip(delta) && !HandleLadderPhysics())
+            if (!HandleNoclip(delta) && !HandleLadderPhysics(delta))
             {
                 if (!HandleWaterPhysics(delta))
                 {
@@ -601,8 +693,7 @@ namespace Unary.Recusant
                             _health.DoFallDamage(Mathf.Abs(_previousVelocity.Y));
                         }
 
-                        if (InputManager.Singleton.IsActionJustPressed(InputActions.Jump, InputScope.PlayerMovement) ||
-                            (AutoBhop && InputManager.Singleton.IsActionPressed(InputActions.Jump, InputScope.PlayerMovement)))
+                        if (_jump.Poll(delta) || (AutoBhop && _jump.Poll(delta, InputActionBase.InputActionType.Hold)))
                         {
                             Body.Velocity = new Vector3(Body.Velocity.X, JumpVelocity, Body.Velocity.Z);
                             ApplySlopeBoost();

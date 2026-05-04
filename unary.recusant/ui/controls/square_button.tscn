@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://jvruq0x4kvgh"]
+
+[ext_resource type="Texture2D" uid="uid://cb6he0lt0wkxo" path="res://unary.recusant/ui/controls/square_button.png" id="2_fg1c5"]
+[ext_resource type="FontFile" uid="uid://en12872agqmw" path="res://unary.recusant/fonts/CharlesWright.ttf" id="3_v2qim"]
+[ext_resource type="Script" uid="uid://b27n4n523kieb" path="res://unary.recusant/sources/ui/shared/UiLabelAutosize.cs" id="4_t5mkx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_t5mkx"]
+font = ExtResource("3_v2qim")
+font_size = 220
+font_color = Color(0, 0, 0, 1)
+
+[node name="UiButtonIcon" type="AspectRatioContainer" unique_id=657311569]
+anchors_preset = -1
+anchor_right = 0.20500001
+anchor_bottom = 0.42700002
+offset_right = -0.50006104
+offset_bottom = -0.4000244
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1228543473]
+layout_mode = 2
+texture = ExtResource("2_fg1c5")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="TextureRect" unique_id=533243815]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.18400002
+anchor_top = 0.055000003
+anchor_right = 0.81600004
+anchor_bottom = 0.79700005
+offset_left = -0.20800781
+offset_top = -0.16000175
+offset_right = 0.2079773
+offset_bottom = -0.06402588
+text = "F12"
+label_settings = SubResource("LabelSettings_t5mkx")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_t5mkx")
+TargetText = "F12"
+metadata/_custom_type_script = "uid://b27n4n523kieb"

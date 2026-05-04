@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace Unary.Core
@@ -8,6 +10,8 @@ namespace Unary.Core
     [GlobalClass]
     public partial class InputManager : Node, IModSystem
     {
+        private int _scope;
+
         public void SetScope<T>(T scope) where T : struct, IConvertible
         {
             _scope = Convert.ToInt32(scope);
@@ -18,7 +22,10 @@ namespace Unary.Core
             return Unsafe.BitCast<int, T>(_scope);
         }
 
-        private int _scope { get; set; }
+        // TODO These will have to be a runtime assignable variables
+        public float FastClickTime = 0.1f;
+        public float DoubleClickTime = 0.5f;
+        public float TrippleClickTime = 0.75f;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void InvertMouseMode()
@@ -36,12 +43,16 @@ namespace Unary.Core
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool HasScope<T>(T scope) where T : struct, IConvertible
         {
-            int intScope = Convert.ToInt32(scope);
-
-            return (_scope & intScope) == intScope;
+            return HasScope(Convert.ToInt32(scope));
         }
 
-        public bool IsActionJustReleased<T>(StringName action, T scope) where T : struct, IConvertible
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool HasScope(int scope)
+        {
+            return (_scope & scope) == scope;
+        }
+
+        public bool IsActionJustReleased(StringName action, int scope)
         {
             if (!HasScope(scope))
             {
@@ -51,7 +62,7 @@ namespace Unary.Core
             return Input.Singleton.IsActionJustReleased(action);
         }
 
-        public bool IsActionJustPressed<T>(StringName action, T scope) where T : struct, IConvertible
+        public bool IsActionJustPressed(StringName action, int scope)
         {
             if (!HasScope(scope))
             {
@@ -61,7 +72,7 @@ namespace Unary.Core
             return Input.Singleton.IsActionJustPressed(action);
         }
 
-        public bool IsActionPressed<T>(StringName action, T scope) where T : struct, IConvertible
+        public bool IsActionPressed(StringName action, int scope)
         {
             if (!HasScope(scope))
             {
@@ -71,27 +82,42 @@ namespace Unary.Core
             return Input.Singleton.IsActionPressed(action);
         }
 
-        public float GetActionStrength<T>(StringName action, T scope) where T : struct, IConvertible
+        public Vector2 GetVector<T>(InputActionBase negativeX, InputActionBase positiveX, InputActionBase negativeY, InputActionBase positiveY, T scope, float delta) where T : struct, IConvertible
         {
-            if (!HasScope(scope))
-            {
-                return 0.0f;
-            }
-
-            return Input.Singleton.GetActionStrength(action);
-        }
-
-        public Vector2 GetVector<T>(StringName negativeX, StringName positiveX, StringName negativeY, StringName positiveY, T scope, float deadzone = -1.0f) where T : struct, IConvertible
-        {
-            if (!HasScope(scope))
+            if (!HasScope(Convert.ToInt32(scope)))
             {
                 return Vector2.Zero;
             }
 
-            return Input.Singleton.GetVector(negativeX, positiveX, negativeY, positiveY, deadzone);
+            Vector2 result = new();
+
+            if (negativeY.Poll(delta))
+            {
+                result.Y -= negativeY.GetActionStrength();
+            }
+
+            if (positiveY.Poll(delta))
+            {
+                result.Y += positiveY.GetActionStrength();
+            }
+
+            if (positiveX.Poll(delta))
+            {
+                result.X += positiveX.GetActionStrength();
+            }
+
+            if (negativeX.Poll(delta))
+            {
+                result.X -= negativeX.GetActionStrength();
+            }
+
+            result = result.Normalized();
+
+            return result;
         }
 
-        public bool IsKeyPressed<T>(Key key, T scope) where T : struct, IConvertible
+
+        public bool IsKeyPressed(Key key, int scope)
         {
             if (!HasScope(scope))
             {
@@ -101,7 +127,7 @@ namespace Unary.Core
             return Input.Singleton.IsKeyPressed(key);
         }
 
-        public bool IsMouseButtonPressed<T>(MouseButton button, T scope) where T : struct, IConvertible
+        public bool IsMouseButtonPressed(MouseButton button, int scope)
         {
             if (!HasScope(scope))
             {
@@ -111,8 +137,49 @@ namespace Unary.Core
             return Input.Singleton.IsMouseButtonPressed(button);
         }
 
+        private List<InputActionBase> _actions = [];
+
         bool ISystem.Initialize()
         {
+            Type[] types = typeof(InputManager).Assembly.GetTypes();
+
+            foreach (var type in types)
+            {
+                FieldInfo[] properties = type.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
+
+                foreach (var property in properties)
+                {
+                    if (property.FieldType != typeof(InputActionBase) &&
+                    property.FieldType.BaseType != typeof(InputActionBase))
+                    {
+                        continue;
+                    }
+
+                    InputActionBase inputBase = (InputActionBase)property.GetValue(null);
+
+                    inputBase.Action = new(type.Namespace.ToPath() + '/' + inputBase.Group.ToPath() + '/' + inputBase.Name.ToPath());
+
+                    InputMap.Singleton.AddAction(inputBase.Action);
+
+                    if (inputBase.Type == InputActionBase.InputType.Keyboard)
+                    {
+                        InputMap.Singleton.ActionAddEvent(inputBase.Action, new InputEventKey()
+                        {
+                            Keycode = inputBase.Key
+                        });
+                    }
+                    else
+                    {
+                        InputMap.Singleton.ActionAddEvent(inputBase.Action, new InputEventMouseButton()
+                        {
+                            ButtonIndex = inputBase.MouseButton
+                        });
+                    }
+
+                    _actions.Add(inputBase);
+                }
+            }
+
             return true;
         }
     }

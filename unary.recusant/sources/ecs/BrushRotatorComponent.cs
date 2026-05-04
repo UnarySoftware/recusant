@@ -7,10 +7,9 @@ namespace Unary.Recusant
     [GlobalClass]
     public partial class BrushRotatorComponent : Component
     {
-        [Export]
-        public BrushEntity brush;
+        private BrushEntity brush;
 
-        public override void _Ready()
+        public override void Initialize()
         {
             brush = Entity.GetComponent<BrushEntityComponent>().GetBrushEntity();
         }
@@ -19,7 +18,7 @@ namespace Unary.Recusant
 
         public override void _PhysicsProcess(double delta)
         {
-            if (brush == null)
+            if (Engine.Singleton.IsEditorHint() || brush == null)
             {
                 return;
             }

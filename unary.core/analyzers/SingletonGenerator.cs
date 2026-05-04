@@ -98,7 +98,8 @@ namespace Unary.Core.Analyzers
             sb.AppendLine($"        {{");
             sb.AppendLine($"            get");
             sb.AppendLine($"            {{");
-            sb.AppendLine($"                return {providerName}<{className}>();");
+            sb.AppendLine($"                field ??= {providerName}<{className}>();");
+            sb.AppendLine($"                return field;");
             sb.AppendLine($"            }}");
             sb.AppendLine($"        }}");
             sb.AppendLine($"    }}");

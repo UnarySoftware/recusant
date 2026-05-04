@@ -18,7 +18,7 @@ namespace Unary.Core
 
         private void SetEntity()
         {
-            if (!IsInsideTree())
+            if (!IsInsideTree() || Entity != null)
             {
                 return;
             }

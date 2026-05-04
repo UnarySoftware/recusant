@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://bsrpbqj62j0c7"]
+
+[ext_resource type="Texture2D" uid="uid://bblt2ihte8rb2" path="res://unary.recusant/ui/controls/long_button.png" id="2_flq3k"]
+[ext_resource type="FontFile" uid="uid://en12872agqmw" path="res://unary.recusant/fonts/CharlesWright.ttf" id="3_xqqln"]
+[ext_resource type="Script" uid="uid://b27n4n523kieb" path="res://unary.recusant/sources/ui/shared/UiLabelAutosize.cs" id="4_e6ta8"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_e6ta8"]
+font = ExtResource("3_xqqln")
+font_size = 260
+font_color = Color(0, 0, 0, 1)
+
+[node name="UiButtonIcon" type="AspectRatioContainer" unique_id=1380852899]
+anchors_preset = -1
+anchor_right = 0.41000003
+anchor_bottom = 0.42700002
+offset_right = -1.0001221
+offset_bottom = -0.4000244
+ratio = 2.0
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=587243662]
+layout_mode = 2
+texture = ExtResource("2_flq3k")
+expand_mode = 2
+
+[node name="Label" type="Label" parent="TextureRect" unique_id=1963901850]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.093
+anchor_top = 0.059000004
+anchor_right = 0.906
+anchor_bottom = 0.799
+offset_left = -0.23200226
+offset_top = -0.20800209
+offset_right = 0.25598145
+offset_bottom = 12.911987
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 108
+text = "CAPS"
+label_settings = SubResource("LabelSettings_e6ta8")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_e6ta8")
+TargetText = "CAPS"
+MaxSize = 260
+metadata/_custom_type_script = "uid://b27n4n523kieb"
