@@ -73,7 +73,7 @@ namespace Unary.Recusant
         private static readonly InputAction _jump = new()
         {
             Scope = InputScope.PlayerMovement,
-            ActionType = InputActionBase.InputActionType.Hold,
+            ActionType = InputActionBase.InputActionType.Press,
             AllowedActionTypes = InputActionBase.InputActionType.NoHold,
             Key = Key.Space,
             Type = InputActionBase.InputType.Keyboard,
@@ -138,7 +138,6 @@ namespace Unary.Recusant
         public float CroushSpeedMultiplier = 0.34f;
 
         private float _crouchResolvedMultiplier;
-
 
         [ExportGroup("Air Movement")]
         [Export]
@@ -461,7 +460,7 @@ namespace Unary.Recusant
 
             Body.Velocity += _camAlignedWishDir * GetMoveSpeed(delta) * delta;
 
-            if (_jump.Poll(delta))
+            if (_jump.Poll(delta, InputActionBase.InputActionType.Hold))
             {
                 Body.Velocity = new Vector3(Body.Velocity.X, Body.Velocity.Y + SwimUpSpeed * delta, Body.Velocity.Z);
             }

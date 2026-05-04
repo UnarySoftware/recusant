@@ -19,8 +19,29 @@ namespace Unary.Core
             public List<UiUnitBase> Units;
         }
 
-        private StringName ui_back = new(nameof(ui_back));
-        private StringName ui_mouse_release = new(nameof(ui_mouse_release));
+        private static readonly InputActionBase _back = new()
+        {
+            BaseScope = 0,
+            ActionType = InputActionBase.InputActionType.Press,
+            AllowedActionTypes = InputActionBase.InputActionType.All,
+            Key = Key.Escape,
+            Type = InputActionBase.InputType.Keyboard,
+            Group = "Interface",
+            Name = "Go Back",
+            Toggle = false,
+        };
+
+        private static readonly InputAction _mouse_release = new()
+        {
+            BaseScope = 0,
+            ActionType = InputActionBase.InputActionType.Press,
+            AllowedActionTypes = InputActionBase.InputActionType.All,
+            Key = Key.Alt,
+            Type = InputActionBase.InputType.Keyboard,
+            Group = "Interface",
+            Name = "Toggle Mouse Capture",
+            Toggle = false,
+        };
 
         private readonly Dictionary<Type, UiStateData> _states = [];
         private Type _currentState;
@@ -334,8 +355,6 @@ namespace Unary.Core
                 newUiState.AddChild(control);
                 Resolve(newUiState, control);
 
-
-
                 List<UiUnitBase> unitsList = [];
                 Dictionary<Type, UiUnitBase> unitsDictionary = [];
 
@@ -463,12 +482,12 @@ namespace Unary.Core
                 }
             }
 
-            if (InputManager.Singleton.IsActionJustReleased(ui_back, 0))
+            if (_back.Poll(delta))
             {
                 GoBack();
             }
 
-            if (InputManager.Singleton.IsActionJustReleased(ui_mouse_release, 0))
+            if (_mouse_release.Poll(delta))
             {
                 InputManager.Singleton.InvertMouseMode();
             }

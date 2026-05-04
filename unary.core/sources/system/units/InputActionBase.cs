@@ -35,7 +35,7 @@ namespace Unary.Core
         public bool Toggle;
         public Key Key;
         public MouseButton MouseButton;
-        protected int _scope;
+        public int BaseScope;
 
         public StringName Action;
 
@@ -58,10 +58,10 @@ namespace Unary.Core
         {
             if (!Toggle)
             {
-                return InputManager.Singleton.IsActionJustPressed(Action, _scope);
+                return InputManager.Singleton.IsActionJustPressed(Action, BaseScope);
             }
 
-            if (InputManager.Singleton.IsActionJustPressed(Action, _scope))
+            if (InputManager.Singleton.IsActionJustPressed(Action, BaseScope))
             {
                 _toggled = !_toggled;
             }
@@ -73,10 +73,10 @@ namespace Unary.Core
         {
             if (!Toggle)
             {
-                return InputManager.Singleton.IsActionPressed(Action, _scope);
+                return InputManager.Singleton.IsActionPressed(Action, BaseScope);
             }
 
-            if (InputManager.Singleton.IsActionPressed(Action, _scope))
+            if (InputManager.Singleton.IsActionPressed(Action, BaseScope))
             {
                 _toggled = !_toggled;
             }
@@ -92,12 +92,12 @@ namespace Unary.Core
                 _timer += delta;
             }
 
-            if (InputManager.Singleton.IsActionJustPressed(Action, _scope))
+            if (InputManager.Singleton.IsActionJustPressed(Action, BaseScope))
             {
                 _pressedCount++;
             }
 
-            if (InputManager.Singleton.IsActionJustReleased(Action, _scope))
+            if (InputManager.Singleton.IsActionJustReleased(Action, BaseScope))
             {
                 _releasedCount++;
             }
@@ -154,10 +154,10 @@ namespace Unary.Core
         {
             if (!Toggle)
             {
-                return InputManager.Singleton.IsActionJustReleased(Action, _scope);
+                return InputManager.Singleton.IsActionJustReleased(Action, BaseScope);
             }
 
-            if (InputManager.Singleton.IsActionJustReleased(Action, _scope))
+            if (InputManager.Singleton.IsActionJustReleased(Action, BaseScope))
             {
                 _toggled = !_toggled;
             }
@@ -183,11 +183,11 @@ namespace Unary.Core
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool IsReleaseAfterHold(float delta)
         {
-            if (InputManager.Singleton.IsActionPressed(Action, _scope))
+            if (InputManager.Singleton.IsActionPressed(Action, BaseScope))
             {
                 _timer += delta;
             }
-            else if (InputManager.Singleton.IsActionJustReleased(Action, _scope) && _timer > InputManager.Singleton.DoubleClickTime)
+            else if (InputManager.Singleton.IsActionJustReleased(Action, BaseScope) && _timer > InputManager.Singleton.DoubleClickTime)
             {
                 _timer = 0.0f;
                 return true;
@@ -262,7 +262,7 @@ namespace Unary.Core
 
         public float GetActionStrength()
         {
-            if (!InputManager.Singleton.HasScope(_scope))
+            if (!InputManager.Singleton.HasScope(BaseScope))
             {
                 return 0.0f;
             }

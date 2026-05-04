@@ -7,6 +7,19 @@ namespace Unary.Core
     [GlobalClass]
     public partial class UiCoreState : UiState
     {
+        private static readonly InputActionBase _open = new()
+        {
+            BaseScope = 0,
+            ActionType = InputActionBase.InputActionType.FastPress,
+            AllowedActionTypes = InputActionBase.InputActionType.All,
+            Key = Key.Quoteleft,
+            Type = InputActionBase.InputType.Keyboard,
+            Group = "Interface",
+            Name = "Open Console",
+            Toggle = false,
+        };
+
+
         public override Type GetBackState()
         {
             return null;
@@ -14,7 +27,7 @@ namespace Unary.Core
 
         public override void Process(float delta)
         {
-            if (InputManager.Singleton.IsActionJustReleased("ui_console", 0))
+            if (_open.Poll(delta))
             {
                 GetUnit<UiCoreConsole>().Toggle();
             }

@@ -12,9 +12,9 @@ namespace Unary.Core
     [GlobalClass]
     public partial class UiCoreConsole : UiUnit<UiCoreState>
     {
-        private static readonly InputAction _copyData = new()
+        private static readonly InputActionBase _copyData = new()
         {
-            Scope = InputScope.None,
+            BaseScope = 0,
             ActionType = InputActionBase.InputActionType.FastPress,
             AllowedActionTypes = InputActionBase.InputActionType.All,
             MouseButton = MouseButton.Left,

@@ -11,7 +11,7 @@ namespace Unary.Recusant
         {
             set
             {
-                _scope = (int)value;
+                base.BaseScope = (int)value;
             }
         }
     }
