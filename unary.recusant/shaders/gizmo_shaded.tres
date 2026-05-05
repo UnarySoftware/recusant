@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://d2nc0am547c14"]
+
+[ext_resource type="Shader" uid="uid://ce5hkc4x52tu2" path="res://unary.recusant/shaders/gizmo_shaded.gdshader" id="1_guow4"]
+[ext_resource type="Texture2D" uid="uid://dswhiguy6g5si" path="res://unary.recusant/materials/grid.png" id="2_m1lo8"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_guow4")
+shader_parameter/grid_texture = ExtResource("2_m1lo8")

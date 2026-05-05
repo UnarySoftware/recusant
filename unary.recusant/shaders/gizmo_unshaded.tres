@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://5kb2d1tm58yv"]
 
-[ext_resource type="Shader" uid="uid://dmaiaudxv4jtx" path="res://unary.recusant/shaders/line3d.gdshader" id="1_vuuj3"]
+[ext_resource type="Shader" uid="uid://dmaiaudxv4jtx" path="res://unary.recusant/shaders/gizmo_unshaded.gdshader" id="1_vuuj3"]
 
 [resource]
 render_priority = 0

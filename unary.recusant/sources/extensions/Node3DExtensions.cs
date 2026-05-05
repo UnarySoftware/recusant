@@ -73,27 +73,27 @@ namespace Unary.Recusant
             }
         }
 
-        public static void DrawBox(this Node3D node3d, Vector3 origin, Vector3 size, Color color)
+        public static void DrawBox(this Node3D node3d, Vector3 origin, Vector3 size, Color color, bool shaded, float textureScale = 20.0f)
         {
             if (Engine.Singleton.IsEditorHint())
             {
-                PluginGizmoDrawer.Singleton.DrawBox(origin, size, color);
+                PluginGizmoDrawer.Singleton.DrawBox(origin, size, color, shaded, textureScale);
             }
             else
             {
-                RuntimeGizmos.Singleton.GetGizmo(node3d).IDrawBox(origin, size, color);
+                RuntimeGizmos.Singleton.GetGizmo(node3d).IDrawBox(origin, size, color, shaded, textureScale);
             }
         }
 
-        public static void DrawBox(this Node3D node3d, Aabb box, Color color)
+        public static void DrawBox(this Node3D node3d, Aabb box, Color color, bool shaded, float textureScale = 20.0f)
         {
             if (Engine.Singleton.IsEditorHint())
             {
-                PluginGizmoDrawer.Singleton.DrawBox(box, color);
+                PluginGizmoDrawer.Singleton.DrawBox(box, color, shaded, textureScale);
             }
             else
             {
-                RuntimeGizmos.Singleton.GetGizmo(node3d).IDrawBox(box, color);
+                RuntimeGizmos.Singleton.GetGizmo(node3d).IDrawBox(box, color, shaded, textureScale);
             }
         }
 
@@ -109,6 +109,29 @@ namespace Unary.Recusant
             }
         }
 
+        public static void DrawMesh(this Node3D node3d, Vector3 origin, Mesh mesh, Color color, bool shaded, float textureScale = 20.0f)
+        {
+            if (Engine.Singleton.IsEditorHint())
+            {
+                PluginGizmoDrawer.Singleton.DrawMesh(mesh, origin, color, shaded, textureScale);
+            }
+            else
+            {
+                RuntimeGizmos.Singleton.GetGizmo(node3d).IDrawMesh(mesh, origin, color, shaded, textureScale);
+            }
+        }
+
+        public static void DrawArrow(this Node3D node3d, Vector3 origin, Vector3 end, Color color, bool shaded, float textureScale = 20.0f)
+        {
+            if (Engine.Singleton.IsEditorHint())
+            {
+                PluginGizmoDrawer.Singleton.DrawArrow(origin, end, color, shaded, textureScale);
+            }
+            else
+            {
+                RuntimeGizmos.Singleton.GetGizmo(node3d).IDrawArrow(origin, end, color, shaded, textureScale);
+            }
+        }
     }
 }
 

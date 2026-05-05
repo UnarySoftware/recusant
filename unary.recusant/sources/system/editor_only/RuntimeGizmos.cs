@@ -10,8 +10,6 @@ namespace Unary.Recusant
     [GlobalClass]
     public partial class RuntimeGizmos : Node, IModSystem
     {
-        private static readonly LazyResource<ShaderMaterial> _material = new("uid://5kb2d1tm58yv");
-
         private readonly Queue<RuntimeGizmo> _freeEntries = [];
         private readonly Dictionary<Node3D, (Queue<RuntimeGizmo> entries, int used)> _busyEntries = [];
 
@@ -52,7 +50,7 @@ namespace Unary.Recusant
                 if (_freeEntries.Count == 0)
                 {
                     result = new RuntimeGizmo();
-                    result.Init(_material.Cache);
+                    result.Init();
                     root.AddChild(result);
                     result.Aquire();
                 }

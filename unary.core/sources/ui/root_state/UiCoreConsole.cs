@@ -15,11 +15,7 @@ namespace Unary.Core
         private static readonly InputActionBase _copyData = new()
         {
             BaseScope = 0,
-<<<<<<< Updated upstream
-            ActionType = InputActionBase.InputActionType.FastPress,
-=======
             ActionType = InputActionBase.InputActionType.Press,
->>>>>>> Stashed changes
             AllowedActionTypes = InputActionBase.InputActionType.All,
             MouseButton = MouseButton.Left,
             Type = InputActionBase.InputType.Mouse,

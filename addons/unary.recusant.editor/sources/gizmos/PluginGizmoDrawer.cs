@@ -12,11 +12,35 @@ namespace Unary.Recusant.Editor
     [GlobalClass]
     public partial class PluginGizmoDrawer : EditorNode3DGizmoPlugin, IPluginSystem
     {
-        private readonly Dictionary<int, Material> _colorToMaterial = [];
+        private struct MaterialKey : IEquatable<MaterialKey>
+        {
+            public bool Shaded;
+            public float Scale;
+            public int ColorHash;
+
+            public readonly bool Equals(MaterialKey other)
+            {
+                return Shaded == other.Shaded &&
+                    Scale == other.Scale &&
+                    ColorHash == other.ColorHash;
+            }
+
+            public override readonly bool Equals(object obj)
+            {
+                return obj is MaterialKey other && Equals(other);
+            }
+
+            public override readonly int GetHashCode()
+            {
+                return HashCode.Combine(Shaded, Scale, ColorHash);
+            }
+        }
+
+        private readonly Dictionary<MaterialKey, Material> _colorToMaterial = [];
 
         private static readonly byte[] _hashArray = new byte[4];
 
-        private Material GetMaterial(Color color)
+        private Material GetMaterial(Color color, bool shaded, float textureScale = 20.0f)
         {
             _hashArray[0] = (byte)color.R8;
             _hashArray[1] = (byte)color.G8;
@@ -25,7 +49,14 @@ namespace Unary.Recusant.Editor
 
             int hash = BitConverter.ToInt32(_hashArray, 0);
 
-            if (_colorToMaterial.TryGetValue(hash, out var result))
+            MaterialKey newKey = new()
+            {
+                Shaded = shaded,
+                ColorHash = hash,
+                Scale = textureScale
+            };
+
+            if (_colorToMaterial.TryGetValue(newKey, out var result))
             {
                 return result;
             }
@@ -34,20 +65,39 @@ namespace Unary.Recusant.Editor
 
             StandardMaterial3D material = GetMaterial(color.ToString());
 
-            material.ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded;
-            material.AlbedoColor = color;
-            material.DisableFog = true;
-
-            if (_hashArray[3] == 255)
+            if (shaded)
             {
-                material.Transparency = BaseMaterial3D.TransparencyEnum.Disabled;
+                material.Transparency = BaseMaterial3D.TransparencyEnum.Alpha;
+                material.ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded;
+
+                material.AlbedoColor = color;
+                material.AlbedoTexture = Gizmos.GridTexture;
+
+                material.CullMode = BaseMaterial3D.CullModeEnum.Back;
+
+                material.Uv1Scale = new Vector3(textureScale, textureScale, textureScale);
             }
             else
             {
-                material.Transparency = BaseMaterial3D.TransparencyEnum.Alpha;
+                material.ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded;
+                material.DisableAmbientLight = true;
+                material.AlbedoColor = color;
+
+                if (_hashArray[3] == 255)
+                {
+                    material.Transparency = BaseMaterial3D.TransparencyEnum.Disabled;
+                }
+                else
+                {
+                    material.Transparency = BaseMaterial3D.TransparencyEnum.Alpha;
+                }
             }
 
-            _colorToMaterial[hash] = material;
+            material.DisableFog = true;
+            material.SpecularMode = BaseMaterial3D.SpecularModeEnum.Disabled;
+            material.DisableSpecularOcclusion = true;
+
+            _colorToMaterial[newKey] = material;
 
             return material;
         }
@@ -97,7 +147,7 @@ namespace Unary.Recusant.Editor
 
         public void DrawBoxWireframe(Vector3 origin, Vector3 size, Color color)
         {
-            _currentGizmo.AddLines(Gizmos.CreateBox(size, origin), GetMaterial(color));
+            _currentGizmo.AddLines(Gizmos.CreateBox(size, origin), GetMaterial(color, false));
         }
 
         public void DrawBoxWireframe(Aabb box, Color color)
@@ -106,28 +156,53 @@ namespace Unary.Recusant.Editor
             DrawBoxWireframe(center, size, color);
         }
 
-        public void DrawBox(Vector3 origin, Vector3 size, Color color)
+        public void DrawBox(Vector3 origin, Vector3 size, Color color, bool shaded, float textureScale)
         {
             Transform3D transform = new()
             {
+                Basis = Basis.Identity,
                 Origin = origin
             };
-            _currentGizmo.AddMesh(Gizmos.GetBoxMesh(size), GetMaterial(color), transform);
+            _currentGizmo.AddMesh(Gizmos.GetBoxMesh(size), GetMaterial(color, shaded, textureScale), transform);
         }
 
-        public void DrawBox(Aabb box, Color color)
+        public void DrawBox(Aabb box, Color color, bool shaded, float textureScale)
         {
             (Vector3 origin, Vector3 size) = Gizmos.DecomposeBox(box);
             Transform3D transform = new()
             {
+                Basis = Basis.Identity,
                 Origin = origin
             };
-            _currentGizmo.AddMesh(Gizmos.GetBoxMesh(size), GetMaterial(color), transform);
+            _currentGizmo.AddMesh(Gizmos.GetBoxMesh(size), GetMaterial(color, shaded, textureScale), transform);
         }
 
         public void DrawPath(Vector3[] points, Color color)
         {
-            _currentGizmo.AddLines(Gizmos.CreatePath(points), GetMaterial(color));
+            _currentGizmo.AddLines(Gizmos.CreatePath(points), GetMaterial(color, false));
+        }
+
+        public void DrawMesh(Mesh mesh, Vector3 origin, Color color, bool shaded, float textureScale)
+        {
+            Transform3D transform = new()
+            {
+                Basis = Basis.Identity,
+                Origin = origin
+            };
+            _currentGizmo.AddMesh(mesh, GetMaterial(color, shaded, textureScale), transform);
+        }
+
+        public void DrawArrow(Vector3 origin, Vector3 end, Color color, bool shaded, float textureScale)
+        {
+            Transform3D transform = new()
+            {
+                Origin = origin,
+                Basis = Basis.Identity
+            };
+
+            transform = transform.LookingAt(end, Vector3.Up);
+
+            _currentGizmo.AddMesh(Gizmos.ArrowMesh, GetMaterial(color, shaded, textureScale), transform);
         }
     }
 }
