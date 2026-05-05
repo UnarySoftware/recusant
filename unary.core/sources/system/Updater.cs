@@ -1,5 +1,3 @@
-global using SlotHandle = System.Int32;
-
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -8,12 +6,19 @@ using System.Runtime.InteropServices;
 
 namespace Unary.Core
 {
+    public struct SlotHandle
+    {
+        public bool Initialized;
+        public int SlotId;
+    }
+
     public struct UpdaterHandle
     {
+        public bool Initialized;
         public float Delay;
         public float Range;
         public int PoolId;
-        public int SlotId;
+        public SlotHandle SlotHandle;
     }
 
     public interface IProcess
@@ -97,22 +102,22 @@ namespace Unary.Core
             }
         }
 
-        public (int PoolId, int SlotId) Subscribe(Action<float> action)
+        public (int PoolId, SlotHandle SlotHandle) Subscribe(Action<float> action)
         {
             int poolId = _subscribeIndex;
-            int slotId = _updaters[poolId].Add(action);
+            SlotHandle slotHandle = _updaters[poolId].Add(action);
 
             if (++_subscribeIndex == Updater.PoolCount)
             {
                 _subscribeIndex = 0;
             }
 
-            return (poolId, slotId);
+            return (poolId, slotHandle);
         }
 
-        public void Unsubscribe(int slotId, int poolId)
+        public void Unsubscribe(SlotHandle slotHandle, int poolId)
         {
-            _updaters[poolId].Remove(slotId);
+            _updaters[poolId].Remove(slotHandle);
         }
     }
 
@@ -214,10 +219,10 @@ namespace Unary.Core
             }
         }
 
-        public (int PoolId, int SlotId) Subscribe(Action<float> starting, Action<float> ending)
+        public (int PoolId, SlotHandle SlotHandle) Subscribe(Action<float> starting, Action<float> ending)
         {
             int poolId = _subscribeIndex;
-            int slotId = _starters[poolId].Add(starting);
+            SlotHandle slotHandle = _starters[poolId].Add(starting);
             _enders[poolId].Add(ending);
 
             if (++_subscribeIndex == Updater.PoolCount)
@@ -225,13 +230,13 @@ namespace Unary.Core
                 _subscribeIndex = 0;
             }
 
-            return (poolId, slotId);
+            return (poolId, slotHandle);
         }
 
-        public void Unsubscribe(int slotId, int poolId)
+        public void Unsubscribe(SlotHandle slotHandle, int poolId)
         {
-            _starters[poolId].Remove(slotId);
-            _enders[poolId].Remove(slotId);
+            _starters[poolId].Remove(slotHandle);
+            _enders[poolId].Remove(slotHandle);
         }
     }
 
@@ -322,10 +327,11 @@ namespace Unary.Core
 
             return new()
             {
+                Initialized = true,
                 Delay = delay,
                 Range = 0.0f,
                 PoolId = poolId,
-                SlotId = slotId
+                SlotHandle = slotId
             };
         }
 
@@ -345,32 +351,43 @@ namespace Unary.Core
 
             return new()
             {
+                Initialized = true,
                 Delay = delay,
                 Range = range,
                 PoolId = poolId,
-                SlotId = slotId
+                SlotHandle = slotId
             };
         }
 
         public void UnsubscribeDelayed(UpdaterHandle handle)
         {
+            if (!handle.Initialized)
+            {
+                return;
+            }
+
             _key.Delay = handle.Delay;
             _key.Range = handle.Range;
 
             if (_delayedDictionary.TryGetValue(_key, out var unit))
             {
-                unit.Unsubscribe(handle.SlotId, handle.PoolId);
+                unit.Unsubscribe(handle.SlotHandle, handle.PoolId);
             }
         }
 
         public void UnsubscribeRange(UpdaterHandle handle)
         {
+            if (!handle.Initialized)
+            {
+                return;
+            }
+
             _key.Delay = handle.Delay;
             _key.Range = handle.Range;
 
             if (_rangesDictionary.TryGetValue(_key, out var unit))
             {
-                unit.Unsubscribe(handle.SlotId, handle.PoolId);
+                unit.Unsubscribe(handle.SlotHandle, handle.PoolId);
             }
         }
     }

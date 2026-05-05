@@ -75,9 +75,10 @@ anchors_preset = -1
 anchor_right = 0.5
 anchor_bottom = 1.0
 grow_vertical = 2
-mouse_filter = 0
+mouse_filter = 2
 
 [node name="Counters" type="HBoxContainer" parent="ConsoleRoot" unique_id=2129095278]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="LogCounter" type="MarginContainer" parent="ConsoleRoot/Counters" unique_id=1040323704]

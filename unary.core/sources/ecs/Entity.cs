@@ -61,6 +61,8 @@ namespace Unary.Core
             {
                 component.Initialize();
             }
+
+            Release();
         }
 
         public void Deinitialize()
@@ -131,6 +133,11 @@ namespace Unary.Core
 
         public void Aquire()
         {
+            if (_componentCache.Count == 0)
+            {
+                return;
+            }
+
             foreach (var component in _componentCache)
             {
                 if (component is IPoolable poolable)
@@ -142,6 +149,11 @@ namespace Unary.Core
 
         public void Release()
         {
+            if (_componentCache.Count == 0)
+            {
+                return;
+            }
+
             foreach (var component in _componentCache)
             {
                 if (component is IPoolable poolable)

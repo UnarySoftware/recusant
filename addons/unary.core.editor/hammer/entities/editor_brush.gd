@@ -1,7 +1,7 @@
 @tool
 class_name BrushEditor extends VMFEntityNode
 
-var target_script = preload("res://unary.core/sources/ecs/EditorOnly.cs")
+var target_script = preload("res://unary.core/sources/level/EditorOnly.cs")
 
 func _entity_setup(_entity: VMFEntity):
 	$MeshInstance3D.set_mesh(get_mesh())

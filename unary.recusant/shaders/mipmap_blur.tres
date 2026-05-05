@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cgxwenjv21f3h"]
+
+[ext_resource type="Shader" uid="uid://clsp226ysobhs" path="res://unary.recusant/shaders/mipmap_blur.gdshader" id="1_rpfcb"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_rpfcb")
+shader_parameter/blur_lod = 3.5000000521542
+shader_parameter/jitter = 0.999999977648
+shader_parameter/jitter_taps = 6
+shader_parameter/tint_color = Color(0, 0, 0, 0.1764706)
+shader_parameter/saturation = 0.999999977648
+shader_parameter/vignette_str = 0.499999988824

@@ -10,7 +10,7 @@ namespace Unary.Recusant
     {
         private Dictionary<PlayerMarker.MarkerType, (int index, List<PlayerMarker> entries)> _markers = [];
 
-        private readonly LazyResource<PoolDeclaration> _playerPoolHandle = new("uid://c16iylkg5pp3i");
+        private static readonly LazyResource<PoolDeclaration> _playerPoolHandle = new("uid://c16iylkg5pp3i");
 
         private readonly HashSet<Entity> _players = [];
 

@@ -216,20 +216,28 @@ namespace Unary.Recusant
         private PlayerHealth _health;
         private PlayerStatus _status;
 
+        private static readonly StringName disabled = new(nameof(disabled));
+
         void IPoolable.Aquire()
         {
             Instance = this;
             physicsProcessSlot = Updater.Singleton.PhysicsProcess.Subscribe(this);
+            ProcessMode = ProcessModeEnum.Always;
+            CollisionShape3D.SetDeferred(disabled, false);
         }
 
         void IPoolable.Release()
         {
             Instance = null;
             Updater.Singleton.PhysicsProcess.Unsubscribe(physicsProcessSlot);
+            ProcessMode = ProcessModeEnum.Disabled;
+            CollisionShape3D.SetDeferred(disabled, true);
         }
 
         public override void Initialize()
         {
+            Body.DisableMode = CollisionObject3D.DisableModeEnum.Remove;
+
             _crouchResolvedMultiplier = CrouchTranslate * CrouchJumpMultiplier;
 
             _camera = GetComponent<PlayerCamera>();

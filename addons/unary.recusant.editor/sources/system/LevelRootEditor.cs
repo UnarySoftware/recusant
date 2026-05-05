@@ -757,7 +757,7 @@ namespace Unary.Recusant
             probeEnd.Y = (Mathf.Round(probeEnd.Y / BoundsSize) + 1.0f) * BoundsSize;
             probeEnd.Z = (Mathf.Round(probeEnd.Z / BoundsSize) + 1.0f) * BoundsSize;
 
-            Dictionary<Vector3, HashSet<int>> boundToPoly = [];
+            Dictionary<Vector3, List<int>> boundToPoly = [];
 
             Vector3 sizeBox = new(BoundsSize, BoundsSize, BoundsSize);
 
@@ -793,6 +793,35 @@ namespace Unary.Recusant
                         // This bound has no triangles associated with it, skipping
                         if (!boundToPoly.TryGetValue(position, out var addedEntries))
                         {
+                            continue;
+                        }
+
+                        // Fine-filter all triangles with proper overlap checks
+                        List<int> removedIndexes = [];
+
+                        for (int i = 0; i < addedEntries.Count; i++)
+                        {
+                            var poly = filteredPolygons[addedEntries[i]];
+
+                            if (!Triangle.IntersectsBounds(newVerticesArray[poly.Vertexes.X],
+                                newVerticesArray[poly.Vertexes.Y],
+                                newVerticesArray[poly.Vertexes.Z],
+                                probeBox))
+                            {
+                                removedIndexes.Add(i);
+                            }
+                        }
+
+                        for (int i = removedIndexes.Count - 1; i >= 0; i--)
+                        {
+                            int target = removedIndexes[i];
+                            addedEntries.RemoveAt(target);
+                        }
+
+                        // This bound has no triangles associated with it, skipping
+                        if (addedEntries.Count == 0)
+                        {
+                            boundToPoly.Remove(position);
                             continue;
                         }
 

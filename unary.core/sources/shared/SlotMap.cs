@@ -15,7 +15,7 @@ namespace Unary.Core
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Span<T> AsSpan() => CollectionsMarshal.AsSpan(_dense);
 
-        public int Add(T item)
+        public SlotHandle Add(T item)
         {
             int denseId = _dense.Count;
             _dense.Add(item);
@@ -34,11 +34,18 @@ namespace Unary.Core
             }
 
             _backMap.Add(slotId);
-            return slotId;
+            return new() { SlotId = slotId, Initialized = true };
         }
 
-        public void Remove(int slotId)
+        public void Remove(SlotHandle slotHandle)
         {
+            int slotId = slotHandle.SlotId;
+
+            if (!slotHandle.Initialized)
+            {
+                return;
+            }
+
             int denseId = _sparse[slotId];
             int lastDense = _dense.Count - 1;
 

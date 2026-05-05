@@ -1,7 +1,7 @@
 @tool
 class_name TextEditor extends VMFEntityNode
 
-var target_script = preload("res://unary.core/sources/ecs/EditorOnly.cs")
+var target_script = preload("res://unary.core/sources/level/EditorOnly.cs")
 
 func _entity_setup(_entity: VMFEntity):
 	transform = get_entity_transform(_entity)

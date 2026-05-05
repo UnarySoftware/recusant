@@ -1,7 +1,7 @@
 @tool
 class_name Trigger extends VMFEntityNode
 
-var brush_entity = preload("res://unary.core/sources/ecs/BrushEntity.cs")
+var brush_entity = preload("res://unary.core/sources/level/BrushEntity.cs")
 
 func _entity_setup(_entity: VMFEntity):
 	var mesh = get_mesh();

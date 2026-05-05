@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://b0jkpclal45yt"]
+
+[ext_resource type="Shader" uid="uid://cvn1f2m8a7evx" path="res://unary.recusant/shaders/canvas_blur.gdshader" id="1_1y8l0"]
+
+[resource]
+shader = ExtResource("1_1y8l0")
+shader_parameter/blur = 3.0

@@ -31,7 +31,7 @@ namespace Unary.Recusant
         public CharacterBody3D Body;
 
         [Export]
-        public Camera3D Camera3D;
+        public PlayerCamera3D PlayerCamera3D;
 
         [Export]
         public Node3D Head;
@@ -54,43 +54,41 @@ namespace Unary.Recusant
         public override void Initialize()
         {
             _movement = GetComponent<PlayerMovement>();
-
             CameraSmooth.PhysicsInterpolationMode = PhysicsInterpolationModeEnum.Off;
         }
 
         public void Aquire()
         {
-            Camera3D.Current = true;
+            CameraManager.Singleton.MakeCurrent(PlayerCamera3D, true);
             _processSlot = Updater.Singleton.Process.Subscribe(this);
         }
 
         public void Release()
         {
-            Camera3D.Current = false;
             Updater.Singleton.Process.Unsubscribe(_processSlot);
         }
 
         void IProcess.Process(float delta)
         {
-            Vector3 rotation = Camera3D.RotationDegrees;
+            Vector3 rotation = PlayerCamera3D.RotationDegrees;
             if (rotation.Z > 0.0f)
             {
                 rotation.Z = Mathf.Clamp(rotation.Z - UnrollStep * delta, 0.0f, MaxRoll);
             }
-            Camera3D.RotationDegrees = rotation;
+            PlayerCamera3D.RotationDegrees = rotation;
         }
 
-        public Camera3D GetActiveCamera()
+        public PlayerCamera3D GetActiveCamera()
         {
-            return Camera3D;
+            return PlayerCamera3D;
         }
 
         public void DoRoll(float force)
         {
             force *= RollMultiplier;
-            Vector3 rotation = Camera3D.RotationDegrees;
+            Vector3 rotation = PlayerCamera3D.RotationDegrees;
             rotation.Z = force;
-            Camera3D.RotationDegrees = rotation;
+            PlayerCamera3D.RotationDegrees = rotation;
         }
 
         public override void _Input(InputEvent @event)

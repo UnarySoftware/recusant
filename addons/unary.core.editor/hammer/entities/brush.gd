@@ -1,7 +1,7 @@
 @tool
 class_name Brush extends VMFEntityNode
 
-var brush_entity = preload("res://unary.core/sources/ecs/BrushEntity.cs")
+var brush_entity = preload("res://unary.core/sources/level/BrushEntity.cs")
 
 enum CollisionType 
 {

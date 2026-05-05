@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://e56m2x5oi0xa"]
+
+[ext_resource type="Shader" uid="uid://by71vb02l0yth" path="res://unary.recusant/shaders/frosted_glass.gdshader" id="1_4oul3"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_4oul3")
+shader_parameter/blur_amount = 0.0
+shader_parameter/distortion = 0.01600000076
+shader_parameter/glass_tint = Color(0, 0, 0, 0.14901961)
+shader_parameter/fresnel_pow = 4.1000000461937205
+shader_parameter/fresnel_str = 0.13999999687072
+shader_parameter/reflect_color = Color(0.36131883, 0.6818907, 1, 1)
+shader_parameter/saturation = 1.23999997228352
+shader_parameter/chromatic_ab = 0.0019999999494
