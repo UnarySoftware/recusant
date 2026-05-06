@@ -106,14 +106,14 @@ namespace Unary.Recusant
         private static bool _initialized = false;
         private static readonly CylinderMesh _mesh = new()
         {
-            TopRadius = PlayerConstants.PlayerRadius,
-            BottomRadius = PlayerConstants.PlayerRadius,
-            Height = PlayerConstants.PlayerHeight,
+            TopRadius = PlayerConstants.PlayerShape.Cache.Radius,
+            BottomRadius = PlayerConstants.PlayerShape.Cache.Radius,
+            Height = PlayerConstants.PlayerShape.Cache.Height,
         };
 
         private static TriangleMesh _triangleMesh;
 
-        private static Vector3 _position = new Vector3(0.0f, PlayerConstants.PlayerHeight / 2.0f, 0.0f);
+        private static Vector3 _position = new Vector3(0.0f, PlayerConstants.PlayerShape.Cache.Height / 2.0f, 0.0f);
 
         private static void TryInitializeGizmo()
         {
@@ -163,7 +163,6 @@ namespace Unary.Recusant
 
                 this.DrawMesh(_position, _mesh, color, true);
                 this.DrawArrow(_position, _position + Vector3.Forward, color, false);
-
                 this.AddCollision(_triangleMesh);
             }
 

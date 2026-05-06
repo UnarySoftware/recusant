@@ -1,15 +1,12 @@
+using Godot;
+using Unary.Core;
+
 namespace Unary.Recusant
 {
     public static class PlayerConstants
     {
-        public static float NavCellSize = 0.2f;
-        public static float NavCellHeight = 0.2f;
-        public static float NavAgentHeight = 1.4f;
-        public static float NavAgentRadius = 0.4f;
-        public static float NavAgentMaxClimb = 0.4f;
-        public static int NavMaxVerticesPerPolygon = 3;
-
-        public static float PlayerRadius = 0.406f;
-        public static float PlayerHeight = 1.803f;
+        public static LazyResource<NavigationMesh> DefaultMesh { get; } = new("uid://bbsl0o6evupdh");
+        public static LazyResourceNode<PlayerMovement> PlayerMovement { get; } = new("uid://dudm3ef31bxc0");
+        public static LazyResource<CylinderShape3D> PlayerShape { get; } = new("uid://wh4y4fij4d0l");
     }
 }

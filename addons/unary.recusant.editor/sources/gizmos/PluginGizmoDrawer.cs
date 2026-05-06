@@ -71,7 +71,7 @@ namespace Unary.Recusant.Editor
                 material.ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded;
 
                 material.AlbedoColor = color;
-                material.AlbedoTexture = Gizmos.GridTexture;
+                material.AlbedoTexture = Gizmos.GridTexture.Cache;
 
                 material.CullMode = BaseMaterial3D.CullModeEnum.Back;
 
@@ -202,7 +202,7 @@ namespace Unary.Recusant.Editor
 
             transform = transform.LookingAt(end, Vector3.Up);
 
-            _currentGizmo.AddMesh(Gizmos.ArrowMesh, GetMaterial(color, shaded, textureScale), transform);
+            _currentGizmo.AddMesh(Gizmos.ArrowMesh.Cache, GetMaterial(color, shaded, textureScale), transform);
         }
     }
 }

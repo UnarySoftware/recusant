@@ -1,0 +1,9 @@
+[gd_resource type="NavigationMesh" format=3 uid="uid://bbsl0o6evupdh"]
+
+[resource]
+geometry_parsed_geometry_type = 1
+geometry_source_geometry_mode = 1
+geometry_source_group_name = &"LevelRoot"
+cell_size = 0.2
+cell_height = 0.2
+vertices_per_polygon = 3.0

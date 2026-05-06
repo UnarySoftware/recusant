@@ -19,7 +19,7 @@ namespace Unary.Recusant
         private static readonly CylinderShape3D _castShape = new()
         {
             Height = 0.01f,
-            Radius = PlayerConstants.PlayerRadius
+            Radius = PlayerConstants.PlayerShape.Cache.Radius
         };
 
         public static PlayerFlow Instance;

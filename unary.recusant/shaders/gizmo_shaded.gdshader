@@ -6,6 +6,7 @@ uniform sampler2D grid_texture;
 
 void fragment()
 {
-	ALBEDO = texture(grid_texture, UV * (color.a * 255.0f)).rgb * color.rgb;
-	ALPHA = texture(grid_texture, UV * (color.a * 255.0f)).a;
+	vec4 data = texture(grid_texture, UV * (color.a * 255.0f));
+	ALBEDO = data.rgb * color.rgb;
+	ALPHA = data.a;
 }

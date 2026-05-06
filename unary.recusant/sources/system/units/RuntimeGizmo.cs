@@ -127,7 +127,7 @@ namespace Unary.Recusant
 
             transform = transform.LookingAt(end, Vector3.Up);
 
-            Mesh = Gizmos.ArrowMesh;
+            Mesh = Gizmos.ArrowMesh.Cache;
             SetMaterial(shaded, newColor, textureScale);
             Transform = transform;
         }

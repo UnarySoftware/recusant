@@ -1,17 +1,13 @@
 [gd_scene format=3 uid="uid://f6kx848g5bco"]
 
-[ext_resource type="Script" uid="uid://e6terw4dr0fb" path="res://unary.recusant/sources/ecs/player/PlayerMovement.cs" id="1_ib3fy"]
 [ext_resource type="Script" uid="uid://ccbwwwt2a8r67" path="res://unary.core/sources/ecs/Entity.cs" id="1_ysajs"]
 [ext_resource type="Script" uid="uid://dom5k6iugkewr" path="res://unary.recusant/sources/shared/PlayerCamera3D.cs" id="2_ala65"]
+[ext_resource type="Shape3D" uid="uid://wh4y4fij4d0l" path="res://unary.recusant/resources/player_shape_standing.tres" id="2_p7g1j"]
 [ext_resource type="ArrayMesh" uid="uid://c70hk8teq05vu" path="res://unary.recusant/meshes/triangle.res" id="3_2rj5g"]
 [ext_resource type="Script" uid="uid://kwagcll6xbsf" path="res://unary.recusant/sources/ecs/player/PlayerFlow.cs" id="3_5guud"]
+[ext_resource type="PackedScene" uid="uid://dudm3ef31bxc0" path="res://unary.recusant/resources/player_movement_component.tscn" id="4_2rj5g"]
 [ext_resource type="Script" uid="uid://c11t2j8iwtl68" path="res://unary.recusant/sources/ecs/player/PlayerCamera.cs" id="4_mfgvn"]
 [ext_resource type="Script" uid="uid://bue0h7gx0cndc" path="res://unary.recusant/sources/ecs/player/PlayerHealth.cs" id="5_c7x01"]
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_24kai"]
-margin = 0.01
-height = 1.803
-radius = 0.406
 
 [node name="Entity" type="Node3D" unique_id=999209273]
 script = ExtResource("1_ysajs")
@@ -22,7 +18,7 @@ unique_name_in_owner = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=1908305889]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.902, 0)
-shape = SubResource("CylinderShape3D_24kai")
+shape = ExtResource("2_p7g1j")
 debug_color = Color(0, 18.892157, 0, 1)
 
 [node name="HeadOriginalPosition" type="Node3D" parent="CharacterBody3D" unique_id=1498628712]
@@ -61,8 +57,7 @@ target_position = Vector3(0, -0.55, 0)
 [node name="StairsBelowRayCast3D" type="RayCast3D" parent="CharacterBody3D" unique_id=1565623768]
 unique_name_in_owner = true
 
-[node name="PlayerMovement" type="Node" parent="." unique_id=1638530866 node_paths=PackedStringArray("Body", "CollisionShape3D", "StairsBelowRayCast3D", "StairsAheadRayCast3D", "Head")]
-script = ExtResource("1_ib3fy")
+[node name="PlayerMovement" parent="." unique_id=1673366512 node_paths=PackedStringArray("Body", "CollisionShape3D", "StairsBelowRayCast3D", "StairsAheadRayCast3D", "Head") instance=ExtResource("4_2rj5g")]
 Body = NodePath("../CharacterBody3D")
 CollisionShape3D = NodePath("../CharacterBody3D/CollisionShape3D")
 StairsBelowRayCast3D = NodePath("../CharacterBody3D/StairsBelowRayCast3D")

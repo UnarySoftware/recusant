@@ -49,15 +49,15 @@ namespace Unary.Recusant
 
             NavigationMesh navigationData = CreateResource<NavigationMesh>(targetDirectory + "/navigation.tres", new()
             {
-                CellSize = PlayerConstants.NavCellSize,
-                CellHeight = PlayerConstants.NavCellHeight,
-                AgentHeight = PlayerConstants.NavAgentHeight,
-                AgentRadius = PlayerConstants.NavAgentRadius,
-                AgentMaxClimb = PlayerConstants.NavAgentMaxClimb,
-                VerticesPerPolygon = PlayerConstants.NavMaxVerticesPerPolygon,
-                GeometrySourceGeometryMode = NavigationMesh.SourceGeometryMode.GroupsWithChildren,
-                GeometrySourceGroupName = LevelRootGroup,
-                GeometryParsedGeometryType = NavigationMesh.ParsedGeometryType.StaticColliders
+                CellSize = PlayerConstants.DefaultMesh.Cache.CellSize,
+                CellHeight = PlayerConstants.DefaultMesh.Cache.CellHeight,
+                AgentHeight = PlayerConstants.DefaultMesh.Cache.AgentHeight,
+                AgentRadius = PlayerConstants.DefaultMesh.Cache.AgentRadius,
+                AgentMaxClimb = PlayerConstants.PlayerMovement.Cache.MaxStepHeight,
+                VerticesPerPolygon = PlayerConstants.DefaultMesh.Cache.VerticesPerPolygon,
+                GeometrySourceGeometryMode = PlayerConstants.DefaultMesh.Cache.GeometrySourceGeometryMode,
+                GeometrySourceGroupName = PlayerConstants.DefaultMesh.Cache.GeometrySourceGroupName,
+                GeometryParsedGeometryType = PlayerConstants.DefaultMesh.Cache.GeometryParsedGeometryType
             });
 
             NavigationRegion3D navigation = new()
@@ -354,7 +354,7 @@ namespace Unary.Recusant
             Vector3 startPosition = startIndex.GlobalPosition;
             Vector3 startPositionResolved = NavigationServer3D.Singleton.MapGetClosestPoint(map, startPosition);
 
-            if (startPosition.DistanceTo(startPositionResolved) > PlayerConstants.PlayerRadius * 2.0f)
+            if (startPosition.DistanceTo(startPositionResolved) > PlayerConstants.PlayerShape.Cache.Radius * 2.0f)
             {
                 FromStartToFinish.Value =
                 [
@@ -371,7 +371,7 @@ namespace Unary.Recusant
             Vector3 endPosition = endIndex.GlobalPosition;
             Vector3 endPositionResolved = NavigationServer3D.Singleton.MapGetClosestPoint(map, endPosition);
 
-            if (endPosition.DistanceTo(endPositionResolved) > PlayerConstants.PlayerRadius * 2.0f)
+            if (endPosition.DistanceTo(endPositionResolved) > PlayerConstants.PlayerShape.Cache.Radius * 2.0f)
             {
                 FromStartToFinish.Value =
                 [

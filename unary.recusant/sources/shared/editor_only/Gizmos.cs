@@ -10,9 +10,8 @@ namespace Unary.Recusant
     {
         private static Dictionary<Vector3, Mesh> _boxMeshes = [];
 
-        public static Mesh ArrowMesh { get; private set; } = (Mesh)ResourceLoader.Singleton.Load("uid://2kdho8dshyx1");
-
-        public static Texture2D GridTexture { get; private set; } = (Texture2D)ResourceLoader.Singleton.Load("uid://dswhiguy6g5si");
+        public static LazyResource<Mesh> ArrowMesh = new("uid://2kdho8dshyx1");
+        public static LazyResource<Texture2D> GridTexture = new("uid://dswhiguy6g5si");
 
         public static Mesh GetBoxMesh(Vector3 size)
         {
