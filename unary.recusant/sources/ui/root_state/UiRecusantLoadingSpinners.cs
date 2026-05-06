@@ -101,7 +101,7 @@ namespace Unary.Recusant
 
         public override void Process(float delta)
         {
-            if (LoadingManager.Singleton.IsLoading)
+            if (LoadingManager.Singleton.IsLoading && LoadingManager.Singleton.LoadingType == LoadingType.StreamingAssets)
             {
                 _loadingTimer = FadeoutTimer;
             }

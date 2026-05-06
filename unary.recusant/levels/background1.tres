@@ -8,9 +8,15 @@ script = ExtResource("1_044qn")
 TargetValue = "uid://cyl1eoo011jco"
 metadata/_custom_type_script = "uid://d182yuar3h6wo"
 
+[sub_resource type="Resource" id="Resource_044qn"]
+script = ExtResource("1_044qn")
+TargetValue = "uid://b6ali7y6uuex1"
+metadata/_custom_type_script = "uid://d182yuar3h6wo"
+
 [resource]
 script = ExtResource("1_dr1r6")
 Name = "Background1"
 Scene = SubResource("Resource_qdb8h")
 Background = true
+Texture = SubResource("Resource_044qn")
 metadata/_custom_type_script = "uid://dxj680v60xb1e"

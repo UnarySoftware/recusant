@@ -19,11 +19,20 @@ namespace Unary.Recusant
         [UiElement("%ProgressBar")]
         private ProgressBar _progress;
 
+        [UiElement("%LoadingFull")]
+        private MarginContainer _loadingFull;
+
+        [UiElement("%LoadingBackground")]
+        private MarginContainer _loadingBackground;
+
         private readonly Queue<Label> _freeQueue = [];
         private readonly Dictionary<uint, Label> _entriesDictionary = [];
 
         public override void Initialize()
         {
+            _loadingBackground.Visible = false;
+            _loadingFull.Visible = false;
+
             _freeQueue.Enqueue(_entry);
             _entry.Visible = false;
 
@@ -77,6 +86,20 @@ namespace Unary.Recusant
             }
 
             _progress.Value = LoadingManager.Singleton.GlobalValue;
+        }
+
+        public override void Open()
+        {
+            if(LoadingManager.Singleton.LoadingType == LoadingType.BackgroundLevel)
+            {
+                _loadingBackground.Visible = true;
+                _loadingFull.Visible = false;
+            }
+            else
+            {
+                _loadingBackground.Visible = false;
+                _loadingFull.Visible = true;
+            }
         }
     }
 }

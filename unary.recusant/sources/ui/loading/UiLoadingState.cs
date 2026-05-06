@@ -8,6 +8,9 @@ namespace Unary.Recusant
     [GlobalClass]
     public partial class UiLoadingState : UiState
     {
+        [UiElement("%Background")]
+        public TextureRect Background;
+
         /* TODO Turn this into a dedicated option since this actually improves loading performance
         int targetFps = 0;
 

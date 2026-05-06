@@ -36,3 +36,4 @@ unary.recusant/analyzers/obj
 *.build
 *.types
 *.ttf
+*.wav

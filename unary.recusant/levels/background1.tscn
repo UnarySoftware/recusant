@@ -7,6 +7,9 @@
 [ext_resource type="Material" uid="uid://dy7x42n27nhuw" path="res://hammer/materials/unary.core/tools/block_light.tres" id="5_pk2mg"]
 [ext_resource type="Script" uid="uid://ddmefidlb4w6a" path="res://unary.recusant/sources/level/RandomBall.cs" id="6_1odc0"]
 [ext_resource type="Material" uid="uid://bm2tgs0tn5trk" path="res://hammer/materials/unary.core/dev/measure_doorsmall.tres" id="6_32oba"]
+[ext_resource type="Script" uid="uid://d0hahcfyufrhb" path="res://unary.core/sources/nodes/AudioStreamPlayer3DPatched.cs" id="7_12hnm"]
+[ext_resource type="AudioStream" uid="uid://udqo7dmefnqn" path="res://unary.recusant/placeholder/sound/ambient/zr_ambience.mp3" id="7_tqvdk"]
+[ext_resource type="Resource" uid="uid://b06afwgxh1unm" path="res://unary.recusant/sound/ambient.tres" id="8_rspti"]
 [ext_resource type="Script" uid="uid://dku88wftngf3g" path="res://unary.recusant/sources/level/LevelRoot.cs" id="8_y0yp1"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_pk2mg"]
@@ -67,8 +70,9 @@ radius = 1.5
 radius = 1.5
 height = 3.0
 
-[node name="LevelRoot" type="Node" unique_id=270199221]
+[node name="LevelRoot" type="Node3D" unique_id=1123221758]
 script = ExtResource("8_y0yp1")
+LevelName = "Background1"
 metadata/_custom_type_script = "uid://dku88wftngf3g"
 
 [node name="Background1" type="Node3D" parent="." unique_id=1409403481]
@@ -117,147 +121,165 @@ shape = SubResource("ConcavePolygonShape3D_y0yp1")
 
 [node name="Camera3D" type="Camera3D" parent="Background1" unique_id=1523615901]
 transform = Transform3D(0.9801399, -0.04545551, -0.19302757, 0, 0.97337526, -0.22921738, 0.19830745, 0.22466509, 0.9540439, -25.11714, 2.7135553, 2.9576316)
+current = true
 fov = 80.0
 
-[node name="RandomBall" type="RigidBody3D" parent="Background1" unique_id=500198131]
+[node name="AudioListener3D" type="AudioListener3D" parent="Background1/Camera3D" unique_id=659623726]
+current = true
+
+[node name="AudioStreamPlayer3DPatched" type="AudioStreamPlayer3D" parent="Background1/Camera3D" unique_id=1014962996]
+stream = ExtResource("7_tqvdk")
+autoplay = true
+script = ExtResource("7_12hnm")
+TargetBus = ExtResource("8_rspti")
+metadata/_custom_type_script = "uid://d0hahcfyufrhb"
+
+[node name="Balls" type="Node3D" parent="Background1" unique_id=820720848]
+
+[node name="Label3D" type="Label3D" parent="Background1/Balls" unique_id=739148894]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.034561, 10.659857, -25.556896)
+text = "EVIL BALLS STORAGE"
+font_size = 380
+
+[node name="RandomBall" type="RigidBody3D" parent="Background1/Balls" unique_id=500198131]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.430265, 2.8493268, -14.096297)
 script = ExtResource("6_1odc0")
 metadata/_custom_type_script = "uid://ddmefidlb4w6a"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Background1/RandomBall" unique_id=570448203]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Background1/Balls/RandomBall" unique_id=570448203]
 shape = SubResource("SphereShape3D_pk2mg")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Background1/RandomBall" unique_id=1201574661]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Background1/Balls/RandomBall" unique_id=1201574661]
 mesh = SubResource("SphereMesh_pk2mg")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("6_32oba")
 
-[node name="RandomBall2" type="RigidBody3D" parent="Background1" unique_id=1691031915]
+[node name="RandomBall2" type="RigidBody3D" parent="Background1/Balls" unique_id=1691031915]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.026575, 2.8493268, -18.27899)
 script = ExtResource("6_1odc0")
 metadata/_custom_type_script = "uid://ddmefidlb4w6a"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Background1/RandomBall2" unique_id=1461990520]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Background1/Balls/RandomBall2" unique_id=1461990520]
 shape = SubResource("SphereShape3D_pk2mg")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Background1/RandomBall2" unique_id=403693732]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Background1/Balls/RandomBall2" unique_id=403693732]
 mesh = SubResource("SphereMesh_pk2mg")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("6_32oba")
 
-[node name="RandomBall3" type="RigidBody3D" parent="Background1" unique_id=549499579]
+[node name="RandomBall3" type="RigidBody3D" parent="Background1/Balls" unique_id=549499579]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.200241, 2.8493268, -17.337677)
 script = ExtResource("6_1odc0")
 metadata/_custom_type_script = "uid://ddmefidlb4w6a"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Background1/RandomBall3" unique_id=380227661]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Background1/Balls/RandomBall3" unique_id=380227661]
 shape = SubResource("SphereShape3D_pk2mg")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Background1/RandomBall3" unique_id=831799553]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Background1/Balls/RandomBall3" unique_id=831799553]
 mesh = SubResource("SphereMesh_pk2mg")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("6_32oba")
 
-[node name="RandomBall4" type="RigidBody3D" parent="Background1" unique_id=134022722]
+[node name="RandomBall4" type="RigidBody3D" parent="Background1/Balls" unique_id=134022722]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.030231, 2.8493268, -12.948279)
 script = ExtResource("6_1odc0")
 metadata/_custom_type_script = "uid://ddmefidlb4w6a"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Background1/RandomBall4" unique_id=1567075356]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Background1/Balls/RandomBall4" unique_id=1567075356]
 shape = SubResource("SphereShape3D_pk2mg")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Background1/RandomBall4" unique_id=89970093]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Background1/Balls/RandomBall4" unique_id=89970093]
 mesh = SubResource("SphereMesh_pk2mg")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("6_32oba")
 
-[node name="RandomBall5" type="RigidBody3D" parent="Background1" unique_id=1453258597]
+[node name="RandomBall5" type="RigidBody3D" parent="Background1/Balls" unique_id=1453258597]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.328005, 2.849326, -12.583614)
 script = ExtResource("6_1odc0")
 metadata/_custom_type_script = "uid://ddmefidlb4w6a"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Background1/RandomBall5" unique_id=1702206343]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Background1/Balls/RandomBall5" unique_id=1702206343]
 shape = SubResource("SphereShape3D_pk2mg")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Background1/RandomBall5" unique_id=897642380]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Background1/Balls/RandomBall5" unique_id=897642380]
 mesh = SubResource("SphereMesh_pk2mg")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("6_32oba")
 
-[node name="RandomBall6" type="RigidBody3D" parent="Background1" unique_id=1958784066]
+[node name="RandomBall6" type="RigidBody3D" parent="Background1/Balls" unique_id=1958784066]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.513476, 2.849325, -19.577795)
 script = ExtResource("6_1odc0")
 metadata/_custom_type_script = "uid://ddmefidlb4w6a"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Background1/RandomBall6" unique_id=1569711243]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Background1/Balls/RandomBall6" unique_id=1569711243]
 shape = SubResource("SphereShape3D_pk2mg")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Background1/RandomBall6" unique_id=730769015]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Background1/Balls/RandomBall6" unique_id=730769015]
 mesh = SubResource("SphereMesh_pk2mg")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("6_32oba")
 
-[node name="RandomBall7" type="RigidBody3D" parent="Background1" unique_id=717745255]
+[node name="RandomBall7" type="RigidBody3D" parent="Background1/Balls" unique_id=717745255]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.744786, 2.849325, -13.708598)
 script = ExtResource("6_1odc0")
 metadata/_custom_type_script = "uid://ddmefidlb4w6a"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Background1/RandomBall7" unique_id=901256723]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Background1/Balls/RandomBall7" unique_id=901256723]
 shape = SubResource("SphereShape3D_pk2mg")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Background1/RandomBall7" unique_id=1046167586]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Background1/Balls/RandomBall7" unique_id=1046167586]
 mesh = SubResource("SphereMesh_pk2mg")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("6_32oba")
 
-[node name="RandomBall8" type="RigidBody3D" parent="Background1" unique_id=1041658179]
+[node name="RandomBall8" type="RigidBody3D" parent="Background1/Balls" unique_id=1041658179]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5290794, 2.849325, -17.936417)
 script = ExtResource("6_1odc0")
 metadata/_custom_type_script = "uid://ddmefidlb4w6a"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Background1/RandomBall8" unique_id=757890403]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Background1/Balls/RandomBall8" unique_id=757890403]
 shape = SubResource("SphereShape3D_pk2mg")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Background1/RandomBall8" unique_id=1637294460]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Background1/Balls/RandomBall8" unique_id=1637294460]
 mesh = SubResource("SphereMesh_pk2mg")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("6_32oba")
 
-[node name="RandomBall9" type="RigidBody3D" parent="Background1" unique_id=2004666272]
+[node name="RandomBall9" type="RigidBody3D" parent="Background1/Balls" unique_id=2004666272]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5316105, 2.849324, -11.932331)
 script = ExtResource("6_1odc0")
 metadata/_custom_type_script = "uid://ddmefidlb4w6a"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Background1/RandomBall9" unique_id=1909342211]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Background1/Balls/RandomBall9" unique_id=1909342211]
 shape = SubResource("SphereShape3D_pk2mg")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Background1/RandomBall9" unique_id=1160078258]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Background1/Balls/RandomBall9" unique_id=1160078258]
 mesh = SubResource("SphereMesh_pk2mg")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("6_32oba")
 
-[node name="RandomBall10" type="RigidBody3D" parent="Background1" unique_id=964728411]
+[node name="RandomBall10" type="RigidBody3D" parent="Background1/Balls" unique_id=964728411]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.77114, 2.849324, -8.4229965)
 script = ExtResource("6_1odc0")
 metadata/_custom_type_script = "uid://ddmefidlb4w6a"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Background1/RandomBall10" unique_id=1369927466]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Background1/Balls/RandomBall10" unique_id=1369927466]
 shape = SubResource("SphereShape3D_pk2mg")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Background1/RandomBall10" unique_id=1856605183]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Background1/Balls/RandomBall10" unique_id=1856605183]
 mesh = SubResource("SphereMesh_pk2mg")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("6_32oba")
 
-[node name="RandomBall11" type="RigidBody3D" parent="Background1" unique_id=1101459329]
+[node name="RandomBall11" type="RigidBody3D" parent="Background1/Balls" unique_id=1101459329]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.148285, 2.849323, -8.341976)
 script = ExtResource("6_1odc0")
 metadata/_custom_type_script = "uid://ddmefidlb4w6a"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Background1/RandomBall11" unique_id=350996174]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Background1/Balls/RandomBall11" unique_id=350996174]
 shape = SubResource("SphereShape3D_pk2mg")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Background1/RandomBall11" unique_id=1112395185]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Background1/Balls/RandomBall11" unique_id=1112395185]
 mesh = SubResource("SphereMesh_pk2mg")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("6_32oba")

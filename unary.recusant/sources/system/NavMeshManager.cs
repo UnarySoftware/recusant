@@ -35,6 +35,11 @@ namespace Unary.Recusant
 
         private bool OnLoaded(ref LevelManager.LevelInfo data)
         {
+            if(data.Definition.Background)
+            {
+                return true;
+            }
+
             _levelRoot = data.Root;
             _vertices = _levelRoot.NavigationMesh.GetVertices();
             _polyCount = _levelRoot.NavigationMesh.GetPolygonCount();

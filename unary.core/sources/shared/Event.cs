@@ -16,11 +16,16 @@ namespace Unary.Core
         private bool _subscribed = false;
         protected bool _collecting = false;
         protected object _owner;
+
+#if TOOLS
+
         protected bool _debug = false;
         protected StringBuilder _debugString;
         protected Type _defineType;
         protected string _defineField;
         protected string _source;
+
+#endif
 
         public void StartQueue()
         {
@@ -179,6 +184,8 @@ namespace Unary.Core
 
         }
 
+#if TOOLS
+
         public EventAction(Type defineType, string defineField) : base()
         {
             _debug = true;
@@ -193,78 +200,89 @@ namespace Unary.Core
             _debugString.Clear();
         }
 
+#endif
+
         public void Publish()
         {
             if (!PublishInternal(null))
             {
                 return;
             }
-
+#if TOOLS
             if (_debug)
             {
                 _debugString.Append("Dispatching order:\n\n");
             }
 
             int counter = 1;
-
+#endif
             foreach (EmptyEventDelegate handler in _subscriberFuncs)
             {
+#if TOOLS
                 if (_debug)
                 {
                     _debugString.Append(counter).Append(". ").Append(handler.Target.GetType().FullName).Append('\n');
                 }
+#endif
                 if (!handler())
                 {
                     break;
                 }
-
+#if TOOLS
                 counter++;
+#endif
             }
-
+#if TOOLS
             if (_debug)
             {
                 RuntimeLogger.Log(_source, _debugString.ToString());
                 _debugString.Clear();
             }
+#endif
         }
 
         public override void ProcessQueue()
         {
+#if TOOLS
             if (_debug)
             {
                 _debugString.Append("Dispatching order (queue):\n");
             }
-
+#endif
             for (int i = 0; i < _initQueue.Count; i++)
             {
+#if TOOLS
                 if (_debug)
                 {
                     _debugString.Append('\n');
                 }
 
                 int counter = 1;
-
+#endif
                 foreach (EmptyEventDelegate handler in _subscriberFuncs)
                 {
+#if TOOLS
                     if (_debug)
                     {
                         _debugString.Append(counter).Append(". ").Append(handler.Target.GetType().FullName).Append('\n');
                     }
+#endif
                     if (!handler())
                     {
                         break;
                     }
-
+#if TOOLS
                     counter++;
+#endif
                 }
             }
-
+#if TOOLS
             if (_debug)
             {
                 RuntimeLogger.Log(_source, _debugString.ToString());
                 _debugString.Clear();
             }
-
+#endif
             _collecting = false;
         }
     }
@@ -278,6 +296,8 @@ namespace Unary.Core
         {
 
         }
+
+#if TOOLS
 
         public EventFunc(Type defineType, string defineField) : base()
         {
@@ -299,81 +319,90 @@ namespace Unary.Core
             _debugString.Clear();
         }
 
+#endif
+
         public void Publish(T data)
         {
             if (!PublishInternal(data))
             {
                 return;
             }
-
+#if TOOLS
             if (_debug)
             {
                 _debugString.Append("Dispatching order:\n\n");
             }
 
             int counter = 1;
-
+#endif
             foreach (DataEventDelegate<T> handler in _subscriberFuncs)
             {
+#if TOOLS
                 if (_debug)
                 {
                     _debugString.Append(counter).Append(". ").Append(handler.Target.GetType().FullName).Append('\n');
                 }
-
+#endif
                 if (!handler(ref data))
                 {
                     break;
                 }
-
+#if TOOLS
                 counter++;
+#endif
             }
-
+#if TOOLS
             if (_debug)
             {
                 RuntimeLogger.Log(_source, _debugString.ToString());
                 _debugString.Clear();
             }
+#endif
         }
 
         public override void ProcessQueue()
         {
+#if TOOLS
             if (_debug)
             {
                 _debugString.Append("Dispatching order (queue):\n");
             }
-
+#endif
             foreach (var entry in _initQueue)
             {
                 T target = entry;
-
+#if TOOLS
                 if (_debug)
                 {
                     _debugString.Append('\n');
                 }
 
                 int counter = 1;
-
+#endif
                 foreach (DataEventDelegate<T> handler in _subscriberFuncs)
                 {
+#if TOOLS
                     if (_debug)
                     {
                         _debugString.Append(counter).Append(". ").Append(handler.Target.GetType().FullName).Append('\n');
                     }
+#endif
                     if (!handler(ref target))
                     {
                         break;
                     }
-
+#if TOOLS
                     counter++;
+#endif
                 }
             }
-
+#if TOOLS
             if (_debug)
             {
                 RuntimeLogger.Log(_source, _debugString.ToString());
                 _debugString.Clear();
             }
-
+#endif
             _collecting = false;
         }
     }

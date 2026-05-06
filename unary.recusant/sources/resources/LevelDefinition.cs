@@ -18,5 +18,11 @@ namespace Unary.Recusant
 
         [Export]
         public bool Background = false;
+
+        [Export]
+        public LazyResource Texture
+        {
+            get => field; set => field = this.Filter(value, typeof(Texture2D));
+        }
     }
 }

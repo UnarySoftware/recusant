@@ -19,6 +19,7 @@ namespace Unary.Recusant
             public LevelDefinition Definition;
         }
 
+        public EventFunc<LevelInfo> OnLoadStarted { get; private set; } = new();
         public EventFunc<LevelInfo> OnLoaded { get; private set; } = new();
         public EventFunc<LevelInfo> OnUnloaded { get; private set; } = new();
 
@@ -67,11 +68,11 @@ namespace Unary.Recusant
 
         bool ISystem.PostInitialize()
         {
-            LoadLevel("Streets");
+            LoadLevel("Background1");
             return true;
         }
 
-        private LevelDefinition _loadDefinition;
+        //private LevelDefinition _loadDefinition;
         private bool _loading = false;
 
         public void LoadLevel(string LevelName)
@@ -94,21 +95,28 @@ namespace Unary.Recusant
                 Root = null;
             }
 
-            _loadDefinition = definition;
+            Definition = definition;
 
-            if (_loadDefinition.Background)
+            OnLoadStarted.Publish(new()
             {
-                LoadingManager.Singleton.ShowLoading(typeof(UiMainMenuState));
+                Root = null, // We dont have a root yet
+                Definition = Definition,
+            });
+
+            if (Definition.Background)
+            {
+                LoadingManager.Singleton.ShowLoading(LoadingType.BackgroundLevel, typeof(UiMainMenuState));
             }
             else
             {
-                LoadingManager.Singleton.ShowLoading(typeof(UiGameplayState));
+                LoadingManager.Singleton.ShowLoading(LoadingType.GameLevel, typeof(UiGameplayState));
             }
 
+            GameStateManager.Singleton.State = GameState.Loading;
 
-            LoadingManager.Singleton.AddJob($"Loading {definition.Name}", GetProgress);
+            LoadingManager.Singleton.AddJob($"Loading level assets...", GetProgress);
 
-            Resources.Singleton.LoadPatchedAsync(_loadDefinition.Scene.TargetValue, OnLevelLoaded, OnProgress, nameof(PackedScene));
+            Resources.Singleton.LoadPatchedAsync(Definition.Scene.TargetValue, OnLevelLoaded, OnProgress, nameof(PackedScene));
         }
 
         private void OnLevelLoaded(Resource resource, object data)
@@ -116,7 +124,7 @@ namespace Unary.Recusant
             if (resource == null)
             {
                 Definition = null;
-                this.Error($"Failed to load a level \"{_loadDefinition.Name}\"");
+                this.Error($"Failed to load a level \"{Definition.Name}\"");
                 return;
             }
 
@@ -126,7 +134,15 @@ namespace Unary.Recusant
             AddChild(levelRoot);
 
             Root = levelRoot;
-            Definition = _loadDefinition;
+
+            if (Definition.Background)
+            {
+                GameStateManager.Singleton.State = GameState.BackgroundDynamic;
+            }
+            else
+            {
+                GameStateManager.Singleton.State = GameState.Game;
+            }
 
             Progress = 1.0f;
         }

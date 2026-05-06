@@ -1,9 +1,18 @@
 [gd_scene format=3 uid="uid://bptr8nlpd32mm"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2agys"]
+[ext_resource type="FontFile" uid="uid://en12872agqmw" path="res://unary.recusant/fonts/CharlesWright.ttf" id="2_tnrt1"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_uuqck"]
+font = ExtResource("2_tnrt1")
+font_size = 24
 
 [sub_resource type="LabelSettings" id="LabelSettings_2vwpm"]
-font_size = 32
+font = ExtResource("2_tnrt1")
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_sfpk8"]
+font = ExtResource("2_tnrt1")
+font_size = 24
 
 [node name="Loading" type="Control" unique_id=1464814751]
 layout_mode = 3
@@ -13,44 +22,107 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=345672862]
+[node name="Background" type="TextureRect" parent="." unique_id=268727345]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 1)
+mouse_filter = 2
+expand_mode = 1
 
-[node name="Root" type="VBoxContainer" parent="." unique_id=532491326]
+[node name="LoadingFull" type="MarginContainer" parent="." unique_id=904984537]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.25
-anchor_right = 0.75
+anchor_left = 0.73300004
+anchor_top = 0.832
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.49987793
+offset_top = 5.6799316
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="Background" type="ColorRect" parent="LoadingFull" unique_id=179681932]
+layout_mode = 2
+color = Color(0.2382622, 0.2382622, 0.23826218, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="LoadingFull/Background" unique_id=1787402423]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-alignment = 1
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
 
-[node name="Label" type="Label" parent="Root" unique_id=1058410885]
+[node name="Root" type="VBoxContainer" parent="LoadingFull/Background/MarginContainer" unique_id=532491326]
 layout_mode = 2
-theme_override_font_sizes/font_size = 64
+
+[node name="Label" type="Label" parent="LoadingFull/Background/MarginContainer/Root" unique_id=1058410885]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "Loading..."
+label_settings = SubResource("LabelSettings_uuqck")
 horizontal_alignment = 1
 
-[node name="ProgressBar" type="ProgressBar" parent="Root" unique_id=1900349733]
+[node name="ProgressBar" type="ProgressBar" parent="LoadingFull/Background/MarginContainer/Root" unique_id=1900349733]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 64
-theme_override_styles/fill = SubResource("StyleBoxFlat_2agys")
+theme_override_font_sizes/font_size = 32
 max_value = 1.0
 
-[node name="LoadingEntries" type="VBoxContainer" parent="Root" unique_id=959454509]
+[node name="LoadingEntries" type="VBoxContainer" parent="LoadingFull/Background/MarginContainer/Root" unique_id=959454509]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="LoadingEntry" type="Label" parent="Root/LoadingEntries" unique_id=1207765790]
+[node name="LoadingEntry" type="Label" parent="LoadingFull/Background/MarginContainer/Root/LoadingEntries" unique_id=1207765790]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Loading entry text bla bla bla"
 label_settings = SubResource("LabelSettings_2vwpm")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LoadingBackground" type="MarginContainer" parent="." unique_id=1943814792]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.929
+anchor_top = 0.924
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0400391
+offset_top = -0.23999023
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="ColorRect" type="ColorRect" parent="LoadingBackground" unique_id=905432304]
+layout_mode = 2
+color = Color(0, 0, 0, 0.5882353)
+
+[node name="Label" type="Label" parent="LoadingBackground/ColorRect" unique_id=214636633]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Loading..."
+label_settings = SubResource("LabelSettings_sfpk8")
+horizontal_alignment = 1
+vertical_alignment = 1

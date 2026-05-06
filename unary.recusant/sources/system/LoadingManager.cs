@@ -11,6 +11,8 @@ namespace Unary.Recusant
     {
         public bool IsLoading { get; private set; } = false;
 
+        public LoadingType LoadingType { get; private set; } = LoadingType.None;
+
         public enum LoadingJobType
         {
             None,
@@ -140,8 +142,9 @@ namespace Unary.Recusant
         }
 
         // Automatically switches to switchStateOnDone UI-wise when done
-        public void ShowLoading(Type switchStateOnDone = null)
+        public void ShowLoading(LoadingType loadingType, Type switchStateOnDone = null)
         {
+            LoadingType = loadingType;
             UiManager.Singleton.Open(typeof(UiLoadingState));
             GlobalValue = 0.0f;
             _switchState = switchStateOnDone;
@@ -151,6 +154,7 @@ namespace Unary.Recusant
         public void HideLoading(Type switchState)
         {
             IsLoading = false;
+            LoadingType = LoadingType.None;
             GlobalValue = 1.0f;
             _jobs.Clear();
 

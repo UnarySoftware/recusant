@@ -35,6 +35,11 @@ namespace Unary.Recusant
 
         private bool OnLoaded(ref LevelManager.LevelInfo info)
         {
+            if(info.Definition.Background)
+            {
+                return true;
+            }
+
             Entity entity = _playerPool.Aquire<Entity>(true);
 
             entity.GetComponent<PlayerMovement>().Body.GlobalPosition = GetMarker(PlayerMarker.MarkerType.Start).GlobalPosition;

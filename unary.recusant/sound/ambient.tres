@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AudioBusDeclaration" format=3 uid="uid://b06afwgxh1unm"]
+
+[ext_resource type="Script" uid="uid://bndscehtrdgi3" path="res://unary.core/sources/resources/AudioBusDeclaration.cs" id="1_kq4af"]
+
+[resource]
+script = ExtResource("1_kq4af")
+Name = "Ambient"
+Volume = 0.3
+metadata/_custom_type_script = "uid://bndscehtrdgi3"

@@ -14,17 +14,34 @@ namespace Unary.Recusant
         [UiElement("%Join")]
         private Button _join;
 
+        [UiElement("%Settings")]
+        private Button _settings;
+
         [UiElement("%Quit")]
         private Button _quit;
 
         public override void Initialize()
         {
+            _host.Pressed += OnHost;
+            _settings.Pressed += OnSettings;
             _quit.Pressed += OnQuit;
         }
 
         public override void Deinitialize()
         {
+            _host.Pressed -= OnHost;
+            _settings.Pressed -= OnSettings;
             _quit.Pressed -= OnQuit;
+        }
+
+        private void OnHost()
+        {
+            LevelManager.Singleton.LoadLevel("Streets");
+        }
+
+        private void OnSettings()
+        {
+            UiManager.Singleton.Open(typeof(UiSettingsState));
         }
 
         private void OnQuit()

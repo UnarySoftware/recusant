@@ -1,0 +1,22 @@
+[gd_resource type="Theme" format=3 uid="uid://dxd8cit37yul1"]
+
+[ext_resource type="FontFile" uid="uid://en12872agqmw" path="res://unary.recusant/fonts/CharlesWright.ttf" id="1_1s5lq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x51a2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1s5lq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_doq8a"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g78no"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7em58"]
+
+[resource]
+Button/constants/outline_size = 10
+Button/fonts/font = ExtResource("1_1s5lq")
+Button/styles/disabled = SubResource("StyleBoxEmpty_x51a2")
+Button/styles/focus = SubResource("StyleBoxEmpty_1s5lq")
+Button/styles/hover = SubResource("StyleBoxEmpty_doq8a")
+Button/styles/normal = SubResource("StyleBoxEmpty_g78no")
+Button/styles/pressed = SubResource("StyleBoxEmpty_7em58")

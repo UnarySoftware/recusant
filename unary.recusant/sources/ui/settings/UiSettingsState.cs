@@ -22,17 +22,31 @@ namespace Unary.Recusant
 
         public override void Open()
         {
-            PostProcessManager.Singleton.SetLayer(PlayerCamera3D.PostProcessSlot.GeneralBlur, _blurMaterial.Cache);
+            if (GameStateManager.Singleton.State == GameState.Game)
+            {
+                PostProcessManager.Singleton.SetLayer(PlayerCamera3D.PostProcessSlot.GeneralBlur, _blurMaterial.Cache);
+            }
         }
 
         public override void Close()
         {
-            PostProcessManager.Singleton.ClearLayer(PlayerCamera3D.PostProcessSlot.GeneralBlur);
+            if (GameStateManager.Singleton.State == GameState.Game)
+            {
+                PostProcessManager.Singleton.ClearLayer(PlayerCamera3D.PostProcessSlot.GeneralBlur);
+            }
         }
 
         public override Type GetBackState()
         {
-            return typeof(UiBackMenuState);
+            if (GameStateManager.Singleton.State == GameState.BackgroundDynamic ||
+                GameStateManager.Singleton.State == GameState.BackgroundStatic)
+            {
+                return typeof(UiMainMenuState);
+            }
+            else
+            {
+                return typeof(UiBackMenuState);
+            }
         }
     }
 }

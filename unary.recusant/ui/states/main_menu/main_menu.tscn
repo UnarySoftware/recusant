@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://dw3jfspamqra"]
 
-[ext_resource type="Texture2D" uid="uid://d1vr7d2rrcuxq" path="res://unary.recusant/ui/LogoCrop.png" id="1_ggeqj"]
+[ext_resource type="Theme" uid="uid://dxd8cit37yul1" path="res://unary.recusant/ui/states/main_menu/main_menu_theme.tres" id="1_gy61u"]
+[ext_resource type="Texture2D" uid="uid://d1vr7d2rrcuxq" path="res://unary.recusant/ui/LogoCrop.png" id="2_b4o3x"]
+[ext_resource type="Texture2D" uid="uid://mevml1mjtphx" path="res://unary.recusant/ui/default_loading.png" id="2_xg076"]
 
 [node name="MainMenu" type="Control" unique_id=191311755]
 layout_mode = 3
@@ -9,16 +11,26 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_gy61u")
+
+[node name="Background" type="TextureRect" parent="." unique_id=1153685106]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_xg076")
+expand_mode = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=330835589]
 layout_mode = 1
-anchors_preset = 13
-anchor_left = 0.5
-anchor_right = 0.5
+anchors_preset = 9
 anchor_bottom = 1.0
-offset_left = -597.0
-offset_right = 597.0
-grow_horizontal = 2
+offset_right = 1194.0
 grow_vertical = 2
 alignment = 1
 
@@ -28,7 +40,7 @@ alignment = 1
 
 [node name="Logo" type="TextureRect" parent="HBoxContainer/VBoxContainer" unique_id=1473297245]
 layout_mode = 2
-texture = ExtResource("1_ggeqj")
+texture = ExtResource("2_b4o3x")
 stretch_mode = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/VBoxContainer" unique_id=1623984911]
@@ -41,7 +53,7 @@ alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=1276118575]
 layout_mode = 2
-theme_override_constants/margin_right = 300
+theme_override_constants/margin_right = 92
 
 [node name="Buttons" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=2027349874]
 layout_mode = 2
@@ -51,20 +63,30 @@ size_flags_horizontal = 3
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 72
-text = "HOST"
+text = " Host"
+alignment = 0
 
 [node name="Join" type="Button" parent="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer/Buttons" unique_id=1532363232]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 72
-text = "JOIN"
+text = " Join"
+alignment = 0
+
+[node name="Settings" type="Button" parent="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer/Buttons" unique_id=1260013582]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 72
+text = " Settings"
+alignment = 0
 
 [node name="Quit" type="Button" parent="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer/Buttons" unique_id=147518693]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 72
-text = "QUIT"
+text = " Quit"
+alignment = 0
 
 [node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=1835636111]
 layout_mode = 2
-theme_override_constants/margin_left = 300
+theme_override_constants/margin_left = 760
