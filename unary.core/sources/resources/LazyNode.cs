@@ -1,9 +1,11 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Unary.Core
 {
-    public class LazyResource<T> where T : Resource
+    public class LazyNode<T> where T : Node
     {
         public T Cache
         {
@@ -14,28 +16,30 @@ namespace Unary.Core
                     return field;
                 }
 
-                Resource resource;
+                PackedScene scene;
 
 #if TOOLS
                 if (Engine.Singleton.IsEditorHint())
                 {
-                    resource = (T)ResourceLoader.Singleton.Load(TargetValue);
+                    scene = (PackedScene)ResourceLoader.Singleton.Load(TargetValue);
                 }
                 else
                 {
-                    resource = (T)Resources.Singleton.LoadPatched(TargetValue);
+                    scene = (PackedScene)Resources.Singleton.LoadPatched(TargetValue);
                 }
 #else
-                resource = (T)Resources.Singleton.LoadPatched(TargetValue);
+                scene = (PackedScene)Resources.Singleton.LoadPatched(TargetValue);
 #endif
+
+                Node result = scene.Instantiate();
 
                 if (Processor != null)
                 {
-                    field = Processor(resource);
+                    field = Processor(result);
                 }
                 else
                 {
-                    field = (T)resource;
+                    field = (T)result;
                 }
 
                 return field;
@@ -43,19 +47,19 @@ namespace Unary.Core
         }
 
         public string TargetValue { get; private set; } = string.Empty;
-        public Func<Resource, T> Processor { get; private set; } = null;
+        public Func<Node, T> Processor { get; private set; } = null;
 
-        public LazyResource()
+        public LazyNode()
         {
 
         }
 
-        public LazyResource(string value)
+        public LazyNode(string value)
         {
             TargetValue = value;
         }
 
-        public LazyResource(string value, Func<Resource, T> processor)
+        public LazyNode(string value, Func<Node, T> processor)
         {
             TargetValue = value;
             Processor = processor;
@@ -63,28 +67,30 @@ namespace Unary.Core
 
         public T LoadWithoutCache()
         {
-            Resource resource;
+            PackedScene scene;
 
 #if TOOLS
             if (Engine.Singleton.IsEditorHint())
             {
-                resource = ResourceLoader.Singleton.Load(TargetValue);
+                scene = (PackedScene)ResourceLoader.Singleton.Load(TargetValue);
             }
             else
             {
-                resource = Resources.Singleton.LoadPatched(TargetValue);
+                scene = (PackedScene)Resources.Singleton.LoadPatched(TargetValue);
             }
 #else
-            resource = Resources.Singleton.LoadPatched(TargetValue);
+            scene = (PackedScene)Resources.Singleton.LoadPatched(TargetValue);
 #endif
+
+            Node result = scene.Instantiate();
 
             if (Processor != null)
             {
-                return Processor(resource);
+                return Processor(result);
             }
             else
             {
-                return (T)resource;
+                return (T)result;
             }
         }
     }
