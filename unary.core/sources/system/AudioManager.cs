@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Unary.Core
 {
@@ -10,10 +11,11 @@ namespace Unary.Core
         public const string MasterBusName = "Master";
 
         public Dictionary<string, int> Buses { get; private set; } = [];
+        private readonly Dictionary<string, Dictionary<string, int>> _modIdToBusData = [];
 
         bool ISystem.Initialize()
         {
-            List<AudioBusDeclaration> buses = ResourceTypesManager.Singleton.LoadResourcesOfType<AudioBusDeclaration>();
+            List<AudioBusDeclaration> buses = ResourceTypesManager.Singleton.LoadResources<AudioBusDeclaration>();
 
             var server = AudioServer.Singleton;
 
@@ -36,14 +38,84 @@ namespace Unary.Core
                     server.SetBusSend(index, bus.Parent.Name);
                 }
 
-                server.SetBusVolumeLinear(index, bus.Volume);
+                server.SetBusVolumeLinear(index, bus.Volume / 100.0f);
                 Buses[bus.Name] = index;
+
+                if (!_modIdToBusData.TryGetValue(bus.ModId, out var entries))
+                {
+                    entries = [];
+                    _modIdToBusData.Add(bus.ModId, entries);
+                }
+
+                entries[bus.Name] = index;
                 index++;
             }
 
             Buses[MasterBusName] = 0;
 
+            string modId = this.GetModId();
+
+            if (!_modIdToBusData.TryGetValue(modId, out var coreEntries))
+            {
+                coreEntries = [];
+                _modIdToBusData.Add(modId, coreEntries);
+            }
+
+            coreEntries[MasterBusName] = 0;
+
+            Load();
+
             return true;
+        }
+
+        void ISystem.Deinitialize()
+        {
+            Save();
+        }
+
+        void Save()
+        {
+            foreach (var modId in _modIdToBusData)
+            {
+                List<AudioBusSerializable> data = [];
+
+                foreach (var busEntry in modId.Value)
+                {
+                    data.Add(new()
+                    {
+                        Name = busEntry.Key,
+                        Volume = Mathf.Clamp(AudioServer.Singleton.GetBusVolumeLinear(busEntry.Value), 0.0f, 1.0f)
+                    });
+                }
+
+                StorageManager.Singleton.WriteEntryText(modId.Key, nameof(AudioManager), JsonSerializer.Serialize(data, JsonConverters.IndentedOptions));
+            }
+        }
+
+        void Load()
+        {
+            foreach (var modId in _modIdToBusData)
+            {
+                string content = StorageManager.Singleton.ReadEntryText(modId.Key, nameof(AudioManager));
+
+                if (content == string.Empty)
+                {
+                    continue;
+                }
+
+                List<AudioBusSerializable> data = JsonSerializer.Deserialize<List<AudioBusSerializable>>(content, JsonConverters.IndentedOptions);
+
+                foreach (var busEntry in data)
+                {
+                    if (!modId.Value.TryGetValue(busEntry.Name, out var busIndex))
+                    {
+                        this.Warning($"Tried setting an unknown bus \"{busEntry.Name}\" when loading audio data for \"{modId.Key}\", skipping...");
+                        continue;
+                    }
+
+                    AudioServer.Singleton.SetBusVolumeLinear(busIndex, Mathf.Clamp(busEntry.Volume, 0.0f, 1.0f));
+                }
+            }
         }
     }
 }

@@ -9,8 +9,8 @@ namespace Unary.Core
         [Export]
         public string Name;
 
-        [Export(PropertyHint.Range, "0.0,1.0,0.05")]
-        public float Volume = 0.5f;
+        [Export(PropertyHint.Range, "0.0,100.0,5.00")]
+        public float Volume = 50.0f;
 
         [Export]
         public AudioBusDeclaration Parent;

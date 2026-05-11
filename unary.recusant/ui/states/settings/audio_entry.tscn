@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://cqy7147sanwjc"]
+
+[ext_resource type="LabelSettings" uid="uid://1ggaqugltlri" path="res://unary.recusant/ui/states/settings/controls_entry_labels.tres" id="1_emt78"]
+[ext_resource type="Texture2D" uid="uid://cdt351624e0bd" path="res://unary.recusant/ui/states/settings/audio_grabber.tres" id="2_sr1rq"]
+[ext_resource type="Texture2D" uid="uid://clwvvseufx3c7" path="res://unary.recusant/ui/states/settings/audio_grabber_highlight.tres" id="3_p73pa"]
+[ext_resource type="Texture2D" uid="uid://clta24dp3oloo" path="res://unary.recusant/ui/states/settings/audio_grabber_disabled.tres" id="4_ravco"]
+
+[node name="AudioEntry" type="ColorRect" unique_id=1144967529]
+custom_minimum_size = Vector2(0, 80)
+color = Color(0.1764706, 0.1764706, 0.1764706, 0.54901963)
+
+[node name="Horizontal" type="HBoxContainer" parent="." unique_id=118233133]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Horizontal" unique_id=174667024]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = " BUS NAME"
+label_settings = ExtResource("1_emt78")
+
+[node name="Data" type="HBoxContainer" parent="Horizontal" unique_id=951277844]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Slider" type="HSlider" parent="Horizontal/Data" unique_id=1216609377]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_icons/grabber = ExtResource("2_sr1rq")
+theme_override_icons/grabber_highlight = ExtResource("3_p73pa")
+theme_override_icons/grabber_disabled = ExtResource("4_ravco")
+step = 5.0
+scrollable = false
+tick_count = 25
+ticks_on_borders = true
+
+[node name="Input" type="LineEdit" parent="Horizontal/Data" unique_id=1510648122]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 40
+text = "100"
+alignment = 1
+virtual_keyboard_enabled = false

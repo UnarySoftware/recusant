@@ -3,20 +3,20 @@
     "Editor": {
       "commandName": "Executable",
       "executablePath": "..\\godot\\editor.exe",
-      "commandLineArgs": "--verbose --editor",
+      "commandLineArgs": "--editor",
       "workingDirectory": ".",
       "nativeDebugging": true
     },
     "Client": {
       "commandName": "Executable",
       "executablePath": "..\\godot\\editor.exe",
-      "commandLineArgs": "--verbose --client",
+      "commandLineArgs": "--client",
       "workingDirectory": "."
     },
     "Host": {
       "commandName": "Executable",
       "executablePath": "..\\godot\\editor.exe",
-      "commandLineArgs": "--verbose --host",
+      "commandLineArgs": "--host",
       "workingDirectory": ".",
       "nativeDebugging": true
     }

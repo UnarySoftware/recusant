@@ -7,7 +7,7 @@ namespace Unary.Core
     public partial class ModManifestSelector : BaseResource
     {
         [Export]
-        public string ModId;
+        public new string ModId;
 
         [Export]
         public string Version;

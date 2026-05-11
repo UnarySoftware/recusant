@@ -14,6 +14,9 @@ namespace Unary.Recusant
         [UiElement("%Game")]
         private UiSettingsTabBase _game;
 
+        [UiElement("%Audio")]
+        private UiSettingsTabBase _audio;
+
         [UiElement("%Graphics")]
         private UiSettingsTabBase _graphics;
 
@@ -23,6 +26,7 @@ namespace Unary.Recusant
         private enum CurrentSelection : long
         {
             Game = 0,
+            Audio,
             Graphics,
             Controls,
         };
@@ -34,6 +38,7 @@ namespace Unary.Recusant
         public override void Initialize()
         {
             _tabsContents[CurrentSelection.Game] = _game;
+            _tabsContents[CurrentSelection.Audio] = _audio;
             _tabsContents[CurrentSelection.Graphics] = _graphics;
             _tabsContents[CurrentSelection.Controls] = _controls;
 

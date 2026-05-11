@@ -130,7 +130,7 @@ namespace Unary.Core
         [InitializeExplicit(typeof(ModSystems))]
         bool ISystem.Initialize()
         {
-            List<UiStateManifest> states = ResourceTypesManager.Singleton.LoadResourcesOfType<UiStateManifest>();
+            List<UiStateManifest> states = ResourceTypesManager.Singleton.LoadResources<UiStateManifest>();
 
             if (states.Count == 0)
             {

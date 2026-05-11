@@ -20,18 +20,17 @@ namespace Unary.Recusant
 
         bool ISystem.Initialize()
         {
-            Type networkResource = typeof(NetworkedResource);
-
             List<string> resources = [];
 
-            foreach (var manifest in ResourceTypesManager.Singleton.TypesToResources)
+            List<Type> types = ResourceTypesManager.Singleton.GetResourceTypesAssignableFrom(typeof(NetworkedResource));
+
+            foreach (var type in types)
             {
-                if (networkResource.IsAssignableFrom(manifest.Key))
+                List<ResourceTypesManager.ResourceHandle> targetResources = ResourceTypesManager.Singleton.GetResourceHandlesOfType(type);
+
+                foreach (var entry in targetResources)
                 {
-                    foreach (var entry in manifest.Value)
-                    {
-                        resources.Add(entry);
-                    }
+                    resources.Add(entry.Path);
                 }
             }
 

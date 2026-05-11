@@ -8,27 +8,70 @@ namespace Unary.Core
 {
     public partial class ResourceTypesManager : Node, ICoreSystem
     {
-        private readonly Dictionary<string, ResourceTypesManifest> _manifests = [];
-        public Dictionary<Type, List<string>> TypesToResources { get; private set; } = [];
-
-        private readonly Dictionary<string, Type> _pathToType = [];
-
-        public List<string> GetResourcesOfType(Type type)
+        public readonly struct ResourceHandle(string modId, string path, Type type) : IEquatable<ResourceHandle>
         {
-            if (TypesToResources.TryGetValue(type, out var result))
+            public string ModId { get; init; } = modId;
+            public string Path { get; init; } = path;
+            public Type Type { get; init; } = type;
+
+            public readonly bool Equals(ResourceHandle other)
+            {
+                return ModId == other.ModId && Path == other.Path && Type == other.Type;
+            }
+
+            public override readonly bool Equals(object obj)
+            {
+                return obj is ResourceHandle other && Equals(other);
+            }
+
+            public override readonly int GetHashCode()
+            {
+                return HashCode.Combine(ModId, Path, Type);
+            }
+
+            public static bool operator ==(ResourceHandle left, ResourceHandle right)
+            {
+                return left.Equals(right);
+            }
+
+            public static bool operator !=(ResourceHandle left, ResourceHandle right)
+            {
+                return !(left == right);
+            }
+        }
+
+        private readonly Dictionary<string, ResourceTypesManifest> _modIdTomanifest = [];
+        private readonly Dictionary<Type, List<ResourceHandle>> _typesToResources = [];
+
+        public List<ResourceHandle> GetResourceHandlesOfType(Type type)
+        {
+            if (_typesToResources.TryGetValue(type, out var result))
             {
                 return result;
             }
             return [];
         }
 
-        public List<T> LoadResourcesOfType<T>(bool patched = true) where T : BaseResource
+        public List<Type> GetResourceTypesAssignableFrom(Type type)
         {
-            Type type = typeof(T);
+            List<Type> result = [];
 
+            foreach (var typeGroup in _typesToResources)
+            {
+                if (type.IsAssignableFrom(typeGroup.Key))
+                {
+                    result.Add(typeGroup.Key);
+                }
+            }
+
+            return result;
+        }
+
+        public List<T> LoadResources<T>(bool patched = true) where T : BaseResource
+        {
             List<T> result = [];
 
-            List<BaseResource> targets = LoadResourcesOfType(type, patched);
+            List<BaseResource> targets = LoadResourcesByType(typeof(T), patched);
 
             foreach (var target in targets)
             {
@@ -38,17 +81,17 @@ namespace Unary.Core
             return result;
         }
 
-        public List<BaseResource> LoadResourcesOfType(Type type, bool patched = true)
+        public List<BaseResource> LoadResourcesByType(Type type, bool patched = true)
         {
             List<BaseResource> result = [];
 
-            List<string> paths = GetResourcesOfType(type);
+            List<ResourceHandle> handles = GetResourceHandlesOfType(type);
 
-            foreach (var path in paths)
+            foreach (var handle in handles)
             {
                 // This is considered a valid non-error-worthy behaviour because the file
                 // could have been deleted by some mod but still be present in a types manifest
-                if (!ResourceLoader.Singleton.Exists(path))
+                if (!ResourceLoader.Singleton.Exists(handle.Path))
                 {
                     continue;
                 }
@@ -57,11 +100,11 @@ namespace Unary.Core
 
                 if (patched)
                 {
-                    resource = Resources.Singleton.LoadPatched(path, type.Name);
+                    resource = Resources.Singleton.LoadPatched(handle.Path, type.Name);
                 }
                 else
                 {
-                    resource = ResourceLoader.Singleton.Load(path, type.Name);
+                    resource = ResourceLoader.Singleton.Load(handle.Path, type.Name);
                 }
 
                 if (resource == null)
@@ -69,19 +112,13 @@ namespace Unary.Core
                     continue;
                 }
 
-                result.Add((BaseResource)resource);
+                BaseResource baseResource = (BaseResource)resource;
+                baseResource.ModId = handle.ModId;
+
+                result.Add(baseResource);
             }
 
             return result;
-        }
-
-        public Type GetPathType(string path)
-        {
-            if (_pathToType.TryGetValue(path, out var result))
-            {
-                return result;
-            }
-            return typeof(Resource);
         }
 
         public bool InitializeMod(string modId)
@@ -94,7 +131,7 @@ namespace Unary.Core
                 return false;
             }
 
-            if (_manifests.ContainsKey(modId))
+            if (_modIdTomanifest.ContainsKey(modId))
             {
                 this.Critical($"There is a duplicate manifest file with resource types for a mod \"{modId}\"");
                 return false;
@@ -104,8 +141,9 @@ namespace Unary.Core
 
             manifest.Paths ??= [];
             manifest.Types ??= [];
+            manifest.ModId = modId;
 
-            _manifests[modId] = manifest;
+            _modIdTomanifest[modId] = manifest;
 
             if (manifest.Paths.Length != manifest.Types.Length)
             {
@@ -126,15 +164,18 @@ namespace Unary.Core
                     continue;
                 }
 
-                if (!TypesToResources.TryGetValue(type, out var entries))
+                if (!_typesToResources.TryGetValue(type, out var entries))
                 {
                     entries = [];
-                    TypesToResources[type] = entries;
+                    _typesToResources[type] = entries;
                 }
 
-                entries.Add(path);
-
-                _pathToType.Add(path, type);
+                entries.Add(new()
+                {
+                    ModId = modId,
+                    Path = path,
+                    Type = type
+                });
             }
 
             return true;

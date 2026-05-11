@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_kwoyn")
 Name = "UI"
-Volume = 0.85
+Volume = 60.0
 metadata/_custom_type_script = "uid://bndscehtrdgi3"

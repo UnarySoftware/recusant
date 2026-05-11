@@ -22,7 +22,7 @@ namespace Unary.Recusant
 
         bool ISystem.Initialize()
         {
-            List<PoolDeclaration> pools = ResourceTypesManager.Singleton.LoadResourcesOfType<PoolDeclaration>();
+            List<PoolDeclaration> pools = ResourceTypesManager.Singleton.LoadResources<PoolDeclaration>();
 
             Dictionary<string, PoolDeclaration> poolDictionary = [];
 

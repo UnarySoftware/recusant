@@ -4,6 +4,7 @@
 [ext_resource type="FontFile" uid="uid://en12872agqmw" path="res://unary.recusant/fonts/CharlesWright.ttf" id="1_qc2nw"]
 [ext_resource type="Script" uid="uid://b2xhopbd5bl0j" path="res://unary.recusant/sources/ui/settings/UiSettingsGame.cs" id="3_xf1li"]
 [ext_resource type="Script" uid="uid://cuw7a253lg0t0" path="res://unary.recusant/sources/ui/settings/UiSettingsGraphics.cs" id="4_bqx8h"]
+[ext_resource type="Script" uid="uid://lhwxu4kxmg8k" path="res://unary.recusant/sources/ui/settings/UiSettingsAudio.cs" id="4_xf1li"]
 [ext_resource type="Script" uid="uid://ccs35vo4pc17j" path="res://unary.recusant/sources/ui/settings/UiSettingsControls.cs" id="5_02rqq"]
 
 [node name="Settings" type="Control" unique_id=854091213]
@@ -41,10 +42,11 @@ theme_override_fonts/font = ExtResource("1_qc2nw")
 theme_override_font_sizes/font_size = 48
 current_tab = 0
 tab_alignment = 1
-tab_count = 3
+tab_count = 4
 tab_0/title = " Game "
-tab_1/title = " Graphics "
-tab_2/title = " Controls "
+tab_1/title = " Audio "
+tab_2/title = " Graphics "
+tab_3/title = " Controls "
 
 [node name="HSeparator" type="HSeparator" parent="BackgroundRect/Entries" unique_id=1726889401]
 layout_mode = 2
@@ -56,6 +58,37 @@ layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("3_xf1li")
 metadata/_custom_type_script = "uid://b2xhopbd5bl0j"
+
+[node name="Audio" type="VBoxContainer" parent="BackgroundRect/Entries" unique_id=1510734735]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("4_xf1li")
+metadata/_custom_type_script = "uid://lhwxu4kxmg8k"
+
+[node name="Control" type="Control" parent="BackgroundRect/Entries/Audio" unique_id=315543463]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Scroll" type="ScrollContainer" parent="BackgroundRect/Entries/Audio/Control" unique_id=987552487]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.277
+anchor_right = 0.72300005
+anchor_bottom = 1.0
+offset_left = -0.4800415
+offset_right = 0.4798584
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AudioEntries" type="VBoxContainer" parent="BackgroundRect/Entries/Audio/Control/Scroll" unique_id=1000855080]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+alignment = 1
 
 [node name="Graphics" type="VBoxContainer" parent="BackgroundRect/Entries" unique_id=1498347212]
 unique_name_in_owner = true
@@ -585,6 +618,7 @@ virtual_keyboard_enabled = false
 
 [node name="Controls" type="VBoxContainer" parent="BackgroundRect/Entries" unique_id=1399166513]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("5_02rqq")

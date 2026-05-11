@@ -35,7 +35,7 @@ namespace Unary.Recusant
 
         bool ISystem.Initialize()
         {
-            List<LevelDefinition> levels = ResourceTypesManager.Singleton.LoadResourcesOfType<LevelDefinition>();
+            List<LevelDefinition> levels = ResourceTypesManager.Singleton.LoadResources<LevelDefinition>();
 
             foreach (var level in levels)
             {

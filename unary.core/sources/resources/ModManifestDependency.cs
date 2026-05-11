@@ -10,7 +10,7 @@ namespace Unary.Core
         public bool Required = true;
 
         [Export]
-        public string ModId;
+        public new string ModId;
 
         [Export]
         public string Version;

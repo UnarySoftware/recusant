@@ -15,7 +15,7 @@ namespace Unary.Core
         [InitializeExplicit(typeof(ResourceManager))]
         bool ISystem.Initialize()
         {
-            List<ResourcePatch> patches = ResourceTypesManager.Singleton.LoadResourcesOfType<ResourcePatch>(false);
+            List<ResourcePatch> patches = ResourceTypesManager.Singleton.LoadResources<ResourcePatch>(false);
 
             foreach (var patch in patches)
             {

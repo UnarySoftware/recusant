@@ -89,7 +89,7 @@ namespace Unary.Recusant
 
             foreach (var type in types)
             {
-                List<BaseResource> targetResources = resources.LoadResourcesOfType(type);
+                List<BaseResource> targetResources = resources.LoadResourcesByType(type);
 
                 if (targetResources.Count == 0)
                 {
