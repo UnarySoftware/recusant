@@ -65,8 +65,7 @@ namespace Unary.Recusant
                 return;
             }
 
-            // TODO Add brush management to NavMeshManager
-            //PlayerManager.Singleton.AddMarker(this);
+            NavMeshManager.Singleton.AddNavBrush(this);
         }
 
         public override void _ExitTree()
@@ -76,7 +75,7 @@ namespace Unary.Recusant
                 return;
             }
 
-            //PlayerManager.Singleton.RemoveMarker(this);
+            NavMeshManager.Singleton.RemoveNavBrush(this);
         }
 
     }

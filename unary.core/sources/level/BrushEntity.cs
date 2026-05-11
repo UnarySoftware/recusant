@@ -1,5 +1,4 @@
 using Godot;
-using Unary.Core.Editor;
 
 namespace Unary.Core
 {
@@ -32,7 +31,7 @@ namespace Unary.Core
 
             if (groups.Count > 1)
             {
-                PluginLogger.Warning(this, "BrushEntity has more than 1 node group");
+                this.Warning("BrushEntity has more than 1 node group");
                 return;
             }
 

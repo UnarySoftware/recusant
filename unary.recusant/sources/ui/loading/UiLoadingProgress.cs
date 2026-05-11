@@ -68,7 +68,7 @@ namespace Unary.Recusant
         {
             if (!_entriesDictionary.TryGetValue(data.Id, out var label))
             {
-                RuntimeLogger.Error(this, $"Failed to release label for a job id: \"{data.Id}\" with text: \"{data.Job.Name}\"");
+                this.Error($"Failed to release label for a job id: \"{data.Id}\" with text: \"{data.Job.Name}\"");
                 return true;
             }
 
@@ -90,7 +90,7 @@ namespace Unary.Recusant
 
         public override void Open()
         {
-            if(LoadingManager.Singleton.LoadingType == LoadingType.BackgroundLevel)
+            if (LoadingManager.Singleton.LoadingType == LoadingType.BackgroundLevel)
             {
                 _loadingBackground.Visible = true;
                 _loadingFull.Visible = false;

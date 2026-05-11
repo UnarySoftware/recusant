@@ -10,10 +10,8 @@ using System.Security.Cryptography;
 namespace Unary.Core
 {
     [Tool]
-    public class FilesystemCache(string path, Func<object, string, bool> reporter)
+    public class FilesystemCache(string path)
     {
-        private Func<object, string, bool> _reporter = reporter;
-
         public string Path { get; private set; } = path;
 
         public enum ChangeType
@@ -134,7 +132,7 @@ namespace Unary.Core
                 {
                     lock (lockObj)
                     {
-                        _reporter(this, ex.Message);
+                        this.Critical(ex.Message);
                     }
                 }
 

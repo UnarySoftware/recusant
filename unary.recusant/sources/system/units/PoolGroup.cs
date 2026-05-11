@@ -63,7 +63,7 @@ namespace Unary.Recusant
             {
                 if (_entries.Count == 0)
                 {
-                    RuntimeLogger.Error(this, $"Pool \"{_poolId}\" requested more objects than was previously allocated!");
+                    this.Error($"Pool \"{_poolId}\" requested more objects than was previously allocated!");
                     return null;
                 }
 

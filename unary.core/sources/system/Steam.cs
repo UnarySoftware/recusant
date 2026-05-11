@@ -42,11 +42,11 @@ namespace Unary.Core
 
             if (severity == 0)
             {
-                RuntimeLogger.Log(Singleton, stringBuilder.ToString());
+                Singleton.Log(stringBuilder.ToString());
             }
             else
             {
-                RuntimeLogger.Warning(Singleton, stringBuilder.ToString());
+                Singleton.Warning(stringBuilder.ToString());
             }
         }
 

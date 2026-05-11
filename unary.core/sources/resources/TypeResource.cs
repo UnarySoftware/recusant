@@ -13,7 +13,7 @@ namespace Unary.Core
 
             if (result == null)
             {
-                RuntimeLogger.Error(this, $"Failed to resolve a type {TargetValue}");
+                this.Error($"Failed to resolve a type {TargetValue}");
             }
 
             return result;

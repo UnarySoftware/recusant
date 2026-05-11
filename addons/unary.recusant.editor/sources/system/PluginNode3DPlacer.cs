@@ -49,7 +49,7 @@ namespace Unary.Recusant.Editor
 
                 if (resolved == null)
                 {
-                    PluginLogger.Warning(Singleton, $"Skipping invalid type \"{type}\"");
+                    Singleton.Warning($"Skipping invalid type \"{type}\"");
                     continue;
                 }
 
@@ -64,7 +64,7 @@ namespace Unary.Recusant.Editor
 
                 if (resolved == null)
                 {
-                    PluginLogger.Warning(Singleton, $"Skipping invalid type \"{type}\"");
+                    Singleton.Warning($"Skipping invalid type \"{type}\"");
                     continue;
                 }
 

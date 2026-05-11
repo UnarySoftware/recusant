@@ -23,7 +23,7 @@ namespace Unary.Recusant
 
             if (error != Error.Ok)
             {
-                RuntimeLogger.Error(this, $"Failed to create a host at port {port} due to an error \"{error}\"");
+                this.Error($"Failed to create a host at port {port} due to an error \"{error}\"");
                 return;
             }
 
@@ -37,7 +37,7 @@ namespace Unary.Recusant
 
             if (error != Error.Ok)
             {
-                RuntimeLogger.Error(this, $"Failed to create an outgoing host due to an error \"{error}\"");
+                this.Error($"Failed to create an outgoing host due to an error \"{error}\"");
                 return;
             }
 
@@ -45,7 +45,7 @@ namespace Unary.Recusant
 
             if (_host == null)
             {
-                RuntimeLogger.Error(this, $"Failed to create a client at port {port}");
+                this.Error($"Failed to create a client at port {port}");
                 return;
             }
 
@@ -106,7 +106,7 @@ namespace Unary.Recusant
                         }
                     case ENetConnection.EventType.Receive:
                         {
-                            RuntimeLogger.Log(this, "RECIEVE!: " + Encoding.UTF8.GetString(peer.GetPacket()));
+                            this.Log("RECIEVE!: " + Encoding.UTF8.GetString(peer.GetPacket()));
                             break;
                         }
                 }
@@ -135,7 +135,7 @@ namespace Unary.Recusant
 
             if (error != Error.Ok)
             {
-                RuntimeLogger.Error(this, $"Failed to send a packet of type \"{type}\" to {client} for a reason \"{error}\"");
+                this.Error($"Failed to send a packet of type \"{type}\" to {client} for a reason \"{error}\"");
             }
         }
 
@@ -161,7 +161,7 @@ namespace Unary.Recusant
 
             if (error != Error.Ok)
             {
-                RuntimeLogger.Error(this, $"Failed to send a packet of type \"{type}\" to the host for a reason \"{error}\"");
+                this.Error($"Failed to send a packet of type \"{type}\" to the host for a reason \"{error}\"");
             }
         }
     }

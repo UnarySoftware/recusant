@@ -45,7 +45,7 @@ namespace Unary.Recusant
                 {
                     if (!poolDictionary.TryGetValue(influence.Key.TargetValue, out var targetPool))
                     {
-                        RuntimeLogger.Error(this, $"Pool with scene \"{pool.Value.Scene.TargetValue}\" just tried influencing unknown pool \"{influence.Key.TargetValue}\"");
+                        this.Error($"Pool with scene \"{pool.Value.Scene.TargetValue}\" just tried influencing unknown pool \"{influence.Key.TargetValue}\"");
                         continue;
                     }
 

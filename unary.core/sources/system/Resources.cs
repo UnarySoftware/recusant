@@ -139,7 +139,7 @@ namespace Unary.Core
             else if (_asyncEntries.IsEmpty && _hadEntries)
             {
                 _hadEntries = false;
-                RuntimeLogger.OnLog.ProcessQueue();
+                RuntimeLogger.OnLog.PublishQueue();
             }
         }
 

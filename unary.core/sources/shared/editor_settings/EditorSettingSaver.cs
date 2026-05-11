@@ -47,7 +47,7 @@ namespace Unary.Core
             {
                 if (!_variables.ContainsKey(path))
                 {
-                    SharedLogger.Error(this, $"Tried setting an unknown variable at path \"{path}\"");
+                    this.Error($"Tried setting an unknown variable at path \"{path}\"");
                     return;
                 }
 

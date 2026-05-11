@@ -6,7 +6,7 @@ namespace Unary.Core
 {
     public partial class BuildFilesystem : Node, ICoreSystem
     {
-        public FilesystemCache Filesystem { get; private set; } = new("build_filesystem.bin", RuntimeLogger.Critical);
+        public FilesystemCache Filesystem { get; private set; } = new("build_filesystem.bin");
 
         bool ISystem.Initialize()
         {

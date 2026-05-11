@@ -7,17 +7,9 @@ namespace Unary.Core
     [GlobalClass]
     public partial class AudioManager : Node, ICoreSystem
     {
-        private Dictionary<string, int> _buses = [];
+        public const string MasterBusName = "Master";
 
-        public int GetBusIndex(string busName)
-        {
-            if (_buses.TryGetValue(busName, out var result))
-            {
-                return result;
-            }
-
-            return -1;
-        }
+        public Dictionary<string, int> Buses { get; private set; } = [];
 
         bool ISystem.Initialize()
         {
@@ -30,7 +22,6 @@ namespace Unary.Core
 
             int index = 1;
 
-            // TODO add bus patching
             foreach (var bus in buses)
             {
                 server.AddBus(index);
@@ -38,7 +29,7 @@ namespace Unary.Core
 
                 if (bus.Parent == null || string.IsNullOrEmpty(bus.Parent.Name))
                 {
-                    server.SetBusSend(index, "Master");
+                    server.SetBusSend(index, MasterBusName);
                 }
                 else
                 {
@@ -46,9 +37,11 @@ namespace Unary.Core
                 }
 
                 server.SetBusVolumeLinear(index, bus.Volume);
-                _buses[bus.Name] = index;
+                Buses[bus.Name] = index;
                 index++;
             }
+
+            Buses[MasterBusName] = 0;
 
             return true;
         }

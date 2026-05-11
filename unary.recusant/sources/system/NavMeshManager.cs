@@ -19,6 +19,7 @@ namespace Unary.Recusant
         private int _polyCount;
         private PolyData[] _polyData;
         private readonly Dictionary<Vector3, int[]> _boundToPolys = [];
+        private readonly HashSet<NavBrush> _navBrushes = [];
 
         bool ISystem.Initialize()
         {
@@ -35,7 +36,7 @@ namespace Unary.Recusant
 
         private bool OnLoaded(ref LevelManager.LevelInfo data)
         {
-            if(data.Definition.Background)
+            if (data.Definition.Background)
             {
                 return true;
             }
@@ -138,7 +139,18 @@ namespace Unary.Recusant
             _polyCount = 0;
             _polyData = null;
             _boundToPolys.Clear();
+            _navBrushes.Clear();
             return true;
+        }
+
+        public void AddNavBrush(NavBrush brush)
+        {
+            _navBrushes.Add(brush);
+        }
+
+        public void RemoveNavBrush(NavBrush brush)
+        {
+            _navBrushes.Remove(brush);
         }
     }
 }

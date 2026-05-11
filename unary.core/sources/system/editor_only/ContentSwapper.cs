@@ -32,16 +32,16 @@ namespace Unary.Core
 
         private bool _swapped = false;
 
-        private static bool SwapFiles(string pathA, string pathB, Func<object, string, bool> reporter)
+        private static bool SwapFiles(string pathA, string pathB)
         {
             if (!File.Exists(pathA))
             {
-                return reporter(typeof(ContentSwapper), $"Failed to swap file {pathA} since it does not exist");
+                return SharedLogger.Critical(typeof(ContentSwapper), $"Failed to swap file {pathA} since it does not exist");
             }
 
             if (!File.Exists(pathB))
             {
-                return reporter(typeof(ContentSwapper), $"Failed to swap file {pathB} since it does not exist");
+                return SharedLogger.Critical(typeof(ContentSwapper), $"Failed to swap file {pathB} since it does not exist");
             }
 
             File.Move(pathA, TempFile);
@@ -51,7 +51,7 @@ namespace Unary.Core
             return true;
         }
 
-        private static bool SwapContent(ContentSwapManifest operations, Func<object, string, bool> reporter)
+        private static bool SwapContent(ContentSwapManifest operations)
         {
             ResourceSaver.Singleton.Save(operations, OperationsFile, ResourceSaver.SaverFlags.None);
 
@@ -59,7 +59,7 @@ namespace Unary.Core
             {
                 string original = operations.Originals[i];
                 string destination = operations.Replacements[i];
-                if (!SwapFiles(original, destination, reporter))
+                if (!SwapFiles(original, destination))
                 {
                     return false;
                 }
@@ -69,8 +69,7 @@ namespace Unary.Core
         }
 
         // Is public and globally accessible since we also want to try swap stuff on plugin initialization
-        // TODO Obsolete all manual reporter passing with SharedLogger
-        public static bool TryRevertSwap(Func<object, string, bool> reporter)
+        public static bool TryRevertSwap()
         {
             if (!ResourceLoader.Singleton.Exists(OperationsFileRes, nameof(ContentSwapManifest)))
             {
@@ -81,39 +80,39 @@ namespace Unary.Core
 
             if (newOperations == null)
             {
-                return reporter(typeof(ContentSwapper), "Failed to load content swap manifest");
+                return SharedLogger.Critical(typeof(ContentSwapper), "Failed to load content swap manifest");
             }
 
             if (newOperations.Originals == null)
             {
-                return reporter(typeof(ContentSwapper), $"Invalid content swap manifest, {nameof(newOperations.Originals)} was null");
+                return SharedLogger.Critical(typeof(ContentSwapper), $"Invalid content swap manifest, {nameof(newOperations.Originals)} was null");
             }
 
             if (newOperations.Originals.Length == 0)
             {
-                return reporter(typeof(ContentSwapper), $"Invalid content swap manifest, {nameof(newOperations.Originals)} was empty");
+                return SharedLogger.Critical(typeof(ContentSwapper), $"Invalid content swap manifest, {nameof(newOperations.Originals)} was empty");
             }
 
             if (newOperations.Replacements == null)
             {
-                return reporter(typeof(ContentSwapper), $"Invalid content swap manifest, {nameof(newOperations.Replacements)} was null");
+                return SharedLogger.Critical(typeof(ContentSwapper), $"Invalid content swap manifest, {nameof(newOperations.Replacements)} was null");
             }
 
             if (newOperations.Replacements.Length == 0)
             {
-                return reporter(typeof(ContentSwapper), $"Invalid content swap manifest, {nameof(newOperations.Replacements)} was empty");
+                return SharedLogger.Critical(typeof(ContentSwapper), $"Invalid content swap manifest, {nameof(newOperations.Replacements)} was empty");
             }
 
             if (newOperations.Originals.Length != newOperations.Replacements.Length)
             {
-                return reporter(typeof(ContentSwapper), $"Invalid content swap manifest, {nameof(newOperations.Originals)} had {newOperations.Originals.Length} entries while {nameof(newOperations.Replacements)} had {newOperations.Replacements.Length}");
+                return SharedLogger.Critical(typeof(ContentSwapper), $"Invalid content swap manifest, {nameof(newOperations.Originals)} had {newOperations.Originals.Length} entries while {nameof(newOperations.Replacements)} had {newOperations.Replacements.Length}");
             }
 
             for (int i = 0; i < newOperations.Originals.Length; i++)
             {
                 string original = newOperations.Originals[i];
                 string destination = newOperations.Replacements[i];
-                SwapFiles(original, destination, reporter);
+                SwapFiles(original, destination);
             }
 
             File.Delete(OperationsFile);
@@ -124,7 +123,7 @@ namespace Unary.Core
         [InitializeExplicit(typeof(ResourceManager), typeof(Resources))]
         bool ISystem.Initialize()
         {
-            if (!TryRevertSwap(RuntimeLogger.Critical))
+            if (!TryRevertSwap())
             {
                 return false;
             }
@@ -186,7 +185,7 @@ namespace Unary.Core
                 counter++;
             }
 
-            SwapContent(newOperations, RuntimeLogger.Critical);
+            SwapContent(newOperations);
 
             _swapped = true;
 
@@ -197,7 +196,7 @@ namespace Unary.Core
         {
             if (_swapped)
             {
-                TryRevertSwap(RuntimeLogger.Critical);
+                TryRevertSwap();
             }
         }
     }

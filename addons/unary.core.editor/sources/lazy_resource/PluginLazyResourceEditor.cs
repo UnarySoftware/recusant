@@ -74,7 +74,7 @@ namespace Unary.Core.Editor
                 }
                 else
                 {
-                    PluginLogger.Warning(this, $"UID missing for {resource.ResourceName}, defaulting to res://");
+                    this.Warning($"UID missing for {resource.ResourceName}, defaulting to res://");
                     targetResource.TargetValue = resource.ResourcePath;
                     EmitChanged(GetEditedProperty(), targetResource.TargetValue);
                 }
@@ -82,7 +82,7 @@ namespace Unary.Core.Editor
             else
             {
                 Pick(_current_path);
-                PluginLogger.Error(this, $"Property \"{Label}\" must be assigned a resource with a filename.");
+                this.Error($"Property \"{Label}\" must be assigned a resource with a filename.");
             }
         }
 

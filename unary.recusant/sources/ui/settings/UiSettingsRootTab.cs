@@ -20,15 +20,11 @@ namespace Unary.Recusant
         [UiElement("%Controls")]
         private UiSettingsTabBase _controls;
 
-        [UiElement("%Debug")]
-        private UiSettingsTabBase _debug;
-
         private enum CurrentSelection : long
         {
             Game = 0,
             Graphics,
             Controls,
-            Debug
         };
 
         private CurrentSelection _selection = CurrentSelection.Game;
@@ -37,14 +33,9 @@ namespace Unary.Recusant
 
         public override void Initialize()
         {
-#if !TOOLS
-            _debug.Visible = false;
-#endif
-
             _tabsContents[CurrentSelection.Game] = _game;
             _tabsContents[CurrentSelection.Graphics] = _graphics;
             _tabsContents[CurrentSelection.Controls] = _controls;
-            _tabsContents[CurrentSelection.Debug] = _debug;
 
             foreach (var entry in _tabsContents)
             {

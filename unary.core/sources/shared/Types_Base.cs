@@ -12,15 +12,6 @@ namespace Unary.Core
         private static Dictionary<Type, HashSet<Attribute>> _typesToAttributes;
         private static Dictionary<Type, HashSet<Type>> _baseTypes;
 
-        protected static Func<object, string, bool> Reporter;
-
-        protected static bool InitializeBase(Func<object, string, bool> reporter)
-        {
-            Reporter = reporter;
-
-            return InitializeTypes();
-        }
-
         private static bool InitializeTypes()
         {
             HashSet<Type> result = [];

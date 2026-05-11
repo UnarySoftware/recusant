@@ -40,7 +40,7 @@ namespace Unary.Recusant
             Engine.Singleton.MaxFps = previousFps;
 
             ulong result = Time.GetTicksMsec() - _start;
-            RuntimeLogger.Log(this, $"Took {result} msec at {targetFps} FPS");
+            this.Log($"Took {result} msec at {targetFps} FPS");
         }
         */
 

@@ -2,7 +2,6 @@
 
 using Godot;
 using System;
-using Unary.Core.Editor;
 
 namespace Unary.Core
 {
@@ -78,7 +77,7 @@ namespace Unary.Core
             {
                 if (Path == null)
                 {
-                    PluginLogger.Error(this, "Path was null, you are not supposed to be setting your settings so early!");
+                    this.Error("Path was null, you are not supposed to be setting your settings so early!");
                     return;
                 }
 

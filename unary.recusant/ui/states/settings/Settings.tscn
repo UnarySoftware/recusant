@@ -5,7 +5,6 @@
 [ext_resource type="Script" uid="uid://b2xhopbd5bl0j" path="res://unary.recusant/sources/ui/settings/UiSettingsGame.cs" id="3_xf1li"]
 [ext_resource type="Script" uid="uid://cuw7a253lg0t0" path="res://unary.recusant/sources/ui/settings/UiSettingsGraphics.cs" id="4_bqx8h"]
 [ext_resource type="Script" uid="uid://ccs35vo4pc17j" path="res://unary.recusant/sources/ui/settings/UiSettingsControls.cs" id="5_02rqq"]
-[ext_resource type="Script" uid="uid://cc51io0611tk4" path="res://unary.recusant/sources/ui/settings/UiSettingsDebug.cs" id="6_xf1li"]
 
 [node name="Settings" type="Control" unique_id=854091213]
 layout_mode = 3
@@ -42,11 +41,10 @@ theme_override_fonts/font = ExtResource("1_qc2nw")
 theme_override_font_sizes/font_size = 48
 current_tab = 0
 tab_alignment = 1
-tab_count = 4
+tab_count = 3
 tab_0/title = " Game "
 tab_1/title = " Graphics "
 tab_2/title = " Controls "
-tab_3/title = " Debug "
 
 [node name="HSeparator" type="HSeparator" parent="BackgroundRect/Entries" unique_id=1726889401]
 layout_mode = 2
@@ -599,11 +597,3 @@ theme_override_constants/tab_separation = 20
 theme_override_fonts/font = ExtResource("1_qc2nw")
 theme_override_font_sizes/font_size = 48
 tab_alignment = 1
-
-[node name="Debug" type="VBoxContainer" parent="BackgroundRect/Entries" unique_id=40446902]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-size_flags_vertical = 3
-script = ExtResource("6_xf1li")
-metadata/_custom_type_script = "uid://cc51io0611tk4"

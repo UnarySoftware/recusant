@@ -63,7 +63,7 @@ namespace Unary.Core.Editor
 
             PluginLogger.Initialize();
 
-            Types.Initialize(PluginLogger.Critical);
+            Types.Initialize();
 
             EnabledPlugins = GetEnabledPlugins();
 

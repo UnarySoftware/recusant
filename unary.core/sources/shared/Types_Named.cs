@@ -21,28 +21,34 @@ namespace Unary.Core
             public string Uid;
         }
 
-        // Has to be exposed for TypeResource inspector
-        // TODO Maybe rewrite this with a better accessor API some day
-
+        // Exposed for TypeResource inspector
         public static Dictionary<string, ClassData> TypeToData
         {
             get
             {
+                if (field != null)
+                {
+                    return field;
+                }
                 BuildClassData();
                 return field;
             }
             private set;
-        }
+        } = null;
 
         public static Dictionary<string, ClassData> UidToData
         {
             get
             {
+                if (field != null)
+                {
+                    return field;
+                }
                 BuildClassData();
                 return field;
             }
             private set;
-        }
+        } = null;
 
         private static bool _builtData = false;
 
@@ -100,9 +106,9 @@ namespace Unary.Core
             }
         }
 
-        public static bool Initialize(Func<object, string, bool> reporter)
+        public static bool Initialize()
         {
-            if (!InitializeBase(reporter))
+            if (!InitializeTypes())
             {
                 return false;
             }
@@ -141,7 +147,7 @@ namespace Unary.Core
 
                 errorBuilder.Append("\nThis will cause unpredictable issues everywhere within the engine.");
 
-                return Reporter(typeof(Types), errorBuilder.ToString());
+                return SharedLogger.Critical(typeof(Types), errorBuilder.ToString());
             }
 
             return true;
@@ -154,7 +160,6 @@ namespace Unary.Core
             UidToData = null;
             _namedTypes = null;
             _fieldAttributes = null;
-            Reporter = null;
         }
 
         public static Type GetTypeOfName(string name)

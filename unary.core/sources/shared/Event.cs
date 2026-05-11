@@ -15,7 +15,6 @@ namespace Unary.Core
         protected bool _initialized = false;
         private bool _subscribed = false;
         protected bool _collecting = false;
-        protected object _owner;
 
 #if TOOLS
 
@@ -32,7 +31,7 @@ namespace Unary.Core
             _collecting = true;
         }
 
-        public abstract void ProcessQueue();
+        public abstract void PublishQueue();
 
         protected bool PublishInternal(K data)
         {
@@ -83,7 +82,7 @@ namespace Unary.Core
                 return;
             }
 
-            ProcessQueue();
+            PublishQueue();
 
             _initQueue.Clear();
             _initialized = true;
@@ -241,7 +240,7 @@ namespace Unary.Core
 #endif
         }
 
-        public override void ProcessQueue()
+        public override void PublishQueue()
         {
 #if TOOLS
             if (_debug)
@@ -360,7 +359,7 @@ namespace Unary.Core
 #endif
         }
 
-        public override void ProcessQueue()
+        public override void PublishQueue()
         {
 #if TOOLS
             if (_debug)

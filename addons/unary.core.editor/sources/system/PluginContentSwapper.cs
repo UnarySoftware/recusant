@@ -9,7 +9,7 @@ namespace Unary.Core.Editor
     {
         bool ISystem.PostInitialize()
         {
-            ContentSwapper.TryRevertSwap(PluginLogger.Critical);
+            ContentSwapper.TryRevertSwap();
             return true;
         }
     }

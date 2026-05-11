@@ -95,7 +95,6 @@ namespace Unary.Recusant
                 }
             }
 
-            // TODO Attribute based assignment resolution
             _saving.Visible = false;
         }
 

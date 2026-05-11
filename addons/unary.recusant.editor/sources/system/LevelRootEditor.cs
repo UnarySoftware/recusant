@@ -8,7 +8,6 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Unary.Core;
-using Unary.Core.Editor;
 
 namespace Unary.Recusant
 {
@@ -110,7 +109,7 @@ namespace Unary.Recusant
 
             if (string.IsNullOrEmpty(targetPath))
             {
-                PluginLogger.Critical(this, "Failed to aquire path of the current scene");
+                this.Critical("Failed to aquire path of the current scene");
                 return;
             }
 
@@ -119,7 +118,7 @@ namespace Unary.Recusant
 
             if (!directory.EndsWith("levels"))
             {
-                PluginLogger.Critical(this, $"Created {nameof(LevelRoot)} is outside of a proper levels folder, skipping node creation");
+                this.Critical($"Created {nameof(LevelRoot)} is outside of a proper levels folder, skipping node creation");
                 return;
             }
 
@@ -159,7 +158,7 @@ namespace Unary.Recusant
 
             if (_region == null)
             {
-                PluginLogger.Critical(this, $"Failed to aquire a {nameof(NavigationRegion3D)} node to reset navigation");
+                this.Critical($"Failed to aquire a {nameof(NavigationRegion3D)} node to reset navigation");
                 return;
             }
 
@@ -200,7 +199,7 @@ namespace Unary.Recusant
 
             if (_region == null)
             {
-                PluginLogger.Critical(this, $"Failed to aquire a {nameof(NavigationRegion3D)} node to build a navigation");
+                this.Critical($"Failed to aquire a {nameof(NavigationRegion3D)} node to build a navigation");
                 return;
             }
 
@@ -212,7 +211,7 @@ namespace Unary.Recusant
         {
             VisualPaths.Value = null;
             _region?.UpdateGizmos();
-            PluginLogger.Critical(this, $"Failed to build navigation data.\nReason: {why}");
+            this.Critical($"Failed to build navigation data.\nReason: {why}");
             EditorInterface.Singleton.MarkSceneAsUnsaved();
         }
 
@@ -925,7 +924,7 @@ namespace Unary.Recusant
                     " with the algoritm yet again. Please report this on GitHub.";
             }
 
-            PluginLogger.Critical(this, $"Successfully build navigation!\n" +
+            this.Critical($"Successfully build navigation!\n" +
                 $"Poly count reduction result: {OriginalPolyCount} - {OriginalPolyCount - ResultPolyCount} = {ResultPolyCount} (-{100 - percentage}%)\n" +
                 $"Remaining groups: {Groups} Invalidated groups: {InvalidatedGroups}\n" +
                 $"Bound count: {Bounds.Length} Max polygons per bound: {MaxPolyPerBound}" +

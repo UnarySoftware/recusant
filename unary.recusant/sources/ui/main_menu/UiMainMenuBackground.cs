@@ -1,5 +1,4 @@
 using Godot;
-using System.Text;
 using Unary.Core;
 
 namespace Unary.Recusant

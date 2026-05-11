@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using System.Text;
 
 namespace Unary.Core
@@ -16,7 +15,7 @@ namespace Unary.Core
 
             foreach (var mod in mods)
             {
-                result.Append('\"').Append(mod.ModId).Append("\" changed: ").Append(mod.BuildManifest.BuildData).Append(" (build ").Append(mod.BuildManifest.BuildNumber).Append(")\n");
+                result.Append('\"').Append(mod.ModId).Append("\" ").Append(mod.BuildManifest.BuildData).Append(" (build ").Append(mod.BuildManifest.BuildNumber).Append(")\n");
             }
 
             (string adjective, string noun) = result.ToString().GetAudibleHash();

@@ -34,7 +34,7 @@ namespace Unary.Core
 
                 Singleton = this;
 
-                Types.Initialize(RuntimeLogger.Critical);
+                Types.Initialize();
 
                 if (!_systems.Initialize(["unary.core"], this))
                 {

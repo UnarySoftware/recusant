@@ -162,11 +162,6 @@ metadata/_custom_type_script = "uid://d0hahcfyufrhb"
 
 [node name="Balls" type="Node3D" parent="Background1" unique_id=820720848]
 
-[node name="Label3D" type="Label3D" parent="Background1/Balls" unique_id=739148894]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.034561, 10.659857, -25.556896)
-text = "EVIL BALLS STORAGE"
-font_size = 380
-
 [node name="RandomBall" type="RigidBody3D" parent="Background1/Balls" unique_id=500198131]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.430265, 2.8493268, -14.096297)
 script = ExtResource("6_1odc0")

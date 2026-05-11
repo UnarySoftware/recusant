@@ -260,21 +260,21 @@ namespace Unary.Recusant
         public GraphicsSetting<float> Brightness = new()
         {
             DefaultValue = 1.0f,
-            Options = [0.5f, 4.0f],
+            Options = [0.5f, 2.0f],
             Validator = Clamp
         };
 
         public GraphicsSetting<float> Contrast = new()
         {
             DefaultValue = 1.0f,
-            Options = [0.5f, 4.0f],
+            Options = [0.5f, 2.0f],
             Validator = Clamp
         };
 
         public GraphicsSetting<float> Saturation = new()
         {
             DefaultValue = 1.0f,
-            Options = [0.5f, 10.0f],
+            Options = [0.5f, 2.0f],
             Validator = Clamp
         };
 
@@ -426,6 +426,12 @@ namespace Unary.Recusant
         private bool UpdateWindowMode(ref Window.ModeEnum value)
         {
             GetTree().Root.Mode = value;
+
+            if (value == Window.ModeEnum.Windowed)
+            {
+                this.Log(DisplayServer.WindowGetPositionWithDecorations().ToString());
+            }
+
             return true;
         }
 

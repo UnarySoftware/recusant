@@ -126,7 +126,7 @@ namespace Unary.Core
                 parent = parent.GetParent();
             }
 
-            RuntimeLogger.Warning(typeof(Entity), $"{nameof(Entity)}.{nameof(Find)} failed to find anything from {node.GetPath()}");
+            SharedLogger.Warning(typeof(Entity), $"{nameof(Entity)}.{nameof(Find)} failed to find anything from {node.GetPath()}");
 
             return null;
         }

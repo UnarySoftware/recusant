@@ -34,17 +34,17 @@ namespace Unary.Core
 
             if (InputManager.Singleton.IsKeyPressed(Key.F1, 0))
             {
-                RuntimeLogger.Log(this, "TEST");
+                this.Log("TEST");
             }
 
             if (InputManager.Singleton.IsKeyPressed(Key.F2, 0))
             {
-                RuntimeLogger.Warning(this, "TEST");
+                this.Warning("TEST");
             }
 
             if (InputManager.Singleton.IsKeyPressed(Key.F3, 0))
             {
-                RuntimeLogger.Error(this, "TEST");
+                this.Error("TEST");
             }
 
             if (InputManager.Singleton.IsKeyPressed(Key.F5, 0))
