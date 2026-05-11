@@ -13,6 +13,7 @@ namespace Unary.Recusant
         private static EditorSettingVariable<bool> _drawMarkers = new()
         {
             EditorDefault = true,
+            RuntimeDefault = false,
             Group = "Gizmos",
             Name = "PlayerMarkers",
             Description = "Draws Player Markers"

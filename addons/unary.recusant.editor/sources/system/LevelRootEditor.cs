@@ -77,6 +77,17 @@ namespace Unary.Recusant
             AddChild(light);
             light.Owner = owner;
 
+            WorldEnvironment environment = new()
+            {
+                Environment = new()
+            };
+
+            AddChild(environment);
+            environment.Owner = owner;
+
+            WorldEnvironment = environment;
+            DirectionalLight3D = light;
+
             EditorInterface.Singleton.MarkSceneAsUnsaved();
         }
 

@@ -63,6 +63,7 @@ namespace Unary.Recusant
         private static EditorSettingVariable<bool> _drawVisualPaths = new()
         {
             EditorDefault = true,
+            RuntimeDefault = false,
             Group = "Gizmos",
             Name = "LevelRoot Paths",
             Description = "Draws Visual Paths"
@@ -71,6 +72,7 @@ namespace Unary.Recusant
         private static EditorSettingVariable<bool> _drawBounds = new()
         {
             EditorDefault = true,
+            RuntimeDefault = false,
             Group = "Gizmos",
             Name = "LevelRoot Bounds",
         };
@@ -94,6 +96,12 @@ namespace Unary.Recusant
 
         [Export]
         private string LevelName = nameof(LevelRoot);
+
+        [Export]
+        public WorldEnvironment WorldEnvironment;
+
+        [Export]
+        public DirectionalLight3D DirectionalLight3D;
 
         public string GetLevelName()
         {

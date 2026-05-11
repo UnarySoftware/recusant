@@ -1,3 +1,5 @@
+#if TOOLS
+
 using Godot;
 using System.Collections.Generic;
 using System.IO;
@@ -20,23 +22,11 @@ namespace Unary.Core
 
         private Dictionary<string, Variant> _variables = [];
 
-        private JsonSerializerOptions _options;
-
         public EditorSettingSaver()
         {
             if (!Directory.Exists(".unary"))
             {
                 Directory.CreateDirectory(".unary");
-            }
-
-            _options = new()
-            {
-                WriteIndented = true
-            };
-
-            foreach (var converter in JsonConverters.Value)
-            {
-                _options.Converters.Add(converter);
             }
 
             Load();
@@ -83,13 +73,15 @@ namespace Unary.Core
         {
             if (File.Exists(Path))
             {
-                _variables = JsonSerializer.Deserialize<Dictionary<string, Variant>>(File.ReadAllText(Path), _options);
+                _variables = JsonSerializer.Deserialize<Dictionary<string, Variant>>(File.ReadAllText(Path), JsonConverters.IndentedOptions);
             }
         }
 
         public void Save()
         {
-            File.WriteAllText(Path, JsonSerializer.Serialize(_variables, _options));
+            File.WriteAllText(Path, JsonSerializer.Serialize(_variables, JsonConverters.IndentedOptions));
         }
     }
 }
+
+#endif

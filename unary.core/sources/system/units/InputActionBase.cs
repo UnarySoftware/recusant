@@ -21,21 +21,170 @@ namespace Unary.Core
             All = Press | Hold | DoubleTap | TrippleTap | Release | FastPress | ReleaseAfterHold
         };
 
+        public static string ToString(InputActionType type)
+        {
+            switch (type)
+            {
+                default:
+                case InputActionType.None:
+                    {
+                        return "None";
+                    }
+                case InputActionType.Press:
+                    {
+                        return "Press";
+                    }
+                case InputActionType.Hold:
+                    {
+                        return "Hold";
+                    }
+                case InputActionType.DoubleTap:
+                    {
+                        return "Double Tap";
+                    }
+                case InputActionType.TrippleTap:
+                    {
+                        return "Tripple Tap";
+                    }
+                case InputActionType.Release:
+                    {
+                        return "Release";
+                    }
+                case InputActionType.FastPress:
+                    {
+                        return "Fast Press";
+                    }
+                case InputActionType.ReleaseAfterHold:
+                    {
+                        return "Release After Hold";
+                    }
+            }
+        }
+
         public enum InputType
         {
             Keyboard,
             Mouse
         };
 
+        public string ModId;
         public string Group;
         public string Name;
         public InputActionType AllowedActionTypes;
-        public InputActionType ActionType;
-        public InputType Type;
-        public bool Toggle;
-        public Key Key;
-        public MouseButton MouseButton;
+
+        public InputActionType ActionType
+        {
+            get
+            {
+                return field;
+            }
+            set
+            {
+                field = value;
+                Reset();
+            }
+        }
+
+        public InputType Type
+        {
+            get
+            {
+                return field;
+            }
+            set
+            {
+                field = value;
+                Reset();
+            }
+        }
+
+        public bool Toggle
+        {
+
+            get
+            {
+                return field;
+            }
+            set
+            {
+                field = value;
+                Reset();
+            }
+        }
+
+        public Key Key
+        {
+            get
+            {
+                return field;
+            }
+            set
+            {
+                field = value;
+                Reset();
+            }
+        }
+
+        public MouseButton MouseButton
+        {
+            get
+            {
+                return field;
+            }
+            set
+            {
+                field = value;
+                Reset();
+            }
+        }
+
+        public bool CanBeRebound = true;
+
+        public struct ChangeData
+        {
+            public InputActionBase Input;
+        }
+
+        public EventFunc<ChangeData> OnChange = new();
+
         public int BaseScope;
+
+        public InputActionBaseSerializable Serialize()
+        {
+            return new()
+            {
+                Group = Group,
+                Name = Name,
+                ActionType = ActionType,
+                Type = Type,
+                Toggle = Toggle,
+                Key = Key,
+                MouseButton = MouseButton,
+            };
+        }
+
+        public void Deserialize(InputActionBaseSerializable data)
+        {
+            if (AllowedActionTypes.HasFlag(data.ActionType))
+            {
+                ActionType = data.ActionType;
+            }
+
+            Type = data.Type;
+            Toggle = data.Toggle;
+
+            if (data.Key != Key.Escape)
+            {
+                Key = data.Key;
+            }
+
+            if (data.MouseButton != MouseButton.WheelLeft && data.MouseButton != MouseButton.WheelRight)
+            {
+                MouseButton = data.MouseButton;
+            }
+
+            OnChange.Publish(new() { Input = this });
+        }
 
         public StringName Action;
 
@@ -267,7 +416,19 @@ namespace Unary.Core
                 return 0.0f;
             }
 
-            return Input.Singleton.GetActionStrength(Action);
+            if (!Toggle)
+            {
+                return Input.Singleton.GetActionStrength(Action);
+            }
+
+            if (_toggled)
+            {
+                return 1.0f;
+            }
+            else
+            {
+                return 0.0f;
+            }
         }
 
     }

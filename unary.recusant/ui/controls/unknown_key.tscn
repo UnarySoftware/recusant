@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dnidv3hscag0s"]
+
+[ext_resource type="Texture2D" uid="uid://2rej5gcf1dqf" path="res://unary.recusant/ui/controls/unknown_key.png" id="1_a1goa"]
+
+[node name="UnknownKey" type="AspectRatioContainer" unique_id=1999921902]
+anchors_preset = -1
+anchor_right = 0.22900002
+anchor_bottom = 0.40600002
+offset_right = -0.960022
+offset_bottom = 0.43997192
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1996150279]
+layout_mode = 2
+texture = ExtResource("1_a1goa")
+expand_mode = 1

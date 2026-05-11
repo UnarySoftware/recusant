@@ -30,6 +30,8 @@ buses/default_bus_layout=""
 
 window/size/viewport_width=2240
 window/size/viewport_height=1260
+window/size/resizable=false
+window/stretch/mode="canvas_items"
 
 [dotnet]
 

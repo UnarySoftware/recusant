@@ -10,6 +10,9 @@ namespace Unary.Recusant
         private TextureRect _right;
         private TextureRect _wheelUp;
         private TextureRect _wheelDown;
+        private TextureRect _wheelx1;
+        private TextureRect _wheelx2;
+
         private bool _initialized = false;
 
         public override void _Ready()
@@ -18,10 +21,14 @@ namespace Unary.Recusant
             _right = GetNode<TextureRect>("%Right");
             _wheelUp = GetNode<TextureRect>("%WheelUp");
             _wheelDown = GetNode<TextureRect>("%WheelDown");
+            _wheelx1 = GetNode<TextureRect>("%WheelX1");
+            _wheelx2 = GetNode<TextureRect>("%WheelX2");
             _initialized = true;
             LeftType = LeftType;
             RightType = RightType;
             Scroll = Scroll;
+            ScrollX1 = ScrollX1;
+            ScrollX2 = ScrollX2;
         }
 
         public enum ButtonType
@@ -137,6 +144,60 @@ namespace Unary.Recusant
             }
         }
 
+        [Export]
+        public ButtonType ScrollX1
+        {
+            get
+            {
+                return field;
+            }
+            set
+            {
+                field = value;
+
+                if (!_initialized)
+                {
+                    return;
+                }
+
+                if (field == ButtonType.Default)
+                {
+                    _wheelx1.Texture = ScrollX1Default;
+                }
+                else if (field == ButtonType.Pressed)
+                {
+                    _wheelx1.Texture = ScrollX1Pressed;
+                }
+            }
+        }
+
+        [Export]
+        public ButtonType ScrollX2
+        {
+            get
+            {
+                return field;
+            }
+            set
+            {
+                field = value;
+
+                if (!_initialized)
+                {
+                    return;
+                }
+
+                if (field == ButtonType.Default)
+                {
+                    _wheelx2.Texture = ScrollX2Default;
+                }
+                else if (field == ButtonType.Pressed)
+                {
+                    _wheelx2.Texture = ScrollX2Pressed;
+                }
+            }
+        }
+
         [ExportGroup("Buttons")]
         [Export]
         public Texture2D LeftDefault;
@@ -168,5 +229,17 @@ namespace Unary.Recusant
 
         [Export]
         public Texture2D ScrollDownGradient;
+
+        [Export]
+        public Texture2D ScrollX1Default;
+
+        [Export]
+        public Texture2D ScrollX1Pressed;
+
+        [Export]
+        public Texture2D ScrollX2Default;
+
+        [Export]
+        public Texture2D ScrollX2Pressed;
     }
 }

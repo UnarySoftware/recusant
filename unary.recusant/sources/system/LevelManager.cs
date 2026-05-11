@@ -144,6 +144,9 @@ namespace Unary.Recusant
                 GameStateManager.Singleton.State = GameState.Game;
             }
 
+            System.GC.Collect();
+            System.GC.WaitForPendingFinalizers();
+
             Progress = 1.0f;
         }
 

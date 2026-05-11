@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://duhv7k76yomgm"]
+
+[node name="ControlGroup" type="Control" unique_id=170465907]
+layout_mode = 3
+anchors_preset = 0
+size_flags_vertical = 3
+
+[node name="Scroll" type="ScrollContainer" parent="." unique_id=1675193093]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.187
+anchor_right = 0.813
+anchor_bottom = 1.0
+offset_left = 0.8800659
+offset_right = -0.8798828
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Entries" type="VBoxContainer" parent="Scroll" unique_id=1086134993]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+alignment = 1

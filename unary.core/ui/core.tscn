@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://odnt6j4mcrw1" path="res://unary.core/textures/InfoPrint.png" id="1_0m1jr"]
 [ext_resource type="FontFile" uid="uid://cius06hh32p1r" path="res://unary.core/fonts/consola.ttf" id="1_n52op"]
 [ext_resource type="Texture2D" uid="uid://byp4owx5ipk2f" path="res://unary.core/textures/WarnPrint.png" id="2_ehbmy"]
+[ext_resource type="FontFile" uid="uid://en12872agqmw" path="res://unary.recusant/fonts/CharlesWright.ttf" id="2_h22bl"]
 [ext_resource type="Texture2D" uid="uid://dntdocykh121b" path="res://unary.core/textures/ErrorPrint.png" id="3_oh8pw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oh8pw"]
@@ -45,6 +46,14 @@ outline_color = Color(0, 0, 0, 1)
 font_size = 20
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_x3jjv"]
+font = ExtResource("2_h22bl")
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_vgc0w"]
+font = ExtResource("2_h22bl")
+font_size = 32
 
 [node name="Core" type="Control" unique_id=260036912]
 layout_mode = 3
@@ -321,3 +330,74 @@ text = "Loading resource: res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f
 test"
 label_settings = SubResource("LabelSettings_tdkg7")
 autowrap_mode = 3
+
+[node name="Notification" type="MarginContainer" parent="." unique_id=279736106]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.356
+anchor_top = 0.35700002
+anchor_right = 0.64400005
+anchor_bottom = 0.643
+offset_left = 0.05999756
+offset_top = -0.32003784
+offset_right = -0.060058594
+offset_bottom = 0.32000732
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="NotificationBackground" type="ColorRect" parent="Notification" unique_id=101191200]
+layout_mode = 2
+color = Color(0.14911404, 0.14911404, 0.14911404, 1)
+
+[node name="NotificationMargin" type="MarginContainer" parent="Notification/NotificationBackground" unique_id=2137849131]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.022000002
+anchor_right = 1.0
+anchor_bottom = 1.0220001
+offset_top = 7.8540006
+offset_bottom = -7.8540344
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="NotificationEntries" type="VBoxContainer" parent="Notification/NotificationBackground/NotificationMargin" unique_id=604480611]
+layout_mode = 2
+
+[node name="NotificationHeader" type="Label" parent="Notification/NotificationBackground/NotificationMargin/NotificationEntries" unique_id=317440263]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Alert"
+label_settings = SubResource("LabelSettings_x3jjv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NotificationInfo" type="Label" parent="Notification/NotificationBackground/NotificationMargin/NotificationEntries" unique_id=1585354892]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 2
+text = "It seems that this text has to fill up all of this space somehow, so I will have to come up with a bunch of nonsence to grow this label horizontally in order to get a LOOOOOT of height and pin this to a control bla bla bla"
+label_settings = SubResource("LabelSettings_vgc0w")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+text_overrun_behavior = 2
+
+[node name="Buttons" type="HBoxContainer" parent="Notification/NotificationBackground/NotificationMargin/NotificationEntries" unique_id=282947628]
+layout_mode = 2
+alignment = 1
+
+[node name="NotificationOk" type="Button" parent="Notification/NotificationBackground/NotificationMargin/NotificationEntries/Buttons" unique_id=1511040478]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_h22bl")
+theme_override_font_sizes/font_size = 24
+text = "  OK  "

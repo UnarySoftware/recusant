@@ -29,6 +29,7 @@ namespace Unary.Core
             Group = "Interface",
             Name = "Go Back",
             Toggle = false,
+            CanBeRebound = false,
         };
 
         private static readonly InputAction _mouse_release = new()
@@ -41,6 +42,7 @@ namespace Unary.Core
             Group = "Interface",
             Name = "Toggle Mouse Capture",
             Toggle = false,
+            CanBeRebound = false,
         };
 
         private readonly Dictionary<Type, UiStateData> _states = [];
@@ -62,7 +64,7 @@ namespace Unary.Core
         }
 
         // I hate it that using two loops like this takes the least amount of code because FieldInfo and PropertyInfo dont have a base shared class
-        private void Resolve(Node node, Node root)
+        public void Resolve(Node node, Node root)
         {
             Type type = node.GetType();
 
@@ -84,7 +86,7 @@ namespace Unary.Core
 
                         Type targetType = target.GetType();
 
-                        if (targetType != field.FieldType)
+                        if (!field.FieldType.IsAssignableFrom(targetType))
                         {
                             this.Warning($"Failed to resolve node with path \"{element.NodePath}\" for \"{type.FullName}\" due to a wrong type \"{targetType.FullName}\" != \"{field.FieldType.FullName}\"");
                             continue;
@@ -113,7 +115,7 @@ namespace Unary.Core
 
                         Type targetType = target.GetType();
 
-                        if (targetType != property.PropertyType)
+                        if (!property.PropertyType.IsAssignableFrom(targetType))
                         {
                             this.Warning($"Failed to resolve node with path \"{element.NodePath}\" for \"{type.FullName}\" due to a wrong type \"{targetType.FullName}\" != \"{property.PropertyType.FullName}\"");
                             continue;

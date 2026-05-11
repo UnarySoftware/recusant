@@ -10,6 +10,9 @@ namespace Unary.Recusant
     {
         private static readonly LazyResource<ShaderMaterial> _blurMaterial = new("uid://cgxwenjv21f3h");
 
+        [UiElement("%BackgroundRect")]
+        public ColorRect BackgroundRect;
+
         public override void Initialize()
         {
 

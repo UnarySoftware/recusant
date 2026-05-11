@@ -1,3 +1,5 @@
+#if TOOLS
+
 using Godot;
 
 namespace Unary.Core
@@ -25,3 +27,5 @@ namespace Unary.Core
         }
     }
 }
+
+#endif

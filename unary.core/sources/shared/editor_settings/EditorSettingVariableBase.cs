@@ -1,3 +1,5 @@
+#if TOOLS
+
 using Godot;
 using System;
 using Unary.Core.Editor;
@@ -6,9 +8,7 @@ namespace Unary.Core
 {
     public class EditorSettingVariableBase : EditorSettingBase
     {
-#if TOOLS
         public EditorProperty Inspector;
-#endif
         public PropertyHint PropertyHint = PropertyHint.None;
         public uint PropertyUsageFlags = (uint)Godot.PropertyUsageFlags.Editor;
         public string HintText = nameof(EditorSettingWrapper.Value);
@@ -47,7 +47,6 @@ namespace Unary.Core
             if (!_gotValue)
             {
                 _gotValue = true;
-#if TOOLS
                 if (Engine.Singleton.IsEditorHint())
                 {
                     EditorSettingManager.Initialize();
@@ -64,11 +63,8 @@ namespace Unary.Core
                 }
                 else
                 {
-                    _field = VariantEditorDefault;
-                }
-#else
                     _field = VariantRuntimeDefault;
-#endif
+                }
             }
 
             return _field;
@@ -76,7 +72,6 @@ namespace Unary.Core
 
         public override void SetField(Variant value)
         {
-#if TOOLS
             Variant newValue = value;
 
             if (Engine.Singleton.IsEditorHint())
@@ -99,7 +94,6 @@ namespace Unary.Core
             _field = newValue;
             OnSetValue(newValue);
             OnValueChanged(this);
-#endif
         }
 
         public virtual bool IsDefault()
@@ -116,3 +110,5 @@ namespace Unary.Core
         public Variant VariantRuntimeDefault;
     }
 }
+
+#endif

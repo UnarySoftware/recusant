@@ -1,3 +1,4 @@
+#if TOOLS
 
 using Godot;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace Unary.Core
 
         public override bool IsDefault()
         {
-            return EqualityComparer<T>.Default.Equals(Value, EditorDefault);
+            return EqualityComparer<T>.Default.Equals(Value, RuntimeDefault);
         }
 
         public override void OnSetValue(Variant value)
@@ -84,3 +85,5 @@ namespace Unary.Core
         }
     }
 }
+
+#endif

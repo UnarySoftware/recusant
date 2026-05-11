@@ -17,8 +17,8 @@ namespace Unary.Core
             Group = "Interface",
             Name = "Open Console",
             Toggle = false,
+            CanBeRebound = false
         };
-
 
         public override Type GetBackState()
         {

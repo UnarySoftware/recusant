@@ -10,6 +10,7 @@
 	<PackageReference Include="DiffMatchPatch" Version="5.0.0" />
 	<PackageReference Include="Microsoft.CodeAnalysis" Version="5.0.0" />
 	<PackageReference Include="DiscordRichPresence" Version="1.6.1.70" />
+	<PackageReference Include="System.Management" Version="10.0.7" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="**/patch/**" />

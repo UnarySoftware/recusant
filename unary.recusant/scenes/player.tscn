@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dudm3ef31bxc0" path="res://unary.recusant/resources/player_movement_component.tscn" id="4_2rj5g"]
 [ext_resource type="Script" uid="uid://c11t2j8iwtl68" path="res://unary.recusant/sources/ecs/player/PlayerCamera.cs" id="4_mfgvn"]
 [ext_resource type="Script" uid="uid://bue0h7gx0cndc" path="res://unary.recusant/sources/ecs/player/PlayerHealth.cs" id="5_c7x01"]
+[ext_resource type="Script" uid="uid://b5hlafyagmdam" path="res://unary.recusant/sources/ecs/player/PlayerInteracts.cs" id="9_645qw"]
 
 [node name="Entity" type="Node3D" unique_id=999209273]
 script = ExtResource("1_ysajs")
@@ -43,8 +44,10 @@ mesh = ExtResource("3_2rj5g")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="CharacterBody3D/HeadOriginalPosition/CameraSmooth/Head" unique_id=1674309651]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.009106839)
+visible = false
 light_energy = 10.0
 shadow_enabled = true
+distance_fade_enabled = true
 spot_range = 25.0
 spot_angle = 40.0
 spot_angle_attenuation = 0.65
@@ -80,3 +83,8 @@ metadata/_custom_type_script = "uid://c11t2j8iwtl68"
 [node name="PlayerHealth" type="Node" parent="." unique_id=2004345291]
 script = ExtResource("5_c7x01")
 metadata/_custom_type_script = "uid://bue0h7gx0cndc"
+
+[node name="PlayerInteracts" type="Node" parent="." unique_id=1463072537 node_paths=PackedStringArray("Flashlight")]
+script = ExtResource("9_645qw")
+Flashlight = NodePath("../CharacterBody3D/HeadOriginalPosition/CameraSmooth/Head/SpotLight3D")
+metadata/_custom_type_script = "uid://b5hlafyagmdam"

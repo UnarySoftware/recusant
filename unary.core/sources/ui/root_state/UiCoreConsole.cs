@@ -22,6 +22,7 @@ namespace Unary.Core
             Group = "Interface",
             Name = "Copy Data From Console",
             Toggle = false,
+            CanBeRebound = false,
         };
 
         private bool _enabled = false;

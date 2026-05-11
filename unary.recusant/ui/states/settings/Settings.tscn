@@ -1,0 +1,609 @@
+[gd_scene format=3 uid="uid://cafb15d7gihvv"]
+
+[ext_resource type="Theme" uid="uid://bjmegmlavtqc1" path="res://unary.recusant/ui/states/settings/settings_theme.tres" id="1_oj1m5"]
+[ext_resource type="FontFile" uid="uid://en12872agqmw" path="res://unary.recusant/fonts/CharlesWright.ttf" id="1_qc2nw"]
+[ext_resource type="Script" uid="uid://b2xhopbd5bl0j" path="res://unary.recusant/sources/ui/settings/UiSettingsGame.cs" id="3_xf1li"]
+[ext_resource type="Script" uid="uid://cuw7a253lg0t0" path="res://unary.recusant/sources/ui/settings/UiSettingsGraphics.cs" id="4_bqx8h"]
+[ext_resource type="Script" uid="uid://ccs35vo4pc17j" path="res://unary.recusant/sources/ui/settings/UiSettingsControls.cs" id="5_02rqq"]
+[ext_resource type="Script" uid="uid://cc51io0611tk4" path="res://unary.recusant/sources/ui/settings/UiSettingsDebug.cs" id="6_xf1li"]
+
+[node name="Settings" type="Control" unique_id=854091213]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_oj1m5")
+
+[node name="BackgroundRect" type="ColorRect" parent="." unique_id=717227065]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.27450982)
+
+[node name="Entries" type="VBoxContainer" parent="BackgroundRect" unique_id=567914379]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RootTabs" type="TabBar" parent="BackgroundRect/Entries" unique_id=691850785]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/tab_separation = 20
+theme_override_fonts/font = ExtResource("1_qc2nw")
+theme_override_font_sizes/font_size = 48
+current_tab = 0
+tab_alignment = 1
+tab_count = 4
+tab_0/title = " Game "
+tab_1/title = " Graphics "
+tab_2/title = " Controls "
+tab_3/title = " Debug "
+
+[node name="HSeparator" type="HSeparator" parent="BackgroundRect/Entries" unique_id=1726889401]
+layout_mode = 2
+
+[node name="Game" type="VBoxContainer" parent="BackgroundRect/Entries" unique_id=100154324]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("3_xf1li")
+metadata/_custom_type_script = "uid://b2xhopbd5bl0j"
+
+[node name="Graphics" type="VBoxContainer" parent="BackgroundRect/Entries" unique_id=1498347212]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("4_bqx8h")
+metadata/_custom_type_script = "uid://cuw7a253lg0t0"
+
+[node name="Control" type="Control" parent="BackgroundRect/Entries/Graphics" unique_id=537039302]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColorRect" type="ColorRect" parent="BackgroundRect/Entries/Graphics/Control" unique_id=1171945717]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.33100003
+anchor_bottom = 1.0
+offset_right = 0.5599365
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+color = Color(0, 0, 0, 0.27450982)
+
+[node name="MarginContainer" type="MarginContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect" unique_id=1406141761]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="ScrollContainer" type="ScrollContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer" unique_id=960413215]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer" unique_id=1559039800]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="PresetSection" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1180003439]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.682353, 0.917647, 1, 1)
+text = "Apply Preset"
+horizontal_alignment = 1
+
+[node name="Presets" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1519834617]
+layout_mode = 2
+
+[node name="VeryLowPreset" type="Button" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/Presets" unique_id=47973466]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Very Low"
+
+[node name="LowPreset" type="Button" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/Presets" unique_id=874808542]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Low"
+
+[node name="MediumPreset" type="Button" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/Presets" unique_id=1251778967]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Medium"
+
+[node name="HighPreset" type="Button" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/Presets" unique_id=1844934023]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "High"
+
+[node name="UltraPreset" type="Button" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/Presets" unique_id=1350079327]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Ultra"
+
+[node name="HSeparator" type="HSeparator" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=208964394]
+layout_mode = 2
+
+[node name="UISection" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1279496687]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.683425, 0.916893, 1, 1)
+text = "User Interface Settings"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1714177952]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="UIScaleLabel" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/GridContainer" unique_id=612287575]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "UI Scale:"
+
+[node name="UIScaleOptions" type="OptionButton" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/GridContainer" unique_id=2066794105]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="HSeparator2" type="HSeparator" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1554565]
+layout_mode = 2
+
+[node name="ViewportSection" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1016208277]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.683425, 0.916893, 1, 1)
+text = "Video Settings"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=271562139]
+layout_mode = 2
+
+[node name="ResolutionLabel" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=249857857]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Resolution:"
+
+[node name="ResolutionOptions" type="OptionButton" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=2012167720]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=943265769]
+layout_mode = 2
+
+[node name="RenderScaleLabel" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer2" unique_id=582747938]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Render Scale (%):"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer2" unique_id=1610767663]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RenderScaleSlider" type="HSlider" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer2/HBoxContainer" unique_id=858666276]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+step = 0.05
+
+[node name="RenderScaleInput" type="LineEdit" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer2/HBoxContainer" unique_id=316082396]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+virtual_keyboard_enabled = false
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1525029013]
+layout_mode = 2
+
+[node name="WindowScalingModeLabel" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer3" unique_id=1170878852]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Window Scaling Mode:"
+
+[node name="WindowScalingModeOptions" type="OptionButton" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer3" unique_id=492532365]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="Fsr" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=323689818]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="FSRSharpnessLabel" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/Fsr" unique_id=1388353539]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "FSR Sharpness (%):"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/Fsr" unique_id=148733858]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FSRSharpnessSlider" type="HSlider" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/Fsr/HBoxContainer" unique_id=1612584286]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+step = 0.05
+
+[node name="FSRSharpnessInput" type="LineEdit" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/Fsr/HBoxContainer" unique_id=845946789]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+virtual_keyboard_enabled = false
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1988576848]
+layout_mode = 2
+
+[node name="DisplayModeLabel" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer5" unique_id=206135412]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Display Mode:"
+
+[node name="DisplayModeOptions" type="OptionButton" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer5" unique_id=2137476074]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=312360826]
+layout_mode = 2
+
+[node name="VsyncLabel" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer6" unique_id=1607267648]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "V-Sync:"
+
+[node name="VsyncOptions" type="OptionButton" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer6" unique_id=590792126]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="FpsLimit" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1276103481]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="FpsLimitLabel" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/FpsLimit" unique_id=413725280]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "FPS Limit:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/FpsLimit" unique_id=1632714173]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FpsSlider" type="HSlider" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/FpsLimit/HBoxContainer" unique_id=315721753]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="FpsInput" type="LineEdit" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/FpsLimit/HBoxContainer" unique_id=2114488119]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+virtual_keyboard_enabled = false
+
+[node name="HBoxContainer8" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=428270842]
+layout_mode = 2
+
+[node name="TaaLabel" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer8" unique_id=1645978019]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Anti-Aliasing (TAA):"
+
+[node name="TaaOptions" type="OptionButton" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer8" unique_id=774785123]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="HBoxContainer9" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=497364083]
+layout_mode = 2
+
+[node name="MsaaLabel" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer9" unique_id=1478832846]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Anti-Aliasing (MSAA):"
+
+[node name="MsaaOptions" type="OptionButton" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer9" unique_id=1506675808]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="HBoxContainer10" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1590440533]
+layout_mode = 2
+
+[node name="ScreenSpaceAALabel" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer10" unique_id=2031658275]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Anti-Aliasing (Screen Space):"
+
+[node name="ScreenSpaceAAOptions" type="OptionButton" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer10" unique_id=952601731]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="HSeparator3" type="HSeparator" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1053103518]
+layout_mode = 2
+
+[node name="QualitySection" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=2084058462]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.683425, 0.916893, 1, 1)
+text = "Quality Settings"
+horizontal_alignment = 1
+
+[node name="HBoxContainer12" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1115003032]
+layout_mode = 2
+
+[node name="ShadowSizeLabel" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer12" unique_id=1427126673]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Shadow Resolution:"
+
+[node name="ShadowSizeOptionButton" type="OptionButton" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer12" unique_id=301562846]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="HBoxContainer13" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1446533573]
+layout_mode = 2
+
+[node name="ShadowFilterLabel" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer13" unique_id=1508717707]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Shadow Filtering:"
+
+[node name="ShadowFilterOptionButton" type="OptionButton" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer13" unique_id=1808900586]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="HBoxContainer14" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=987861159]
+layout_mode = 2
+
+[node name="ModelQualityLabel" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer14" unique_id=1395534178]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Model Quality:"
+
+[node name="ModelQualityOptions" type="OptionButton" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer14" unique_id=2109048701]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="HSeparator4" type="HSeparator" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1863250214]
+layout_mode = 2
+
+[node name="EnvironmentSection" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=337737920]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.683425, 0.916893, 1, 1)
+text = "Effect Settings"
+horizontal_alignment = 1
+
+[node name="HBoxContainer15" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=596738481]
+layout_mode = 2
+
+[node name="GiLabel" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer15" unique_id=968233749]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Global Illumination:"
+
+[node name="GiOptions" type="OptionButton" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer15" unique_id=2023232340]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="HBoxContainer16" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1808851521]
+layout_mode = 2
+
+[node name="BloomLabel" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer16" unique_id=559383838]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Bloom:"
+
+[node name="BloomOptions" type="OptionButton" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer16" unique_id=1494211652]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="HBoxContainer17" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=760124773]
+layout_mode = 2
+
+[node name="AoLabel" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer17" unique_id=1915858670]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Ambient Occlusion:"
+
+[node name="AoOptions" type="OptionButton" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer17" unique_id=1782130618]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="HBoxContainer18" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=55285989]
+layout_mode = 2
+
+[node name="SsrLabel" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer18" unique_id=746911026]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Screen-Space Reflections:"
+
+[node name="SsrOptions" type="OptionButton" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer18" unique_id=1217821221]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="HBoxContainer19" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1562826478]
+layout_mode = 2
+
+[node name="SslLabel" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer19" unique_id=1319240333]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Screen-Space Lighting:"
+
+[node name="SslOptions" type="OptionButton" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer19" unique_id=1529824508]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="HBoxContainer20" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1819698533]
+layout_mode = 2
+
+[node name="VolumetricFogLabel" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer20" unique_id=798769242]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Volumetric Fog:"
+
+[node name="VolumetricFogOptions" type="OptionButton" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer20" unique_id=474388678]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="HSeparator5" type="HSeparator" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1470785520]
+layout_mode = 2
+
+[node name="AdjustmentSection" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1326247443]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.683425, 0.916893, 1, 1)
+text = "Adjustments"
+horizontal_alignment = 1
+
+[node name="HBoxContainer21" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1634432134]
+layout_mode = 2
+
+[node name="BrightnessLabel" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer21" unique_id=876154020]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Brightness (%):"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer21" unique_id=1464234914]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BrightnessSlider" type="HSlider" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer21/HBoxContainer" unique_id=482889010]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+step = 0.05
+
+[node name="BrightnessInput" type="LineEdit" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer21/HBoxContainer" unique_id=1744161097]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+virtual_keyboard_enabled = false
+
+[node name="HBoxContainer22" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1654554702]
+layout_mode = 2
+
+[node name="ContrastLabel" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer22" unique_id=1620671538]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Contrast (%):"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer22" unique_id=907130572]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ContrastSlider" type="HSlider" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer22/HBoxContainer" unique_id=1258512968]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+step = 0.05
+
+[node name="ContrastInput" type="LineEdit" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer22/HBoxContainer" unique_id=1954345258]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+virtual_keyboard_enabled = false
+
+[node name="HBoxContainer23" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1469412952]
+layout_mode = 2
+
+[node name="SaturationLabel" type="Label" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer23" unique_id=1869056198]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Saturation (%):"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer23" unique_id=855972947]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SaturationSlider" type="HSlider" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer23/HBoxContainer" unique_id=4916488]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+step = 0.05
+
+[node name="SaturationInput" type="LineEdit" parent="BackgroundRect/Entries/Graphics/Control/ColorRect/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer23/HBoxContainer" unique_id=683197800]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+virtual_keyboard_enabled = false
+
+[node name="Controls" type="VBoxContainer" parent="BackgroundRect/Entries" unique_id=1399166513]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("5_02rqq")
+metadata/_custom_type_script = "uid://ccs35vo4pc17j"
+
+[node name="ControlTabs" type="TabBar" parent="BackgroundRect/Entries/Controls" unique_id=1969909098]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/tab_separation = 20
+theme_override_fonts/font = ExtResource("1_qc2nw")
+theme_override_font_sizes/font_size = 48
+tab_alignment = 1
+
+[node name="Debug" type="VBoxContainer" parent="BackgroundRect/Entries" unique_id=40446902]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("6_xf1li")
+metadata/_custom_type_script = "uid://cc51io0611tk4"

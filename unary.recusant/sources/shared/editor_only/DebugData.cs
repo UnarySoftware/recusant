@@ -12,27 +12,6 @@ namespace Unary.Recusant
         private readonly string _path = $".unary/debug_data/{handler.GetType().FullName}/{{0}}_{fieldName}.debug";
         private readonly Func<string> _identity = identity;
 
-        private static JsonSerializerOptions Options
-        {
-            get
-            {
-                if (field == null)
-                {
-                    field = new()
-                    {
-                        WriteIndented = true
-                    };
-
-                    foreach (var converter in JsonConverters.Value)
-                    {
-                        field.Converters.Add(converter);
-                    }
-                }
-
-                return field;
-            }
-        }
-
         private string Path
         {
             get
@@ -58,7 +37,7 @@ namespace Unary.Recusant
                     return default;
                 }
 
-                field = JsonSerializer.Deserialize<T>(File.ReadAllText(Path), Options);
+                field = JsonSerializer.Deserialize<T>(File.ReadAllText(Path), JsonConverters.IndentedOptions);
                 _gotValue = true;
 
                 return field;
@@ -74,7 +53,7 @@ namespace Unary.Recusant
                     Directory.CreateDirectory(directory);
                 }
 
-                File.WriteAllText(Path, JsonSerializer.Serialize(field, Options));
+                File.WriteAllText(Path, JsonSerializer.Serialize(field, JsonConverters.IndentedOptions));
 
                 _gotValue = true;
             }

@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://1ggaqugltlri"]
+
+[ext_resource type="FontFile" uid="uid://en12872agqmw" path="res://unary.recusant/fonts/CharlesWright.ttf" id="1_5pcfv"]
+
+[resource]
+font = ExtResource("1_5pcfv")
+font_size = 40

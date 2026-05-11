@@ -14,9 +14,7 @@ namespace Unary.Core
     {
         private static EditorSettingVariable<bool> _swapContent = new()
         {
-            EditorDefault = true,
-            // No need for runtime swapping, we only need this for editor time
-            RuntimeDefault = false
+            EditorDefault = false,
         };
 
         public static EditorSettingVariable<string[]> BannedExtensions = new()
@@ -71,6 +69,7 @@ namespace Unary.Core
         }
 
         // Is public and globally accessible since we also want to try swap stuff on plugin initialization
+        // TODO Obsolete all manual reporter passing with SharedLogger
         public static bool TryRevertSwap(Func<object, string, bool> reporter)
         {
             if (!ResourceLoader.Singleton.Exists(OperationsFileRes, nameof(ContentSwapManifest)))

@@ -40,6 +40,10 @@ namespace Unary.Core
 
                 return field;
             }
+            private set
+            {
+                field = value;
+            }
         }
 
         public string TargetValue { get; private set; } = string.Empty;
@@ -59,6 +63,11 @@ namespace Unary.Core
         {
             TargetValue = value;
             Processor = processor;
+        }
+
+        public void Precache()
+        {
+            _ = Cache;
         }
 
         public T LoadWithoutCache()
@@ -86,6 +95,11 @@ namespace Unary.Core
             {
                 return (T)resource;
             }
+        }
+
+        public void ClearCache()
+        {
+            Cache = null;
         }
     }
 }

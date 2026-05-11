@@ -1,0 +1,34 @@
+[gd_resource type="Theme" format=3 uid="uid://bjmegmlavtqc1"]
+
+[ext_resource type="FontFile" uid="uid://en12872agqmw" path="res://unary.recusant/fonts/CharlesWright.ttf" id="1_lx34v"]
+
+[resource]
+Button/fonts/font = ExtResource("1_lx34v")
+CheckBox/fonts/font = ExtResource("1_lx34v")
+CheckButton/fonts/font = ExtResource("1_lx34v")
+CodeEdit/fonts/font = null
+ColorPickerButton/fonts/font = null
+FoldableContainer/fonts/font = null
+GraphNodeTitleLabel/fonts/font = null
+ItemList/fonts/font = ExtResource("1_lx34v")
+Label/fonts/font = ExtResource("1_lx34v")
+LineEdit/fonts/font = ExtResource("1_lx34v")
+LinkButton/fonts/font = ExtResource("1_lx34v")
+MenuBar/fonts/font = ExtResource("1_lx34v")
+MenuButton/fonts/font = ExtResource("1_lx34v")
+OptionButton/fonts/font = ExtResource("1_lx34v")
+PopupMenu/fonts/font = ExtResource("1_lx34v")
+PopupMenu/fonts/font_separator = ExtResource("1_lx34v")
+ProgressBar/fonts/font = ExtResource("1_lx34v")
+RichTextLabel/fonts/bold_font = null
+RichTextLabel/fonts/bold_italics_font = null
+RichTextLabel/fonts/italics_font = null
+RichTextLabel/fonts/mono_font = null
+RichTextLabel/fonts/normal_font = null
+TabBar/fonts/font = ExtResource("1_lx34v")
+TabContainer/fonts/font = ExtResource("1_lx34v")
+TextEdit/fonts/font = ExtResource("1_lx34v")
+TooltipLabel/fonts/font = ExtResource("1_lx34v")
+Tree/fonts/font = ExtResource("1_lx34v")
+Tree/fonts/title_button_font = ExtResource("1_lx34v")
+Window/fonts/title_font = ExtResource("1_lx34v")

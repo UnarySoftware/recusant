@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Unary.Core
@@ -26,5 +27,26 @@ namespace Unary.Core
             new GodotJson<Projection>(),
             new GodotJson<Color>(),
         ];
+
+        public static JsonSerializerOptions IndentedOptions
+        {
+            get
+            {
+                if (field == null)
+                {
+                    field = new()
+                    {
+                        WriteIndented = true
+                    };
+
+                    foreach (var converter in JsonConverters.Value)
+                    {
+                        field.Converters.Add(converter);
+                    }
+                }
+
+                return field;
+            }
+        }
     }
 }

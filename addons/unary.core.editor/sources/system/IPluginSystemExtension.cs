@@ -19,26 +19,6 @@ namespace Unary.Core.Editor
         {
             return PluginBootstrap.Singleton;
         }
-
-        public static void Log(this IPluginSystem system, string text)
-        {
-            PluginLogger.Log(system, text);
-        }
-
-        public static void Warning(this IPluginSystem system, string text)
-        {
-            PluginLogger.Warning(system, text);
-        }
-
-        public static void Error(this IPluginSystem system, string text)
-        {
-            PluginLogger.Error(system, text);
-        }
-
-        public static bool Critical(this IPluginSystem system, string text)
-        {
-            return PluginLogger.Critical(system, text);
-        }
     }
 }
 

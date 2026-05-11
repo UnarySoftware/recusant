@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://cirs6ikvuaiol"]
+
+[ext_resource type="LabelSettings" uid="uid://1ggaqugltlri" path="res://unary.recusant/ui/states/settings/controls_entry_labels.tres" id="1_y6k43"]
+[ext_resource type="Texture2D" uid="uid://boit1ypwtj6d1" path="res://unary.recusant/ui/states/settings/checked_icon.tres" id="6_c3mkq"]
+[ext_resource type="Texture2D" uid="uid://bj43hpiipxihy" path="res://unary.recusant/ui/states/settings/unchecked_icon.tres" id="7_gsuda"]
+
+[node name="Entry" type="ColorRect" unique_id=2124844360]
+custom_minimum_size = Vector2(0, 80)
+color = Color(0.1764706, 0.1764706, 0.1764706, 0.54901963)
+
+[node name="EntryData" type="HBoxContainer" parent="." unique_id=1760570190]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="EntryData" unique_id=2075805187]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Name"
+label_settings = ExtResource("1_y6k43")
+
+[node name="Button" type="Button" parent="EntryData" unique_id=1622637735]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+
+[node name="Options" type="OptionButton" parent="EntryData" unique_id=1265461972]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+alignment = 1
+
+[node name="CheckBox" type="CheckBox" parent="EntryData" unique_id=1856195500]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_icons/checked = ExtResource("6_c3mkq")
+theme_override_icons/unchecked = ExtResource("7_gsuda")
+text = " Toggle"
+alignment = 1
