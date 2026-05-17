@@ -8,14 +8,13 @@ namespace Unary.Recusant
     [GlobalClass]
     public partial class PlayerManager : Node, IModSystem
     {
-        private Dictionary<PlayerMarker.MarkerType, (int index, List<PlayerMarker> entries)> _markers = [];
+        private readonly Dictionary<PlayerMarker.MarkerType, (int index, List<PlayerMarker> entries)> _markers = [];
 
         private static readonly LazyResource<PoolDeclaration> _playerPoolHandle = new("uid://c16iylkg5pp3i");
 
         private readonly HashSet<Entity> _players = [];
 
         private PoolGroup _playerPool;
-
 
         bool ISystem.Initialize()
         {
@@ -40,9 +39,10 @@ namespace Unary.Recusant
                 return true;
             }
 
-            Entity entity = _playerPool.Aquire<Entity>(true);
+            Entity entity = _playerPool.Aquire<Entity>(true, false);
 
             entity.GetComponent<PlayerMovement>().Body.GlobalPosition = GetMarker(PlayerMarker.MarkerType.Start).GlobalPosition;
+            entity.Aquire();
 
             _players.Add(entity);
             return true;
@@ -52,7 +52,7 @@ namespace Unary.Recusant
         {
             foreach (var player in _players)
             {
-                _playerPool.Release(player);
+                _playerPool.Release(player, true);
             }
 
             _players.Clear();

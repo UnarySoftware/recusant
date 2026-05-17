@@ -53,7 +53,7 @@ namespace Unary.Core
 
             Buses[MasterBusName] = 0;
 
-            string modId = this.GetModId();
+            string modId = this.GetModId().ToLower();
 
             if (!_modIdToBusData.TryGetValue(modId, out var coreEntries))
             {

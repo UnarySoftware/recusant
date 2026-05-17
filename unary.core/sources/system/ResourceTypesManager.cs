@@ -141,7 +141,7 @@ namespace Unary.Core
 
             manifest.Paths ??= [];
             manifest.Types ??= [];
-            manifest.ModId = modId;
+            manifest.ModId = modId.ToLower();
 
             _modIdTomanifest[modId] = manifest;
 

@@ -5,6 +5,7 @@
 [ext_resource type="Material" uid="uid://oi7rxrtv6e6f" path="res://unary.recusant/materials/sky/sky.tres" id="2_ts0u2"]
 [ext_resource type="Script" uid="uid://cnvv71406cqlw" path="res://unary.recusant/sources/level/ModDirectionalLight3D.cs" id="3_a485h"]
 [ext_resource type="Script" uid="uid://c2vsxawd2sib" path="res://addons/godotvmf/src/vmf_node.gd" id="5_rp0i2"]
+[ext_resource type="ArrayOccluder3D" uid="uid://kuy2patg4ihk" path="res://unary.recusant/levels/streets/occlusion.occ" id="5_ts0u2"]
 [ext_resource type="Material" uid="uid://cfruxmd5w6f1u" path="res://hammer/materials/unary.core/dev/dev_measuregeneric01b.tres" id="6_rblc5"]
 [ext_resource type="Material" uid="uid://bj5rcrp1vvlrh" path="res://hammer/materials/unary.core/dev/dev_measuregeneric01.tres" id="7_3gml4"]
 [ext_resource type="PackedScene" uid="uid://c23w6hgskshfd" path="res://addons/unary.core.editor/hammer/entities/detail.tscn" id="8_a485h"]
@@ -24,9 +25,11 @@ background_mode = 2
 sky = SubResource("Sky_8hpa1")
 ambient_light_source = 3
 tonemap_mode = 4
+ssao_enabled = true
 sdfgi_enabled = true
-sdfgi_cascades = 1
-sdfgi_min_cell_size = 2.0
+sdfgi_use_occlusion = true
+sdfgi_cascades = 2
+sdfgi_min_cell_size = 0.78125
 sdfgi_y_scale = 2
 fog_mode = 1
 fog_density = 0.7127
@@ -20891,6 +20894,9 @@ light_bake_mode = 0
 shadow_enabled = true
 script = ExtResource("3_a485h")
 metadata/_custom_type_script = "uid://cnvv71406cqlw"
+
+[node name="OccluderInstance3D" type="OccluderInstance3D" parent="." unique_id=1356750029]
+occluder = ExtResource("5_ts0u2")
 
 [node name="Navigation" type="NavigationRegion3D" parent="." unique_id=1176748007]
 navigation_mesh = ExtResource("9_5rvk1")

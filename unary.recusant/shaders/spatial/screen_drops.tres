@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dkvpkdwpwuvsl"]
+
+[ext_resource type="Shader" uid="uid://cmvpvnjmiab6i" path="res://unary.recusant/shaders/spatial/screen_drops.gdshader" id="1_qo6hu"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_qo6hu")
+shader_parameter/rain_amount = 0.350000016625
+shader_parameter/rain_speed = 1.7000000774901203
+shader_parameter/max_blur = 0.0
+shader_parameter/min_blur = 0.0
+shader_parameter/scale_x = 1.4070000668325
+shader_parameter/scale_y = 0.7850000372875

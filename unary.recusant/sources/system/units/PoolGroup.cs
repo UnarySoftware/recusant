@@ -51,7 +51,7 @@ namespace Unary.Recusant
             }
         }
 
-        public T Aquire<T>(bool release) where T : Node3D
+        public T Aquire<T>(bool release, bool runAquire) where T : Node3D
         {
             if (!release)
             {
@@ -69,9 +69,12 @@ namespace Unary.Recusant
 
                 Node3D released = _entries.Dequeue();
 
-                if (released is IPoolable poolable)
+                if (runAquire)
                 {
-                    poolable.Aquire();
+                    if (released is IPoolable poolable)
+                    {
+                        poolable.Aquire();
+                    }
                 }
 
                 released.Visible = true;
@@ -80,11 +83,14 @@ namespace Unary.Recusant
             }
         }
 
-        public void Release(Node3D node)
+        public void Release(Node3D node, bool runRelease)
         {
-            if (node is IPoolable poolable)
+            if (runRelease)
             {
-                poolable.Release();
+                if (node is IPoolable poolable)
+                {
+                    poolable.Release();
+                }
             }
 
             node.Visible = false;

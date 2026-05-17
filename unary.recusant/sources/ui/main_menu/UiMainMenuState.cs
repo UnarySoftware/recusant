@@ -36,7 +36,7 @@ namespace Unary.Recusant
 
         private void OnHost()
         {
-            LevelManager.Singleton.LoadLevel("Streets");
+            LevelManager.Singleton.LoadLevel("Test");
         }
 
         private void OnSettings()

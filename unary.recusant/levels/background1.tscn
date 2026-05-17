@@ -5,7 +5,7 @@
 [ext_resource type="Material" uid="uid://cfruxmd5w6f1u" path="res://hammer/materials/unary.core/dev/dev_measuregeneric01b.tres" id="2_sjfm3"]
 [ext_resource type="Script" uid="uid://cgie4o1kjvrdk" path="res://unary.recusant/sources/level/ModWorldEnvironment.cs" id="3_228ku"]
 [ext_resource type="Material" uid="uid://bj5rcrp1vvlrh" path="res://hammer/materials/unary.core/dev/dev_measuregeneric01.tres" id="3_jq23h"]
-[ext_resource type="Material" uid="uid://oi7rxrtv6e6f" path="res://unary.recusant/materials/sky/sky.tres" id="3_na25g"]
+[ext_resource type="Material" uid="uid://7dg3dcpg8bxo" path="res://unary.recusant/shaders/sky/celestial_shader2.tres" id="3_na25g"]
 [ext_resource type="Material" uid="uid://dy7x42n27nhuw" path="res://hammer/materials/unary.core/tools/block_light.tres" id="5_pk2mg"]
 [ext_resource type="Script" uid="uid://ddmefidlb4w6a" path="res://unary.recusant/sources/level/RandomBall.cs" id="6_1odc0"]
 [ext_resource type="Material" uid="uid://bm2tgs0tn5trk" path="res://hammer/materials/unary.core/dev/measure_doorsmall.tres" id="6_32oba"]
@@ -13,6 +13,9 @@
 [ext_resource type="AudioStream" uid="uid://udqo7dmefnqn" path="res://unary.recusant/placeholder/sound/ambient/zr_ambience.mp3" id="7_tqvdk"]
 [ext_resource type="Resource" uid="uid://b06afwgxh1unm" path="res://unary.recusant/sound/ambient.tres" id="8_rspti"]
 [ext_resource type="Script" uid="uid://dku88wftngf3g" path="res://unary.recusant/sources/level/LevelRoot.cs" id="8_y0yp1"]
+[ext_resource type="AudioStream" uid="uid://dqbngku6dgngv" path="res://unary.recusant/placeholder/sound/ambient/windingrass_loop.wav" id="12_0bcwk"]
+[ext_resource type="Material" uid="uid://dkvpkdwpwuvsl" path="res://unary.recusant/shaders/spatial/screen_drops.tres" id="13_4srss"]
+[ext_resource type="Material" uid="uid://obtkh3ex20ho" path="res://unary.recusant/particles/rain.tres" id="16_0bcwk"]
 
 [sub_resource type="Sky" id="Sky_4srss"]
 sky_material = ExtResource("3_na25g")
@@ -27,9 +30,11 @@ sdfgi_cascades = 3
 sdfgi_y_scale = 0
 fog_enabled = true
 fog_mode = 1
+fog_light_color = Color(0.19378588, 0.21401817, 0.24549937, 1)
 fog_density = 0.1
 fog_sky_affect = 0.75
-volumetric_fog_enabled = true
+fog_depth_begin = 0.0
+fog_depth_end = 76.9
 volumetric_fog_density = 0.0
 volumetric_fog_ambient_inject = 1.78
 
@@ -84,12 +89,51 @@ data = PackedVector3Array(32.512, 0, -39.0144, 32.512, 0, -19.5072, 32.512, 26.0
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_0bcwk"]
 data = PackedVector3Array(-48.767998, 19.5072, -6.5024, 3.2512, 19.5072, -6.5024, 3.2512, 19.5072, -3.2512, -48.767998, 19.5072, -6.5024, 3.2512, 19.5072, -3.2512, -48.767998, 19.5072, -3.2512, -48.767998, 0, -3.2512, 3.2512, 0, -3.2512, 3.2512, 0, -6.5024, -48.767998, 0, -3.2512, 3.2512, 0, -6.5024, -48.767998, 0, -6.5024, -48.767998, 19.5072, -6.5024, -48.767998, 19.5072, -3.2512, -48.767998, 0, -3.2512, -48.767998, 19.5072, -6.5024, -48.767998, 0, -3.2512, -48.767998, 0, -6.5024, 3.2512, 0, -6.5024, 3.2512, 0, -3.2512, 3.2512, 19.5072, -3.2512, 3.2512, 0, -6.5024, 3.2512, 19.5072, -3.2512, 3.2512, 19.5072, -6.5024, 3.2512, 19.5072, -6.5024, -48.767998, 19.5072, -6.5024, -48.767998, 0, -6.5024, 3.2512, 19.5072, -6.5024, -48.767998, 0, -6.5024, 3.2512, 0, -6.5024, 3.2512, 0, -3.2512, -48.767998, 0, -3.2512, -48.767998, 19.5072, -3.2512, 3.2512, 0, -3.2512, -48.767998, 19.5072, -3.2512, 3.2512, 19.5072, -3.2512, 0, 19.5072, -19.5072, 3.2512, 19.5072, -19.5072, 3.2512, 19.5072, -6.5024, 0, 19.5072, -19.5072, 3.2512, 19.5072, -6.5024, 0, 19.5072, -6.5024, 0, 0, -6.5024, 3.2512, 0, -6.5024, 3.2512, 0, -19.5072, 0, 0, -6.5024, 3.2512, 0, -19.5072, 0, 0, -19.5072, 0, 19.5072, -19.5072, 0, 19.5072, -6.5024, 0, 0, -6.5024, 0, 19.5072, -19.5072, 0, 0, -6.5024, 0, 0, -19.5072, 3.2512, 0, -19.5072, 3.2512, 0, -6.5024, 3.2512, 19.5072, -6.5024, 3.2512, 0, -19.5072, 3.2512, 19.5072, -6.5024, 3.2512, 19.5072, -19.5072, 3.2512, 19.5072, -19.5072, 0, 19.5072, -19.5072, 0, 0, -19.5072, 3.2512, 19.5072, -19.5072, 0, 0, -19.5072, 3.2512, 0, -19.5072, 3.2512, 0, -6.5024, 0, 0, -6.5024, 0, 19.5072, -6.5024, 3.2512, 0, -6.5024, 0, 19.5072, -6.5024, 3.2512, 19.5072, -6.5024, -48.767998, 22.7584, -42.2656, 3.2512, 22.7584, -42.2656, 3.2512, 22.7584, -3.2512, -48.767998, 22.7584, -42.2656, 3.2512, 22.7584, -3.2512, -48.767998, 22.7584, -3.2512, -48.767998, 19.5072, -3.2512, 3.2512, 19.5072, -3.2512, 3.2512, 19.5072, -42.2656, -48.767998, 19.5072, -3.2512, 3.2512, 19.5072, -42.2656, -48.767998, 19.5072, -42.2656, -48.767998, 22.7584, -42.2656, -48.767998, 22.7584, -3.2512, -48.767998, 19.5072, -3.2512, -48.767998, 22.7584, -42.2656, -48.767998, 19.5072, -3.2512, -48.767998, 19.5072, -42.2656, 3.2512, 19.5072, -42.2656, 3.2512, 19.5072, -3.2512, 3.2512, 22.7584, -3.2512, 3.2512, 19.5072, -42.2656, 3.2512, 22.7584, -3.2512, 3.2512, 22.7584, -42.2656, 3.2512, 22.7584, -42.2656, -48.767998, 22.7584, -42.2656, -48.767998, 19.5072, -42.2656, 3.2512, 22.7584, -42.2656, -48.767998, 19.5072, -42.2656, 3.2512, 19.5072, -42.2656, 3.2512, 19.5072, -3.2512, -48.767998, 19.5072, -3.2512, -48.767998, 22.7584, -3.2512, 3.2512, 19.5072, -3.2512, -48.767998, 22.7584, -3.2512, 3.2512, 22.7584, -3.2512)
 
+[sub_resource type="QuadMesh" id="QuadMesh_na25g"]
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_pk2mg"]
 radius = 1.5
 
 [sub_resource type="SphereMesh" id="SphereMesh_pk2mg"]
 radius = 1.5
 height = 3.0
+
+[sub_resource type="Gradient" id="Gradient_ui07d"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lypsr"]
+gradient = SubResource("Gradient_ui07d")
+width = 32
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_0bcwk"]
+colors = PackedColorArray(1.5883148e-06, 0.4391926, 0.42742848, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ui07d"]
+gradient = SubResource("Gradient_0bcwk")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lypsr"]
+render_priority = 1
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+diffuse_mode = 2
+albedo_color = Color(0.52439326, 0.7393862, 0.6520962, 1)
+albedo_texture = SubResource("GradientTexture2D_lypsr")
+refraction_scale = 0.15
+refraction_texture = SubResource("GradientTexture2D_ui07d")
+refraction_texture_channel = 4
+billboard_mode = 2
+
+[sub_resource type="QuadMesh" id="QuadMesh_0bcwk"]
+material = SubResource("StandardMaterial3D_lypsr")
+size = Vector2(0.1, 0.9)
 
 [node name="LevelRoot" type="Node3D" unique_id=1123221758 node_paths=PackedStringArray("WorldEnvironment", "DirectionalLight3D")]
 script = ExtResource("8_y0yp1")
@@ -102,7 +146,7 @@ metadata/_custom_type_script = "uid://dku88wftngf3g"
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Background1" unique_id=134288100]
 transform = Transform3D(-0.74755615, -0.116331354, 0.65393186, 0.5033625, 0.54311866, 0.67204785, -0.43334278, 0.8315583, -0.3474548, -13.3314705, 3.4893312, -0.35206985)
-light_color = Color(1, 0.93670046, 1, 1)
+light_energy = 0.02
 shadow_enabled = true
 directional_shadow_blend_splits = true
 script = ExtResource("2_kcvaj")
@@ -159,6 +203,20 @@ autoplay = true
 script = ExtResource("7_12hnm")
 TargetBus = ExtResource("8_rspti")
 metadata/_custom_type_script = "uid://d0hahcfyufrhb"
+
+[node name="ModAudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Background1/Camera3D" unique_id=785124487]
+stream = ExtResource("12_0bcwk")
+volume_db = -8.0
+autoplay = true
+script = ExtResource("7_12hnm")
+TargetBus = ExtResource("8_rspti")
+metadata/_custom_type_script = "uid://d0hahcfyufrhb"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Background1/Camera3D" unique_id=1274354332]
+transform = Transform3D(0.441, 2.4959375e-09, -4.837411e-08, -4.153618e-09, 0.265, -8.0830084e-08, 1.6614472e-08, 1.668222e-08, 1.284, -0.006, 0.018, -0.121)
+mesh = SubResource("QuadMesh_na25g")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("13_4srss")
 
 [node name="Balls" type="Node3D" parent="Background1" unique_id=820720848]
 
@@ -315,3 +373,26 @@ gi_mode = 2
 mesh = SubResource("SphereMesh_pk2mg")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("6_32oba")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=1799166190]
+transform = Transform3D(-0.6253653, 0.3901661, -0.6757875, 0, 0.8660254, 0.5, 0.78033215, 0.31268266, -0.5415823, -44.95845, 18.395273, -31.656832)
+light_color = Color(3.0022678, 3.0022678, 3.0022678, 1)
+light_energy = 4.628
+light_indirect_energy = 3.973
+light_volumetric_fog_energy = 0.0
+light_specular = 0.0
+shadow_enabled = true
+shadow_bias = 0.06
+spot_range = 52.033
+spot_angle = 45.61
+spot_angle_attenuation = 0.7320424
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=1468572542]
+transform = Transform3D(4.223727, 0, 0, 0, 3.0723631, 0, 0, 0, 2.4371257, -12.841091, 37.888947, -14.531417)
+amount = 1000
+lifetime = 3.0
+preprocess = 2.0
+speed_scale = 3.0
+visibility_aabb = AABB(-5.895574, -8.286882, -5.8909974, 11.793438, 10.184762, 11.764141)
+process_material = ExtResource("16_0bcwk")
+draw_pass_1 = SubResource("QuadMesh_0bcwk")

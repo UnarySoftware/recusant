@@ -1,0 +1,12 @@
+[gd_resource type="ParticleProcessMaterial" format=3 uid="uid://obtkh3ex20ho"]
+
+[resource]
+lifetime_randomness = 0.13
+emission_shape_scale = Vector3(9, 1, 7.53)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(0, -1, 0)
+spread = 7.5
+initial_velocity_min = 50.0
+initial_velocity_max = 50.0
+collision_mode = 2
