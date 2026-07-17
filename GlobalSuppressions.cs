@@ -1,13 +1,4 @@
-// This file is used by Code Analysis to maintain SuppressMessage
-// attributes that are applied to this project.
-// Project-level suppressions either have no target or are given
-// a specific target and scoped to a namespace, type, member, etc.
-
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:Unary")]
-[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:Unary.Core")]
-[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:Unary.Core.Editor")]
-[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:Unary.Recusant")]
-[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:Unary.Recusant.Editor")]
-
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "Namespaces are reserved by the name of ModIds instead of following folder structure", Scope = "module")]
+[assembly: SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Static use might be perfomant, but most of the time you have to enforce use of an accessor like Singleton/Instance", Scope = "module")]

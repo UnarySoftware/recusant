@@ -116,7 +116,7 @@ namespace Unary.Recusant
 
             LoadingManager.Singleton.AddJob($"Loading level assets...", GetProgress);
 
-            Resources.Singleton.LoadPatchedAsync(Definition.Scene.TargetValue, OnLevelLoaded, OnProgress, nameof(PackedScene));
+            Resources.Singleton.LoadAsync(Definition.Scene.TargetValue, OnLevelLoaded, OnProgress, nameof(PackedScene));
         }
 
         private void OnLevelLoaded(Resource resource, object data)
@@ -143,9 +143,6 @@ namespace Unary.Recusant
             {
                 GameStateManager.Singleton.State = GameState.Game;
             }
-
-            System.GC.Collect();
-            System.GC.WaitForPendingFinalizers();
 
             Progress = 1.0f;
         }

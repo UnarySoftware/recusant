@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" script_class="UnaryStandartMaterial3D" format=3 uid="uid://djn00mh7q40tv"]
+
+[ext_resource type="Texture2D" uid="uid://dyj3uq8glwgbn" path="res://unary.core/materials/dev/door_small.png" id="1_5heqy"]
+[ext_resource type="Script" uid="uid://brr3vk4vct6hm" path="res://unary.core/sources/resources/UnaryStandartMaterial3D.cs" id="1_i4aa2"]
+
+[resource]
+albedo_texture = ExtResource("1_5heqy")
+script = ExtResource("1_i4aa2")
+metadata/_custom_type_script = "uid://brr3vk4vct6hm"

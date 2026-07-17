@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TrenchBroomGameConfig" load_steps=4 format=3 uid="uid://dxva3okr6m20w"]
+
+[ext_resource type="Resource" uid="uid://cl0216dhhhrhc" path="res://trenchbroom/fgd/trenchbroom_fgd.tres" id="4_jvx5w"]
+[ext_resource type="Texture2D" uid="uid://bieiptgow81jw" path="res://icon.png" id="5_mya1d"]
+[ext_resource type="Script" uid="uid://xgy71up30fe5" path="res://addons/func_godot_csharp/sources/trenchbroom/TrenchBroomGameConfig.cs" id="6_7n7oq"]
+
+[resource]
+script = ExtResource("6_7n7oq")
+GameName = "Recusant"
+Icon = ExtResource("5_mya1d")
+InitialMap = "initial_valve.map"
+TexturesRootFolder = ".trenchbroom"
+TextureExclusionPatterns = Array[String](["*_albedo", "*_ao", "*_emission", "*_height", "*_metallic", "*_normal", "*_orm", "*_roughness", "*_sss", "*.exr"])
+FgdFile = ExtResource("4_jvx5w")

@@ -40,7 +40,7 @@ namespace Unary.Recusant
 
             foreach (var resource in resources)
             {
-                NetworkedResource networkedResource = (NetworkedResource)Resources.Singleton.LoadPatched(resource);
+                NetworkedResource networkedResource = (NetworkedResource)ResourceLoader.Singleton.Load(resource);
                 networkedResource.NetworkId = index;
                 _resources[index] = networkedResource;
                 index++;

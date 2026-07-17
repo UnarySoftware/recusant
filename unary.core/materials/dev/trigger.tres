@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://c6628qs2op72q"]
+
+[ext_resource type="Shader" uid="uid://83ohqor1knbw" path="res://unary.core/materials/dev/dev_transparent.gdshader" id="1_4fo6t"]
+[ext_resource type="Texture2D" uid="uid://d0ktgdw03dcg7" path="res://unary.core/materials/dev/trigger.png" id="2_4fo6t"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_4fo6t")
+shader_parameter/albedo = ExtResource("2_4fo6t")
+shader_parameter/alpha = 0.5

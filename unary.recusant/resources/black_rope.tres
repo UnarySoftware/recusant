@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="RopeMaterial" format=3 uid="uid://b7pxghjdg5yj6"]
+
+[ext_resource type="Script" uid="uid://7n18b4a6pkkg" path="res://unary.recusant/sources/resources/RopeMaterial.cs" id="1_6bca5"]
+[ext_resource type="Material" uid="uid://ycwc66hgjgi6" path="res://unary.recusant/materials/ropes/black_rope.tres" id="1_6tunv"]
+
+[resource]
+script = ExtResource("1_6bca5")
+Material = ExtResource("1_6tunv")
+metadata/_custom_type_script = "uid://7n18b4a6pkkg"

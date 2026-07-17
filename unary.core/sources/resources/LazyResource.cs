@@ -10,7 +10,7 @@ namespace Unary.Core
 
         public void Precache()
         {
-            _cache ??= Resources.Singleton.LoadPatched(TargetValue);
+            _cache ??= ResourceLoader.Singleton.Load(TargetValue);
         }
 
         public T Load<T>() where T : Resource
@@ -21,7 +21,7 @@ namespace Unary.Core
 
         public T LoadWithoutCache<T>() where T : Resource
         {
-            return (T)Resources.Singleton.LoadPatched(TargetValue);
+            return (T)ResourceLoader.Singleton.Load(TargetValue);
         }
     }
 }

@@ -11,10 +11,11 @@ namespace Unary.Core
         protected readonly List<T> _subscriberFuncs = [];
 
         protected object _queueLock = new();
-        protected readonly List<K> _initQueue = [];
-        protected bool _initialized = false;
+        protected List<K> _initQueue = [];
+        protected List<K> _publishQueue = [];
+        protected volatile bool _initialized = false;
         private bool _subscribed = false;
-        protected bool _collecting = false;
+        protected volatile bool _collecting = false;
 
 #if TOOLS
 
@@ -33,6 +34,20 @@ namespace Unary.Core
 
         public abstract void PublishQueue();
 
+        public List<K> SwapQueue()
+        {
+            lock (_queueLock)
+            {
+                _collecting = false;
+
+                _publishQueue.Clear();
+
+                (_initQueue, _publishQueue) = (_publishQueue, _initQueue);
+
+                return _publishQueue;
+            }
+        }
+
         protected bool PublishInternal(K data)
         {
             if (_initialized && !_collecting)
@@ -40,20 +55,25 @@ namespace Unary.Core
                 return true;
             }
 
-            if (Bootstrap.Singleton.FinishedInitialization && !_collecting)
-            {
-                _initialized = true;
-                return true;
-            }
-
-            if (!_subscribed && !_collecting)
-            {
-                Bootstrap.Singleton.OnFinishInitialization += OnFinishInitialization;
-                _subscribed = true;
-            }
-
             lock (_queueLock)
             {
+                if (_initialized && !_collecting)
+                {
+                    return true;
+                }
+
+                if (Bootstrap.Singleton.FinishedInitialization && !_collecting)
+                {
+                    _initialized = true;
+                    return true;
+                }
+
+                if (!_subscribed && !_collecting)
+                {
+                    Bootstrap.Singleton.OnFinishInitialization += OnFinishInitialization;
+                    _subscribed = true;
+                }
+
                 bool found = false;
 
                 foreach (var entry in _initQueue)
@@ -84,7 +104,6 @@ namespace Unary.Core
 
             PublishQueue();
 
-            _initQueue.Clear();
             _initialized = true;
         }
 
@@ -242,13 +261,14 @@ namespace Unary.Core
 
         public override void PublishQueue()
         {
+            List<object> queue = SwapQueue();
 #if TOOLS
             if (_debug)
             {
                 _debugString.Append("Dispatching order (queue):\n");
             }
 #endif
-            for (int i = 0; i < _initQueue.Count; i++)
+            for (int i = 0; i < queue.Count; i++)
             {
 #if TOOLS
                 if (_debug)
@@ -282,7 +302,6 @@ namespace Unary.Core
                 _debugString.Clear();
             }
 #endif
-            _collecting = false;
         }
     }
 
@@ -361,13 +380,14 @@ namespace Unary.Core
 
         public override void PublishQueue()
         {
+            List<T> queue = SwapQueue();
 #if TOOLS
             if (_debug)
             {
                 _debugString.Append("Dispatching order (queue):\n");
             }
 #endif
-            foreach (var entry in _initQueue)
+            foreach (var entry in queue)
             {
                 T target = entry;
 #if TOOLS
@@ -402,7 +422,6 @@ namespace Unary.Core
                 _debugString.Clear();
             }
 #endif
-            _collecting = false;
         }
     }
 }

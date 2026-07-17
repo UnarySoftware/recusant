@@ -1,0 +1,6 @@
+[gd_resource type="Theme" format=3 uid="uid://62q27rdudwl8"]
+
+[ext_resource type="FontFile" uid="uid://cius06hh32p1r" path="res://unary.core/fonts/consola.ttf" id="1_1ky6d"]
+
+[resource]
+Label/fonts/font = ExtResource("1_1ky6d")

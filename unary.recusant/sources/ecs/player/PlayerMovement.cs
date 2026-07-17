@@ -188,11 +188,12 @@ namespace Unary.Recusant
         [Export]
         public Node3D Head;
 
+        public bool CanMove = true;
+
         private Vector3 _wishDir = Vector3.Zero;
         private Vector3 _camAlignedWishDir = Vector3.Zero;
 
         private bool _isCrouched = false;
-
         private bool _isNoclip = false;
 
         private bool _wasSnappedToStairs = false;
@@ -209,8 +210,6 @@ namespace Unary.Recusant
 
         public static PlayerMovement Instance;
 
-        private SlotHandle physicsProcessSlot;
-
         private PlayerCamera _camera;
         private PlayerHealth _health;
         private PlayerStatus _status;
@@ -220,7 +219,7 @@ namespace Unary.Recusant
         void IPoolable.Aquire()
         {
             Instance = this;
-            physicsProcessSlot = Updater.Singleton.PhysicsProcess.Subscribe(this);
+            Updater.Singleton.PhysicsProcess.Subscribe(this);
             ProcessMode = ProcessModeEnum.Always;
             CollisionShape3D.SetDeferred(disabled, false);
         }
@@ -228,7 +227,7 @@ namespace Unary.Recusant
         void IPoolable.Release()
         {
             Instance = null;
-            Updater.Singleton.PhysicsProcess.Unsubscribe(physicsProcessSlot);
+            Updater.Singleton.PhysicsProcess.Unsubscribe(this);
             ProcessMode = ProcessModeEnum.Disabled;
             CollisionShape3D.SetDeferred(disabled, true);
         }
@@ -659,14 +658,21 @@ namespace Unary.Recusant
                 Vector3 floorNormal = Body.GetFloorNormal();
                 floorNormal.Y = 0.0f;
 
-                Vector3 normalize = Body.Velocity.Normalized();
+                Vector3 velocity = Body.Velocity;
+
+                if (velocity.Y == JumpVelocity)
+                {
+                    return;
+                }
+
+                Vector3 normalize = velocity.Normalized();
                 normalize.Y = 0.0f;
 
                 float dotProduct = floorNormal.Dot(normalize);
 
                 if (dotProduct > 0.0f)
                 {
-                    float length = Body.Velocity.Length();
+                    float length = velocity.Length();
                     Body.Velocity += floorNormal * length;
                 }
             }
@@ -674,6 +680,11 @@ namespace Unary.Recusant
 
         void IPhysicsProcess.PhysicsProcess(float delta)
         {
+            if (!CanMove)
+            {
+                return;
+            }
+
             if (Body.IsOnFloor())
             {
                 _wasFlooredFrame = Engine.GetPhysicsFrames();
@@ -709,9 +720,9 @@ namespace Unary.Recusant
                     }
                     else
                     {
+                        _previousVelocity = Body.Velocity;
                         HandleAirPhysics(delta);
                         _wasInAir = true;
-                        _previousVelocity = Body.Velocity;
                     }
                 }
 

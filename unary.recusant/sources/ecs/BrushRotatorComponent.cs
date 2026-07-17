@@ -8,10 +8,12 @@ namespace Unary.Recusant
     public partial class BrushRotatorComponent : Component
     {
         private BrushEntity brush;
+        private PlatformBody3D platform;
 
         public override void Initialize()
         {
             brush = Entity.GetComponent<BrushEntityComponent>().GetBrushEntity();
+            platform = brush.GetNode<PlatformBody3D>("%PlatformBody3D");
         }
 
         private double _timer = 0.0f;
@@ -19,6 +21,11 @@ namespace Unary.Recusant
         public override void _PhysicsProcess(double delta)
         {
             if (Engine.Singleton.IsEditorHint() || brush == null)
+            {
+                return;
+            }
+
+            if (!platform.ShouldMove)
             {
                 return;
             }

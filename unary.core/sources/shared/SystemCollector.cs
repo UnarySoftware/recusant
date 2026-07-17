@@ -28,6 +28,11 @@ namespace Unary.Core
 
         public T GetSystem(Type type)
         {
+            if (!Initialized)
+            {
+                return default;
+            }
+
             if (!_systemsDictionary.TryGetValue(type, out var system))
             {
                 return default;
@@ -160,7 +165,11 @@ namespace Unary.Core
 
             foreach (var targetType in sortedTypes)
             {
-                GetSystem(targetType.Target);
+                if (EqualityComparer<T>.Default.Equals(GetSystem(targetType.Target), default))
+                {
+                    Initialized = false;
+                    break;
+                }
 
                 if (!Initialized)
                 {

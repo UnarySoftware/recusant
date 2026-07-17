@@ -9,6 +9,8 @@
 [ext_resource type="Script" uid="uid://c11t2j8iwtl68" path="res://unary.recusant/sources/ecs/player/PlayerCamera.cs" id="4_mfgvn"]
 [ext_resource type="Script" uid="uid://bue0h7gx0cndc" path="res://unary.recusant/sources/ecs/player/PlayerHealth.cs" id="5_c7x01"]
 [ext_resource type="Script" uid="uid://b5hlafyagmdam" path="res://unary.recusant/sources/ecs/player/PlayerInteracts.cs" id="9_645qw"]
+[ext_resource type="Script" uid="uid://iccs7pnm8nvj" path="res://unary.recusant/sources/ecs/player/PlayerUnstucker.cs" id="10_3ll8r"]
+[ext_resource type="Script" uid="uid://cywt6fme4e5v8" path="res://unary.recusant/sources/ecs/player/PlayerSquisher.cs" id="11_ws6wy"]
 
 [node name="Entity" type="Node3D" unique_id=999209273]
 script = ExtResource("1_ysajs")
@@ -89,3 +91,13 @@ metadata/_custom_type_script = "uid://bue0h7gx0cndc"
 script = ExtResource("9_645qw")
 Flashlight = NodePath("../CharacterBody3D/HeadOriginalPosition/CameraSmooth/Head/SpotLight3D")
 metadata/_custom_type_script = "uid://b5hlafyagmdam"
+
+[node name="PlayerUnstucker" type="Node" parent="." unique_id=1767669490 node_paths=PackedStringArray("Body")]
+script = ExtResource("10_3ll8r")
+Body = NodePath("../CharacterBody3D")
+metadata/_custom_type_script = "uid://iccs7pnm8nvj"
+
+[node name="PlayerSquisher" type="Node" parent="." unique_id=1925836653 node_paths=PackedStringArray("Body")]
+script = ExtResource("11_ws6wy")
+Body = NodePath("../CharacterBody3D")
+metadata/_custom_type_script = "uid://cywt6fme4e5v8"

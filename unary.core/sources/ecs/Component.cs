@@ -7,6 +7,10 @@ namespace Unary.Core
     public partial class Component : Node
     {
         private Entity _entityCache;
+        public SlotHandle ProcessSlotHandle;
+        public SlotHandle PhysicsProcessSlotHandle;
+
+        public bool Initialized = false;
 
         public Entity Entity
         {

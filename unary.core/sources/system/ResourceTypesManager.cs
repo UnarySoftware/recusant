@@ -96,16 +96,7 @@ namespace Unary.Core
                     continue;
                 }
 
-                Resource resource;
-
-                if (patched)
-                {
-                    resource = Resources.Singleton.LoadPatched(handle.Path, type.Name);
-                }
-                else
-                {
-                    resource = ResourceLoader.Singleton.Load(handle.Path, type.Name);
-                }
+                Resource resource = ResourceLoader.Singleton.Load(handle.Path, type.Name);
 
                 if (resource == null)
                 {

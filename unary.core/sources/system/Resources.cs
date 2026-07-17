@@ -8,56 +8,21 @@ namespace Unary.Core
     [GlobalClass]
     public partial class Resources : Node, ICoreSystem
     {
-        private readonly Dictionary<long, HashSet<ResourcePatch>> _patches = [];
+        private ResourcePatcher _patcher;
 
-        private ResourceInterceptor _interceptor;
-
+#if TOOLS
         [InitializeExplicit(typeof(ResourceManager))]
+#endif
         bool ISystem.Initialize()
         {
-            List<ResourcePatch> patches = ResourceTypesManager.Singleton.LoadResources<ResourcePatch>(false);
-
-            foreach (var patch in patches)
-            {
-                if (string.IsNullOrEmpty(patch.Target.TargetValue))
-                {
-                    continue;
-                }
-
-                long id = ResourceUid.Singleton.TextToId(patch.Target.TargetValue);
-
-                if (id == ResourceUid.InvalidId)
-                {
-                    this.Warning($"Ignoring invalid patch target {patch.Target.TargetValue}");
-                    continue;
-                }
-
-                if (!_patches.TryGetValue(id, out var entries))
-                {
-                    entries = [];
-                    _patches[id] = entries;
-                }
-
-                entries.Add(patch);
-            }
-
-            _interceptor = new();
-            ResourceInterceptor.Enabled = true;
-            ResourceLoader.Singleton.AddResourceFormatLoader(_interceptor, true);
-
+            _patcher = new();
+            ResourceLoader.Singleton.AddDetour(_patcher, true);
             return true;
         }
 
         void ISystem.Deinitialize()
         {
-            ResourceLoader.Singleton.RemoveResourceFormatLoader(_interceptor);
-        }
-
-        public Resource LoadPatched(string path, string typeHint = "")
-        {
-            Resource result = ResourceLoader.Singleton.Load(path, typeHint, ResourceLoader.CacheMode.IgnoreDeep);
-            _interceptor.TemporaryClear();
-            return result;
+            ResourceLoader.Singleton.RemoveDetour(_patcher);
         }
 
         private struct AsyncEntry
@@ -71,17 +36,20 @@ namespace Unary.Core
         private readonly ConcurrentDictionary<string, AsyncEntry> _asyncEntries = [];
         private readonly ConcurrentHashSet<string> _deleteEntries = [];
 
-        public void LoadPatchedAsync(string path, Action<Resource, object> result, Action<float> progress, string typeHint = "", object data = null)
+        public void LoadAsync(string path, Action<Resource, object> result, Action<float> progress, string typeHint = "", object data = null)
         {
             RuntimeLogger.OnLog.StartQueue();
 
-            Error error = ResourceLoader.Singleton.LoadThreadedRequest(path, typeHint, true, ResourceLoader.CacheMode.IgnoreDeep);
+            Error error = ResourceLoader.Singleton.LoadThreadedRequest(path, typeHint, false);
 
             if (error != Error.Ok)
             {
                 this.Error($"Failed to load a resource at \"{path}\"");
                 progress(0.0f);
                 result(null, null);
+
+                // Nothing was queued, so Process will never flush the log queue that StartQueue opened above
+                RuntimeLogger.OnLog.PublishQueue();
                 return;
             }
 
@@ -100,7 +68,7 @@ namespace Unary.Core
         {
             foreach (var entry in _asyncEntries)
             {
-                var status = ResourceLoader.Singleton.LoadThreadedGetStatus(entry.Key, entry.Value.FloatStorage);
+                ResourceLoader.ThreadLoadStatus status = ResourceLoader.Singleton.LoadThreadedGetStatus(entry.Key, entry.Value.FloatStorage);
 
                 if (status == ResourceLoader.ThreadLoadStatus.InProgress)
                 {
@@ -140,36 +108,6 @@ namespace Unary.Core
             {
                 _hadEntries = false;
                 RuntimeLogger.OnLog.PublishQueue();
-            }
-        }
-
-        public void Process(Resource resource)
-        {
-            long id = ResourceLoader.Singleton.GetResourceUid(resource.ResourcePath);
-
-            if (id == ResourceUid.InvalidId)
-            {
-                return;
-            }
-
-            if (!_patches.TryGetValue(id, out var patches))
-            {
-                return;
-            }
-
-            foreach (var patch in patches)
-            {
-                foreach (var property in patch.Properties)
-                {
-                    try
-                    {
-                        resource.Set(property.Key, property.Value);
-                    }
-                    catch (Exception e)
-                    {
-                        this.Error(e.Message);
-                    }
-                }
             }
         }
     }

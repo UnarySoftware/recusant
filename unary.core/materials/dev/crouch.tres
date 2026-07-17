@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" script_class="UnaryStandartMaterial3D" format=3 uid="uid://cfo6xmliltn6w"]
+
+[ext_resource type="Script" uid="uid://brr3vk4vct6hm" path="res://unary.core/sources/resources/UnaryStandartMaterial3D.cs" id="1_foy3g"]
+[ext_resource type="Texture2D" uid="uid://briq7s4tpo0on" path="res://unary.core/materials/dev/crouch.png" id="1_rcyhs"]
+
+[resource]
+albedo_texture = ExtResource("1_rcyhs")
+script = ExtResource("1_foy3g")
+metadata/_custom_type_script = "uid://brr3vk4vct6hm"

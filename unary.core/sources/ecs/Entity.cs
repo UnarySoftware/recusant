@@ -59,7 +59,11 @@ namespace Unary.Core
 
             foreach (var component in _componentCache)
             {
-                component.Initialize();
+                if (!component.Initialized)
+                {
+                    component.Initialized = true;
+                    component.Initialize();
+                }
             }
 
             Release();
@@ -79,6 +83,12 @@ namespace Unary.Core
 
             if (_typeCache.TryGetValue(type, out var entry))
             {
+                if (!entry.Initialized)
+                {
+                    entry.Initialized = true;
+                    entry.Initialize();
+                }
+
                 return (T)entry;
             }
             else
@@ -88,6 +98,13 @@ namespace Unary.Core
                     if (component is T target)
                     {
                         _typeCache[type] = component;
+
+                        if (!target.Initialized)
+                        {
+                            target.Initialized = true;
+                            target.Initialize();
+                        }
+
                         return target;
                     }
                 }

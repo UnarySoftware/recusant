@@ -16,7 +16,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="recusant"
 run/main_scene="uid://24beweal5uma"
-config/features=PackedStringArray("4.6", "C#", "Forward Plus")
+config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 boot_splash/show_image=false
 boot_splash/stretch_mode=0
 boot_splash/use_filter=false
@@ -41,35 +41,18 @@ project/assembly_name="Solution"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godotvmf/plugin.cfg", "res://addons/unary.core.editor/plugin.cfg", "res://addons/unary.recusant.editor/plugin.cfg")
+enabled=PackedStringArray("res://addons/func_godot_csharp/plugin.cfg", "res://addons/unary.core.editor/plugin.cfg", "res://addons/unary.recusant.editor/plugin.cfg")
 
 [file_customization]
 
 folder_colors={
 "res://addons/": "red",
 "res://hammer/": "orange",
-"res://unary.core/": "yellow",
-"res://unary.recusant/": "green",
-"res://unary.testmod1/": "teal"
+"res://trenchbroom/": "yellow",
+"res://unary.core/": "green",
+"res://unary.recusant/": "blue",
+"res://unary.testmod1/": "purple"
 }
-
-[godot_vmf]
-
-materials/ignore=["unary.core/tools/no_draw"]
-import/geometry_folder="res://hammer/geometry"
-import/entity_aliases={
-"brush": "uid://dov7a7jgmgccw",
-"detail": "uid://c23w6hgskshfd",
-"editor": "uid://dm6uv2u6wtt6b",
-"editor_text": "uid://ixbijsjhrlqv",
-"nav_brush": "uid://bm154jrcuaeky",
-"trigger": "uid://by8dj33sr5qf3"
-}
-import/scale=0.0254
-models/target_folder=""
-import/instances_folder=""
-import/entities_folder="res://addons/godotvmf/entities/"
-materials/target_folder="res://hammer/materials"
 
 [layer_names]
 

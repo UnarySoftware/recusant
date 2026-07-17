@@ -36,7 +36,7 @@ namespace Unary.Recusant
 
             LazyResource resource = data.Definition.Texture;
 
-            if (resource != null && resource.TargetValue != string.Empty)
+            if (BaseSelectorResource.IsValid(resource))
             {
                 texture = resource.Load<Texture2D>();
             }

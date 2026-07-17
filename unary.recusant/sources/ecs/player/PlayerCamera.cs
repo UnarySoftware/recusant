@@ -42,8 +42,6 @@ namespace Unary.Recusant
         private Vector3? _savedCameraPosition = null;
         private float _headbobTime = 0.0f;
 
-        private SlotHandle _processSlot;
-
         private PlayerMovement _movement;
 
         public Basis GetWishDir()
@@ -60,12 +58,12 @@ namespace Unary.Recusant
         public void Aquire()
         {
             CameraManager.Singleton.MakeCurrent(PlayerCamera3D, true);
-            _processSlot = Updater.Singleton.Process.Subscribe(this);
+            Updater.Singleton.Process.Subscribe(this);
         }
 
         public void Release()
         {
-            Updater.Singleton.Process.Unsubscribe(_processSlot);
+            Updater.Singleton.Process.Unsubscribe(this);
         }
 
         void IProcess.Process(float delta)

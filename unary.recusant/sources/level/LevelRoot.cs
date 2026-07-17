@@ -44,6 +44,16 @@ namespace Unary.Recusant
             }
         }
 
+        public override void _Notification(int what)
+        {
+            // A scene created from scratch has no path until it gets saved for the first time,
+            // so _Ready is too early to know where our resources belong
+            if (what == NotificationEditorPostSave && Engine.Singleton.IsEditorHint())
+            {
+                CallDeferred(MethodName.InitializeNodes);
+            }
+        }
+
         public override void _ExitTree()
         {
             _drawVisualPaths.OnValueChanged -= OnGizmoChange;
@@ -103,9 +113,39 @@ namespace Unary.Recusant
         [Export]
         public DirectionalLight3D DirectionalLight3D;
 
+        [Export]
+        public WindManager WindManager;
+
         public string GetLevelName()
         {
             return LevelName;
+        }
+
+        public static LevelRoot Find(Node3D node3d)
+        {
+            if (node3d is LevelRoot entryRoot)
+            {
+                return entryRoot;
+            }
+
+            Node parent = node3d.GetParent();
+
+            while (true)
+            {
+                if (parent == null)
+                {
+                    break;
+                }
+                else if (parent is LevelRoot root)
+                {
+                    return root;
+                }
+                parent = parent.GetParent();
+            }
+
+            SharedLogger.Warning(typeof(LevelRoot), $"{nameof(LevelRoot)}.{nameof(Find)} failed to find anything from {node3d.GetPath()}");
+
+            return null;
         }
 
         // Vertex related info

@@ -16,7 +16,7 @@ namespace Unary.Core
 
         private static void TryInitialize()
         {
-            if (_type == Type.None)
+            if (_type != Type.None)
             {
                 return;
             }

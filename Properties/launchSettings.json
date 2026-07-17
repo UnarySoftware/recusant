@@ -2,23 +2,24 @@
   "profiles": {
     "Editor": {
       "commandName": "Executable",
-      "executablePath": "..\\godot\\editor.exe",
+      "executablePath": "..\\windows\\bin\\editor.exe",
       "commandLineArgs": "--editor",
       "workingDirectory": ".",
-      "nativeDebugging": true
+      "debugEngines": "managed,native"
     },
     "Client": {
       "commandName": "Executable",
-      "executablePath": "..\\godot\\editor.exe",
+      "executablePath": "..\\windows\\bin\\editor.exe",
       "commandLineArgs": "--client",
-      "workingDirectory": "."
+      "workingDirectory": ".",
+      "debugEngines": "managed,native"
     },
     "Host": {
       "commandName": "Executable",
-      "executablePath": "..\\godot\\editor.exe",
+      "executablePath": "..\\windows\\bin\\editor.exe",
       "commandLineArgs": "--host",
       "workingDirectory": ".",
-      "nativeDebugging": true
+      "debugEngines": "managed,native"
     }
   }
 }

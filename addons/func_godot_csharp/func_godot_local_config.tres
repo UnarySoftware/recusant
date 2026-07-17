@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="FuncGodotLocalConfig" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://addons/func_godot_csharp/sources/util/FuncGodotLocalConfig.cs" id="1_local_config"]
+
+[resource]
+script = ExtResource("1_local_config")

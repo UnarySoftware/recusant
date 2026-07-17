@@ -1,0 +1,92 @@
+[gd_resource type="Resource" script_class="CursorPackDefinition" format=3 uid="uid://dtaka6xt5moy5"]
+
+[ext_resource type="Script" uid="uid://d182yuar3h6wo" path="res://unary.core/sources/resources/LazyResource.cs" id="1_07k1i"]
+[ext_resource type="Script" uid="uid://px5qjvouukf1" path="res://unary.recusant/sources/resources/CursorPackDefinition.cs" id="1_g1pyb"]
+
+[sub_resource type="Resource" id="Resource_hmcg2"]
+script = ExtResource("1_07k1i")
+TargetValue = "uid://bu72r8u70ihj2"
+metadata/_custom_type_script = "uid://d182yuar3h6wo"
+
+[sub_resource type="Resource" id="Resource_86vxc"]
+script = ExtResource("1_07k1i")
+TargetValue = "uid://dwshktu70nvwi"
+metadata/_custom_type_script = "uid://d182yuar3h6wo"
+
+[sub_resource type="Resource" id="Resource_gtex6"]
+script = ExtResource("1_07k1i")
+TargetValue = "uid://b36n32vxw3f8d"
+metadata/_custom_type_script = "uid://d182yuar3h6wo"
+
+[sub_resource type="Resource" id="Resource_g8qtc"]
+script = ExtResource("1_07k1i")
+TargetValue = "uid://cvphhegkveirw"
+metadata/_custom_type_script = "uid://d182yuar3h6wo"
+
+[sub_resource type="Resource" id="Resource_3y328"]
+script = ExtResource("1_07k1i")
+TargetValue = "uid://dlgpv5yei2wro"
+metadata/_custom_type_script = "uid://d182yuar3h6wo"
+
+[sub_resource type="Resource" id="Resource_2mlno"]
+script = ExtResource("1_07k1i")
+TargetValue = "uid://jsy61ubnhvla"
+metadata/_custom_type_script = "uid://d182yuar3h6wo"
+
+[sub_resource type="Resource" id="Resource_scfot"]
+script = ExtResource("1_07k1i")
+TargetValue = "uid://bnhh7kgea1lss"
+metadata/_custom_type_script = "uid://d182yuar3h6wo"
+
+[sub_resource type="Resource" id="Resource_qgxjh"]
+script = ExtResource("1_07k1i")
+TargetValue = "uid://usq2163vgopb"
+metadata/_custom_type_script = "uid://d182yuar3h6wo"
+
+[sub_resource type="Resource" id="Resource_a1htj"]
+script = ExtResource("1_07k1i")
+TargetValue = "uid://c7gofwq0j6cj1"
+metadata/_custom_type_script = "uid://d182yuar3h6wo"
+
+[sub_resource type="Resource" id="Resource_c2fmk"]
+script = ExtResource("1_07k1i")
+TargetValue = "uid://cdi6hv617dgu7"
+metadata/_custom_type_script = "uid://d182yuar3h6wo"
+
+[sub_resource type="Resource" id="Resource_t4l5m"]
+script = ExtResource("1_07k1i")
+TargetValue = "uid://tokjh2sl7qt2"
+metadata/_custom_type_script = "uid://d182yuar3h6wo"
+
+[sub_resource type="Resource" id="Resource_ap1gw"]
+script = ExtResource("1_07k1i")
+TargetValue = "uid://qb6dd5o5rlbg"
+metadata/_custom_type_script = "uid://d182yuar3h6wo"
+
+[sub_resource type="Resource" id="Resource_y2tsq"]
+script = ExtResource("1_07k1i")
+TargetValue = "uid://bgmt6gcif0oc5"
+metadata/_custom_type_script = "uid://d182yuar3h6wo"
+
+[sub_resource type="Resource" id="Resource_ewqug"]
+script = ExtResource("1_07k1i")
+TargetValue = "uid://c2kxr150cgb4i"
+metadata/_custom_type_script = "uid://d182yuar3h6wo"
+
+[resource]
+script = ExtResource("1_g1pyb")
+ArrowTexture = SubResource("Resource_hmcg2")
+IBeamTexture = SubResource("Resource_t4l5m")
+PointingHandTexture = SubResource("Resource_ap1gw")
+CrossTexture = SubResource("Resource_3y328")
+WaitTexture = SubResource("Resource_ewqug")
+BusyTexture = SubResource("Resource_gtex6")
+DragTexture = SubResource("Resource_2mlno")
+CanDropTexture = SubResource("Resource_g8qtc")
+ForbiddenTexture = SubResource("Resource_qgxjh")
+VSizeTexture = SubResource("Resource_y2tsq")
+HSizeTexture = SubResource("Resource_a1htj")
+BDiagSizeTexture = SubResource("Resource_86vxc")
+FDiagSizeTexture = SubResource("Resource_scfot")
+HelpTexture = SubResource("Resource_c2fmk")
+metadata/_custom_type_script = "uid://px5qjvouukf1"

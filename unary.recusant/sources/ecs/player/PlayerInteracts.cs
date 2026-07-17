@@ -24,18 +24,16 @@ namespace Unary.Recusant
 
         public static PlayerInteracts Instance { get; private set; }
 
-        private SlotHandle _processSlot;
-
         void IPoolable.Aquire()
         {
             Instance = this;
-            _processSlot = Updater.Singleton.Process.Subscribe(this);
+            Updater.Singleton.Process.Subscribe(this);
         }
 
         void IPoolable.Release()
         {
             Instance = null;
-            Updater.Singleton.PhysicsProcess.Unsubscribe(_processSlot);
+            Updater.Singleton.PhysicsProcess.Unsubscribe(this);
         }
 
         public void Process(float delta)

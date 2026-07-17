@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://ycwc66hgjgi6"]
+
+[ext_resource type="Shader" uid="uid://bl5tta8nk5vgj" path="res://unary.recusant/shaders/spatial/rope_shader.gdshader" id="1_t6xdx"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_t6xdx")
+shader_parameter/albedo_color = Color(0, 0, 0, 1)
+shader_parameter/roughness = 0.0
+shader_parameter/metallic = 0.0
+shader_parameter/sag_amount = 0.98
+shader_parameter/global_wind_dir = Vector3(1, 0, 0)
+shader_parameter/global_wind_speed = 1.2
+shader_parameter/global_wind_strength = 0.3
+shader_parameter/global_wind_amplitude = 0.0
+shader_parameter/global_wind_frequency = 0.01

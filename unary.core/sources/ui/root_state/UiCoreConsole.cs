@@ -183,7 +183,7 @@ namespace Unary.Core
 
         public override void Initialize()
         {
-            _data = (UiCoreConsoleData)Resources.Singleton.LoadPatched("res://unary.core/ui/console_data.tres", nameof(UiCoreConsoleData));
+            _data = (UiCoreConsoleData)ResourceLoader.Singleton.Load("res://unary.core/ui/console_data.tres", nameof(UiCoreConsoleData));
             _warnVoice = new()
             {
                 Stream = _data.Warning,

@@ -21,7 +21,7 @@ namespace Unary.Recusant
 
         private void CreateResources(string targetDirectory)
         {
-            Node owner = GetTree().EditedSceneRoot;
+            Node owner = Owner ?? this;
 
             LightmapGIData lightmapData = CreateResource<LightmapGIData>(targetDirectory + "/lightmap.lmbake", new());
 
@@ -75,17 +75,26 @@ namespace Unary.Recusant
 
             AddChild(light);
             light.Owner = owner;
+            DirectionalLight3D = light;
 
             WorldEnvironment environment = new()
             {
+                Name = nameof(WorldEnvironment),
                 Environment = new()
             };
 
             AddChild(environment);
             environment.Owner = owner;
-
             WorldEnvironment = environment;
-            DirectionalLight3D = light;
+
+            WindManager windManager = new()
+            {
+                Name = nameof(WindManager)
+            };
+
+            AddChild(windManager);
+            windManager.Owner = owner;
+            WindManager = windManager;
 
             EditorInterface.Singleton.MarkSceneAsUnsaved();
         }
@@ -109,7 +118,6 @@ namespace Unary.Recusant
 
             if (string.IsNullOrEmpty(targetPath))
             {
-                this.Critical("Failed to aquire path of the current scene");
                 return;
             }
 

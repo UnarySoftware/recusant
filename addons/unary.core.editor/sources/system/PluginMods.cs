@@ -1,6 +1,7 @@
 #if TOOLS
 
 using Godot;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -12,7 +13,7 @@ namespace Unary.Core.Editor
         [EditorSettingAction(description: "This prints all of the currently selected mods")]
         private static void PrintModsList()
         {
-            List<ModManifest> mods = EnabledModsList;
+            List<ModManifest> mods = Singleton.EnabledModsList;
 
             foreach (var mod in mods)
             {
@@ -52,9 +53,9 @@ namespace Unary.Core.Editor
             }
         };
 
-        public static List<ModManifest> AllModsList { get; private set; } = [];
+        public List<ModManifest> AllModsList { get; private set; } = [];
 
-        public static List<ModManifest> EnabledModsList
+        public List<ModManifest> EnabledModsList
         {
             get
             {
@@ -81,9 +82,9 @@ namespace Unary.Core.Editor
             }
         }
 
-        public static Dictionary<string, ModManifest> AllModsDictionary { get; private set; } = [];
+        public Dictionary<string, ModManifest> AllModsDictionary { get; private set; } = [];
 
-        public static Dictionary<string, ModManifest> EnabledModsDictionary
+        public Dictionary<string, ModManifest> EnabledModsDictionary
         {
             get
             {
@@ -100,7 +101,7 @@ namespace Unary.Core.Editor
             }
         }
 
-        private static (uint, string) RemapFields(uint previousValue, string previousInput, List<string> currentInput)
+        private (uint, string) RemapFields(uint previousValue, string previousInput, List<string> currentInput)
         {
             string hintString = string.Empty;
             int counter = 1;
@@ -177,25 +178,27 @@ namespace Unary.Core.Editor
 
             bool listChanged = false;
 
+            PluginMods me = PluginMods.Singleton;
+
             foreach (var newManifest in newManifests)
             {
-                if (!AllModsDictionary.TryGetValue(newManifest.ModId, out var value))
+                if (!me.AllModsDictionary.TryGetValue(newManifest.ModId, out var value))
                 {
                     // This is a new manifest
-                    AllModsList.Add(newManifest);
-                    AllModsDictionary.Add(newManifest.ModId, newManifest);
+                    me.AllModsList.Add(newManifest);
+                    me.AllModsDictionary.Add(newManifest.ModId, newManifest);
                     listChanged = true;
                 }
             }
 
             List<string> removeList = [];
 
-            foreach (var oldManifest in AllModsDictionary)
+            foreach (var oldManifest in me.AllModsDictionary)
             {
                 if (!newManifests.Contains(oldManifest.Value))
                 {
                     // This manifest is present in the list but is missing on reparse - its gone now
-                    AllModsList.Remove(oldManifest.Value);
+                    me.AllModsList.Remove(oldManifest.Value);
                     removeList.Add(oldManifest.Key);
                     listChanged = true;
                 }
@@ -203,7 +206,7 @@ namespace Unary.Core.Editor
 
             foreach (var entry in removeList)
             {
-                AllModsDictionary.Remove(entry);
+                me.AllModsDictionary.Remove(entry);
             }
 
             if (!listChanged)
@@ -211,18 +214,18 @@ namespace Unary.Core.Editor
                 return;
             }
 
-            AllModsList.Sort((x, y) => x.ModId.CompareTo(y.ModId));
+            me.AllModsList.Sort((x, y) => x.ModId.CompareTo(y.ModId));
 
             List<string> _currentMods = ["Everything"];
 
-            foreach (var mod in AllModsList)
+            foreach (var mod in me.AllModsList)
             {
                 _currentMods.Add(mod.ModId);
             }
 
             uint previousValue = _selectedMods.GetField().As<uint>();
 
-            (var newValue, var newString) = RemapFields(previousValue, _selectedMods.HintText, _currentMods);
+            (var newValue, var newString) = me.RemapFields(previousValue, _selectedMods.HintText, _currentMods);
 
             if (_selectedMods.HintText == newString)
             {
@@ -232,7 +235,11 @@ namespace Unary.Core.Editor
             _selectedMods.SetField(newValue);
             _selectedMods.HintText = newString;
             PluginDock.Singleton.UpdateInspector(_selectedMods);
+
+            Singleton.OnRefresh?.Invoke();
         }
+
+        public Action OnRefresh;
 
         bool ISystem.PostInitialize()
         {

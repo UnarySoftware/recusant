@@ -13,6 +13,9 @@ namespace Unary.Core
         public float Volume = 50.0f;
 
         [Export]
-        public AudioBusDeclaration Parent;
+        public LazyResource Parent
+        {
+            get => field; set => field = this.Filter(value, typeof(AudioBusDeclaration));
+        }
     }
 }

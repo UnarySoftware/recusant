@@ -14,20 +14,7 @@ namespace Unary.Core
                     return field;
                 }
 
-                PackedScene scene;
-
-#if TOOLS
-                if (Engine.Singleton.IsEditorHint())
-                {
-                    scene = (PackedScene)ResourceLoader.Singleton.Load(TargetValue);
-                }
-                else
-                {
-                    scene = (PackedScene)Resources.Singleton.LoadPatched(TargetValue);
-                }
-#else
-                scene = (PackedScene)Resources.Singleton.LoadPatched(TargetValue);
-#endif
+                PackedScene scene = (PackedScene)ResourceLoader.Singleton.Load(TargetValue);
 
                 Node result = scene.Instantiate();
 
@@ -65,20 +52,7 @@ namespace Unary.Core
 
         public T LoadWithoutCache()
         {
-            PackedScene scene;
-
-#if TOOLS
-            if (Engine.Singleton.IsEditorHint())
-            {
-                scene = (PackedScene)ResourceLoader.Singleton.Load(TargetValue);
-            }
-            else
-            {
-                scene = (PackedScene)Resources.Singleton.LoadPatched(TargetValue);
-            }
-#else
-            scene = (PackedScene)Resources.Singleton.LoadPatched(TargetValue);
-#endif
+            PackedScene scene = (PackedScene)ResourceLoader.Singleton.Load(TargetValue);
 
             Node result = scene.Instantiate();
 

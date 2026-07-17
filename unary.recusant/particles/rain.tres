@@ -2,7 +2,7 @@
 
 [resource]
 lifetime_randomness = 0.13
-emission_shape_scale = Vector3(9, 1, 7.53)
+emission_shape_scale = Vector3(3, 1, 7.5)
 emission_shape = 3
 emission_box_extents = Vector3(1, 1, 1)
 direction = Vector3(0, -1, 0)

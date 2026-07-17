@@ -7,11 +7,32 @@ namespace Unary.Core
 {
     public partial class StorageManager : Node, ICoreSystem
     {
+        // !!! DISCLAIMER !!!
+        // Hardware fingerprinting is used exclusively for stuff like bound graphics settings per specific hardware configuration.
+        // !!! DISCLAIMER !!!
+
         public byte[] FingerprintBytes { get; private set; }
         public string FingerprintString { get; private set; }
 
-        public const string Folder = "storage";
+        // !!! DISCLAIMER !!!
+        // Unique Id is used exclusively as a "safe to pass over the internet" unique identity token that gets consumed per-use and yet 
+		// could NOT be traced back to the original holder directly while still being able to target them for things like developer gifted rewards.
+        // !!! DISCLAIMER !!!
 
+        public Guid UniqueId { get; private set; }
+        public string UniqueIdString { get; private set; }
+        // Set this to true after unique id could not be considered as consumed
+        public bool UniqueIdConsumed { get; set; } = false;
+
+        public const string Folder = "storage";
+        public static string IdPath { get; } = Folder + '/' + nameof(StorageManager) + ".id";
+
+        private void RerollUniqueId()
+        {
+            File.WriteAllText(IdPath, Guid.CreateVersion7().ToString());
+        }
+
+        [InitializeExplicit(typeof(ModLoader))]
         bool ISystem.Initialize()
         {
             FingerprintBytes = Engine.Singleton.SpecsHash();
@@ -20,7 +41,22 @@ namespace Unary.Core
             if (!Directory.Exists(Folder))
             {
                 Directory.CreateDirectory(Folder);
+                File.Create(Folder + "/.gdignore");
             }
+
+            if (!File.Exists(IdPath))
+            {
+                RerollUniqueId();
+            }
+
+            UniqueIdString = File.ReadAllText(IdPath);
+
+            if (!Guid.TryParse(UniqueIdString, out Guid id))
+            {
+                return this.Critical($"Failed parsing Guid \"{UniqueIdString}\" from file " + IdPath);
+            }
+
+            UniqueId = id;
 
             foreach (var mod in ModLoader.Singleton.EnabledMods)
             {
@@ -33,6 +69,14 @@ namespace Unary.Core
             }
 
             return true;
+        }
+
+        void ISystem.Deinitialize()
+        {
+            if (UniqueIdConsumed)
+            {
+                RerollUniqueId();
+            }
         }
 
         private static string TouchFolder(string modId, string type)
@@ -170,11 +214,6 @@ namespace Unary.Core
         public void WriteEntryBytesLocal(string modId, string entry, byte[] bytes)
         {
             WriteEntryBytes(modId, FingerprintString, entry, bytes);
-        }
-
-        void ISystem.Deinitialize()
-        {
-
         }
     }
 }

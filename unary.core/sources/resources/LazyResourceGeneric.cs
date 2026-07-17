@@ -14,20 +14,7 @@ namespace Unary.Core
                     return field;
                 }
 
-                Resource resource;
-
-#if TOOLS
-                if (Engine.Singleton.IsEditorHint())
-                {
-                    resource = (T)ResourceLoader.Singleton.Load(TargetValue);
-                }
-                else
-                {
-                    resource = (T)Resources.Singleton.LoadPatched(TargetValue);
-                }
-#else
-                resource = (T)Resources.Singleton.LoadPatched(TargetValue);
-#endif
+                Resource resource = (T)ResourceLoader.Singleton.Load(TargetValue);
 
                 if (Processor != null)
                 {
@@ -72,20 +59,7 @@ namespace Unary.Core
 
         public T LoadWithoutCache()
         {
-            Resource resource;
-
-#if TOOLS
-            if (Engine.Singleton.IsEditorHint())
-            {
-                resource = ResourceLoader.Singleton.Load(TargetValue);
-            }
-            else
-            {
-                resource = Resources.Singleton.LoadPatched(TargetValue);
-            }
-#else
-            resource = Resources.Singleton.LoadPatched(TargetValue);
-#endif
+            Resource resource = ResourceLoader.Singleton.Load(TargetValue);
 
             if (Processor != null)
             {

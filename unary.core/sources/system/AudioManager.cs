@@ -13,9 +13,11 @@ namespace Unary.Core
         public Dictionary<string, int> Buses { get; private set; } = [];
         private readonly Dictionary<string, Dictionary<string, int>> _modIdToBusData = [];
 
+        private List<AudioBusDeclaration> _buses = [];
+
         bool ISystem.Initialize()
         {
-            List<AudioBusDeclaration> buses = ResourceTypesManager.Singleton.LoadResources<AudioBusDeclaration>();
+            _buses = ResourceTypesManager.Singleton.LoadResources<AudioBusDeclaration>();
 
             var server = AudioServer.Singleton;
 
@@ -24,18 +26,25 @@ namespace Unary.Core
 
             int index = 1;
 
-            foreach (var bus in buses)
+            foreach (var bus in _buses)
             {
                 server.AddBus(index);
                 server.SetBusName(index, bus.Name);
 
-                if (bus.Parent == null || string.IsNullOrEmpty(bus.Parent.Name))
+                AudioBusDeclaration parent = null;
+
+                if (bus.Parent != null)
+                {
+                    parent = bus.Parent.Load<AudioBusDeclaration>();
+                }
+
+                if (parent == null || string.IsNullOrEmpty(parent.Name))
                 {
                     server.SetBusSend(index, MasterBusName);
                 }
                 else
                 {
-                    server.SetBusSend(index, bus.Parent.Name);
+                    server.SetBusSend(index, parent.Name);
                 }
 
                 server.SetBusVolumeLinear(index, bus.Volume / 100.0f);

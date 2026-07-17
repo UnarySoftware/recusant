@@ -7,55 +7,7 @@ namespace Unary.Core
     [GlobalClass, Icon("res://addons/unary.core.editor/icons/Component.svg")]
     public partial class BrushEntityComponent : Component
     {
-        private string _brushName = string.Empty;
-
-        [Export]
-        public string BrushName
-        {
-            get
-            {
-                return _brushName;
-            }
-            set
-            {
-                _brushName = value;
-#if TOOLS
-                if (Engine.Singleton.IsEditorHint())
-                {
-                    CallDeferred(MethodName.UpdateGroups);
-                }
-#endif
-            }
-        }
-
-#if TOOLS
-        public override void _Ready()
-        {
-            if (Engine.Singleton.IsEditorHint())
-            {
-                CallDeferred(MethodName.UpdateGroups);
-            }
-        }
-
-        private const string prefixString = "vmf:";
-
-        private void UpdateGroups()
-        {
-            var groups = GetGroups();
-
-            foreach (var group in groups)
-            {
-                RemoveFromGroup(group);
-            }
-
-            if (string.IsNullOrEmpty(_brushName) || string.IsNullOrWhiteSpace(_brushName))
-            {
-                return;
-            }
-
-            AddToGroup(prefixString + _brushName, true);
-        }
-#endif
+        public string BrushName = string.Empty;
 
         private readonly List<BrushEntity> _brushes = [];
         private bool _initialized = false;
@@ -69,14 +21,8 @@ namespace Unary.Core
 
             _initialized = true;
 
-            var groups = GetGroups();
-
-            if (groups.Count == 0)
-            {
-                return;
-            }
-
-            var nodes = GetTree().GetNodesInGroup(groups[0]);
+            // Move the group logic handling to 
+            var nodes = GetTree().GetNodesInGroup(BrushName);
 
             foreach (var node in nodes)
             {

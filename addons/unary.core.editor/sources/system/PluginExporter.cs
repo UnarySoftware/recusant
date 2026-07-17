@@ -9,8 +9,8 @@ namespace Unary.Core.Editor
     [Tool]
     public partial class ProjectExporter : IPluginSystem
     {
-        private const string _editor_path = "../godot/editor.exe";
-        private const string _build_logs = "../godot/editor_data/mono/build_logs";
+        private const string _editor_path = "../bin/editor.exe";
+        private const string _build_logs = "../bin/editor_data/mono/build_logs";
         private const string _msbuild_issues = "msbuild_issues.csv";
 
         private const string _debug_preset = "Debug";

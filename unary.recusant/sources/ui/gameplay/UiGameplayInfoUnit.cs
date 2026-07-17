@@ -20,8 +20,10 @@ namespace Unary.Recusant
         {
             if (PlayerMovement.Instance != null)
             {
-                _label1.Text = PlayerMovement.Instance.Body.Velocity.Length().ToString("0.0 m/s");
-                _label2.Text = PlayerHealth.Instance.Damage + " dmg";
+                _label1.Text = "Body Vel: " + PlayerMovement.Instance.Body.Velocity.Length().ToString("0.0 m/s") +
+                    " Move Vel: " + PlayerUnstucker.Instance.ActualVelocity.ToString("0.0 m/s") +
+                    " Coeff: " + PlayerUnstucker.Instance.Coeff.ToString("0.0") + " Air: " + PlayerUnstucker.Instance.IsAirborn;
+                _label2.Text = PlayerHealth.Instance.Health + " HP";
 
                 if (PlayerFlow.Instance != null)
                 {

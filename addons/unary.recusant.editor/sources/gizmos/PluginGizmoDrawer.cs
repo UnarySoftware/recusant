@@ -110,7 +110,6 @@ namespace Unary.Recusant.Editor
 
         void ISystem.Deinitialize()
         {
-            _colorToMaterial.Clear();
             PluginBootstrap.Singleton.RemoveNode3DGizmoPlugin(this);
         }
 

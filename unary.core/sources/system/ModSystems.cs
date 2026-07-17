@@ -12,7 +12,6 @@ namespace Unary.Core
             return (T)_systems.GetSystem(typeof(T));
         }
 
-        [InitializeExplicit(typeof(ContentSwapper))]
         bool ISystem.Initialize()
         {
             HashSet<string> enabledNamespaces = [];

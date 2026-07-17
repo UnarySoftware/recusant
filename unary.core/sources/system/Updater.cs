@@ -34,18 +34,50 @@ namespace Unary.Core
     public interface IUpdateInvoker<T> where T : class
     {
         static abstract void Invoke(T target, float delta);
+        static abstract void PassHandle(Component component, SlotHandle handle);
+        static abstract SlotHandle FetchHandle(Component component);
     }
 
     public struct ProcessInvoker : IUpdateInvoker<IProcess>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Invoke(IProcess target, float delta) => target.Process(delta);
+        public static void Invoke(IProcess target, float delta)
+        {
+            target.Process(delta);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void PassHandle(Component component, SlotHandle handle)
+        {
+            component.ProcessSlotHandle = handle;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SlotHandle FetchHandle(Component component)
+        {
+            return component.ProcessSlotHandle;
+        }
     }
 
     public struct PhysicsProcessInvoker : IUpdateInvoker<IPhysicsProcess>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Invoke(IPhysicsProcess target, float delta) => target.PhysicsProcess(delta);
+        public static void Invoke(IPhysicsProcess target, float delta)
+        {
+            target.PhysicsProcess(delta);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void PassHandle(Component component, SlotHandle handle)
+        {
+            component.PhysicsProcessSlotHandle = handle;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SlotHandle FetchHandle(Component component)
+        {
+            return component.PhysicsProcessSlotHandle;
+        }
     }
 
     public sealed class DelayedUnit(float delay)
@@ -307,9 +339,27 @@ namespace Unary.Core
             }
         }
 
-        public SlotHandle Subscribe(TSubscriber subscriber) => _subscribers.Add(subscriber);
+        public SlotHandle Subscribe(TSubscriber subscriber)
+        {
+            SlotHandle result = _subscribers.Add(subscriber);
 
-        public void Unsubscribe(SlotHandle slotId) => _subscribers.Remove(slotId);
+            if (subscriber is Component component)
+            {
+                TInvoker.PassHandle(component, result);
+            }
+
+            return result;
+        }
+
+        public void Unsubscribe(Component component)
+        {
+            Unsubscribe(TInvoker.FetchHandle(component));
+        }
+
+        public void Unsubscribe(SlotHandle slotId)
+        {
+            _subscribers.Remove(slotId);
+        }
 
         public UpdaterHandle SubscribeDelayed(float delay, Action<float> action)
         {
