@@ -7,6 +7,7 @@ namespace Unary.Recusant
 {
     public partial class ENetTransport : BaseTransport
     {
+        /*
         private ENetConnection _connection = new();
         private ENetPacketPeer _host;
 
@@ -164,5 +165,6 @@ namespace Unary.Recusant
                 this.Error($"Failed to send a packet of type \"{type}\" to the host for a reason \"{error}\"");
             }
         }
+        */
     }
 }

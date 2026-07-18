@@ -430,7 +430,6 @@ namespace FuncGodot
         {
             return script switch
             {
-                GDScript gdScript => gdScript.New().AsGodotObject(),
                 CSharpScript cSharpScript => cSharpScript.New().AsGodotObject(),
                 _ => null,
             };

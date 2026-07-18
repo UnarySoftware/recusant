@@ -74,8 +74,19 @@ namespace Unary.Core.Analyzers
             var namespaceName = GetNamespace(classDeclaration);
             var className = classDeclaration.Identifier.Text;
 
+            var primaryDeclaration = classSymbol.DeclaringSyntaxReferences.FirstOrDefault();
+
+            if (primaryDeclaration != null &&
+                (primaryDeclaration.SyntaxTree != classDeclaration.SyntaxTree ||
+                primaryDeclaration.Span != classDeclaration.Span))
+            {
+                return;
+            }
+
+            var hintName = string.IsNullOrEmpty(namespaceName) ? className : $"{namespaceName}.{className}";
+
             var sourceText = GenerateWrapperClass(namespaceName, className, singletonPath);
-            context.AddSource($"{className}.g.cs", SourceText.From(sourceText, System.Text.Encoding.UTF8));
+            context.AddSource($"{hintName}.g.cs", SourceText.From(sourceText, System.Text.Encoding.UTF8));
         }
 
         private string GenerateWrapperClass(string namespaceName, string className, string providerName)

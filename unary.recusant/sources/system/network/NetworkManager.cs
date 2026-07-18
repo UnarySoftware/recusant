@@ -34,16 +34,17 @@ namespace Unary.Recusant
 
             if (Launcher.Singleton.HasArgument("host"))
             {
-                StartHost();
+                //StartHost();
             }
             else if (Launcher.Singleton.HasArgument("client"))
             {
-                StartClient();
+                //StartClient();
             }
 
             return true;
         }
 
+        /*
         public void StartHost()
         {
             this.Log("Starting as host");
@@ -70,5 +71,6 @@ namespace Unary.Recusant
         {
             _transport.SendToHost(data, type);
         }
+        */
     }
 }

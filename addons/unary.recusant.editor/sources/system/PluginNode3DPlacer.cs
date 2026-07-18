@@ -171,15 +171,15 @@ namespace Unary.Recusant.Editor
                 {
                     PhysicsRayQueryParameters3D query = PhysicsRayQueryParameters3D.Create(from, to);
 
-                    var result = state.IntersectRay(query);
+                    PhysicsRayQueryResult3D result = state.IntersectRay(query);
 
-                    if (result.Count == 0)
+                    if (result == null)
                     {
                         position = from + dir * 10.0f;
                     }
                     else
                     {
-                        position = result["position"].AsVector3();
+                        position = result.GetPosition();
                     }
                 }
                 else

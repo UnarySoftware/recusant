@@ -8,5 +8,15 @@ namespace Unary.Core
         {
             return (source.Namespace ?? "").Replace(".Editor", "").Trim('_');
         }
+
+        public static bool IsEditorType(this Type source)
+        {
+            if (string.IsNullOrEmpty(source.Namespace))
+            {
+                return false;
+            }
+
+            return source.Namespace.ToLower().EndsWith(".editor");
+        }
     }
 }

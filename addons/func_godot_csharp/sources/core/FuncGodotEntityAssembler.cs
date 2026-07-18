@@ -177,7 +177,6 @@ namespace FuncGodot
 
             return script switch
             {
-                GDScript gdScript => gdScript.New().As<Node>(),
                 CSharpScript cSharpScript => cSharpScript.New().As<Node>(),
                 _ => null,
             };
