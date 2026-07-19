@@ -41,7 +41,7 @@ project/assembly_name="Solution"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/func_godot_csharp/plugin.cfg", "res://addons/unary.core.editor/plugin.cfg", "res://addons/unary.recusant.editor/plugin.cfg")
+enabled=PackedStringArray("res://addons/unary.core.editor/plugin.cfg", "res://addons/unary.recusant.editor/plugin.cfg")
 
 [file_customization]
 

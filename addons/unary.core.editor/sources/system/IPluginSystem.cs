@@ -1,5 +1,7 @@
 #if TOOLS
 
+using Godot;
+
 namespace Unary.Core.Editor
 {
     [SingletonProvider("Unary.Core.Editor.PluginBootstrap.Singleton.GetSystem")]
@@ -21,6 +23,12 @@ namespace Unary.Core.Editor
             return true;
         }
         */
+
+        public bool Handles(GodotObject target)
+        {
+            return false;
+        }
+
         public bool PreExport()
         {
             return true;

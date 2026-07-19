@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="FuncGodotFGDSolidClass" load_steps=2 format=3 uid="uid://fep2qn6ndleg"]
+[gd_resource type="Resource" script_class="FuncGodotFGDSolidClass" format=3 uid="uid://fep2qn6ndleg"]
 
-[ext_resource type="Script" uid="uid://bcr4rfvtktu7y" path="res://addons/func_godot_csharp/sources/fgd/FuncGodotFGDSolidClass.cs" id="3_8gdby"]
+[ext_resource type="Script" uid="uid://bx5076tvgjwkk" path="res://addons/unary.core.editor/sources/func_godot/fgd/FuncGodotFGDBaseClass.cs" id="1_vxcdg"]
+[ext_resource type="Script" uid="uid://bcr4rfvtktu7y" path="res://addons/unary.core.editor/sources/func_godot/fgd/FuncGodotFGDSolidClass.cs" id="3_8gdby"]
 
 [resource]
 script = ExtResource("3_8gdby")
@@ -11,6 +12,7 @@ CollisionShapeType = 2
 CollisionMask = 0
 Classname = "worldspawn"
 Description = "Default static world geometry. Builds a StaticBody3D with a single MeshInstance3D and a single convex CollisionShape3D shape."
+BaseClasses = Array[ExtResource("1_vxcdg")]([])
 MetaProperties = Dictionary[String, Variant]({
 "color": Color(0.8, 0.8, 0.8, 1)
 })

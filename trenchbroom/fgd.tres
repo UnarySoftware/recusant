@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="FuncGodotFGDFile" format=3 uid="uid://cl0216dhhhrhc"]
+
+[ext_resource type="Script" uid="uid://bwjs5cw6vakti" path="res://addons/unary.core.editor/sources/func_godot/fgd/FuncGodotFGDEntityClass.cs" id="2_sqfvc"]
+[ext_resource type="Resource" uid="uid://fep2qn6ndleg" path="res://trenchbroom/fgd/worldspawn.tres" id="8_dlafm"]
+[ext_resource type="Script" uid="uid://c02y6y224uyyj" path="res://addons/unary.core.editor/sources/func_godot/fgd/FuncGodotFGDFile.cs" id="9_50n7g"]
+
+[resource]
+script = ExtResource("9_50n7g")
+FgdName = "Recusant"
+BaseFgdFiles = Array[ExtResource("9_50n7g")]([])
+EntityDefinitions = Array[ExtResource("2_sqfvc")]([ExtResource("8_dlafm")])
+GenerateModelPointClassModels = false
