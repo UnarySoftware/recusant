@@ -31,6 +31,7 @@ namespace Unary.Core.Analyzers
 
             _generators.Clear();
             _generators.Add(new SingletonGenerator());
+            _generators.Add(new FgdPropertyGenerator());
 
             generatorContext.RegisterSourceOutput(compilationAndClasses, (context, source) =>
             {

@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="FuncGodotConfig" format=3 uid="uid://dxva3okr6m20w"]
+
+[ext_resource type="Script" uid="uid://fnjf1f4slg1a" path="res://addons/unary.core.editor/sources/func_godot/trenchbroom/TrenchBroomTag.cs" id="1_7ym5m"]
+[ext_resource type="Script" uid="uid://ba146g34xyudn" path="res://addons/unary.core.editor/sources/func_godot/util/FuncGodotConfig.cs" id="1_config"]
+[ext_resource type="Resource" uid="uid://kca3bj68bh4l" path="res://func_godot/map_settings.tres" id="2_mapsettings"]
+[ext_resource type="Resource" uid="uid://cl0216dhhhrhc" path="res://func_godot/fgd/fgd.tres" id="3_fgd"]
+[ext_resource type="Texture2D" uid="uid://bieiptgow81jw" path="res://icon.png" id="4_icon"]
+
+[sub_resource type="Resource" id="Resource_e6pn0"]
+script = ExtResource("1_7ym5m")
+TagName = "Clip"
+TextureName = "clip"
+metadata/_custom_type_script = "uid://fnjf1f4slg1a"
+
+[sub_resource type="Resource" id="Resource_wm8kq"]
+script = ExtResource("1_7ym5m")
+TagName = "NpcClip"
+TextureName = "npc_clip"
+metadata/_custom_type_script = "uid://fnjf1f4slg1a"
+
+[sub_resource type="Resource" id="Resource_ig8f6"]
+script = ExtResource("1_7ym5m")
+TagName = "PlayerClip"
+TextureName = "player_clip"
+metadata/_custom_type_script = "uid://fnjf1f4slg1a"
+
+[sub_resource type="Resource" id="Resource_6plwk"]
+script = ExtResource("1_7ym5m")
+TagName = "Trigger"
+TextureName = "trigger"
+metadata/_custom_type_script = "uid://fnjf1f4slg1a"
+
+[resource]
+script = ExtResource("1_config")
+Icon = ExtResource("4_icon")
+DefaultMapSettings = ExtResource("2_mapsettings")
+FgdFile = ExtResource("3_fgd")
+BrushFaceTags = Array[ExtResource("1_7ym5m")]([SubResource("Resource_e6pn0"), SubResource("Resource_wm8kq"), SubResource("Resource_ig8f6"), SubResource("Resource_6plwk")])

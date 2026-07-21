@@ -9,6 +9,10 @@ namespace Unary.Recusant
     [SceneAncor]
     public partial class LevelRoot : Node3D, IGizmo
     {
+#if !TOOLS
+        public static LevelRoot Instance = null;
+#endif
+
         public static StringName LevelRootGroup { get; } = new(nameof(LevelRoot));
 
 #if TOOLS
@@ -35,6 +39,10 @@ namespace Unary.Recusant
 
         public override void _Ready()
         {
+#if !TOOLS
+            Instance = this;
+#endif
+
             _drawVisualPaths.OnValueChanged += OnGizmoChange;
             _drawBounds.OnValueChanged += OnGizmoChange;
 
@@ -58,6 +66,10 @@ namespace Unary.Recusant
         {
             _drawVisualPaths.OnValueChanged -= OnGizmoChange;
             _drawBounds.OnValueChanged -= OnGizmoChange;
+
+#if !TOOLS
+            Instance = null;
+#endif
         }
 
         [Export(PropertyHint.Range, "0.01f,1.0f,0.000001f")]
@@ -123,12 +135,20 @@ namespace Unary.Recusant
 
         public static LevelRoot Find(Node3D node3d)
         {
+#if !TOOLS
+            if(Instance != null)
+            {
+                return Instance;
+            }
+#endif
+
             if (node3d is LevelRoot entryRoot)
             {
                 return entryRoot;
             }
 
             Node parent = node3d.GetParent();
+            LevelRoot result = null;
 
             while (true)
             {
@@ -138,14 +158,23 @@ namespace Unary.Recusant
                 }
                 else if (parent is LevelRoot root)
                 {
-                    return root;
+                    result = root;
+                    break;
                 }
                 parent = parent.GetParent();
             }
 
-            SharedLogger.Warning(typeof(LevelRoot), $"{nameof(LevelRoot)}.{nameof(Find)} failed to find anything from {node3d.GetPath()}");
+            if (result == null)
+            {
+                SharedLogger.Warning(typeof(LevelRoot), $"{nameof(LevelRoot)}.{nameof(Find)} failed to find anything from {node3d.GetPath()}");
+                return null;
+            }
 
-            return null;
+#if !TOOLS
+            Instance = result;
+#endif
+
+            return result;
         }
 
         // Vertex related info

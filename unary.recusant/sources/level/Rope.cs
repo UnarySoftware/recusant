@@ -80,6 +80,8 @@ namespace Unary.Recusant
         UpdaterHandle _moveUpdate;
         UpdaterHandle _windUpdate;
 
+        private WindManager _manager;
+
         public override void _Ready()
         {
             _mesh = new ArrayMesh();
@@ -88,7 +90,8 @@ namespace Unary.Recusant
             RegenerateMesh();
             _initialized = true;
 
-            WindManager.Instance?.AddRope(this);
+            _manager = LevelRoot.Find(this).WindManager;
+            _manager.AddRope(this);
 
 #if TOOLS
             if (!Engine.Singleton.IsEditorHint())
@@ -109,7 +112,7 @@ namespace Unary.Recusant
             }
 #endif
 
-            WindManager.Instance?.RemoveRope(this);
+            _manager.RemoveRope(this);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -213,14 +216,14 @@ namespace Unary.Recusant
         private void WindUpdate(float delta)
         {
 #if TOOLS
-            if (WindManager.Instance == null)
+            if (_manager == null)
             {
                 this.Error($"WindManager was null");
                 return;
             }
 #endif
 
-            IReadOnlyList<WindSource> windSources = WindManager.Instance.GetWindSources();
+            IReadOnlyList<WindSource> windSources = _manager.GetWindSources();
 
             WindSource picked = null;
             float strength = 0.0f;

@@ -6,7 +6,7 @@
 [ext_resource type="NavigationMesh" uid="uid://drxfev1i5tymd" path="res://unary.recusant/levels/streets/navigation.tres" id="4_hywiy"]
 [ext_resource type="Script" uid="uid://du2365jrpac60" path="res://unary.recusant/sources/level/WindManager.cs" id="5_iul02"]
 [ext_resource type="Script" uid="uid://fxsrthy2he8g" path="res://addons/unary.core.editor/sources/func_godot/map/FuncGodotMap.cs" id="6_hywiy"]
-[ext_resource type="Resource" uid="uid://kca3bj68bh4l" path="res://trenchbroom/map_settings.tres" id="7_iul02"]
+[ext_resource type="Resource" uid="uid://kca3bj68bh4l" path="res://func_godot/map_settings.tres" id="7_iul02"]
 [ext_resource type="Material" uid="uid://cnyul5k1y3fus" path="res://unary.core/materials/dev/orange.tres" id="8_28dih"]
 [ext_resource type="Material" uid="uid://b6nxk4067dk7y" path="res://unary.core/materials/dev/gray.tres" id="9_njm5w"]
 [ext_resource type="Script" uid="uid://b1kh1xeix3gv8" path="res://unary.core/sources/nodes/StaticCollisionShape3D.cs" id="10_rp0i2"]

@@ -115,24 +115,7 @@ namespace Unary.Core
 
             BuildClassData();
 
-            _namedTypes = [];
-
-            Dictionary<Type, Type> collisions = [];
-
-            var types = GetTypes();
-
-            foreach (var type in types)
-            {
-                string name = type.Name;
-
-                if (_namedTypes.TryGetValue(name, out var collision))
-                {
-                    collisions.Add(type, collision);
-                    continue;
-                }
-
-                _namedTypes[name] = type;
-            }
+            Dictionary<Type, Type> collisions = PopulateNamedTypes();
 
             if (collisions.Count > 0)
             {
@@ -153,6 +136,33 @@ namespace Unary.Core
             return true;
         }
 
+        private static Dictionary<Type, Type> PopulateNamedTypes()
+        {
+            if (_types == null)
+            {
+                InitializeTypes();
+            }
+
+            _namedTypes = [];
+
+            Dictionary<Type, Type> collisions = [];
+
+            foreach (var type in GetTypes())
+            {
+                string name = type.Name;
+
+                if (_namedTypes.TryGetValue(name, out var collision))
+                {
+                    collisions.Add(type, collision);
+                    continue;
+                }
+
+                _namedTypes[name] = type;
+            }
+
+            return collisions;
+        }
+
         public static void Deinitialize()
         {
             DeinitializeBase();
@@ -160,6 +170,7 @@ namespace Unary.Core
             UidToData = null;
             _namedTypes = null;
             _fieldAttributes = null;
+            _builtData = false;
         }
 
         public static Type GetTypeOfName(string name)
@@ -167,6 +178,11 @@ namespace Unary.Core
             if (UidToData.TryGetValue(name, out var data))
             {
                 name = data.Type;
+            }
+
+            if (_namedTypes == null || _namedTypes.Count == 0)
+            {
+                PopulateNamedTypes();
             }
 
             if (_namedTypes.TryGetValue(name, out var resultType))
@@ -221,7 +237,7 @@ namespace Unary.Core
                             entries.Add(attributeType, dictionary);
                         }
 
-                        dictionary.Add(field.Name, attribute);
+                        dictionary[field.Name] = attribute;
                     }
                 }
 

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="FuncGodotFGDSolidClass" format=3 uid="uid://c3athfa7xpb7t"]
+
+[ext_resource type="Script" uid="uid://bx5076tvgjwkk" path="res://addons/unary.core.editor/sources/func_godot/fgd/FuncGodotFGDBaseClass.cs" id="1_bseyj"]
+[ext_resource type="Script" uid="uid://bcr4rfvtktu7y" path="res://addons/unary.core.editor/sources/func_godot/fgd/FuncGodotFGDSolidClass.cs" id="1_tidfd"]
+[ext_resource type="Script" uid="uid://j7t2gc45eqvw" path="res://unary.core/sources/resources/TypeResource.cs" id="2_type"]
+
+[sub_resource type="Resource" id="Resource_nodetype"]
+script = ExtResource("2_type")
+TargetValue = "uid://b51vr0xdcqqy8"
+metadata/_custom_type_script = "uid://j7t2gc45eqvw"
+
+[resource]
+script = ExtResource("1_tidfd")
+GlobalIlluminationMode = 0
+ShadowCastingSetting = 0
+RenderLayers = 0
+CollisionShapeType = 0
+CollisionLayer = 0
+CollisionMask = 0
+Classname = "editor_only"
+Description = "This entity could only be present from within TrenchBroom itself, only used as a scaffolding when creating levels."
+BaseClasses = Array[ExtResource("1_bseyj")]([])
+NodeType = SubResource("Resource_nodetype")

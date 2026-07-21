@@ -117,7 +117,7 @@ namespace FuncGodot
 
         private static float GetDefaultInverseScaleFactor()
         {
-            return FuncGodotConfig.Load()?.DefaultInverseScaleFactor ?? 32.0f;
+            return FuncGodotConfig.DefaultInverseScaleFactor;
         }
 
         private string GetExportPath()
@@ -144,7 +144,7 @@ namespace FuncGodot
 
         private static string GetGamePath()
         {
-            return FuncGodotConfig.Load()?.MapEditorGamePath ?? string.Empty;
+            return FuncGodotConfig.ResolvePath(FuncGodotConfig.MapEditorGamePath ?? string.Empty);
         }
 
         private bool CreateGltfFile(GltfState state, string path, Node3D node)

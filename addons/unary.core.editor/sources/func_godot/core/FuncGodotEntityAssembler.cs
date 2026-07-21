@@ -160,6 +160,23 @@ namespace FuncGodot
             return null;
         }
 
+        private static Node InstantiateEntityNode(FuncGodotFGDEntityClass definition)
+        {
+            if (BaseSelectorResource.IsValid(definition.NodeType))
+            {
+                Type nodeType = definition.NodeType.ResolveType();
+
+                if (nodeType != null && typeof(Node).IsAssignableFrom(nodeType))
+                {
+                    return (Node)Activator.CreateInstance(nodeType);
+                }
+
+                // ResolveType already logged the failure; fall through to NodeClass.
+            }
+
+            return InstantiateNodeClass(definition.NodeClass);
+        }
+
         /// Instantiates the node named by an entity definition's NodeClass.
         private static Node InstantiateNodeClass(string nodeClass)
         {
@@ -237,19 +254,6 @@ namespace FuncGodot
                 return null;
             }
 
-            Script scriptClass = definition switch
-            {
-                FuncGodotFGDSolidClass solidClass => solidClass.ScriptClass,
-                FuncGodotFGDPointClass pointClass => pointClass.ScriptClass,
-                _ => null,
-            };
-
-            // A scene file brings its own scripts, so only a bare node class gets one attached.
-            if (scriptClass != null && (definition is not FuncGodotFGDPointClass point || point.SceneFile == null))
-            {
-                node.SetScript(scriptClass);
-            }
-
             foreach (string nodeGroup in _mapSettings.EntityNodeGroups)
             {
                 if (!string.IsNullOrEmpty(nodeGroup))
@@ -282,7 +286,7 @@ namespace FuncGodot
                 return null;
             }
 
-            Node node = InstantiateNodeClass(definition.NodeClass) ?? new Node3D();
+            Node node = InstantiateEntityNode(definition) ?? new Node3D();
 
             NameNode(node, nodeName);
 
@@ -475,7 +479,7 @@ namespace FuncGodot
             }
             else
             {
-                node = InstantiateNodeClass(definition.NodeClass);
+                node = InstantiateEntityNode(definition);
             }
 
             node ??= new Node3D();

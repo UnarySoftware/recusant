@@ -29,14 +29,17 @@ namespace Unary.Recusant
 
         public float RadiusSquared = 0.0f;
 
+        private WindManager _manager;
+
         public override void _Ready()
         {
-            WindManager.Instance.AddWindSource(this);
+            _manager = LevelRoot.Find(this).WindManager;
+            _manager.AddWindSource(this);
         }
 
         public override void _ExitTree()
         {
-            WindManager.Instance.RemoveWindSource(this);
+            _manager.RemoveWindSource(this);
         }
     }
 }

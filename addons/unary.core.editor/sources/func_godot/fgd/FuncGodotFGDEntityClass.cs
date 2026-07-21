@@ -3,8 +3,11 @@
 // used under the MIT License. See addons/unary.core.editor/sources/func_godot/LICENSE.md.
 
 using Godot;
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
+using Unary.Core;
 
 namespace FuncGodot
 {
@@ -43,17 +46,6 @@ namespace FuncGodot
         public Godot.Collections.Array<FuncGodotFGDBaseClass> BaseClasses;
 
         /// <summary>
-        /// Key/value pairs that appear in TrenchBroom. After the map is built these are collected into a
-        /// dictionary applied to the generated node's <c>func_godot_properties</c>.
-        /// </summary>
-        [Export]
-        public Godot.Collections.Dictionary<string, Variant> ClassProperties = [];
-
-        /// Editor descriptions for the entries in <see cref="ClassProperties"/>.
-        [Export]
-        public Godot.Collections.Dictionary<string, Variant> ClassPropertyDescriptions = [];
-
-        /// <summary>
         /// Applies class properties to identically named properties on the generated node. Properties must be
         /// the matching type or the build reports an error.
         /// </summary>
@@ -74,6 +66,18 @@ namespace FuncGodot
         /// </summary>
         [Export]
         public string NodeClass = string.Empty;
+
+        /// <summary>
+        /// C# node type to generate on map build, selected from types deriving <see cref="Node3D"/>. Takes
+        /// priority over <see cref="NodeClass"/> and, on point classes, is ignored when a scene is set. Use this
+        /// instead of attaching a script: the type is instantiated directly, so no post-build script swap runs.
+        /// </summary>
+        [Export]
+        public TypeResource NodeType
+        {
+            get => field;
+            set => field = this.Filter(value, typeof(Node3D));
+        }
 
         /// Class property to name the generated node after. Overrides the map settings' entity name property.
         [Export]
@@ -185,15 +189,20 @@ namespace FuncGodot
 
             string newline = FuncGodotUtil.Newline();
 
-            result.Append(ClassProperties.Count > 0 ? "[" + newline : "[");
+            // Class properties are compiled on demand from the NodeType's [FgdProperty] fields.
+            BuildNodeTypeProperties(
+                out Dictionary<string, Variant> classProperties,
+                out Dictionary<string, Variant> classPropertyDescriptions);
 
-            foreach (string property in ClassProperties.Keys)
+            result.Append(classProperties.Count > 0 ? "[" + newline : "[");
+
+            foreach (string property in classProperties.Keys)
             {
-                Variant value = ClassProperties[property];
+                Variant value = classProperties[property];
 
                 string propertyType = string.Empty;
                 string propertyValue = string.Empty;
-                string propertyDescription = BuildPropertyDescription(property, value);
+                string propertyDescription = BuildPropertyDescription(classPropertyDescriptions, property, value);
 
                 switch (value.VariantType)
                 {
@@ -397,9 +406,12 @@ namespace FuncGodot
         /// Builds the quoted description for a class property. Choices properties may carry their default
         /// value alongside the description as a <c>[String description, int/String default]</c> array.
         /// </summary>
-        private string BuildPropertyDescription(string property, Variant value)
+        private static string BuildPropertyDescription(
+            Dictionary<string, Variant> classPropertyDescriptions,
+            string property,
+            Variant value)
         {
-            if (!ClassPropertyDescriptions.TryGetValue(property, out Variant description))
+            if (!classPropertyDescriptions.TryGetValue(property, out Variant description))
             {
                 return "\"\"";
             }
@@ -440,9 +452,11 @@ namespace FuncGodot
         {
             properties ??= [];
 
-            foreach (string key in ClassProperties.Keys)
+            BuildNodeTypeProperties(out Dictionary<string, Variant> ownProperties, out _);
+
+            foreach (string key in ownProperties.Keys)
             {
-                properties[key] = ClassProperties[key];
+                properties[key] = ownProperties[key];
             }
 
             foreach (FuncGodotFGDBaseClass baseClass in BaseClasses)
@@ -457,9 +471,11 @@ namespace FuncGodot
         {
             descriptions ??= [];
 
-            foreach (string key in ClassPropertyDescriptions.Keys)
+            BuildNodeTypeProperties(out _, out Dictionary<string, Variant> ownDescriptions);
+
+            foreach (string key in ownDescriptions.Keys)
             {
-                descriptions[key] = ClassPropertyDescriptions[key];
+                descriptions[key] = ownDescriptions[key];
             }
 
             foreach (FuncGodotFGDBaseClass baseClass in BaseClasses)
@@ -468,6 +484,111 @@ namespace FuncGodot
             }
 
             return descriptions;
+        }
+
+        /// <summary>
+        /// Compiles the FGD class properties and descriptions on demand from the <see cref="NodeType"/>'s fields
+        /// marked with <see cref="FgdProperty"/>. The field name becomes the property key, the field's default
+        /// value (read through Godot's marshalling, so the field must also be <c>[Export]</c>) becomes the FGD
+        /// default, and enum fields become <c>choices</c> lists. Both dictionaries come back empty when no valid
+        /// node type is set. Nothing is stored: these are only ever needed while a map or FGD build is underway.
+        /// </summary>
+        private void BuildNodeTypeProperties(
+            out Dictionary<string, Variant> properties,
+            out Dictionary<string, Variant> descriptions)
+        {
+            properties = [];
+            descriptions = [];
+
+            if (!BaseSelectorResource.IsValid(NodeType))
+            {
+                return;
+            }
+
+            Type type = NodeType.ResolveType();
+
+            if (type == null)
+            {
+                // ResolveType already logged the failure.
+                return;
+            }
+
+            // Reflect the resolved type directly rather than going through a shared cache: GetFields() already
+            // returns inherited public fields, and [FgdProperty] is inherited, so the whole property set surfaces.
+            List<(FieldInfo Field, FgdProperty Attribute)> fgdFields = [];
+
+            foreach (FieldInfo field in type.GetFields())
+            {
+                if (field.GetCustomAttribute<FgdProperty>() is FgdProperty attribute)
+                {
+                    fgdFields.Add((field, attribute));
+                }
+            }
+
+            if (fgdFields.Count == 0)
+            {
+                return;
+            }
+
+            if (Activator.CreateInstance(type) is not Node instance)
+            {
+                GD.PushError($"Could not instantiate node type '{type.Name}' to read its [FgdProperty] defaults.");
+                return;
+            }
+
+            try
+            {
+                foreach ((FieldInfo field, FgdProperty attribute) in fgdFields)
+                {
+                    string propertyName = field.Name;
+
+                    // Read the default through Godot so the Variant type matches what the build round-trips.
+                    Variant defaultValue = instance.Get(propertyName);
+
+                    if (defaultValue.VariantType == Variant.Type.Nil)
+                    {
+                        GD.PushWarning($"[FgdProperty] field '{type.Name}.{propertyName}' must also be [Export] to be written to the FGD.");
+                        continue;
+                    }
+
+                    if (field.FieldType.IsEnum)
+                    {
+                        // Enums map onto FGD choices, with the default carried in the description entry.
+                        properties[propertyName] = BuildEnumChoices(field.FieldType);
+                        descriptions[propertyName] = new Godot.Collections.Array
+                        {
+                            attribute.Description,
+                            defaultValue.AsInt64(),
+                        };
+
+                        continue;
+                    }
+
+                    properties[propertyName] = defaultValue;
+
+                    if (!string.IsNullOrEmpty(attribute.Description))
+                    {
+                        descriptions[propertyName] = attribute.Description;
+                    }
+                }
+            }
+            finally
+            {
+                instance.Free();
+            }
+        }
+
+        /// Builds a choices dictionary { "EnumName" : intValue } for an enum-typed FGD property.
+        private static Godot.Collections.Dictionary BuildEnumChoices(Type enumType)
+        {
+            Godot.Collections.Dictionary choices = [];
+
+            foreach (object value in Enum.GetValues(enumType))
+            {
+                choices[Enum.GetName(enumType, value)] = Convert.ToInt64(value);
+            }
+
+            return choices;
         }
     }
 }

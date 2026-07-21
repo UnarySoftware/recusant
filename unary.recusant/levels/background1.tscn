@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://fxsrthy2he8g" path="res://addons/unary.core.editor/sources/func_godot/map/FuncGodotMap.cs" id="5_228ku"]
 [ext_resource type="Script" uid="uid://b1kh1xeix3gv8" path="res://unary.core/sources/nodes/StaticCollisionShape3D.cs" id="6_0bcwk"]
 [ext_resource type="Script" uid="uid://ddmefidlb4w6a" path="res://unary.recusant/sources/level/RandomBall.cs" id="6_1odc0"]
-[ext_resource type="Resource" uid="uid://kca3bj68bh4l" path="res://trenchbroom/map_settings.tres" id="6_228ku"]
+[ext_resource type="Resource" uid="uid://kca3bj68bh4l" path="res://func_godot/map_settings.tres" id="6_228ku"]
 [ext_resource type="Script" uid="uid://d0hahcfyufrhb" path="res://unary.core/sources/nodes/UnaryAudioStreamPlayer3D.cs" id="7_12hnm"]
 [ext_resource type="AudioStream" uid="uid://udqo7dmefnqn" path="res://unary.recusant/placeholder/sound/ambient/zr_ambience.mp3" id="7_tqvdk"]
 [ext_resource type="Resource" uid="uid://b06afwgxh1unm" path="res://unary.recusant/sound/ambient.tres" id="8_rspti"]
@@ -160,7 +160,7 @@ script = ExtResource("3_228ku")
 metadata/_custom_type_script = "uid://cgie4o1kjvrdk"
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1523615901]
-transform = Transform3D(0.37156242, -0.08900006, -0.9241322, 0, 0.9953945, -0.09586309, 0.92840797, 0.035619125, 0.36985123, 34.03576, 7.3879247, 20.399672)
+transform = Transform3D(0.1875893, -0.22097437, -0.95706874, 0, 0.9743661, -0.2249681, 0.98224753, 0.04220161, 0.18278067, 25.164173, 4.2661147, 13.436647)
 current = true
 fov = 80.0
 
@@ -195,7 +195,6 @@ shape = SubResource("SphereShape3D_pk2mg")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Balls/RandomBall" unique_id=1201574661]
 gi_mode = 2
 mesh = SubResource("SphereMesh_pk2mg")
-skeleton = NodePath("")
 surface_material_override/0 = ExtResource("5_0bcwk")
 
 [node name="RandomBall2" type="RigidBody3D" parent="Balls" unique_id=1859114225]
@@ -209,7 +208,6 @@ shape = SubResource("SphereShape3D_pk2mg")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Balls/RandomBall2" unique_id=1955034186]
 gi_mode = 2
 mesh = SubResource("SphereMesh_pk2mg")
-skeleton = NodePath("")
 surface_material_override/0 = ExtResource("5_0bcwk")
 
 [node name="RandomBall3" type="RigidBody3D" parent="Balls" unique_id=1469138779]
@@ -223,7 +221,6 @@ shape = SubResource("SphereShape3D_pk2mg")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Balls/RandomBall3" unique_id=1257942947]
 gi_mode = 2
 mesh = SubResource("SphereMesh_pk2mg")
-skeleton = NodePath("")
 surface_material_override/0 = ExtResource("5_0bcwk")
 
 [node name="RandomBall4" type="RigidBody3D" parent="Balls" unique_id=506327566]
@@ -237,7 +234,6 @@ shape = SubResource("SphereShape3D_pk2mg")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Balls/RandomBall4" unique_id=2132112862]
 gi_mode = 2
 mesh = SubResource("SphereMesh_pk2mg")
-skeleton = NodePath("")
 surface_material_override/0 = ExtResource("5_0bcwk")
 
 [node name="RandomBall5" type="RigidBody3D" parent="Balls" unique_id=1673007366]
@@ -251,7 +247,6 @@ shape = SubResource("SphereShape3D_pk2mg")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Balls/RandomBall5" unique_id=2065942949]
 gi_mode = 2
 mesh = SubResource("SphereMesh_pk2mg")
-skeleton = NodePath("")
 surface_material_override/0 = ExtResource("5_0bcwk")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=1799166190]

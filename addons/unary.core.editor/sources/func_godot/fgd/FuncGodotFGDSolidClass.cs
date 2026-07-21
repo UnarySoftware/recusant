@@ -161,11 +161,5 @@ namespace FuncGodot
         /// </summary>
         [Export]
         public bool AddCollisionShapeToFaceIndicesMetadata = false;
-
-        [ExportGroup("Scripting")]
-
-        /// Script to attach to the node generated on map build.
-        [Export]
-        public Script ScriptClass;
     }
 }

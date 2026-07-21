@@ -9,8 +9,6 @@ namespace Unary.Recusant
     {
         private bool _initialized = false;
 
-        public static WindManager Instance { get; private set; }
-
         [Export]
         public Vector3 WindDirection
         {
@@ -197,7 +195,7 @@ namespace Unary.Recusant
 
             ShaderMaterial material = rope.RopeMaterial.Material;
 
-            if (!_ropeMaterials.TryGetValue(material, out var newEntries))
+            if (_ropeMaterials.TryGetValue(material, out var newEntries))
             {
                 newEntries.Remove(rope);
 
@@ -220,21 +218,9 @@ namespace Unary.Recusant
 
         public override void _Ready()
         {
-            // TODO Manage generated meshes by saving/loading them and try reusing those per different ropes
-            Instance = this;
-
             PushUniforms();
             _initialized = true;
         }
 
-        public override void _Process(double delta)
-        {
-            
-        }
-
-        public override void _ExitTree()
-        {
-            Instance = null;
-        }
     }
 }

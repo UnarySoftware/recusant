@@ -50,15 +50,19 @@ namespace FuncGodot
         public bool GenerateModelPointClassModels = true;
 
         /// <summary>
-        /// Writes the FGD into <paramref name="fgdOutputFolder"/>, defaulting to the config's FGD output
-        /// folder. Called with the game config's folder when exported through <see cref="FuncGodotConfig"/>.
+        /// Writes the FGD into <paramref name="fgdOutputFolder"/>. Exporting the FGD on its own defaults to
+        /// the TrenchBroom game config folder, which is where <see cref="FuncGodotConfig.ExportFile"/> also
+        /// puts it, so both routes land in the same place.
         /// </summary>
         public Error DoExportFile(string fgdOutputFolder = "")
         {
             if (string.IsNullOrEmpty(fgdOutputFolder))
             {
-                fgdOutputFolder = FuncGodotConfig.Load()?.FgdOutputFolder ?? string.Empty;
+                fgdOutputFolder = FuncGodotConfig.Load()?.GetGameConfigFolder() ?? string.Empty;
             }
+
+            // No-op when ExportFile already handed us an absolute folder.
+            fgdOutputFolder = FuncGodotConfig.ResolvePath(fgdOutputFolder);
 
             if (string.IsNullOrEmpty(fgdOutputFolder))
             {
@@ -185,9 +189,10 @@ namespace FuncGodot
         }
 
         /// <summary>
-        /// The buildable entity definitions, keyed by classname, with every inherited meta property, class
-        /// property, and description flattened onto a copy of each definition. This is what the parser matches
-        /// map entities against.
+        /// The buildable entity definitions, keyed by classname, with every inherited meta property flattened
+        /// onto a copy of each definition. Class properties and descriptions are compiled on demand from each
+        /// definition's NodeType (see <see cref="FuncGodotFGDEntityClass.RetrieveAllClassProperties"/>). This is
+        /// what the parser matches map entities against.
         /// </summary>
         public Dictionary<string, FuncGodotFGDEntityClass> GetEntityDefinitions()
         {
@@ -222,24 +227,18 @@ namespace FuncGodot
                 FuncGodotFGDEntityClass definition = (FuncGodotFGDEntityClass)entity.Duplicate();
 
                 Godot.Collections.Dictionary<string, Variant> metaProperties = [];
-                Godot.Collections.Dictionary<string, Variant> classProperties = [];
-                Godot.Collections.Dictionary<string, Variant> classPropertyDescriptions = [];
 
-                // Base classes first, so the entity's own values win on collision.
+                // Base classes first, so the entity's own values win on collision. Class properties and their
+                // descriptions are compiled on demand from each definition's NodeType, so only the authored meta
+                // properties need flattening here.
                 foreach (FuncGodotFGDEntityClass baseClass in GenerateBaseClassList(definition))
                 {
                     Merge(metaProperties, baseClass.MetaProperties);
-                    Merge(classProperties, baseClass.ClassProperties);
-                    Merge(classPropertyDescriptions, baseClass.ClassPropertyDescriptions);
                 }
 
                 Merge(metaProperties, definition.MetaProperties);
-                Merge(classProperties, definition.ClassProperties);
-                Merge(classPropertyDescriptions, definition.ClassPropertyDescriptions);
 
                 definition.MetaProperties = metaProperties;
-                definition.ClassProperties = classProperties;
-                definition.ClassPropertyDescriptions = classPropertyDescriptions;
 
                 result[entity.Classname] = definition;
             }

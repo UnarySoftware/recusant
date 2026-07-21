@@ -3,7 +3,6 @@
 // used under the MIT License. See addons/unary.core.editor/sources/func_godot/LICENSE.md.
 
 using Godot;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
@@ -11,50 +10,28 @@ namespace FuncGodot
 {
     /// <summary>
     /// The single func_godot configuration resource. Since Valve 220 is the only supported map format and
-    /// TrenchBroom the only supported editor, project defaults, the TrenchBroom game config, and this
-    /// machine's folder paths all live here. Load the shared instance with <see cref="Load"/> rather than
-    /// constructing new ones.
-    /// <para>
-    /// The folder paths under "Local Paths" are per-machine: they are stored as JSON in <c>user://</c> and
-    /// are deliberately never serialized into the .tres, so one developer's paths stay out of version
-    /// control. Use the export/reload buttons to persist them.
-    /// </para>
+    /// TrenchBroom the only supported editor, project defaults, the TrenchBroom game config, and the export
+    /// paths all live here. Load the shared instance with <see cref="Load"/> rather than constructing new
+    /// ones.
     /// </summary>
     [Tool]
     [GlobalClass]
     public partial class FuncGodotConfig : Resource
     {
-        public const string ConfigPath = "res://addons/unary.core.editor/func_godot_config.tres";
-
-        /// Per-machine folder paths, stored outside the resource.
-        private enum LocalPath
-        {
-            /// Where an exported FGD is written, unless the game config export overrides it.
-            FgdOutputFolder,
-
-            /// Where the TrenchBroom game configuration is written.
-            TrenchBroomGameConfigFolder,
-
-            /// The mapping folder holding all map editor assets, usually the project folder or a subfolder.
-            MapEditorGamePath,
-        }
-
-        private const string LocalPathsFile = "user://func_godot_config.json";
+        public const string ConfigPath = "res://func_godot/config.tres";
 
         [ExportToolButton("Export GameConfig")]
         public Callable ExportFileButton => Callable.From(ExportFile);
 
         /// Name of the game in TrenchBroom's game list.
         [Export]
-        public string GameName = "FuncGodot";
+        public string GameName = "Recusant";
 
         /// Icon for TrenchBroom's game list.
         [Export]
         public Texture2D Icon;
 
-        /// The map TrenchBroom creates when starting a new Valve format map. Optional.
-        [Export]
-        public string InitialMap = "initial_valve.map";
+        public const string InitialMap = "initial_valve.map";
 
         [ExportGroup("Project")]
 
@@ -66,8 +43,7 @@ namespace FuncGodot
         /// Inverse scale factor a <see cref="FuncGodotFGDModelPointClass"/> falls back to when its own scale
         /// expression is empty.
         /// </summary>
-        [Export]
-        public float DefaultInverseScaleFactor = 32.0f;
+        public const float DefaultInverseScaleFactor = 39.37f;
 
         /// Folder that <see cref="FuncGodotFGDModelPointClass"/> display models are exported into.
         [Export]
@@ -76,8 +52,7 @@ namespace FuncGodot
         [ExportGroup("Textures")]
 
         /// Top level textures folder, relative to the game path. Called materials in recent TrenchBroom.
-        [Export]
-        public string TexturesRootFolder = "textures";
+        public const string TexturesRootFolder = ".trenchbroom";
 
         /// Textures matching these patterns are hidden from TrenchBroom.
         [Export]
@@ -125,37 +100,22 @@ namespace FuncGodot
         [Export]
         public Vector2 DefaultUvScale = Vector2.One;
 
-        [ExportGroup("Local Paths")]
+        [ExportGroup("Paths")]
 
-        [Export(PropertyHint.GlobalDir)]
-        public string FgdOutputFolder
-        {
-            get => GetLocalPath(LocalPath.FgdOutputFolder);
-            set => SetLocalPath(LocalPath.FgdOutputFolder, value);
-        }
+        /// <summary>
+        /// Where the TrenchBroom game configuration is written on Windows, FGD included. Relative paths are
+        /// taken as relative to the project root - see <see cref="ResolvePath"/>.
+        /// </summary>
+        public const string GameConfigFolderWindows = "../windows/trenchbroom/games/Recusant";
 
-        [Export(PropertyHint.GlobalDir)]
-        public string TrenchBroomGameConfigFolder
-        {
-            get => GetLocalPath(LocalPath.TrenchBroomGameConfigFolder);
-            set => SetLocalPath(LocalPath.TrenchBroomGameConfigFolder, value);
-        }
+        /// The Linux counterpart of <see cref="GameConfigFolderWindows"/>.
+        public const string GameConfigFolderLinux = "../linux/trenchbroom/games/Recusant";
 
-        [Export(PropertyHint.GlobalDir)]
-        public string MapEditorGamePath
-        {
-            get => GetLocalPath(LocalPath.MapEditorGamePath);
-            set => SetLocalPath(LocalPath.MapEditorGamePath, value);
-        }
-
-        [ExportToolButton("Export local paths", Icon = "Save")]
-        public Callable ExportLocalPathsButton => Callable.From(ExportLocalPaths);
-
-        [ExportToolButton("Reload local paths", Icon = "Reload")]
-        public Callable ReloadLocalPathsButton => Callable.From(ReloadLocalPaths);
-
-        private readonly Dictionary<LocalPath, string> _localPaths = [];
-        private bool _localPathsLoaded = false;
+        /// <summary>
+        /// The folder TrenchBroom is pointed at as its game path. Display model paths in the FGD are written
+        /// relative to it, so it must match TrenchBroom's own setting.
+        /// </summary>
+        public const string MapEditorGamePath = ".";
 
         /// Loads the shared config resource, or null when it is missing.
         public static FuncGodotConfig Load()
@@ -164,103 +124,42 @@ namespace FuncGodot
         }
 
         /// <summary>
-        /// Keeps the per-machine paths out of the saved resource: they stay editable in the inspector but
-        /// carry no Storage usage, so Godot never writes them into the .tres.
+        /// Turns a configured folder into an absolute OS path. Relative values resolve against the project
+        /// root rather than the editor process's working directory, so a committed path means the same thing
+        /// no matter how the editor was launched. Absolute paths and empty values are returned unchanged.
         /// </summary>
-        public override void _ValidateProperty(Godot.Collections.Dictionary property)
+        public static string ResolvePath(string path)
         {
-            string name = property["name"].AsString();
-
-            if (name is nameof(FgdOutputFolder)
-                or nameof(TrenchBroomGameConfigFolder)
-                or nameof(MapEditorGamePath))
+            if (string.IsNullOrEmpty(path) || path.IsAbsolutePath())
             {
-                property["usage"] = (int)PropertyUsageFlags.Editor;
+                return path ?? string.Empty;
             }
+
+            return ProjectSettings.GlobalizePath("res://").PathJoin(path).SimplifyPath();
         }
 
-        private string GetLocalPath(LocalPath path)
+        /// <summary>
+        /// The TrenchBroom game config folder for the platform the editor is running on, resolved to an
+        /// absolute path. Empty, with an error pushed, on a platform that has no folder configured.
+        /// </summary>
+        public string GetGameConfigFolder()
         {
-            if (!_localPathsLoaded)
+            string platform = OS.GetName();
+
+            string folder = platform switch
             {
-                ReloadLocalPaths();
+                "Windows" => GameConfigFolderWindows,
+                "Linux" => GameConfigFolderLinux,
+                _ => null,
+            };
+
+            if (folder == null)
+            {
+                GD.PushError($"No TrenchBroom game config folder configured for platform '{platform}'");
+                return string.Empty;
             }
 
-            return _localPaths.GetValueOrDefault(path, string.Empty);
-        }
-
-        private void SetLocalPath(LocalPath path, string value)
-        {
-            _localPaths[path] = value;
-        }
-
-        /// Reloads the per-machine paths from this machine's configuration file.
-        public void ReloadLocalPaths()
-        {
-            _localPathsLoaded = true;
-
-            if (!FileAccess.FileExists(LocalPathsFile))
-            {
-                return;
-            }
-
-            string contents = FileAccess.GetFileAsString(LocalPathsFile);
-
-            if (string.IsNullOrEmpty(contents))
-            {
-                return;
-            }
-
-            Variant parsed = Json.ParseString(contents);
-
-            if (parsed.VariantType != Variant.Type.Dictionary)
-            {
-                GD.PushError($"Malformed local config at {LocalPathsFile}");
-                return;
-            }
-
-            _localPaths.Clear();
-
-            Godot.Collections.Dictionary values = parsed.AsGodotDictionary();
-
-            foreach (LocalPath path in System.Enum.GetValues<LocalPath>())
-            {
-                if (values.TryGetValue(path.ToString(), out Variant value))
-                {
-                    _localPaths[path] = value.AsString();
-                }
-            }
-
-            NotifyPropertyListChanged();
-        }
-
-        /// Writes the current per-machine paths to this machine's configuration file.
-        public void ExportLocalPaths()
-        {
-            if (_localPaths.Count == 0)
-            {
-                return;
-            }
-
-            Godot.Collections.Dictionary values = [];
-
-            foreach (KeyValuePair<LocalPath, string> path in _localPaths)
-            {
-                values[path.Key.ToString()] = path.Value;
-            }
-
-            using FileAccess file = FileAccess.Open(LocalPathsFile, FileAccess.ModeFlags.Write);
-
-            if (file == null)
-            {
-                GD.PushError($"Failed to open local config for writing at {LocalPathsFile}");
-                return;
-            }
-
-            file.StoreLine(Json.Stringify(values));
-            _localPathsLoaded = false;
-
-            GD.Print("Saved settings to ", file.GetPathAbsolute());
+            return ResolvePath(folder);
         }
 
         /// <summary>
@@ -268,7 +167,7 @@ namespace FuncGodot
         /// </summary>
         public void ExportFile()
         {
-            string configFolder = TrenchBroomGameConfigFolder;
+            string configFolder = GetGameConfigFolder();
 
             if (string.IsNullOrEmpty(configFolder))
             {

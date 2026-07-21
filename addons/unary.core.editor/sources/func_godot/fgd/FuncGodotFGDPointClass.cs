@@ -20,13 +20,9 @@ namespace FuncGodot
             Prefix = "@PointClass";
         }
 
-        /// Scene to instantiate on map build. Overrides NodeClass and ScriptClass.
+        /// Scene to instantiate on map build. Overrides NodeClass and NodeType.
         [Export]
         public PackedScene SceneFile;
-
-        /// Script to attach to the generated node. Ignored when SceneFile is set.
-        [Export]
-        public Script ScriptClass;
 
         /// <summary>
         /// Rotate the generated node from the <c>angles</c>, <c>mangle</c>, or <c>angle</c> properties, in that
