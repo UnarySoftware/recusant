@@ -54,9 +54,7 @@ namespace Unary.Recusant
 
         public override void _Notification(int what)
         {
-            // A scene created from scratch has no path until it gets saved for the first time,
-            // so _Ready is too early to know where our resources belong
-            if (what == NotificationEditorPostSave && Engine.Singleton.IsEditorHint())
+            if (Engine.Singleton.IsEditorHint() && what == NotificationEditorPostSave)
             {
                 CallDeferred(MethodName.InitializeNodes);
             }

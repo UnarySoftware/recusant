@@ -29,7 +29,7 @@ namespace FuncGodot
             public Vector3[] Normals = [];
             public float[] Tangents = [];
 
-            /// Texture path without extension, relative to the map settings' base texture directory.
+            /// Texture path without extension, relative to the config's base texture directory.
             public string Texture = string.Empty;
 
             /// UV offset in the origin, UV scale in the basis. Valve 220 stores rotation in the axes instead.
@@ -105,7 +105,7 @@ namespace FuncGodot
             public List<Plane> Planes = [];
             public List<FaceData> Faces = [];
 
-            /// True when every face of the brush uses the origin texture from the map settings.
+            /// True when every face of the brush uses the origin texture from the config.
             public bool Origin = false;
         }
 
@@ -164,6 +164,11 @@ namespace FuncGodot
             public List<UnaryStandartMaterial3D.SurfaceType?> ShapeSurfaceTypes = [];
 
             public List<CollisionShape3D> CollisionShapes = [];
+
+            /// The body the shapes were parented to, when the entity node supplied one via
+            /// <see cref="IFgdCollisionBody"/> rather than being a CollisionObject3D itself.
+            public CollisionObject3D CollisionBody = null;
+
             public OccluderInstance3D OccluderInstance = null;
 
             /// Global position of the generated node. Mesh vertices are offset by this during generation.

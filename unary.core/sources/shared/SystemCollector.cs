@@ -219,7 +219,15 @@ namespace Unary.Core
             {
                 T target = _systemsList[i];
                 target.Deinitialize();
+
+                if (target is Node nodeSystem && nodeSystem.GetParent() == null)
+                {
+                    nodeSystem.Free();
+                }
             }
+
+            _systemsList.Clear();
+            _systemsDictionary.Clear();
         }
     }
 }

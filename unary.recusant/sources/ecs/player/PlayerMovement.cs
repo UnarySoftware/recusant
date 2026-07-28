@@ -125,7 +125,7 @@ namespace Unary.Recusant
         public float MaxVelocityGround = 7.0f;
 
         [Export]
-        public float MaxStepHeight = 0.46f;
+        public float MaxStepHeight = 0.47f;
 
         [Export]
         public float CrouchTranslate = 0.422f;

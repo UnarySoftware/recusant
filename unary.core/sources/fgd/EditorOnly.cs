@@ -11,8 +11,28 @@ namespace Unary.Core
         [FgdProperty]
         public bool EditorPreserve = false;
 
-        [Export]
-        [FgdProperty]
-        public string TestStringProperty;
+        public override void _Ready()
+        {
+#if TOOLS
+            if (Engine.Singleton.IsEditorHint())
+            {
+                return;
+            }
+#endif
+
+            QueueFree();
+        }
+
+#if TOOLS
+        public override void AppliedProperties()
+        {
+            if (EditorPreserve && Engine.Singleton.IsEditorHint())
+            {
+                return;
+            }
+
+            QueueFree();
+        }
+#endif
     }
 }

@@ -69,17 +69,24 @@ namespace FuncGodot
                 return string.Empty;
             }
 
+            string path = BuildDisplayAssetPathText(descriptor.DisplayAssetPath);
+
+            if (string.IsNullOrEmpty(path))
+            {
+                return string.Empty;
+            }
+
             bool usesOptions = !string.IsNullOrEmpty(descriptor.Scale)
                 || !string.IsNullOrEmpty(descriptor.Skin)
                 || !string.IsNullOrEmpty(descriptor.Frame);
 
             if (!usesOptions)
             {
-                return descriptor.DisplayAssetPath;
+                return path;
             }
 
             StringBuilder model = new();
-            model.Append("{ \"path\": ").Append(descriptor.DisplayAssetPath);
+            model.Append("{ \"path\": ").Append(path);
 
             if (!string.IsNullOrEmpty(descriptor.Skin))
             {
@@ -99,6 +106,43 @@ namespace FuncGodot
             model.Append(" }");
 
             return model.ToString();
+        }
+
+        /// <summary>
+        /// TrenchBroom's expression parser only accepts a display asset path as a quoted string literal; a bare
+        /// word is read as a class property key to resolve the path from instead. Anything that is not already
+        /// quoted and is not a bare identifier is quoted here, so paths like
+        /// <c>unary.recusant/meshes/Dummy.glb</c> do not trip the parser on their separators.
+        /// </summary>
+        private static string BuildDisplayAssetPathText(string path)
+        {
+            string trimmed = path?.Trim() ?? string.Empty;
+
+            if (trimmed.Length == 0 || trimmed.StartsWith('"') || trimmed.StartsWith('\''))
+            {
+                return trimmed;
+            }
+
+            return IsPropertyKey(trimmed) ? trimmed : "\"" + trimmed + "\"";
+        }
+
+        /// A bare TrenchBroom identifier, the only unquoted form its expression parser reads as a property key.
+        private static bool IsPropertyKey(string value)
+        {
+            if (!char.IsAsciiLetter(value[0]) && value[0] != '_')
+            {
+                return false;
+            }
+
+            foreach (char character in value)
+            {
+                if (!char.IsAsciiLetterOrDigit(character) && character != '_')
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /// <summary>

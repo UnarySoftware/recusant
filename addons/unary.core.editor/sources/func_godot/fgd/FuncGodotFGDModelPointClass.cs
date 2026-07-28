@@ -20,7 +20,7 @@ namespace FuncGodot
 
         /// <summary>
         /// TrenchBroom scale expression applied to the model. Falls back to
-        /// <see cref="FuncGodotConfig.DefaultInverseScaleFactor"/> when empty.
+        /// <see cref="FuncGodotConfig.InverseScaleFactor"/> when empty.
         /// </summary>
         [Export]
         public string ScaleExpression = string.Empty;
@@ -36,7 +36,7 @@ namespace FuncGodot
         [Export]
         public Vector3 RotationOffset = Vector3.Zero;
 
-        /// Set by FuncGodotFGDFile during export, so models are only written when the FGD asks for them.
+        /// Set by FuncGodotConfig during export, so models are only written when the config asks for them.
         public bool ModelGenerationEnabled = false;
 
         /// Writes a .gdignore into the model export folder so Godot does not import the display models.
@@ -117,7 +117,7 @@ namespace FuncGodot
 
         private static float GetDefaultInverseScaleFactor()
         {
-            return FuncGodotConfig.DefaultInverseScaleFactor;
+            return FuncGodotConfig.Load()?.InverseScaleFactor ?? FuncGodotConfig.DefaultInverseScaleFactor;
         }
 
         private string GetExportPath()

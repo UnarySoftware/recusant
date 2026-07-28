@@ -111,6 +111,15 @@ namespace Unary.Recusant.Editor
         void ISystem.Deinitialize()
         {
             PluginBootstrap.Singleton.RemoveNode3DGizmoPlugin(this);
+
+            foreach (var material in _colorToMaterial.Values)
+            {
+                material.Dispose();
+            }
+
+            _colorToMaterial.Clear();
+
+            _currentGizmo = null;
         }
 
         public override string _GetGizmoName()

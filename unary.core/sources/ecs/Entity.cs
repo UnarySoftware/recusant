@@ -7,7 +7,7 @@ namespace Unary.Core
     [Tool]
     [GlobalClass]
     [Icon("res://addons/unary.core.editor/icons/Entity.svg")]
-    public partial class Entity : Node3D, IPoolable
+    public partial class Entity : Node3D, IPoolable, IFgdOwner
     {
         public enum EntityType
         {
@@ -119,9 +119,15 @@ namespace Unary.Core
             {
                 return baseEntity;
             }
-            else if (node is BrushEntity brushEntity)
+            else if (node is BaseFgd brushEntity)
             {
-                return brushEntity.Entity;
+                foreach (var owner in brushEntity.Owners)
+                {
+                    if (owner is Entity entity)
+                    {
+                        return entity;
+                    }
+                }
             }
 
             Node parent = node.GetParent();
@@ -136,9 +142,15 @@ namespace Unary.Core
                 {
                     return entity;
                 }
-                else if (parent is BrushEntity brushEntity)
+                else if (parent is BaseFgd brushEntity)
                 {
-                    return brushEntity.Entity;
+                    foreach (var owner in brushEntity.Owners)
+                    {
+                        if (owner is Entity targetEntity)
+                        {
+                            return targetEntity;
+                        }
+                    }
                 }
                 parent = parent.GetParent();
             }
@@ -178,6 +190,11 @@ namespace Unary.Core
                     poolable.Release();
                 }
             }
+        }
+
+        public void OnDestroy(BaseFgd fgd)
+        {
+            QueueFree();
         }
     }
 }

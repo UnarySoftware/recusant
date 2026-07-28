@@ -1,13 +1,18 @@
 [gd_resource type="Resource" script_class="FuncGodotFGDSolidClass" format=3 uid="uid://fep2qn6ndleg"]
 
 [ext_resource type="Script" uid="uid://bx5076tvgjwkk" path="res://addons/unary.core.editor/sources/func_godot/fgd/FuncGodotFGDBaseClass.cs" id="1_vxcdg"]
+[ext_resource type="Script" uid="uid://j7t2gc45eqvw" path="res://unary.core/sources/resources/TypeResource.cs" id="2_u6cf3"]
 [ext_resource type="Script" uid="uid://bcr4rfvtktu7y" path="res://addons/unary.core.editor/sources/func_godot/fgd/FuncGodotFGDSolidClass.cs" id="3_8gdby"]
+
+[sub_resource type="Resource" id="Resource_45f5j"]
+script = ExtResource("2_u6cf3")
+TargetValue = "StaticBody3D"
+metadata/_custom_type_script = "uid://j7t2gc45eqvw"
 
 [resource]
 script = ExtResource("3_8gdby")
 SpawnType = 0
 OriginType = 1
-VertexMergeDistance = 0.03125
 CollisionShapeType = 2
 CollisionMask = 0
 Classname = "worldspawn"
@@ -16,4 +21,4 @@ BaseClasses = Array[ExtResource("1_vxcdg")]([])
 MetaProperties = Dictionary[String, Variant]({
 "color": Color(0.8, 0.8, 0.8, 1)
 })
-NodeClass = "StaticBody3D"
+NodeType = SubResource("Resource_45f5j")

@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://ccif0oldqxpyr"]
+
+[ext_resource type="Texture2D" uid="uid://b3tthjtjvtf82" path="res://unary.recusant/meshes/Dummy_Dummy.png" id="1_w4bb8"]
+
+[resource]
+shading_mode = 0
+specular_mode = 2
+disable_ambient_light = true
+disable_fog = true
+disable_specular_occlusion = true
+albedo_texture = ExtResource("1_w4bb8")
+stencil_flags = 2
+stencil_outline_thickness = 0.019

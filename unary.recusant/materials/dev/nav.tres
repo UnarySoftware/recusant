@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dsaupl4785chx"]
+
+[ext_resource type="Shader" uid="uid://83ohqor1knbw" path="res://unary.core/materials/dev/dev_transparent.gdshader" id="1_602n5"]
+[ext_resource type="Texture2D" uid="uid://c285f0qe0bfmh" path="res://unary.recusant/materials/dev/nav.png" id="2_ir0u6"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_602n5")
+shader_parameter/albedo = ExtResource("2_ir0u6")
+shader_parameter/alpha = 0.5

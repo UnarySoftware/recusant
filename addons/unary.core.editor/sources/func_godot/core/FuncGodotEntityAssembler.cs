@@ -17,7 +17,7 @@ namespace FuncGodot
     {
         public const string Signature = "[ENT]";
 
-        private readonly FuncGodotMapSettings _mapSettings;
+        private readonly FuncGodotConfig _config;
         private FuncGodotMap.BuildFlagBits _buildFlags;
 
         public event Action<string> DeclareStep;
@@ -27,9 +27,9 @@ namespace FuncGodot
             DeclareStep?.Invoke(step);
         }
 
-        public FuncGodotEntityAssembler(FuncGodotMapSettings mapSettings)
+        public FuncGodotEntityAssembler(FuncGodotConfig config)
         {
-            _mapSettings = mapSettings;
+            _config = config;
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace FuncGodot
                 ? mapNode.GetTree().EditedSceneRoot ?? mapNode
                 : mapNode;
 
-            if (_mapSettings.UseGroupsHierarchy)
+            if (_config.UseGroupsHierarchy)
             {
                 Step($"Generating {groups.Count} groups");
 
@@ -63,7 +63,9 @@ namespace FuncGodot
                 {
                     if (group.ParentId < 0)
                     {
-                        mapNode.AddChild(group.Node);
+                        // forceReadableName so groups sharing a name get "Name2"/"Name3" suffixes rather than
+                        // Godot's "@Node3D@31447" fallback; groups are matched by Id, not name, so this is safe.
+                        mapNode.AddChild(group.Node, true);
                         group.Node.Owner = sceneRoot;
                         continue;
                     }
@@ -75,7 +77,7 @@ namespace FuncGodot
                             continue;
                         }
 
-                        parent.Node.AddChild(group.Node);
+                        parent.Node.AddChild(group.Node, true);
                         group.Node.Owner = sceneRoot;
                         break;
                     }
@@ -96,9 +98,9 @@ namespace FuncGodot
                     continue;
                 }
 
-                if (!_mapSettings.UseGroupsHierarchy || entityData.Group == null)
+                if (!_config.UseGroupsHierarchy || entityData.Group == null)
                 {
-                    mapNode.AddChild(entityNode);
+                    mapNode.AddChild(entityNode, true);
 
                     // Worldspawn stays the first child, so the map reads top down.
                     if (entityIndex == 0)
@@ -108,10 +110,16 @@ namespace FuncGodot
                 }
                 else
                 {
-                    entityData.Group.Node.AddChild(entityNode);
+                    entityData.Group.Node.AddChild(entityNode, true);
                 }
 
                 entityNode.Owner = sceneRoot;
+
+                // Owned before its children, so they never sit under an unowned ancestor.
+                if (entityData.CollisionBody != null)
+                {
+                    entityData.CollisionBody.Owner = sceneRoot;
+                }
 
                 if (entityData.MeshInstance != null)
                 {
@@ -133,7 +141,7 @@ namespace FuncGodot
                     entityData.OccluderInstance.Owner = sceneRoot;
                 }
 
-                ApplyEntityProperties(entityNode, entityData);
+                ApplyEntityProperties(entityNode, entityData, entityIndex);
             }
 
             Step("Entity assembly and property application complete");
@@ -174,29 +182,7 @@ namespace FuncGodot
                 // ResolveType already logged the failure; fall through to NodeClass.
             }
 
-            return InstantiateNodeClass(definition.NodeClass);
-        }
-
-        /// Instantiates the node named by an entity definition's NodeClass.
-        private static Node InstantiateNodeClass(string nodeClass)
-        {
-            if (string.IsNullOrEmpty(nodeClass))
-            {
-                return null;
-            }
-
-            if (ClassDB.Singleton.ClassExists(nodeClass))
-            {
-                return ClassDB.Singleton.Instantiate(nodeClass).As<Node>();
-            }
-
-            Script script = GetScriptByClassName(nodeClass);
-
-            return script switch
-            {
-                CSharpScript cSharpScript => cSharpScript.New().As<Node>(),
-                _ => null,
-            };
+            return null;
         }
 
         /// A name prefixed with "%" becomes a unique name in its owner, matching Godot's own syntax.
@@ -224,24 +210,6 @@ namespace FuncGodot
 
             FuncGodotFGDEntityClass definition = entityData.Definition;
 
-            string nameProperty = string.Empty;
-
-            if (!string.IsNullOrEmpty(definition.NameProperty)
-                && entityData.Properties.TryGetValue(definition.NameProperty, out Variant definitionName))
-            {
-                nameProperty = definitionName.ToString();
-            }
-            else if (!string.IsNullOrEmpty(_mapSettings.EntityNameProperty)
-                && entityData.Properties.TryGetValue(_mapSettings.EntityNameProperty, out Variant settingsName))
-            {
-                nameProperty = settingsName.ToString();
-            }
-
-            if (!string.IsNullOrEmpty(nameProperty))
-            {
-                nodeName = nameProperty;
-            }
-
             Node node = definition switch
             {
                 FuncGodotFGDSolidClass solidClass => GenerateSolidEntityNode(nodeName, entityData, solidClass),
@@ -254,7 +222,7 @@ namespace FuncGodot
                 return null;
             }
 
-            foreach (string nodeGroup in _mapSettings.EntityNodeGroups)
+            foreach (string nodeGroup in _config.EntityNodeGroups)
             {
                 if (!string.IsNullOrEmpty(nodeGroup))
                 {
@@ -290,6 +258,12 @@ namespace FuncGodot
 
             NameNode(node, nodeName);
 
+            CollisionObject3D collisionObject = data.Shapes.Count > 0 ? ResolveCollisionBody(node, data) : null;
+
+            // The body is what moves at runtime, so the visuals have to ride it rather than stay on the
+            // entity node. When the node is the body itself this is the same parent either way.
+            Node visualParent = collisionObject ?? node;
+
             if (data.Mesh != null)
             {
                 MeshInstance3D meshInstance = new()
@@ -301,27 +275,27 @@ namespace FuncGodot
                     Layers = definition.RenderLayers,
                 };
 
-                node.AddChild(meshInstance);
+                visualParent.AddChild(meshInstance);
                 data.MeshInstance = meshInstance;
 
                 if (definition.BuildOcclusion)
                 {
-                    BuildOccluder(node, data);
+                    BuildOccluder(visualParent, data);
                 }
 
                 // Smoothing rebuilds the mesh, so it has to happen before the UV2 unwrap that follows it.
                 if (!_buildFlags.HasFlag(FuncGodotMap.BuildFlagBits.DisableSmoothing)
-                    && data.IsSmoothShaded(_mapSettings.EntitySmoothingProperty))
+                    && data.IsSmoothShaded(_config.EntitySmoothingProperty))
                 {
                     meshInstance.Mesh = FuncGodotUtil.SmoothMeshByAngle(
                         data.Mesh,
-                        data.GetSmoothingAngle(_mapSettings.EntitySmoothingAngleProperty));
+                        data.GetSmoothingAngle(_config.EntitySmoothingAngleProperty));
 
                     if (data.IsGiEnabled() && _buildFlags.HasFlag(FuncGodotMap.BuildFlagBits.UnwrapUv2))
                     {
                         (meshInstance.Mesh as ArrayMesh)?.LightmapUnwrap(
                             Transform3D.Identity,
-                            _mapSettings.UvUnwrapTexelSize * _mapSettings.ScaleFactor);
+                            _config.UvUnwrapTexelSize * _config.ScaleFactor);
                     }
                 }
             }
@@ -337,11 +311,11 @@ namespace FuncGodot
                     Layers = definition.RenderLayers,
                 };
 
-                node.AddChild(shadowMeshInstance);
+                visualParent.AddChild(shadowMeshInstance);
                 data.ShadowMeshInstance = shadowMeshInstance;
             }
 
-            if (data.Shapes.Count > 0 && node is CollisionObject3D collisionObject)
+            if (collisionObject != null)
             {
                 BuildCollision(collisionObject, data, definition);
             }
@@ -352,7 +326,7 @@ namespace FuncGodot
             }
             else if (node is Node2D node2D)
             {
-                node2D.Position = new Vector2(data.Origin.Z, -data.Origin.Y) * _mapSettings.InverseScaleFactor;
+                node2D.Position = new Vector2(data.Origin.Z, -data.Origin.Y) * _config.InverseScaleFactor;
             }
 
             if (data.MeshMetadata.Count > 0)
@@ -361,6 +335,36 @@ namespace FuncGodot
             }
 
             return node;
+        }
+
+        /// <summary>
+        /// Finds what the generated shapes should hang off. Nodes that are a CollisionObject3D take them
+        /// directly; nodes that implement <see cref="IFgdCollisionBody"/> - BaseFgd derivatives, which are
+        /// Node3D - get to supply a body child. Anything else has nowhere to put them.
+        /// </summary>
+        private static CollisionObject3D ResolveCollisionBody(Node node, FuncGodotData.EntityData data)
+        {
+            if (node is CollisionObject3D collisionObject)
+            {
+                return collisionObject;
+            }
+
+            if (node is not IFgdCollisionBody provider)
+            {
+                return null;
+            }
+
+            CollisionObject3D body = provider.CreateCollisionBody();
+
+            if (body == null)
+            {
+                return null;
+            }
+
+            node.AddChild(body);
+            data.CollisionBody = body;
+
+            return body;
         }
 
         private static void BuildOccluder(Node node, FuncGodotData.EntityData data)
@@ -395,8 +399,10 @@ namespace FuncGodot
             data.OccluderInstance = occluderInstance;
         }
 
+        private static LazyResource<Material> ClipTexture = new("uid://bf5u438eiv0dl");
+
         /// <summary>
-        /// Creates a <see cref="StaticCollisionShape3D"/> per generated shape, carrying its surface type so
+        /// Creates a <see cref="UnaryCollisionShape3D"/> per generated shape, carrying its surface type so
         /// gameplay code can tell what it hit. Shapes whose faces declared no surface type - tool textures like
         /// clip that build collision without a material - carry <see cref="UnaryStandartMaterial3D.SurfaceType.None"/>.
         /// </summary>
@@ -428,10 +434,16 @@ namespace FuncGodot
                     ? data.ShapeSurfaceTypes[i]
                     : null) ?? UnaryStandartMaterial3D.SurfaceType.None;
 
-                CollisionShape3D collisionShape = new StaticCollisionShape3D
+                UnaryCollisionShape3D collisionShape = new()
                 {
                     Type = surfaceType,
                 };
+
+                if (surfaceType == UnaryStandartMaterial3D.SurfaceType.None)
+                {
+                    collisionShape.VisualizerMaterial = ClipTexture.Cache;
+                    collisionShape.VisualizerColor = Colors.White;
+                }
 
                 string prefix = surfaceType.ToString().ToLower() + "_";
 
@@ -633,7 +645,7 @@ namespace FuncGodot
 
             if (node is Node3D node3D)
             {
-                node3D.Position = origin * _mapSettings.ScaleFactor;
+                node3D.Position = origin * _config.ScaleFactor;
             }
             else if (node is Node2D node2D)
             {
@@ -670,12 +682,14 @@ namespace FuncGodot
         /// definition opts in, into a <c>func_godot_properties</c> member, and through the
         /// <c>_func_godot_apply_properties</c> and <c>_func_godot_build_complete</c> callbacks.
         /// </summary>
-        private static void ApplyEntityProperties(Node node, FuncGodotData.EntityData data)
+        private static void ApplyEntityProperties(Node node, FuncGodotData.EntityData data, int entityIndex)
         {
             Dictionary<string, Variant> properties = data.Properties;
             FuncGodotFGDEntityClass definition = data.Definition;
 
             Godot.Collections.Dictionary godotProperties = [];
+
+            godotProperties["EntityIndex"] = entityIndex;
 
             foreach (KeyValuePair<string, Variant> property in properties)
             {
@@ -703,9 +717,9 @@ namespace FuncGodot
                 node.Set("func_godot_properties", godotProperties);
             }
 
-            if (node.HasMethod("_func_godot_apply_properties"))
+            if (node.HasMethod("ApplyProperties"))
             {
-                node.Call("_func_godot_apply_properties", godotProperties);
+                node.Call("ApplyProperties", godotProperties);
             }
 
             if (node.HasMethod("_func_godot_build_complete"))

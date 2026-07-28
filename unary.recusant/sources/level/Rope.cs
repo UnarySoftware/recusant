@@ -218,7 +218,7 @@ namespace Unary.Recusant
 #if TOOLS
             if (_manager == null)
             {
-                this.Error($"WindManager was null");
+                _manager = LevelRoot.Find(this).WindManager;
                 return;
             }
 #endif

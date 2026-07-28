@@ -61,13 +61,6 @@ namespace FuncGodot
         };
 
         /// <summary>
-        /// Node to generate on map build: a built-in Godot class, a script class, or a GDExtension class.
-        /// Leave blank on point classes that instantiate a scene instead.
-        /// </summary>
-        [Export]
-        public string NodeClass = string.Empty;
-
-        /// <summary>
         /// C# node type to generate on map build, selected from types deriving <see cref="Node3D"/>. Takes
         /// priority over <see cref="NodeClass"/> and, on point classes, is ignored when a scene is set. Use this
         /// instead of attaching a script: the type is instantiated directly, so no post-build script swap runs.
@@ -78,10 +71,6 @@ namespace FuncGodot
             get => field;
             set => field = this.Filter(value, typeof(Node3D));
         }
-
-        /// Class property to name the generated node after. Overrides the map settings' entity name property.
-        [Export]
-        public string NameProperty = string.Empty;
 
         [Export]
         public Godot.Collections.Array<string> NodeGroups = [];
@@ -371,7 +360,10 @@ namespace FuncGodot
                     continue;
                 }
 
-                result.Append('\t').Append(property).Append('(').Append(propertyType).Append(')');
+                // Keys are written in snake_case, the convention every FGD consumer expects. TrenchBroom stores
+                // them in the map file exactly as spelled here, and the parser maps them back onto the node's
+                // PascalCase fields.
+                result.Append('\t').Append(property.ToSnakeCase()).Append('(').Append(propertyType).Append(')');
 
                 bool isFlags = value.VariantType == Variant.Type.Array;
                 bool isChoices = value.VariantType == Variant.Type.Dictionary;
@@ -488,10 +480,12 @@ namespace FuncGodot
 
         /// <summary>
         /// Compiles the FGD class properties and descriptions on demand from the <see cref="NodeType"/>'s fields
-        /// marked with <see cref="FgdProperty"/>. The field name becomes the property key, the field's default
-        /// value (read through Godot's marshalling, so the field must also be <c>[Export]</c>) becomes the FGD
-        /// default, and enum fields become <c>choices</c> lists. Both dictionaries come back empty when no valid
-        /// node type is set. Nothing is stored: these are only ever needed while a map or FGD build is underway.
+        /// marked with <see cref="FgdProperty"/>. The field name becomes the property key - kept in the field's
+        /// own PascalCase here and only converted to snake_case where the FGD text is written - the field's
+        /// default value (read through Godot's marshalling, so the field must also be <c>[Export]</c>) becomes
+        /// the FGD default, and enum fields become <c>choices</c> lists. Both dictionaries come back empty when
+        /// no valid node type is set. Nothing is stored: these are only ever needed while a map or FGD build is
+        /// underway.
         /// </summary>
         private void BuildNodeTypeProperties(
             out Dictionary<string, Variant> properties,

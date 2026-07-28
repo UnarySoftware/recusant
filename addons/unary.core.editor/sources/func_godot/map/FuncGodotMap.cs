@@ -9,26 +9,14 @@ using System.Collections.Generic;
 namespace FuncGodot
 {
     /// <summary>
-    /// Builds a scene from a Valve 220 Quake .map file, according to its <see cref="FuncGodotMapSettings"/>
-    /// and the <see cref="FuncGodotFGDFile"/> that settings resource points at.
+    /// Builds a scene from a Valve 220 Quake .map file, according to the build settings and entity
+    /// definitions in the shared <see cref="FuncGodotConfig"/>.
     /// </summary>
     [Tool]
     [GlobalClass]
     public partial class FuncGodotMap : Node3D
     {
         public const string Signature = "[MAP]";
-
-        public FuncGodotMap()
-        {
-            // A new map node defaults its settings to the shared config's DefaultMapSettings, so it comes
-            // pre-wired like func_godot does. A saved scene's stored MapSettings overrides this afterward.
-            FuncGodotConfig config = FuncGodotConfig.Load();
-
-            if (config?.DefaultMapSettings != null)
-            {
-                MapSettings = config.DefaultMapSettings;
-            }
-        }
 
         [Flags]
         public enum BuildFlagBits
@@ -66,10 +54,6 @@ namespace FuncGodot
         /// Global path to the .map file to build. Overrides <see cref="LocalMapFile"/>.
         [Export(PropertyHint.GlobalFile, "*.map")]
         public string GlobalMapFile = string.Empty;
-
-        /// Build scale, texture locations, entity definitions, and more.
-        [Export]
-        public FuncGodotMapSettings MapSettings;
 
         [ExportCategory("Build")]
 
@@ -175,15 +159,11 @@ namespace FuncGodot
                 return;
             }
 
-            if (MapSettings == null)
-            {
-                FailBuild("Map node has no map settings. Aborting map build", true);
-                return;
-            }
+            FuncGodotConfig config = FuncGodotConfig.Load();
 
-            if (MapSettings.EntityFgd == null)
+            if (config == null)
             {
-                FailBuild("Map settings have no entity FGD. Aborting map build", true);
+                FailBuild($"No func_godot config at {FuncGodotConfig.ConfigPath}. Aborting map build", true);
                 return;
             }
 
@@ -195,7 +175,7 @@ namespace FuncGodot
                 parser.DeclareStep += step => FuncGodotUtil.PrintProfileInfo(step, FuncGodotParser.Signature);
             }
 
-            FuncGodotData.ParseData parseData = parser.ParseMapData(_mapFile, MapSettings);
+            FuncGodotData.ParseData parseData = parser.ParseMapData(_mapFile, config);
 
             if (parseData.Entities.Count == 0)
             {
@@ -207,7 +187,7 @@ namespace FuncGodot
             List<FuncGodotData.EntityData> entities = parseData.Entities;
             List<FuncGodotData.GroupData> groups = parseData.Groups;
 
-            FuncGodotGeometryGenerator generator = new(MapSettings, HyperplaneSize);
+            FuncGodotGeometryGenerator generator = new(config, HyperplaneSize);
 
             if (profile)
             {
@@ -223,7 +203,7 @@ namespace FuncGodot
                 return;
             }
 
-            FuncGodotEntityAssembler assembler = new(MapSettings);
+            FuncGodotEntityAssembler assembler = new(config);
 
             if (profile)
             {

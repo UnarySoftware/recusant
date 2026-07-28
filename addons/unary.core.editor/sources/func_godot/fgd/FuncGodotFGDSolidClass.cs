@@ -76,17 +76,9 @@ namespace FuncGodot
         [ExportGroup("Geometry")]
 
         /// <summary>
-        /// Snapping epsilon applied to this entity's generated vertices. Raising it can close seams between
-        /// polygons; zero disables snapping. Overridden per entity by the map settings'
-        /// <see cref="FuncGodotMapSettings.VertexMergeDistanceProperty"/> class property when a brush sets it.
-        /// </summary>
-        [Export]
-        public float VertexMergeDistance = 0.0f;
-
-        /// <summary>
         /// Culls this entity's interior faces, meaning faces whose vertices match or sit flush within a larger
-        /// face. Costs build time proportional to the entity's brush count. Overridden per entity by the map
-        /// settings' <see cref="FuncGodotMapSettings.CullInteriorFacesProperty"/> class property when a brush sets it.
+        /// face. Costs build time proportional to the entity's brush count. Overridden per entity by the
+        /// config's <see cref="FuncGodotConfig.CullInteriorFacesProperty"/> class property when a brush sets it.
         /// </summary>
         [Export]
         public bool CullInteriorFaces = false;

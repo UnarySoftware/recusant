@@ -6,9 +6,8 @@
 [ext_resource type="Material" uid="uid://b6nxk4067dk7y" path="res://unary.core/materials/dev/gray.tres" id="4_4srss"]
 [ext_resource type="Material" uid="uid://cnyul5k1y3fus" path="res://unary.core/materials/dev/orange.tres" id="5_0bcwk"]
 [ext_resource type="Script" uid="uid://fxsrthy2he8g" path="res://addons/unary.core.editor/sources/func_godot/map/FuncGodotMap.cs" id="5_228ku"]
-[ext_resource type="Script" uid="uid://b1kh1xeix3gv8" path="res://unary.core/sources/nodes/StaticCollisionShape3D.cs" id="6_0bcwk"]
+[ext_resource type="Script" uid="uid://b1kh1xeix3gv8" path="res://unary.core/sources/nodes/UnaryCollisionShape3D.cs" id="6_0bcwk"]
 [ext_resource type="Script" uid="uid://ddmefidlb4w6a" path="res://unary.recusant/sources/level/RandomBall.cs" id="6_1odc0"]
-[ext_resource type="Resource" uid="uid://kca3bj68bh4l" path="res://func_godot/map_settings.tres" id="6_228ku"]
 [ext_resource type="Script" uid="uid://d0hahcfyufrhb" path="res://unary.core/sources/nodes/UnaryAudioStreamPlayer3D.cs" id="7_12hnm"]
 [ext_resource type="AudioStream" uid="uid://udqo7dmefnqn" path="res://unary.recusant/placeholder/sound/ambient/zr_ambience.mp3" id="7_tqvdk"]
 [ext_resource type="Resource" uid="uid://b06afwgxh1unm" path="res://unary.recusant/sound/ambient.tres" id="8_rspti"]
@@ -128,7 +127,6 @@ metadata/_custom_type_script = "uid://dku88wftngf3g"
 [node name="FuncGodotMap" type="Node3D" parent="." unique_id=1939817989]
 script = ExtResource("5_228ku")
 LocalMapFile = "uid://b73ac2gcm73rp"
-MapSettings = ExtResource("6_228ku")
 metadata/_custom_type_script = "uid://fxsrthy2he8g"
 
 [node name="0_worldspawn" type="StaticBody3D" parent="FuncGodotMap" unique_id=1687035546]

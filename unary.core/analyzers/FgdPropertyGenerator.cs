@@ -97,9 +97,9 @@ namespace Unary.Core.Analyzers
 
             sb.AppendLine($"    public partial class {className}");
             sb.AppendLine("    {");
-            sb.AppendLine("        public override void ApplyProperties(global::Godot.Collections.Dictionary properties)");
+            sb.AppendLine("        public override void RunApplyProperties(global::Godot.Collections.Dictionary properties)");
             sb.AppendLine("        {");
-            sb.AppendLine("            base.ApplyProperties(properties);");
+            sb.AppendLine("            base.RunApplyProperties(properties);");
 
             foreach (var field in fields)
             {

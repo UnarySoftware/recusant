@@ -22,7 +22,7 @@ namespace FuncGodot
         /// Rounding applied to plane lookup keys when matching opposing faces, to absorb float error.
         private const float OcclusionPrecision = 100.0f;
 
-        private readonly FuncGodotMapSettings _mapSettings;
+        private readonly FuncGodotConfig _config;
         private readonly float _hyperplaneSize;
 
         private List<FuncGodotData.EntityData> _entityData = [];
@@ -36,9 +36,9 @@ namespace FuncGodot
             DeclareStep?.Invoke(step);
         }
 
-        public FuncGodotGeometryGenerator(FuncGodotMapSettings mapSettings, float hyperplaneSize = 512.0f)
+        public FuncGodotGeometryGenerator(FuncGodotConfig config, float hyperplaneSize = 512.0f)
         {
-            _mapSettings = mapSettings;
+            _config = config;
             _hyperplaneSize = hyperplaneSize;
         }
 
@@ -54,7 +54,7 @@ namespace FuncGodot
             Step($"Preparing {entityCount} {(entityCount == 1 ? "entity" : "entities")}");
 
             Step("Gathering materials");
-            FuncGodotUtil.BuildTextureMap(_entityData, _mapSettings, out _textureMaterials, out _textureSizes);
+            FuncGodotUtil.BuildTextureMap(_entityData, _config, out _textureMaterials, out _textureSizes);
 
             Step("Generating brush vertices");
             Multi.Thread(0, entityCount, (index, state) => GenerateEntityVertices(index));
@@ -72,7 +72,7 @@ namespace FuncGodot
             {
                 Step("Unwrapping UV2s");
 
-                float texelSize = _mapSettings.UvUnwrapTexelSize * _mapSettings.ScaleFactor;
+                float texelSize = _config.UvUnwrapTexelSize * _config.ScaleFactor;
 
                 // lightmap_unwrap is not thread safe, so this stage stays serial.
                 for (int index = 0; index < entityCount; index++)
@@ -92,22 +92,22 @@ namespace FuncGodot
 
         private bool IsSkip(FuncGodotData.FaceData face)
         {
-            return FuncGodotUtil.IsSkip(face.Texture, _mapSettings);
+            return FuncGodotUtil.IsSkip(face.Texture, _config);
         }
 
         private bool IsClip(FuncGodotData.FaceData face)
         {
-            return FuncGodotUtil.IsClip(face.Texture, _mapSettings);
+            return FuncGodotUtil.IsClip(face.Texture, _config);
         }
 
         private bool IsOrigin(FuncGodotData.FaceData face)
         {
-            return FuncGodotUtil.IsOrigin(face.Texture, _mapSettings);
+            return FuncGodotUtil.IsOrigin(face.Texture, _config);
         }
 
         private bool IsShadow(FuncGodotData.FaceData face)
         {
-            return FuncGodotUtil.IsShadow(face.Texture, _mapSettings);
+            return FuncGodotUtil.IsShadow(face.Texture, _config);
         }
 
         private Material GetMaterial(string texture)
@@ -119,7 +119,7 @@ namespace FuncGodot
         {
             return _textureSizes.TryGetValue(texture, out Vector2 size)
                 ? size
-                : Vector2.One * _mapSettings.InverseScaleFactor;
+                : Vector2.One * _config.InverseScaleFactor;
         }
 
         /// <summary>
@@ -219,12 +219,7 @@ namespace FuncGodot
             FuncGodotData.EntityData entity = _entityData[entityIndex];
 
             // Configured on the entity definition, overridable per entity by the map property.
-            float vertexMergeDistance = entity.Definition is FuncGodotFGDSolidClass solid ? solid.VertexMergeDistance : 0.0f;
-
-            if (entity.Properties.TryGetValue(_mapSettings.VertexMergeDistanceProperty, out Variant mergeDistance))
-            {
-                vertexMergeDistance = mergeDistance.AsSingle();
-            }
+            float vertexMergeDistance = FuncGodotUtil.VertexEpsilon;
 
             foreach (FuncGodotData.BrushData brush in entity.Brushes)
             {
@@ -351,7 +346,7 @@ namespace FuncGodot
                             break;
                         }
 
-                        origin *= _mapSettings.ScaleFactor;
+                        origin *= _config.ScaleFactor;
 
                         entity.Origin = originType == FuncGodotFGDSolidClass.OriginTypes.Absolute
                             ? origin
@@ -478,7 +473,7 @@ namespace FuncGodot
             // Configured on the entity definition, overridable per entity by the map property.
             bool cullInteriorFaces = definition.CullInteriorFaces;
 
-            if (entity.Properties.TryGetValue(_mapSettings.CullInteriorFacesProperty, out Variant cull))
+            if (entity.Properties.TryGetValue(_config.CullInteriorFacesProperty, out Variant cull))
             {
                 cullInteriorFaces = cull.AsBool();
             }
@@ -592,7 +587,7 @@ namespace FuncGodot
                 }
 
                 // Tool textures never become a visual surface.
-                if (FuncGodotUtil.FilterFace(textureName, _mapSettings) || vertices.Count == 0)
+                if (FuncGodotUtil.FilterFace(textureName, _config) || vertices.Count == 0)
                 {
                     continue;
                 }
@@ -961,7 +956,7 @@ namespace FuncGodot
             // Smoothed meshes are re-created during entity assembly, so they are unwrapped there instead.
             if (entity.Mesh == null
                 || !entity.IsGiEnabled()
-                || entity.IsSmoothShaded(_mapSettings.EntitySmoothingProperty))
+                || entity.IsSmoothShaded(_config.EntitySmoothingProperty))
             {
                 return;
             }

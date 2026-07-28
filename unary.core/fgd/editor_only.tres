@@ -13,7 +13,6 @@ metadata/_custom_type_script = "uid://j7t2gc45eqvw"
 script = ExtResource("1_tidfd")
 GlobalIlluminationMode = 0
 ShadowCastingSetting = 0
-RenderLayers = 0
 CollisionShapeType = 0
 CollisionLayer = 0
 CollisionMask = 0

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://colxbhdhr5bu1"]
+
+[ext_resource type="Material" uid="uid://ccif0oldqxpyr" path="res://unary.recusant/meshes/dummy.tres" id="1_71ak2"]
+[ext_resource type="Script" uid="uid://b51vr0xdcqqy8" path="res://unary.core/sources/fgd/EditorOnly.cs" id="1_r0ihj"]
+[ext_resource type="ArrayMesh" uid="uid://cikn7vuhxjsg4" path="res://unary.recusant/meshes/Dummy.glb" id="2_r0ihj"]
+
+[node name="Root" type="Node3D" unique_id=1083432855]
+script = ExtResource("1_r0ihj")
+EditorPreserve = true
+
+[node name="Dummy" type="MeshInstance3D" parent="." unique_id=836947318]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+material_override = ExtResource("1_71ak2")
+cast_shadow = 0
+custom_aabb = AABB(-0.407, 0, -0.407, 0.813, 1.83, 0.813)
+ignore_occlusion_culling = true
+gi_mode = 0
+mesh = ExtResource("2_r0ihj")
+surface_material_override/0 = ExtResource("1_71ak2")

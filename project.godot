@@ -47,7 +47,6 @@ enabled=PackedStringArray("res://addons/unary.core.editor/plugin.cfg", "res://ad
 
 folder_colors={
 "res://addons/": "red",
-"res://func_godot/": "yellow",
 "res://hammer/": "orange",
 "res://unary.core/": "green",
 "res://unary.recusant/": "blue",
@@ -56,7 +55,9 @@ folder_colors={
 
 [layer_names]
 
-3d_render/layer_15="No Occlusion"
+3d_render/layer_1="World"
+3d_render/layer_2="Brushes"
+3d_render/layer_19="No Occlusion"
 3d_render/layer_20="Editor Only"
 3d_physics/layer_1="All"
 3d_physics/layer_2="Player"

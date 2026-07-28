@@ -7,17 +7,19 @@ using Godot;
 namespace FuncGodot
 {
     /// <summary>
-    /// Describes how a <see cref="FuncGodotFGDPointClass"/> is displayed in TrenchBroom. Values are written
-    /// into the FGD literally: paths must be quoted, class property keys and integers must not be.
+    /// Describes how a <see cref="FuncGodotFGDPointClass"/> is displayed in TrenchBroom. Values other than
+    /// <see cref="DisplayAssetPath"/> are written into the FGD literally, so class property keys, integers, and
+    /// scale expressions must be given in the form TrenchBroom expects. Class properties are named by their
+    /// snake_case FGD key - <c>display_model_path</c> for a <c>DisplayModelPath</c> field, not the field name.
     /// </summary>
     [Tool]
     [GlobalClass]
     public partial class FuncGodotFGDPointClassDisplayDescriptor : Resource
     {
         /// <summary>
-        /// Either a quoted path to the display asset relative to TrenchBroom's game path
-        /// (e.g. <c>"models/marsfrog.glb"</c>), or an unquoted class property key holding such a path
-        /// (e.g. <c>display_model_path</c>).
+        /// Either a path to the display asset relative to TrenchBroom's game path
+        /// (e.g. <c>models/marsfrog.glb</c>), which is quoted for you, or a class property key holding such a
+        /// path (e.g. <c>display_model_path</c>), which is left bare so TrenchBroom resolves it.
         /// </summary>
         [Export]
         public string DisplayAssetPath = string.Empty;

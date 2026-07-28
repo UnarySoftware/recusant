@@ -75,6 +75,14 @@ namespace Unary.Recusant
             RuntimeGizmos.Singleton.Aquire(this);
         }
 
+        public override void _Notification(int what)
+        {
+            if (Engine.Singleton.IsEditorHint() && what == NotificationEditorPostSave)
+            {
+                CallDeferred(MethodName.InitializeGroup);
+            }
+        }
+
         public override void _ExitTree()
         {
 #if TOOLS

@@ -3,7 +3,6 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace Unary.Core.Editor
 {
@@ -138,43 +137,7 @@ namespace Unary.Core.Editor
         [EditorSettingAction]
         private static void RefreshMods()
         {
-            EditorFileSystem engineFilesystem = EditorInterface.Singleton.GetResourceFilesystem();
-
-            HashSet<ModManifest> newManifests = [];
-
-            string[] directories = Directory.GetDirectories(".", "*.*", SearchOption.TopDirectoryOnly);
-
-            foreach (var directory in directories)
-            {
-                string path = directory.Replace("." + Path.DirectorySeparatorChar, "");
-
-                if (path.StartsWith('.'))
-                {
-                    continue;
-                }
-
-                string modId = path;
-                string manifestPath = modId + '/' + modId + ".tres";
-
-                if (!ResourceLoader.Singleton.Exists(manifestPath, nameof(ModManifest)))
-                {
-                    continue;
-                }
-
-                string resourceType = manifestPath.GetScriptType();
-
-                if (resourceType != nameof(ModManifest))
-                {
-                    continue;
-                }
-
-                ModManifest manifest = (ModManifest)ResourceLoader.Singleton.Load(manifestPath);
-
-                if (manifest != null && manifest.ModId == modId)
-                {
-                    newManifests.Add(manifest);
-                }
-            }
+            HashSet<ModManifest> newManifests = [.. ModManifest.ScanProject()];
 
             bool listChanged = false;
 

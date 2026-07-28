@@ -101,11 +101,11 @@ namespace FuncGodot
         ];
 
         /// Searches the base texture directory for a texture, falling back to the default texture.
-        public static Texture2D LoadTexture(string textureName, FuncGodotMapSettings mapSettings)
+        public static Texture2D LoadTexture(string textureName, FuncGodotConfig config)
         {
-            foreach (string extension in mapSettings.TextureFileExtensions)
+            foreach (string extension in config.TextureFileExtensions)
             {
-                string texturePath = mapSettings.BaseTextureDir.PathJoin(textureName + "." + extension);
+                string texturePath = config.BaseTextureDir.PathJoin(textureName + "." + extension);
 
                 if (!ResourceLoader.Exists(texturePath))
                 {
@@ -123,46 +123,46 @@ namespace FuncGodot
             return ResourceLoader.Load<Texture2D>(DefaultTexturePath);
         }
 
-        public static bool IsSkip(string texture, FuncGodotMapSettings mapSettings)
+        public static bool IsSkip(string texture, FuncGodotConfig config)
         {
-            return mapSettings != null && texture.ToLower() == mapSettings.SkipTexture;
+            return config != null && texture.ToLower() == config.SkipTexture;
         }
 
-        public static bool IsClip(string texture, FuncGodotMapSettings mapSettings)
+        public static bool IsClip(string texture, FuncGodotConfig config)
         {
-            return mapSettings != null && texture.ToLower() == mapSettings.ClipTexture;
+            return config != null && texture.ToLower() == config.ClipTexture;
         }
 
-        public static bool IsOrigin(string texture, FuncGodotMapSettings mapSettings)
+        public static bool IsOrigin(string texture, FuncGodotConfig config)
         {
-            return mapSettings != null && texture.ToLower() == mapSettings.OriginTexture;
+            return config != null && texture.ToLower() == config.OriginTexture;
         }
 
         /// Shadow faces are moved into a separate shadow-only mesh rather than the main visual mesh.
-        public static bool IsShadow(string texture, FuncGodotMapSettings mapSettings)
+        public static bool IsShadow(string texture, FuncGodotConfig config)
         {
-            return mapSettings != null
-                && !string.IsNullOrEmpty(mapSettings.ShadowTexture)
-                && texture.ToLower() == mapSettings.ShadowTexture;
+            return config != null
+                && !string.IsNullOrEmpty(config.ShadowTexture)
+                && texture.ToLower() == config.ShadowTexture;
         }
 
         /// True for any tool texture, none of which contribute to the visual mesh.
-        public static bool FilterFace(string texture, FuncGodotMapSettings mapSettings)
+        public static bool FilterFace(string texture, FuncGodotConfig config)
         {
-            if (mapSettings == null)
+            if (config == null)
             {
                 return false;
             }
 
-            return IsSkip(texture, mapSettings)
-                || IsClip(texture, mapSettings)
-                || IsOrigin(texture, mapSettings)
-                || IsShadow(texture, mapSettings);
+            return IsSkip(texture, config)
+                || IsClip(texture, config)
+                || IsOrigin(texture, config)
+                || IsShadow(texture, config);
         }
 
         /// <summary>
         /// The surface type a face's material declares, used to split collision into separately tagged
-        /// <see cref="StaticCollisionShape3D"/> nodes. Null for any material that is not a
+        /// <see cref="UnaryCollisionShape3D"/> nodes. Null for any material that is not a
         /// <see cref="UnaryStandartMaterial3D"/>, which lands the face in the untyped default pool.
         /// </summary>
         public static UnaryStandartMaterial3D.SurfaceType? GetCollisionSurfaceType(Material material)
@@ -175,10 +175,10 @@ namespace FuncGodot
             return null;
         }
 
-        /// Adds PBR textures to an existing BaseMaterial3D by matching the map settings' name patterns.
-        public static void BuildBaseMaterial(FuncGodotMapSettings mapSettings, BaseMaterial3D material, string texture)
+        /// Adds PBR textures to an existing BaseMaterial3D by matching the config's name patterns.
+        public static void BuildBaseMaterial(FuncGodotConfig config, BaseMaterial3D material, string texture)
         {
-            string path = mapSettings.BaseTextureDir.PathJoin(texture);
+            string path = config.BaseTextureDir.PathJoin(texture);
 
             // A texture may live in a subfolder named after itself, alongside its PBR maps.
             if (DirAccess.DirExistsAbsolute(path))
@@ -188,14 +188,14 @@ namespace FuncGodot
 
             string[] patterns =
             [
-                mapSettings.AlbedoMapPattern,
-                mapSettings.NormalMapPattern,
-                mapSettings.MetallicMapPattern,
-                mapSettings.RoughnessMapPattern,
-                mapSettings.EmissionMapPattern,
-                mapSettings.AoMapPattern,
-                mapSettings.HeightMapPattern,
-                mapSettings.OrmMapPattern,
+                config.AlbedoMapPattern,
+                config.NormalMapPattern,
+                config.MetallicMapPattern,
+                config.RoughnessMapPattern,
+                config.EmissionMapPattern,
+                config.AoMapPattern,
+                config.HeightMapPattern,
+                config.OrmMapPattern,
             ];
 
             for (int i = 0; i < patterns.Length; i++)
@@ -213,7 +213,7 @@ namespace FuncGodot
                     continue;
                 }
 
-                foreach (string extension in mapSettings.TextureFileExtensions)
+                foreach (string extension in config.TextureFileExtensions)
                 {
                     string pbrPath = pattern.Contains("{1}")
                         ? string.Format(pattern, path, extension)
@@ -241,7 +241,7 @@ namespace FuncGodot
         /// </summary>
         public static void BuildTextureMap(
             List<FuncGodotData.EntityData> entityData,
-            FuncGodotMapSettings mapSettings,
+            FuncGodotConfig config,
             out Dictionary<string, Material> textureMaterials,
             out Dictionary<string, Vector2> textureSizes)
         {
@@ -261,17 +261,17 @@ namespace FuncGodot
                     {
                         string textureName = face.Texture;
 
-                        if (FilterFace(textureName, mapSettings) || textureMaterials.ContainsKey(textureName))
+                        if (FilterFace(textureName, config) || textureMaterials.ContainsKey(textureName))
                         {
                             continue;
                         }
 
-                        string materialDir = string.IsNullOrEmpty(mapSettings.BaseMaterialDir)
-                            ? mapSettings.BaseTextureDir
-                            : mapSettings.BaseMaterialDir;
+                        string materialDir = string.IsNullOrEmpty(config.BaseMaterialDir)
+                            ? config.BaseTextureDir
+                            : config.BaseMaterialDir;
 
                         string materialPath = materialDir.PathJoin(textureName)
-                            + "." + mapSettings.MaterialFileExtension;
+                            + "." + config.MaterialFileExtension;
 
                         materialPath = materialPath.Replace("*", "");
 
@@ -287,10 +287,10 @@ namespace FuncGodot
                                 albedo = baseMaterial.AlbedoTexture;
                             }
                             else if (material is ShaderMaterial shaderMaterial
-                                && !string.IsNullOrEmpty(mapSettings.DefaultMaterialAlbedoUniform))
+                                && !string.IsNullOrEmpty(config.DefaultMaterialAlbedoUniform))
                             {
                                 albedo = shaderMaterial
-                                    .GetShaderParameter(mapSettings.DefaultMaterialAlbedoUniform)
+                                    .GetShaderParameter(config.DefaultMaterialAlbedoUniform)
                                     .As<Texture2D>();
                             }
 
@@ -300,38 +300,38 @@ namespace FuncGodot
                             }
                             else
                             {
-                                Texture2D texture = LoadTexture(textureName, mapSettings);
+                                Texture2D texture = LoadTexture(textureName, config);
 
                                 textureSizes[textureName] = texture != null
                                     ? texture.GetSize()
-                                    : Vector2.One * mapSettings.InverseScaleFactor;
+                                    : Vector2.One * config.InverseScaleFactor;
                             }
 
                             continue;
                         }
 
-                        if (mapSettings.DefaultMaterial == null)
+                        if (config.DefaultMaterial == null)
                         {
                             continue;
                         }
 
                         // Material generation
-                        Material generated = (Material)mapSettings.DefaultMaterial.Duplicate(false);
-                        Texture2D generatedTexture = LoadTexture(textureName, mapSettings);
+                        Material generated = (Material)config.DefaultMaterial.Duplicate(false);
+                        Texture2D generatedTexture = LoadTexture(textureName, config);
                         textureSizes[textureName] = generatedTexture.GetSize();
 
                         if (generated is BaseMaterial3D generatedBase)
                         {
                             generatedBase.AlbedoTexture = generatedTexture;
-                            BuildBaseMaterial(mapSettings, generatedBase, textureName);
+                            BuildBaseMaterial(config, generatedBase, textureName);
                         }
                         else if (generated is ShaderMaterial generatedShader)
                         {
-                            generatedShader.SetShaderParameter(mapSettings.DefaultMaterialAlbedoUniform, generatedTexture);
+                            generatedShader.SetShaderParameter(config.DefaultMaterialAlbedoUniform, generatedTexture);
 
-                            foreach (string uniform in mapSettings.ShaderMaterialUniformMapPatterns.Keys)
+                            foreach (string uniform in config.ShaderMaterialUniformMapPatterns.Keys)
                             {
-                                string pattern = mapSettings.ShaderMaterialUniformMapPatterns[uniform];
+                                string pattern = config.ShaderMaterialUniformMapPatterns[uniform];
 
                                 if (!pattern.Contains("{0}"))
                                 {
@@ -339,9 +339,9 @@ namespace FuncGodot
                                     continue;
                                 }
 
-                                foreach (string extension in mapSettings.TextureFileExtensions)
+                                foreach (string extension in config.TextureFileExtensions)
                                 {
-                                    string uniformTexturePath = mapSettings.BaseTextureDir.PathJoin(
+                                    string uniformTexturePath = config.BaseTextureDir.PathJoin(
                                         string.Format(pattern, textureName) + "." + extension);
 
                                     if (!ResourceLoader.Exists(uniformTexturePath))
@@ -355,8 +355,8 @@ namespace FuncGodot
                             }
                         }
 
-                        if (mapSettings.SaveGeneratedMaterials
-                            && !FilterFace(textureName, mapSettings)
+                        if (config.SaveGeneratedMaterials
+                            && !FilterFace(textureName, config)
                             && generatedTexture.ResourcePath != DefaultTexturePath)
                         {
                             string baseDir = materialPath.GetBaseDir();

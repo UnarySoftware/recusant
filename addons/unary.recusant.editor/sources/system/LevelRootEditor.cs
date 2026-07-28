@@ -40,7 +40,8 @@ namespace Unary.Recusant
             OccluderInstance3D occlusion = new()
             {
                 Name = "Occlusion",
-                Occluder = occluderData
+                Occluder = occluderData,
+                Layers = 0b11111111111111111100
             };
 
             AddChild(occlusion);
@@ -99,16 +100,13 @@ namespace Unary.Recusant
             EditorInterface.Singleton.MarkSceneAsUnsaved();
         }
 
-        public void AddGroup()
+        public void InitializeNodes()
         {
             if (!IsInGroup(LevelRootGroup))
             {
                 AddToGroup(LevelRootGroup, true);
             }
-        }
 
-        public void InitializeNodes()
-        {
             if (GetChildCount() > 0)
             {
                 return;
@@ -158,10 +156,6 @@ namespace Unary.Recusant
         {
             await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
-            AddGroup();
-
-            await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-
             _region = GetNodeOrNull<NavigationRegion3D>("Navigation");
 
             if (_region == null)
@@ -193,10 +187,6 @@ namespace Unary.Recusant
 
         private async Task StartBuildNavigation()
         {
-            await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-
-            AddGroup();
-
             await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
             _region = null;

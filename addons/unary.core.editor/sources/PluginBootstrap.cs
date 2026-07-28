@@ -10,7 +10,16 @@ namespace Unary.Core.Editor
     [Tool]
     public partial class PluginBootstrap : EditorPlugin
     {
-        public static PluginBootstrap Singleton { get; private set; } = null;
+        public static PluginBootstrap Singleton
+        {
+            private set;
+            get
+            {
+                field ??= (PluginBootstrap)Engine.Singleton.GetSingleton(nameof(PluginBootstrap));
+                return field;
+            }
+        } = null;
+
         public bool Debug { get; private set; } = false;
 
         private SystemCollector<IPluginSystem> _systems = new();
@@ -59,6 +68,8 @@ namespace Unary.Core.Editor
 
         public override void _EnterTree()
         {
+            Engine.Singleton.RegisterSingleton(nameof(PluginBootstrap), this);
+
             Singleton = this;
 
             PluginLogger.Initialize();
@@ -156,6 +167,8 @@ namespace Unary.Core.Editor
             PluginLogger.Deinitialize();
 
             Types.Deinitialize();
+
+            Engine.Singleton.UnregisterSingleton(nameof(PluginBootstrap));
         }
     }
 }

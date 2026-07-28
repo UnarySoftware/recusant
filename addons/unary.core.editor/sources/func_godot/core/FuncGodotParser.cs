@@ -28,7 +28,7 @@ namespace FuncGodot
         /// Reads the map file and produces its entities and groups, with every entity resolved against the
         /// FGD and its properties converted from strings into the types the definition declares.
         /// </summary>
-        public FuncGodotData.ParseData ParseMapData(string mapFile, FuncGodotMapSettings mapSettings)
+        public FuncGodotData.ParseData ParseMapData(string mapFile, FuncGodotConfig config)
         {
             FuncGodotData.ParseData parseData = new();
 
@@ -41,7 +41,7 @@ namespace FuncGodot
 
             Step("Parsing as Valve 220 MAP");
 
-            if (!ParseValveMap(mapData, mapSettings, parseData))
+            if (!ParseValveMap(mapData, config, parseData))
             {
                 GD.PushError($"Error: Failed to parse map file ({mapFile})");
                 return new FuncGodotData.ParseData();
@@ -51,7 +51,7 @@ namespace FuncGodot
             ResolveGroupHierarchy(parseData.Groups);
 
             Step("Checking entity omission, definition status, and property types");
-            ResolveEntityDefinitions(parseData.Entities, mapSettings);
+            ResolveEntityDefinitions(parseData.Entities, config);
 
             Step("Removing omitted layers and groups");
             parseData.Groups.RemoveAll(group => group.Omit);
@@ -135,7 +135,7 @@ namespace FuncGodot
         /// </summary>
         private static bool ParseValveMap(
             string[] mapData,
-            FuncGodotMapSettings mapSettings,
+            FuncGodotConfig config,
             FuncGodotData.ParseData parseData)
         {
             List<FuncGodotData.EntityData> entities = parseData.Entities;
@@ -255,16 +255,16 @@ namespace FuncGodot
                 // Brush faces.
                 if (brush != null && line.StartsWith('('))
                 {
-                    if (TryParseFace(line, lineNumber, mapSettings, out FuncGodotData.FaceData face))
+                    if (TryParseFace(line, lineNumber, config, out FuncGodotData.FaceData face))
                     {
                         brush.Planes.Add(face.Plane);
 
                         // An origin brush must be textured entirely with the origin texture to count.
                         if (brush.Faces.Count == 0)
                         {
-                            brush.Origin = FuncGodotUtil.IsOrigin(face.Texture, mapSettings);
+                            brush.Origin = FuncGodotUtil.IsOrigin(face.Texture, config);
                         }
-                        else if (brush.Origin && !FuncGodotUtil.IsOrigin(face.Texture, mapSettings))
+                        else if (brush.Origin && !FuncGodotUtil.IsOrigin(face.Texture, config))
                         {
                             brush.Origin = false;
                         }
@@ -383,7 +383,7 @@ namespace FuncGodot
         private static bool TryParseFace(
             string line,
             int lineNumber,
-            FuncGodotMapSettings mapSettings,
+            FuncGodotConfig config,
             out FuncGodotData.FaceData face)
         {
             face = null;
@@ -409,7 +409,7 @@ namespace FuncGodot
                     return false;
                 }
 
-                points[i] = new Vector3(values[0], values[1], values[2]) * mapSettings.ScaleFactor;
+                points[i] = new Vector3(values[0], values[1], values[2]) * config.ScaleFactor;
             }
 
             face = new FuncGodotData.FaceData
@@ -470,8 +470,8 @@ namespace FuncGodot
                 return false;
             }
 
-            face.Uv.X = new Vector2(scale[1], 0.0f) * mapSettings.ScaleFactor;
-            face.Uv.Y = new Vector2(0.0f, scale[2]) * mapSettings.ScaleFactor;
+            face.Uv.X = new Vector2(scale[1], 0.0f) * config.ScaleFactor;
+            face.Uv.Y = new Vector2(0.0f, scale[2]) * config.ScaleFactor;
 
             return true;
         }
@@ -481,20 +481,21 @@ namespace FuncGodot
         #region ENTITY DEFINITIONS
 
         /// <summary>
-        /// Attaches each entity's FGD definition, drops entities in omitted groups, and converts the entity's
+        /// Attaches each entity's FGD definition, drops entities in omitted groups, renames the class properties
+        /// the map spells in snake_case back to the names the definition declares, and converts the entity's
         /// string properties into the Variant types the definition declares.
         /// </summary>
         private static void ResolveEntityDefinitions(
             List<FuncGodotData.EntityData> entities,
-            FuncGodotMapSettings mapSettings)
+            FuncGodotConfig config)
         {
-            Dictionary<string, FuncGodotFGDEntityClass> entityDefinitions = mapSettings.EntityFgd.GetEntityDefinitions();
+            Dictionary<string, FuncGodotFGDEntityClass> entityDefinitions = config.GetEntityDefinitions();
             HashSet<string> missingDefinitions = [];
 
             // Fallbacks, so an entity without a definition still builds into something sane.
             FuncGodotFGDPointClass defaultPointClass = new()
             {
-                NodeClass = "Marker3D",
+
             };
 
             FuncGodotFGDSolidClass defaultSolidClass = new()
@@ -507,6 +508,7 @@ namespace FuncGodot
 
             Dictionary<string, Dictionary<string, Variant>> propertyDefaultsCache = [];
             Dictionary<string, Dictionary<string, Variant>> propertyDescriptionsCache = [];
+            Dictionary<string, Dictionary<string, string>> propertyNamesCache = [];
 
             for (int i = entities.Count - 1; i >= 0; i--)
             {
@@ -548,8 +550,65 @@ namespace FuncGodot
                     propertyDescriptionsCache[entityDefinition.Classname] = descriptions;
                 }
 
+                if (!propertyNamesCache.TryGetValue(entityDefinition.Classname, out Dictionary<string, string> names))
+                {
+                    names = BuildPropertyNameMap(defaults);
+                    propertyNamesCache[entityDefinition.Classname] = names;
+                }
+
+                // Names first: everything downstream matches map properties against the definition's own keys.
+                RestorePropertyNames(entity, names);
+
                 ConvertEntityProperties(entity, defaults, descriptions);
                 ApplyPropertyDefaults(entity, defaults, descriptions);
+            }
+        }
+
+        /// <summary>
+        /// Maps each class property's snake_case FGD spelling back to the PascalCase name the definition and
+        /// the generated node declare it under. Built by converting the declared names forward, the same way
+        /// the FGD writer does, rather than converting the map's keys back: the reverse conversion is lossy for
+        /// names holding acronyms or digits, so <c>Speed2D</c> would come back as <c>Speed2d</c>.
+        /// </summary>
+        private static Dictionary<string, string> BuildPropertyNameMap(Dictionary<string, Variant> defaults)
+        {
+            Dictionary<string, string> names = [];
+
+            foreach (string property in defaults.Keys)
+            {
+                string key = property.ToSnakeCase();
+
+                if (key != property)
+                {
+                    names[key] = property;
+                }
+            }
+
+            return names;
+        }
+
+        /// <summary>
+        /// Renames the entity's snake_case class properties to their declared names. Keys the definition does
+        /// not declare - <c>classname</c>, <c>origin</c>, TrenchBroom's <c>_tb_*</c> - are left alone, as are
+        /// maps written against an older FGD that already spell a property the declared way.
+        /// </summary>
+        private static void RestorePropertyNames(FuncGodotData.EntityData entity, Dictionary<string, string> names)
+        {
+            if (names.Count == 0)
+            {
+                return;
+            }
+
+            foreach (string property in new List<string>(entity.Properties.Keys))
+            {
+                if (!names.TryGetValue(property, out string declared)
+                    || entity.Properties.ContainsKey(declared))
+                {
+                    continue;
+                }
+
+                entity.Properties[declared] = entity.Properties[property];
+                entity.Properties.Remove(property);
             }
         }
 

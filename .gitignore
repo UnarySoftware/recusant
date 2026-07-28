@@ -39,3 +39,4 @@ unary.recusant/analyzers/obj
 *.ttf
 *.wav
 storage/
+**/autosave/**

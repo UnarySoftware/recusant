@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="FuncGodotFGDPointClass" format=3 uid="uid://lf6lcucc5v20"]
+
+[ext_resource type="Script" uid="uid://bx5076tvgjwkk" path="res://addons/unary.core.editor/sources/func_godot/fgd/FuncGodotFGDBaseClass.cs" id="1_ae2bq"]
+[ext_resource type="Script" uid="uid://mp4q5vujdupb" path="res://addons/unary.core.editor/sources/func_godot/fgd/FuncGodotFGDPointClassDisplayDescriptor.cs" id="2_3ovrn"]
+[ext_resource type="PackedScene" uid="uid://colxbhdhr5bu1" path="res://unary.recusant/meshes/Dummy.tscn" id="3_3ovrn"]
+[ext_resource type="Script" uid="uid://db2hiqt2xetip" path="res://addons/unary.core.editor/sources/func_godot/fgd/FuncGodotFGDPointClass.cs" id="3_ae2bq"]
+[ext_resource type="Script" uid="uid://j7t2gc45eqvw" path="res://unary.core/sources/resources/TypeResource.cs" id="3_f80wk"]
+
+[sub_resource type="Resource" id="Resource_f80wk"]
+script = ExtResource("2_3ovrn")
+DisplayAssetPath = "unary.recusant/meshes/Dummy.glb"
+Scale = "39.37"
+metadata/_custom_type_script = "uid://mp4q5vujdupb"
+
+[sub_resource type="Resource" id="Resource_g44vl"]
+script = ExtResource("3_f80wk")
+TargetValue = "uid://b51vr0xdcqqy8"
+metadata/_custom_type_script = "uid://j7t2gc45eqvw"
+
+[resource]
+script = ExtResource("3_ae2bq")
+SceneFile = ExtResource("3_3ovrn")
+DisplayDescriptors = Array[ExtResource("2_3ovrn")]([SubResource("Resource_f80wk")])
+Classname = "player"
+BaseClasses = Array[ExtResource("1_ae2bq")]([])
+MetaProperties = Dictionary[String, Variant]({
+"color": Color(0.8, 0.8, 0.8, 1),
+"model": "{ \"path\": \"unary.recusant/meshes/Dummy.glb\", \"scale\": 39.37 }",
+"size": AABB(-16, -16, 0, 16, 16, 72)
+})
+NodeType = SubResource("Resource_g44vl")
+metadata/_custom_type_script = "uid://db2hiqt2xetip"
