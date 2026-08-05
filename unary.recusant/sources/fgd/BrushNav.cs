@@ -90,4 +90,17 @@ namespace Unary.Recusant
 
 #endif
     }
+
+    public static class BrushNavFlagExtension
+    {
+        public static string ToStringPretty(this BrushNav.Flag flag)
+        {
+            if (flag == 0)
+            {
+                return "None";
+            }
+
+            return flag.ToString();
+        }
+    }
 }

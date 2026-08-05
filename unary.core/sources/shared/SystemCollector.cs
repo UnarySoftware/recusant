@@ -217,12 +217,23 @@ namespace Unary.Core
         {
             for (int i = _systemsList.Count - 1; i >= 0; i--)
             {
-                T target = _systemsList[i];
-                target.Deinitialize();
+                _systemsList[i].Deinitialize();
+            }
 
-                if (target is Node nodeSystem && nodeSystem.GetParent() == null)
+            for (int i = _systemsList.Count - 1; i >= 0; i--)
+            {
+                T target = _systemsList[i];
+
+                if (target is Node nodeSystem)
                 {
-                    nodeSystem.Free();
+                    if (nodeSystem.GetParent() == null)
+                    {
+                        nodeSystem.Free();
+                    }
+                }
+                else if (target is RefCounted refCountedSystem)
+                {
+                    refCountedSystem.Dispose();
                 }
             }
 

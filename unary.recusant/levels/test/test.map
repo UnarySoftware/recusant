@@ -79,12 +79,12 @@
 }
 // brush 8
 {
-( 294 -924 256 ) ( 294 -412 0 ) ( 294 -412 8 ) "unary.core . materials/dev/clip" [ 0 1 0 -48 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 384 -924 256 ) ( 294 -924 256 ) ( 294 -924 264 ) "unary.core . materials/dev/clip" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 294 -412 0 ) ( 294 -924 256 ) ( 384 -924 256 ) "unary.core . materials/dev/clip" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -412 8 ) ( 384 -924 264 ) ( 294 -924 264 ) "unary.core . materials/dev/clip" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -412 8 ) ( 294 -412 8 ) ( 294 -412 0 ) "unary.core . materials/dev/clip" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 384 -924 264 ) ( 384 -412 8 ) ( 384 -412 0 ) "unary.core . materials/dev/clip" [ 0 1 0 -48 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 294 -364 8 ) ( 294 -924 288 ) ( 294 -924 280 ) "unary.core . materials/dev/clip" [ 0 1 0 -48 ] [ 0 0 -1 0 ] 180 0.25 0.25
+( 294 -924 288 ) ( 384 -924 288 ) ( 384 -924 280 ) "unary.core . materials/dev/clip" [ -1 0 0 0 ] [ 0 0 -1 0 ] 180 0.25 0.25
+( 384 -924 280 ) ( 384 -364 0 ) ( 294 -364 0 ) "unary.core . materials/dev/clip" [ 0 1 0 -48 ] [ 1 0 0 0 ] 180 0.25 0.25
+( 384 -924 288 ) ( 294 -924 288 ) ( 294 -364 8 ) "unary.core . materials/dev/clip" [ 0 1 0 -48 ] [ 1 0 0 0 ] 180 0.25 0.25
+( 384 -364 0 ) ( 384 -364 8 ) ( 294 -364 8 ) "unary.core . materials/dev/clip" [ -1 0 0 0 ] [ 0 0 -1 0 ] 180 0.25 0.25
+( 384 -924 288 ) ( 384 -364 8 ) ( 384 -364 0 ) "unary.core . materials/dev/clip" [ 0 1 0 -48 ] [ 0 0 -1 0 ] 180 0.25 0.25
 }
 // brush 9
 {
@@ -231,11 +231,11 @@
 }
 // brush 25
 {
-( 294 -412 0 ) ( 294 -940 264 ) ( 294 -940 0 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 294 -940 0 ) ( 294 -940 264 ) ( 384 -940 264 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 384 -940 0 ) ( 384 -412 0 ) ( 294 -412 0 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -940 264 ) ( 294 -412 0 ) ( 384 -412 0 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -940 0 ) ( 384 -940 264 ) ( 384 -412 0 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 294 -940 288 ) ( 294 -940 0 ) ( 294 -364 0 ) "unary.core . materials/dev/orange" [ 0 1 0 -112 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 294 -940 288 ) ( 384 -940 288 ) ( 384 -940 0 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 384 -940 0 ) ( 384 -364 0 ) ( 294 -364 0 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -364 0 ) ( 384 -364 0 ) ( 384 -940 288 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -940 288 ) ( 384 -364 0 ) ( 384 -940 0 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 0 ] 0 0.25 0.25
 }
 // brush 26
 {
@@ -254,6 +254,402 @@
 ( -376 -1282.07 288 ) ( -324 -1192 56 ) ( -233.933 -1244 56 ) "unary.core . materials/dev/orange" [ -0.866025 0.5 0 77.6312 ] [ 0.5 0.866025 0 9.20868 ] 0 0.25 0.25
 ( -233.933 -1244 24 ) ( -233.933 -1244 56 ) ( -324 -1192 56 ) "unary.core . materials/dev/orange" [ -0.866025 0.5 0 77.6312 ] [ 0 0 -1 0 ] 0 0.25 0.25
 ( -233.933 -1244 56 ) ( -233.933 -1244 24 ) ( -285.933 -1334.07 256 ) "unary.core . materials/dev/orange" [ -0.5 -0.866025 0 -9.20868 ] [ 0 0 -1 0 ] 0 0.25 0.25
+}
+// brush 28
+{
+( 856 176 0 ) ( 856 177 0 ) ( 856 176 1 ) "unary.core . materials/dev/orange" [ 0 -1 0 0 ] [ 0 0 -1 0 ] 270 1 1
+( 856 176 0 ) ( 856 176 1 ) ( 857 176 0 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 0 -1 0 ] 90 1 1
+( 856 176 0 ) ( 857 176 0 ) ( 856 177 0 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 -1 0 0 ] 270 1 1
+( 880 240 16 ) ( 880 241 16 ) ( 881 240 16 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 -1 0 0 ] 270 1 1
+( 880 240 16 ) ( 881 240 16 ) ( 880 240 17 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 270 1 1
+( 872 240 16 ) ( 872 240 17 ) ( 872 241 16 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 0 ] 180 1 1
+}
+// brush 29
+{
+( 872 176 16 ) ( 872 177 16 ) ( 872 176 17 ) "unary.core . materials/dev/orange" [ 0 -1 0 0 ] [ 0 0 -1 16 ] 90 1 1
+( 872 176 16 ) ( 872 176 17 ) ( 873 176 16 ) "unary.core . materials/dev/orange" [ 1 0 0 -16 ] [ 0 0 -1 16 ] 270 1 1
+( 872 176 16 ) ( 873 176 16 ) ( 872 177 16 ) "unary.core . materials/dev/orange" [ -1 0 0 16 ] [ 0 -1 0 0 ] 90 1 1
+( 896 240 32 ) ( 896 241 32 ) ( 897 240 32 ) "unary.core . materials/dev/orange" [ 1 0 0 -16 ] [ 0 -1 0 0 ] 90 1 1
+( 896 240 32 ) ( 897 240 32 ) ( 896 240 33 ) "unary.core . materials/dev/orange" [ -1 0 0 16 ] [ 0 0 -1 16 ] 90 1 1
+( 888 240 32 ) ( 888 240 33 ) ( 888 241 32 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 16 ] 0 1 1
+}
+// brush 30
+{
+( 888 176 32 ) ( 888 177 32 ) ( 888 176 33 ) "unary.core . materials/dev/orange" [ 0 -1 0 0 ] [ 0 0 -1 32 ] 180 1 1
+( 888 176 32 ) ( 888 176 33 ) ( 889 176 32 ) "unary.core . materials/dev/orange" [ 1 0 0 -32 ] [ 0 0 -1 32 ] 0 1 1
+( 888 176 32 ) ( 889 176 32 ) ( 888 177 32 ) "unary.core . materials/dev/orange" [ -1 0 0 32 ] [ 0 -1 0 0 ] 180 1 1
+( 912 240 48 ) ( 912 241 48 ) ( 913 240 48 ) "unary.core . materials/dev/orange" [ 1 0 0 -32 ] [ 0 -1 0 0 ] 180 1 1
+( 912 240 48 ) ( 913 240 48 ) ( 912 240 49 ) "unary.core . materials/dev/orange" [ -1 0 0 32 ] [ 0 0 -1 32 ] 180 1 1
+( 904 240 48 ) ( 904 240 49 ) ( 904 241 48 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 32 ] 90 1 1
+}
+// brush 31
+{
+( 904 176 48 ) ( 904 177 48 ) ( 904 176 49 ) "unary.core . materials/dev/orange" [ 0 -1 0 0 ] [ 0 0 -1 48 ] 270 1 1
+( 904 176 48 ) ( 904 176 49 ) ( 905 176 48 ) "unary.core . materials/dev/orange" [ 1 0 0 -48 ] [ 0 0 -1 48 ] 90 1 1
+( 904 176 48 ) ( 905 176 48 ) ( 904 177 48 ) "unary.core . materials/dev/orange" [ -1 0 0 48 ] [ 0 -1 0 0 ] 270 1 1
+( 928 240 64 ) ( 928 241 64 ) ( 929 240 64 ) "unary.core . materials/dev/orange" [ 1 0 0 -48 ] [ 0 -1 0 0 ] 270 1 1
+( 928 240 64 ) ( 929 240 64 ) ( 928 240 65 ) "unary.core . materials/dev/orange" [ -1 0 0 48 ] [ 0 0 -1 48 ] 270 1 1
+( 920 240 64 ) ( 920 240 65 ) ( 920 241 64 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 48 ] 180 1 1
+}
+// brush 32
+{
+( 920 176 64 ) ( 920 177 64 ) ( 920 176 65 ) "unary.core . materials/dev/orange" [ 0 -1 0 0 ] [ 0 0 -1 64 ] 90 1 1
+( 920 176 64 ) ( 920 176 65 ) ( 921 176 64 ) "unary.core . materials/dev/orange" [ 1 0 0 -64 ] [ 0 0 -1 64 ] 270 1 1
+( 920 176 64 ) ( 921 176 64 ) ( 920 177 64 ) "unary.core . materials/dev/orange" [ -1 0 0 64 ] [ 0 -1 0 0 ] 90 1 1
+( 944 240 80 ) ( 944 241 80 ) ( 945 240 80 ) "unary.core . materials/dev/orange" [ 1 0 0 -64 ] [ 0 -1 0 0 ] 90 1 1
+( 944 240 80 ) ( 945 240 80 ) ( 944 240 81 ) "unary.core . materials/dev/orange" [ -1 0 0 64 ] [ 0 0 -1 64 ] 90 1 1
+( 936 240 80 ) ( 936 240 81 ) ( 936 241 80 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 64 ] 0 1 1
+}
+// brush 33
+{
+( 936 176 80 ) ( 936 177 80 ) ( 936 176 81 ) "unary.core . materials/dev/orange" [ 0 -1 0 0 ] [ 0 0 -1 80 ] 180 1 1
+( 936 176 80 ) ( 936 176 81 ) ( 937 176 80 ) "unary.core . materials/dev/orange" [ 1 0 0 -80 ] [ 0 0 -1 80 ] 0 1 1
+( 936 176 80 ) ( 937 176 80 ) ( 936 177 80 ) "unary.core . materials/dev/orange" [ -1 0 0 80 ] [ 0 -1 0 0 ] 180 1 1
+( 960 240 96 ) ( 960 241 96 ) ( 961 240 96 ) "unary.core . materials/dev/orange" [ 1 0 0 -80 ] [ 0 -1 0 0 ] 180 1 1
+( 960 240 96 ) ( 961 240 96 ) ( 960 240 97 ) "unary.core . materials/dev/orange" [ -1 0 0 80 ] [ 0 0 -1 80 ] 180 1 1
+( 952 240 96 ) ( 952 240 97 ) ( 952 241 96 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 80 ] 90 1 1
+}
+// brush 34
+{
+( 952 176 96 ) ( 952 177 96 ) ( 952 176 97 ) "unary.core . materials/dev/orange" [ 0 -1 0 0 ] [ 0 0 -1 96 ] 270 1 1
+( 952 176 96 ) ( 952 176 97 ) ( 953 176 96 ) "unary.core . materials/dev/orange" [ 1 0 0 -96 ] [ 0 0 -1 96 ] 90 1 1
+( 952 176 96 ) ( 953 176 96 ) ( 952 177 96 ) "unary.core . materials/dev/orange" [ -1 0 0 96 ] [ 0 -1 0 0 ] 270 1 1
+( 976 240 112 ) ( 976 241 112 ) ( 977 240 112 ) "unary.core . materials/dev/orange" [ 1 0 0 -96 ] [ 0 -1 0 0 ] 270 1 1
+( 976 240 112 ) ( 977 240 112 ) ( 976 240 113 ) "unary.core . materials/dev/orange" [ -1 0 0 96 ] [ 0 0 -1 96 ] 270 1 1
+( 968 240 112 ) ( 968 240 113 ) ( 968 241 112 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 96 ] 180 1 1
+}
+// brush 35
+{
+( 968 176 112 ) ( 968 177 112 ) ( 968 176 113 ) "unary.core . materials/dev/orange" [ 0 -1 0 0 ] [ 0 0 -1 112 ] 270 1 1
+( 968 176 112 ) ( 968 176 113 ) ( 969 176 112 ) "unary.core . materials/dev/orange" [ 1 0 0 -112 ] [ 0 0 -1 112 ] 90 1 1
+( 968 176 112 ) ( 969 176 112 ) ( 968 177 112 ) "unary.core . materials/dev/orange" [ -1 0 0 112 ] [ 0 -1 0 0 ] 270 1 1
+( 992 240 128 ) ( 992 241 128 ) ( 993 240 128 ) "unary.core . materials/dev/orange" [ 1 0 0 -112 ] [ 0 -1 0 0 ] 270 1 1
+( 992 240 128 ) ( 993 240 128 ) ( 992 240 129 ) "unary.core . materials/dev/orange" [ -1 0 0 112 ] [ 0 0 -1 112 ] 270 1 1
+( 984 240 128 ) ( 984 240 129 ) ( 984 241 128 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 112 ] 180 1 1
+}
+// brush 36
+{
+( 856 150 0 ) ( 856 151 0 ) ( 856 150 1 ) "unary.core . materials/dev/orange" [ 0 -1 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( 856 90 0 ) ( 856 90 1 ) ( 857 90 0 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 0 -1 0 ] 180 1 1
+( 856 150 0 ) ( 857 150 0 ) ( 856 151 0 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
+( 873 174 17 ) ( 873 175 17 ) ( 874 174 17 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 -1 0 0 ] 270 1 1
+( 873 167 16 ) ( 874 167 16 ) ( 873 167 17 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 270 1 1
+( 873 174 16 ) ( 873 174 17 ) ( 873 175 16 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1
+}
+// brush 37
+{
+( 873 150 17 ) ( 873 151 17 ) ( 873 150 18 ) "unary.core . materials/dev/orange" [ 0 -1 0 0 ] [ 0 0 -1 17 ] 270 1 1
+( 873 90 17 ) ( 873 90 18 ) ( 874 90 17 ) "unary.core . materials/dev/orange" [ 1 0 0 -17 ] [ 0 0 -1 17 ] 90 1 1
+( 873 150 17 ) ( 874 150 17 ) ( 873 151 17 ) "unary.core . materials/dev/orange" [ -1 0 0 17 ] [ 0 -1 0 0 ] 270 1 1
+( 890 174 34 ) ( 890 175 34 ) ( 891 174 34 ) "unary.core . materials/dev/orange" [ 1 0 0 -17 ] [ 0 -1 0 0 ] 180 1 1
+( 890 167 33 ) ( 891 167 33 ) ( 890 167 34 ) "unary.core . materials/dev/orange" [ -1 0 0 17 ] [ 0 0 -1 17 ] 180 1 1
+( 890 174 33 ) ( 890 174 34 ) ( 890 175 33 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 17 ] 270 1 1
+}
+// brush 38
+{
+( 890 150 34 ) ( 890 151 34 ) ( 890 150 35 ) "unary.core . materials/dev/orange" [ 0 -1 0 0 ] [ 0 0 -1 34 ] 0 1 1
+( 890 90 34 ) ( 890 90 35 ) ( 891 90 34 ) "unary.core . materials/dev/orange" [ 1 0 0 -34 ] [ 0 0 -1 34 ] 180 1 1
+( 890 150 34 ) ( 891 150 34 ) ( 890 151 34 ) "unary.core . materials/dev/orange" [ -1 0 0 34 ] [ 0 -1 0 0 ] 0 1 1
+( 907 174 51 ) ( 907 175 51 ) ( 908 174 51 ) "unary.core . materials/dev/orange" [ 1 0 0 -34 ] [ 0 -1 0 0 ] 270 1 1
+( 907 167 50 ) ( 908 167 50 ) ( 907 167 51 ) "unary.core . materials/dev/orange" [ -1 0 0 34 ] [ 0 0 -1 34 ] 270 1 1
+( 907 174 50 ) ( 907 174 51 ) ( 907 175 50 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 34 ] 0 1 1
+}
+// brush 39
+{
+( 907 150 51 ) ( 907 151 51 ) ( 907 150 52 ) "unary.core . materials/dev/orange" [ 0 -1 0 0 ] [ 0 0 -1 51 ] 180 1 1
+( 907 90 51 ) ( 907 90 52 ) ( 908 90 51 ) "unary.core . materials/dev/orange" [ 1 0 0 -51 ] [ 0 0 -1 51 ] 0 1 1
+( 907 150 51 ) ( 908 150 51 ) ( 907 151 51 ) "unary.core . materials/dev/orange" [ -1 0 0 51 ] [ 0 -1 0 0 ] 180 1 1
+( 924 174 68 ) ( 924 175 68 ) ( 925 174 68 ) "unary.core . materials/dev/orange" [ 1 0 0 -51 ] [ 0 -1 0 0 ] 90 1 1
+( 924 167 67 ) ( 925 167 67 ) ( 924 167 68 ) "unary.core . materials/dev/orange" [ -1 0 0 51 ] [ 0 0 -1 51 ] 90 1 1
+( 924 174 67 ) ( 924 174 68 ) ( 924 175 67 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 51 ] 180 1 1
+}
+// brush 40
+{
+( 924 150 68 ) ( 924 151 68 ) ( 924 150 69 ) "unary.core . materials/dev/orange" [ 0 -1 0 0 ] [ 0 0 -1 68 ] 270 1 1
+( 924 90 68 ) ( 924 90 69 ) ( 925 90 68 ) "unary.core . materials/dev/orange" [ 1 0 0 -68 ] [ 0 0 -1 68 ] 90 1 1
+( 924 150 68 ) ( 925 150 68 ) ( 924 151 68 ) "unary.core . materials/dev/orange" [ -1 0 0 68 ] [ 0 -1 0 0 ] 270 1 1
+( 941 174 85 ) ( 941 175 85 ) ( 942 174 85 ) "unary.core . materials/dev/orange" [ 1 0 0 -68 ] [ 0 -1 0 0 ] 180 1 1
+( 941 167 84 ) ( 942 167 84 ) ( 941 167 85 ) "unary.core . materials/dev/orange" [ -1 0 0 68 ] [ 0 0 -1 68 ] 180 1 1
+( 941 174 84 ) ( 941 174 85 ) ( 941 175 84 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 68 ] 270 1 1
+}
+// brush 41
+{
+( 941 150 85 ) ( 941 151 85 ) ( 941 150 86 ) "unary.core . materials/dev/orange" [ 0 -1 0 0 ] [ 0 0 -1 85 ] 90 1 1
+( 941 90 85 ) ( 941 90 86 ) ( 942 90 85 ) "unary.core . materials/dev/orange" [ 1 0 0 -85 ] [ 0 0 -1 85 ] 270 1 1
+( 941 150 85 ) ( 942 150 85 ) ( 941 151 85 ) "unary.core . materials/dev/orange" [ -1 0 0 85 ] [ 0 -1 0 0 ] 90 1 1
+( 958 174 102 ) ( 958 175 102 ) ( 959 174 102 ) "unary.core . materials/dev/orange" [ 1 0 0 -85 ] [ 0 -1 0 0 ] 0 1 1
+( 958 167 101 ) ( 959 167 101 ) ( 958 167 102 ) "unary.core . materials/dev/orange" [ -1 0 0 85 ] [ 0 0 -1 85 ] 0 1 1
+( 958 174 101 ) ( 958 174 102 ) ( 958 175 101 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 85 ] 90 1 1
+}
+// brush 42
+{
+( 958 150 102 ) ( 958 151 102 ) ( 958 150 103 ) "unary.core . materials/dev/orange" [ 0 -1 0 0 ] [ 0 0 -1 102 ] 90 1 1
+( 958 90 102 ) ( 958 90 103 ) ( 959 90 102 ) "unary.core . materials/dev/orange" [ 1 0 0 -102 ] [ 0 0 -1 102 ] 270 1 1
+( 958 150 102 ) ( 959 150 102 ) ( 958 151 102 ) "unary.core . materials/dev/orange" [ -1 0 0 102 ] [ 0 -1 0 0 ] 90 1 1
+( 975 174 119 ) ( 975 175 119 ) ( 976 174 119 ) "unary.core . materials/dev/orange" [ 1 0 0 -102 ] [ 0 -1 0 0 ] 0 1 1
+( 975 167 118 ) ( 976 167 118 ) ( 975 167 119 ) "unary.core . materials/dev/orange" [ -1 0 0 102 ] [ 0 0 -1 102 ] 0 1 1
+( 975 174 118 ) ( 975 174 119 ) ( 975 175 118 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 102 ] 90 1 1
+}
+// brush 43
+{
+( 975 150 119 ) ( 975 151 119 ) ( 975 150 120 ) "unary.core . materials/dev/orange" [ 0 -1 0 0 ] [ 0 0 -1 119 ] 90 1 1
+( 975 90 119 ) ( 975 90 120 ) ( 976 90 119 ) "unary.core . materials/dev/orange" [ 1 0 0 9 ] [ 0 0 -1 119 ] 270 1 1
+( 975 150 119 ) ( 976 150 119 ) ( 975 151 119 ) "unary.core . materials/dev/orange" [ -1 0 0 -9 ] [ 0 -1 0 0 ] 90 1 1
+( 992 174 136 ) ( 992 175 136 ) ( 993 174 136 ) "unary.core . materials/dev/orange" [ 1 0 0 9 ] [ 0 -1 0 0 ] 0 1 1
+( 992 167 135 ) ( 993 167 135 ) ( 992 167 136 ) "unary.core . materials/dev/orange" [ -1 0 0 -9 ] [ 0 0 -1 119 ] 0 1 1
+( 992 174 135 ) ( 992 174 136 ) ( 992 175 135 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 119 ] 90 1 1
+}
+// brush 44
+{
+( 856 53 0 ) ( 856 54 0 ) ( 856 53 1 ) "unary.core . materials/dev/orange" [ 0 -1 0 -97 ] [ 0 0 -1 0 ] 90 1 1
+( 856 -7 0 ) ( 856 -7 1 ) ( 857 -7 0 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 0 -1 0 ] 270 1 1
+( 856 53 0 ) ( 857 53 0 ) ( 856 54 0 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 -1 0 -97 ] 90 1 1
+( 873 77 18 ) ( 873 78 18 ) ( 874 77 18 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 -1 0 -97 ] 270 1 1
+( 873 70 16 ) ( 874 70 16 ) ( 873 70 17 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( 874 77 16 ) ( 874 77 17 ) ( 874 78 16 ) "unary.core . materials/dev/orange" [ 0 1 0 97 ] [ 0 0 -1 0 ] 0 1 1
+}
+// brush 45
+{
+( 874 53 18 ) ( 874 54 18 ) ( 874 53 19 ) "unary.core . materials/dev/orange" [ 0 -1 0 -97 ] [ 0 0 -1 18 ] 180 1 1
+( 874 -7 18 ) ( 874 -7 19 ) ( 875 -7 18 ) "unary.core . materials/dev/orange" [ 1 0 0 -18 ] [ 0 0 -1 18 ] 0 1 1
+( 874 53 18 ) ( 875 53 18 ) ( 874 54 18 ) "unary.core . materials/dev/orange" [ -1 0 0 18 ] [ 0 -1 0 -97 ] 180 1 1
+( 891 77 36 ) ( 891 78 36 ) ( 892 77 36 ) "unary.core . materials/dev/orange" [ 1 0 0 -18 ] [ 0 -1 0 -97 ] 0 1 1
+( 891 70 34 ) ( 892 70 34 ) ( 891 70 35 ) "unary.core . materials/dev/orange" [ -1 0 0 18 ] [ 0 0 -1 18 ] 90 1 1
+( 892 77 34 ) ( 892 77 35 ) ( 892 78 34 ) "unary.core . materials/dev/orange" [ 0 1 0 97 ] [ 0 0 -1 18 ] 90 1 1
+}
+// brush 46
+{
+( 892 53 36 ) ( 892 54 36 ) ( 892 53 37 ) "unary.core . materials/dev/orange" [ 0 -1 0 -97 ] [ 0 0 -1 36 ] 270 1 1
+( 892 -7 36 ) ( 892 -7 37 ) ( 893 -7 36 ) "unary.core . materials/dev/orange" [ 1 0 0 -36 ] [ 0 0 -1 36 ] 90 1 1
+( 892 53 36 ) ( 893 53 36 ) ( 892 54 36 ) "unary.core . materials/dev/orange" [ -1 0 0 36 ] [ 0 -1 0 -97 ] 270 1 1
+( 909 77 54 ) ( 909 78 54 ) ( 910 77 54 ) "unary.core . materials/dev/orange" [ 1 0 0 -36 ] [ 0 -1 0 -97 ] 90 1 1
+( 909 70 52 ) ( 910 70 52 ) ( 909 70 53 ) "unary.core . materials/dev/orange" [ -1 0 0 36 ] [ 0 0 -1 36 ] 180 1 1
+( 910 77 52 ) ( 910 77 53 ) ( 910 78 52 ) "unary.core . materials/dev/orange" [ 0 1 0 97 ] [ 0 0 -1 36 ] 180 1 1
+}
+// brush 47
+{
+( 910 53 54 ) ( 910 54 54 ) ( 910 53 55 ) "unary.core . materials/dev/orange" [ 0 -1 0 -97 ] [ 0 0 -1 54 ] 270 1 1
+( 910 -7 54 ) ( 910 -7 55 ) ( 911 -7 54 ) "unary.core . materials/dev/orange" [ 1 0 0 -54 ] [ 0 0 -1 54 ] 90 1 1
+( 910 53 54 ) ( 911 53 54 ) ( 910 54 54 ) "unary.core . materials/dev/orange" [ -1 0 0 54 ] [ 0 -1 0 -97 ] 270 1 1
+( 927 77 72 ) ( 927 78 72 ) ( 928 77 72 ) "unary.core . materials/dev/orange" [ 1 0 0 -54 ] [ 0 -1 0 -97 ] 90 1 1
+( 927 70 70 ) ( 928 70 70 ) ( 927 70 71 ) "unary.core . materials/dev/orange" [ -1 0 0 54 ] [ 0 0 -1 54 ] 180 1 1
+( 928 77 70 ) ( 928 77 71 ) ( 928 78 70 ) "unary.core . materials/dev/orange" [ 0 1 0 97 ] [ 0 0 -1 54 ] 180 1 1
+}
+// brush 48
+{
+( 928 53 72 ) ( 928 54 72 ) ( 928 53 73 ) "unary.core . materials/dev/orange" [ 0 -1 0 -97 ] [ 0 0 -1 72 ] 90 1 1
+( 928 -7 72 ) ( 928 -7 73 ) ( 929 -7 72 ) "unary.core . materials/dev/orange" [ 1 0 0 -72 ] [ 0 0 -1 72 ] 270 1 1
+( 928 53 72 ) ( 929 53 72 ) ( 928 54 72 ) "unary.core . materials/dev/orange" [ -1 0 0 72 ] [ 0 -1 0 -97 ] 90 1 1
+( 945 77 90 ) ( 945 78 90 ) ( 946 77 90 ) "unary.core . materials/dev/orange" [ 1 0 0 -72 ] [ 0 -1 0 -97 ] 270 1 1
+( 945 70 88 ) ( 946 70 88 ) ( 945 70 89 ) "unary.core . materials/dev/orange" [ -1 0 0 72 ] [ 0 0 -1 72 ] 0 1 1
+( 946 77 88 ) ( 946 77 89 ) ( 946 78 88 ) "unary.core . materials/dev/orange" [ 0 1 0 97 ] [ 0 0 -1 72 ] 0 1 1
+}
+// brush 49
+{
+( 946 53 90 ) ( 946 54 90 ) ( 946 53 91 ) "unary.core . materials/dev/orange" [ 0 -1 0 -97 ] [ 0 0 -1 90 ] 270 1 1
+( 946 -7 90 ) ( 946 -7 91 ) ( 947 -7 90 ) "unary.core . materials/dev/orange" [ 1 0 0 -90 ] [ 0 0 -1 90 ] 90 1 1
+( 946 53 90 ) ( 947 53 90 ) ( 946 54 90 ) "unary.core . materials/dev/orange" [ -1 0 0 90 ] [ 0 -1 0 -97 ] 270 1 1
+( 963 77 108 ) ( 963 78 108 ) ( 964 77 108 ) "unary.core . materials/dev/orange" [ 1 0 0 -90 ] [ 0 -1 0 -97 ] 90 1 1
+( 963 70 106 ) ( 964 70 106 ) ( 963 70 107 ) "unary.core . materials/dev/orange" [ -1 0 0 90 ] [ 0 0 -1 90 ] 180 1 1
+( 964 77 106 ) ( 964 77 107 ) ( 964 78 106 ) "unary.core . materials/dev/orange" [ 0 1 0 97 ] [ 0 0 -1 90 ] 180 1 1
+}
+// brush 50
+{
+( 964 53 108 ) ( 964 54 108 ) ( 964 53 109 ) "unary.core . materials/dev/orange" [ 0 -1 0 -97 ] [ 0 0 -1 108 ] 270 1 1
+( 964 -7 108 ) ( 964 -7 109 ) ( 965 -7 108 ) "unary.core . materials/dev/orange" [ 1 0 0 -108 ] [ 0 0 -1 108 ] 90 1 1
+( 964 53 108 ) ( 965 53 108 ) ( 964 54 108 ) "unary.core . materials/dev/orange" [ -1 0 0 108 ] [ 0 -1 0 -97 ] 270 1 1
+( 981 77 126 ) ( 981 78 126 ) ( 982 77 126 ) "unary.core . materials/dev/orange" [ 1 0 0 -108 ] [ 0 -1 0 -97 ] 90 1 1
+( 981 70 124 ) ( 982 70 124 ) ( 981 70 125 ) "unary.core . materials/dev/orange" [ -1 0 0 108 ] [ 0 0 -1 108 ] 180 1 1
+( 982 77 124 ) ( 982 77 125 ) ( 982 78 124 ) "unary.core . materials/dev/orange" [ 0 1 0 97 ] [ 0 0 -1 108 ] 180 1 1
+}
+// brush 51
+{
+( 982 53 126 ) ( 982 54 126 ) ( 982 53 127 ) "unary.core . materials/dev/orange" [ 0 -1 0 -97 ] [ 0 0 -1 126 ] 90 1 1
+( 982 -7 126 ) ( 982 -7 127 ) ( 983 -7 126 ) "unary.core . materials/dev/orange" [ 1 0 0 2 ] [ 0 0 -1 126 ] 270 1 1
+( 982 53 126 ) ( 983 53 126 ) ( 982 54 126 ) "unary.core . materials/dev/orange" [ -1 0 0 -2 ] [ 0 -1 0 -97 ] 90 1 1
+( 999 77 144 ) ( 999 78 144 ) ( 1000 77 144 ) "unary.core . materials/dev/orange" [ 1 0 0 2 ] [ 0 -1 0 -97 ] 270 1 1
+( 999 70 142 ) ( 1000 70 142 ) ( 999 70 143 ) "unary.core . materials/dev/orange" [ -1 0 0 -2 ] [ 0 0 -1 126 ] 0 1 1
+( 1000 77 142 ) ( 1000 77 143 ) ( 1000 78 142 ) "unary.core . materials/dev/orange" [ 0 1 0 97 ] [ 0 0 -1 126 ] 0 1 1
+}
+// brush 52
+{
+( 855 -43 0 ) ( 855 -42 0 ) ( 855 -43 1 ) "unary.core . materials/dev/orange" [ 0 -1 0 -65 ] [ 0 0 -1 0 ] 270 1 1
+( 855 -103 0 ) ( 855 -103 1 ) ( 856 -103 0 ) "unary.core . materials/dev/orange" [ 1 0 0 1 ] [ 0 0 -1 0 ] 90 1 1
+( 855 -43 0 ) ( 856 -43 0 ) ( 855 -42 0 ) "unary.core . materials/dev/orange" [ -1 0 0 -1 ] [ 0 -1 0 -65 ] 270 1 1
+( 872 -19 19 ) ( 872 -18 19 ) ( 873 -19 19 ) "unary.core . materials/dev/orange" [ 1 0 0 1 ] [ 0 -1 0 -65 ] 0 1 1
+( 872 -26 16 ) ( 873 -26 16 ) ( 872 -26 17 ) "unary.core . materials/dev/orange" [ -1 0 0 -1 ] [ 0 0 -1 0 ] 180 1 1
+( 874 -19 16 ) ( 874 -19 17 ) ( 874 -18 16 ) "unary.core . materials/dev/orange" [ 0 1 0 65 ] [ 0 0 -1 0 ] 90 1 1
+}
+// brush 53
+{
+( 874 -43 19 ) ( 874 -42 19 ) ( 874 -43 20 ) "unary.core . materials/dev/orange" [ 0 -1 0 -65 ] [ 0 0 -1 19 ] 90 1 1
+( 874 -103 19 ) ( 874 -103 20 ) ( 875 -103 19 ) "unary.core . materials/dev/orange" [ 1 0 0 -18 ] [ 0 0 -1 19 ] 270 1 1
+( 874 -43 19 ) ( 875 -43 19 ) ( 874 -42 19 ) "unary.core . materials/dev/orange" [ -1 0 0 18 ] [ 0 -1 0 -65 ] 90 1 1
+( 891 -19 38 ) ( 891 -18 38 ) ( 892 -19 38 ) "unary.core . materials/dev/orange" [ 1 0 0 -18 ] [ 0 -1 0 -65 ] 180 1 1
+( 891 -26 35 ) ( 892 -26 35 ) ( 891 -26 36 ) "unary.core . materials/dev/orange" [ -1 0 0 18 ] [ 0 0 -1 19 ] 0 1 1
+( 893 -19 35 ) ( 893 -19 36 ) ( 893 -18 35 ) "unary.core . materials/dev/orange" [ 0 1 0 65 ] [ 0 0 -1 19 ] 270 1 1
+}
+// brush 54
+{
+( 893 -43 38 ) ( 893 -42 38 ) ( 893 -43 39 ) "unary.core . materials/dev/orange" [ 0 -1 0 -65 ] [ 0 0 -1 38 ] 180 1 1
+( 893 -103 38 ) ( 893 -103 39 ) ( 894 -103 38 ) "unary.core . materials/dev/orange" [ 1 0 0 -37 ] [ 0 0 -1 38 ] 0 1 1
+( 893 -43 38 ) ( 894 -43 38 ) ( 893 -42 38 ) "unary.core . materials/dev/orange" [ -1 0 0 37 ] [ 0 -1 0 -65 ] 180 1 1
+( 910 -19 57 ) ( 910 -18 57 ) ( 911 -19 57 ) "unary.core . materials/dev/orange" [ 1 0 0 -37 ] [ 0 -1 0 -65 ] 270 1 1
+( 910 -26 54 ) ( 911 -26 54 ) ( 910 -26 55 ) "unary.core . materials/dev/orange" [ -1 0 0 37 ] [ 0 0 -1 38 ] 90 1 1
+( 912 -19 54 ) ( 912 -19 55 ) ( 912 -18 54 ) "unary.core . materials/dev/orange" [ 0 1 0 65 ] [ 0 0 -1 38 ] 0 1 1
+}
+// brush 55
+{
+( 912 -43 57 ) ( 912 -42 57 ) ( 912 -43 58 ) "unary.core . materials/dev/orange" [ 0 -1 0 -65 ] [ 0 0 -1 57 ] 180 1 1
+( 912 -103 57 ) ( 912 -103 58 ) ( 913 -103 57 ) "unary.core . materials/dev/orange" [ 1 0 0 -56 ] [ 0 0 -1 57 ] 0 1 1
+( 912 -43 57 ) ( 913 -43 57 ) ( 912 -42 57 ) "unary.core . materials/dev/orange" [ -1 0 0 56 ] [ 0 -1 0 -65 ] 180 1 1
+( 929 -19 76 ) ( 929 -18 76 ) ( 930 -19 76 ) "unary.core . materials/dev/orange" [ 1 0 0 -56 ] [ 0 -1 0 -65 ] 270 1 1
+( 929 -26 73 ) ( 930 -26 73 ) ( 929 -26 74 ) "unary.core . materials/dev/orange" [ -1 0 0 56 ] [ 0 0 -1 57 ] 90 1 1
+( 931 -19 73 ) ( 931 -19 74 ) ( 931 -18 73 ) "unary.core . materials/dev/orange" [ 0 1 0 65 ] [ 0 0 -1 57 ] 0 1 1
+}
+// brush 56
+{
+( 931 -43 76 ) ( 931 -42 76 ) ( 931 -43 77 ) "unary.core . materials/dev/orange" [ 0 -1 0 -65 ] [ 0 0 -1 76 ] 180 1 1
+( 931 -103 76 ) ( 931 -103 77 ) ( 932 -103 76 ) "unary.core . materials/dev/orange" [ 1 0 0 -75 ] [ 0 0 -1 76 ] 0 1 1
+( 931 -43 76 ) ( 932 -43 76 ) ( 931 -42 76 ) "unary.core . materials/dev/orange" [ -1 0 0 75 ] [ 0 -1 0 -65 ] 180 1 1
+( 948 -19 95 ) ( 948 -18 95 ) ( 949 -19 95 ) "unary.core . materials/dev/orange" [ 1 0 0 -75 ] [ 0 -1 0 -65 ] 270 1 1
+( 948 -26 92 ) ( 949 -26 92 ) ( 948 -26 93 ) "unary.core . materials/dev/orange" [ -1 0 0 75 ] [ 0 0 -1 76 ] 90 1 1
+( 950 -19 92 ) ( 950 -19 93 ) ( 950 -18 92 ) "unary.core . materials/dev/orange" [ 0 1 0 65 ] [ 0 0 -1 76 ] 0 1 1
+}
+// brush 57
+{
+( 950 -43 95 ) ( 950 -42 95 ) ( 950 -43 96 ) "unary.core . materials/dev/orange" [ 0 -1 0 -65 ] [ 0 0 -1 95 ] 90 1 1
+( 950 -103 95 ) ( 950 -103 96 ) ( 951 -103 95 ) "unary.core . materials/dev/orange" [ 1 0 0 -94 ] [ 0 0 -1 95 ] 270 1 1
+( 950 -43 95 ) ( 951 -43 95 ) ( 950 -42 95 ) "unary.core . materials/dev/orange" [ -1 0 0 94 ] [ 0 -1 0 -65 ] 90 1 1
+( 967 -19 114 ) ( 967 -18 114 ) ( 968 -19 114 ) "unary.core . materials/dev/orange" [ 1 0 0 -94 ] [ 0 -1 0 -65 ] 180 1 1
+( 967 -26 111 ) ( 968 -26 111 ) ( 967 -26 112 ) "unary.core . materials/dev/orange" [ -1 0 0 94 ] [ 0 0 -1 95 ] 0 1 1
+( 969 -19 111 ) ( 969 -19 112 ) ( 969 -18 111 ) "unary.core . materials/dev/orange" [ 0 1 0 65 ] [ 0 0 -1 95 ] 270 1 1
+}
+// brush 58
+{
+( 969 -43 114 ) ( 969 -42 114 ) ( 969 -43 115 ) "unary.core . materials/dev/orange" [ 0 -1 0 -65 ] [ 0 0 -1 114 ] 0 1 1
+( 969 -103 114 ) ( 969 -103 115 ) ( 970 -103 114 ) "unary.core . materials/dev/orange" [ 1 0 0 -113 ] [ 0 0 -1 114 ] 180 1 1
+( 969 -43 114 ) ( 970 -43 114 ) ( 969 -42 114 ) "unary.core . materials/dev/orange" [ -1 0 0 113 ] [ 0 -1 0 -65 ] 0 1 1
+( 986 -19 133 ) ( 986 -18 133 ) ( 987 -19 133 ) "unary.core . materials/dev/orange" [ 1 0 0 -113 ] [ 0 -1 0 -65 ] 90 1 1
+( 986 -26 130 ) ( 987 -26 130 ) ( 986 -26 131 ) "unary.core . materials/dev/orange" [ -1 0 0 113 ] [ 0 0 -1 114 ] 270 1 1
+( 988 -19 130 ) ( 988 -19 131 ) ( 988 -18 130 ) "unary.core . materials/dev/orange" [ 0 1 0 65 ] [ 0 0 -1 114 ] 180 1 1
+}
+// brush 59
+{
+( 988 -43 133 ) ( 988 -42 133 ) ( 988 -43 134 ) "unary.core . materials/dev/orange" [ 0 -1 0 -65 ] [ 0 0 -1 5 ] 270 1 1
+( 988 -103 133 ) ( 988 -103 134 ) ( 989 -103 133 ) "unary.core . materials/dev/orange" [ 1 0 0 -4 ] [ 0 0 -1 5 ] 90 1 1
+( 988 -43 133 ) ( 989 -43 133 ) ( 988 -42 133 ) "unary.core . materials/dev/orange" [ -1 0 0 4 ] [ 0 -1 0 -65 ] 270 1 1
+( 1005 -19 152 ) ( 1005 -18 152 ) ( 1006 -19 152 ) "unary.core . materials/dev/orange" [ 1 0 0 -4 ] [ 0 -1 0 -65 ] 0 1 1
+( 1005 -26 149 ) ( 1006 -26 149 ) ( 1005 -26 150 ) "unary.core . materials/dev/orange" [ -1 0 0 4 ] [ 0 0 -1 5 ] 180 1 1
+( 1007 -19 149 ) ( 1007 -19 150 ) ( 1007 -18 149 ) "unary.core . materials/dev/orange" [ 0 1 0 65 ] [ 0 0 -1 5 ] 90 1 1
+}
+// brush 60
+{
+( 856 258 0 ) ( 856 259 0 ) ( 856 258 1 ) "unary.core . materials/dev/orange" [ 0 -1 0 82 ] [ 0 0 -1 0 ] 90 1 1
+( 856 258 0 ) ( 856 258 1 ) ( 857 258 0 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 0 -1 0 ] 270 1 1
+( 856 258 0 ) ( 857 258 0 ) ( 856 259 0 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 -1 0 82 ] 90 1 1
+( 880 322 15 ) ( 880 323 15 ) ( 881 322 15 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 -1 0 82 ] 0 1 1
+( 880 322 16 ) ( 881 322 16 ) ( 880 322 17 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 90 1 1
+( 871 322 16 ) ( 871 322 17 ) ( 871 323 16 ) "unary.core . materials/dev/orange" [ 0 1 0 -82 ] [ 0 0 -1 0 ] 270 1 1
+}
+// brush 61
+{
+( 871 258 15 ) ( 871 259 15 ) ( 871 258 16 ) "unary.core . materials/dev/orange" [ 0 -1 0 82 ] [ 0 0 -1 15 ] 180 1 1
+( 871 258 15 ) ( 871 258 16 ) ( 872 258 15 ) "unary.core . materials/dev/orange" [ 1 0 0 -15 ] [ 0 0 -1 15 ] 0 1 1
+( 871 258 15 ) ( 872 258 15 ) ( 871 259 15 ) "unary.core . materials/dev/orange" [ -1 0 0 15 ] [ 0 -1 0 82 ] 180 1 1
+( 895 322 30 ) ( 895 323 30 ) ( 896 322 30 ) "unary.core . materials/dev/orange" [ 1 0 0 -15 ] [ 0 -1 0 82 ] 90 1 1
+( 895 322 31 ) ( 896 322 31 ) ( 895 322 32 ) "unary.core . materials/dev/orange" [ -1 0 0 15 ] [ 0 0 -1 15 ] 180 1 1
+( 886 322 31 ) ( 886 322 32 ) ( 886 323 31 ) "unary.core . materials/dev/orange" [ 0 1 0 -82 ] [ 0 0 -1 15 ] 0 1 1
+}
+// brush 62
+{
+( 886 258 30 ) ( 886 259 30 ) ( 886 258 31 ) "unary.core . materials/dev/orange" [ 0 -1 0 82 ] [ 0 0 -1 30 ] 180 1 1
+( 886 258 30 ) ( 886 258 31 ) ( 887 258 30 ) "unary.core . materials/dev/orange" [ 1 0 0 -30 ] [ 0 0 -1 30 ] 0 1 1
+( 886 258 30 ) ( 887 258 30 ) ( 886 259 30 ) "unary.core . materials/dev/orange" [ -1 0 0 30 ] [ 0 -1 0 82 ] 180 1 1
+( 910 322 45 ) ( 910 323 45 ) ( 911 322 45 ) "unary.core . materials/dev/orange" [ 1 0 0 -30 ] [ 0 -1 0 82 ] 90 1 1
+( 910 322 46 ) ( 911 322 46 ) ( 910 322 47 ) "unary.core . materials/dev/orange" [ -1 0 0 30 ] [ 0 0 -1 30 ] 180 1 1
+( 901 322 46 ) ( 901 322 47 ) ( 901 323 46 ) "unary.core . materials/dev/orange" [ 0 1 0 -82 ] [ 0 0 -1 30 ] 0 1 1
+}
+// brush 63
+{
+( 901 258 45 ) ( 901 259 45 ) ( 901 258 46 ) "unary.core . materials/dev/orange" [ 0 -1 0 82 ] [ 0 0 -1 45 ] 270 1 1
+( 901 258 45 ) ( 901 258 46 ) ( 902 258 45 ) "unary.core . materials/dev/orange" [ 1 0 0 -45 ] [ 0 0 -1 45 ] 90 1 1
+( 901 258 45 ) ( 902 258 45 ) ( 901 259 45 ) "unary.core . materials/dev/orange" [ -1 0 0 45 ] [ 0 -1 0 82 ] 270 1 1
+( 925 322 60 ) ( 925 323 60 ) ( 926 322 60 ) "unary.core . materials/dev/orange" [ 1 0 0 -45 ] [ 0 -1 0 82 ] 180 1 1
+( 925 322 61 ) ( 926 322 61 ) ( 925 322 62 ) "unary.core . materials/dev/orange" [ -1 0 0 45 ] [ 0 0 -1 45 ] 270 1 1
+( 916 322 61 ) ( 916 322 62 ) ( 916 323 61 ) "unary.core . materials/dev/orange" [ 0 1 0 -82 ] [ 0 0 -1 45 ] 90 1 1
+}
+// brush 64
+{
+( 916 258 60 ) ( 916 259 60 ) ( 916 258 61 ) "unary.core . materials/dev/orange" [ 0 -1 0 82 ] [ 0 0 -1 60 ] 0 1 1
+( 916 258 60 ) ( 916 258 61 ) ( 917 258 60 ) "unary.core . materials/dev/orange" [ 1 0 0 -60 ] [ 0 0 -1 60 ] 180 1 1
+( 916 258 60 ) ( 917 258 60 ) ( 916 259 60 ) "unary.core . materials/dev/orange" [ -1 0 0 60 ] [ 0 -1 0 82 ] 0 1 1
+( 940 322 75 ) ( 940 323 75 ) ( 941 322 75 ) "unary.core . materials/dev/orange" [ 1 0 0 -60 ] [ 0 -1 0 82 ] 270 1 1
+( 940 322 76 ) ( 941 322 76 ) ( 940 322 77 ) "unary.core . materials/dev/orange" [ -1 0 0 60 ] [ 0 0 -1 60 ] 0 1 1
+( 931 322 76 ) ( 931 322 77 ) ( 931 323 76 ) "unary.core . materials/dev/orange" [ 0 1 0 -82 ] [ 0 0 -1 60 ] 180 1 1
+}
+// brush 65
+{
+( 931 258 75 ) ( 931 259 75 ) ( 931 258 76 ) "unary.core . materials/dev/orange" [ 0 -1 0 82 ] [ 0 0 -1 75 ] 0 1 1
+( 931 258 75 ) ( 931 258 76 ) ( 932 258 75 ) "unary.core . materials/dev/orange" [ 1 0 0 -75 ] [ 0 0 -1 75 ] 180 1 1
+( 931 258 75 ) ( 932 258 75 ) ( 931 259 75 ) "unary.core . materials/dev/orange" [ -1 0 0 75 ] [ 0 -1 0 82 ] 0 1 1
+( 955 322 90 ) ( 955 323 90 ) ( 956 322 90 ) "unary.core . materials/dev/orange" [ 1 0 0 -75 ] [ 0 -1 0 82 ] 270 1 1
+( 955 322 91 ) ( 956 322 91 ) ( 955 322 92 ) "unary.core . materials/dev/orange" [ -1 0 0 75 ] [ 0 0 -1 75 ] 0 1 1
+( 946 322 91 ) ( 946 322 92 ) ( 946 323 91 ) "unary.core . materials/dev/orange" [ 0 1 0 -82 ] [ 0 0 -1 75 ] 180 1 1
+}
+// brush 66
+{
+( 946 258 90 ) ( 946 259 90 ) ( 946 258 91 ) "unary.core . materials/dev/orange" [ 0 -1 0 82 ] [ 0 0 -1 90 ] 270 1 1
+( 946 258 90 ) ( 946 258 91 ) ( 947 258 90 ) "unary.core . materials/dev/orange" [ 1 0 0 -90 ] [ 0 0 -1 90 ] 90 1 1
+( 946 258 90 ) ( 947 258 90 ) ( 946 259 90 ) "unary.core . materials/dev/orange" [ -1 0 0 90 ] [ 0 -1 0 82 ] 270 1 1
+( 970 322 105 ) ( 970 323 105 ) ( 971 322 105 ) "unary.core . materials/dev/orange" [ 1 0 0 -90 ] [ 0 -1 0 82 ] 180 1 1
+( 970 322 106 ) ( 971 322 106 ) ( 970 322 107 ) "unary.core . materials/dev/orange" [ -1 0 0 90 ] [ 0 0 -1 90 ] 270 1 1
+( 961 322 106 ) ( 961 322 107 ) ( 961 323 106 ) "unary.core . materials/dev/orange" [ 0 1 0 -82 ] [ 0 0 -1 90 ] 90 1 1
+}
+// brush 67
+{
+( 961 258 105 ) ( 961 259 105 ) ( 961 258 106 ) "unary.core . materials/dev/orange" [ 0 -1 0 82 ] [ 0 0 -1 105 ] 180 1 1
+( 961 258 105 ) ( 961 258 106 ) ( 962 258 105 ) "unary.core . materials/dev/orange" [ 1 0 0 -105 ] [ 0 0 -1 105 ] 0 1 1
+( 961 258 105 ) ( 962 258 105 ) ( 961 259 105 ) "unary.core . materials/dev/orange" [ -1 0 0 105 ] [ 0 -1 0 82 ] 180 1 1
+( 985 322 120 ) ( 985 323 120 ) ( 986 322 120 ) "unary.core . materials/dev/orange" [ 1 0 0 -105 ] [ 0 -1 0 82 ] 90 1 1
+( 985 322 121 ) ( 986 322 121 ) ( 985 322 122 ) "unary.core . materials/dev/orange" [ -1 0 0 105 ] [ 0 0 -1 105 ] 180 1 1
+( 976 322 121 ) ( 976 322 122 ) ( 976 323 121 ) "unary.core . materials/dev/orange" [ 0 1 0 -82 ] [ 0 0 -1 105 ] 0 1 1
+}
+// brush 68
+{
+( 976 258 120 ) ( 976 259 120 ) ( 976 258 121 ) "unary.core . materials/dev/orange" [ 0 -1 0 82 ] [ 0 0 -1 120 ] 90 1 1
+( 976 258 120 ) ( 976 258 121 ) ( 977 258 120 ) "unary.core . materials/dev/orange" [ 1 0 0 -120 ] [ 0 0 -1 120 ] 270 1 1
+( 976 258 120 ) ( 977 258 120 ) ( 976 259 120 ) "unary.core . materials/dev/orange" [ -1 0 0 120 ] [ 0 -1 0 82 ] 90 1 1
+( 1000 322 135 ) ( 1000 323 135 ) ( 1001 322 135 ) "unary.core . materials/dev/orange" [ 1 0 0 -120 ] [ 0 -1 0 82 ] 0 1 1
+( 1000 322 136 ) ( 1001 322 136 ) ( 1000 322 137 ) "unary.core . materials/dev/orange" [ -1 0 0 120 ] [ 0 0 -1 120 ] 90 1 1
+( 991 322 136 ) ( 991 322 137 ) ( 991 323 136 ) "unary.core . materials/dev/orange" [ 0 1 0 -82 ] [ 0 0 -1 120 ] 270 1 1
+}
+// brush 69
+{
+( 991 258 135 ) ( 991 259 135 ) ( 991 258 136 ) "unary.core . materials/dev/orange" [ 0 -1 0 82 ] [ 0 0 -1 7 ] 270 1 1
+( 991 258 135 ) ( 991 258 136 ) ( 992 258 135 ) "unary.core . materials/dev/orange" [ 1 0 0 -7 ] [ 0 0 -1 7 ] 90 1 1
+( 991 258 135 ) ( 992 258 135 ) ( 991 259 135 ) "unary.core . materials/dev/orange" [ -1 0 0 7 ] [ 0 -1 0 82 ] 270 1 1
+( 1015 322 150 ) ( 1015 323 150 ) ( 1016 322 150 ) "unary.core . materials/dev/orange" [ 1 0 0 -7 ] [ 0 -1 0 82 ] 180 1 1
+( 1015 322 151 ) ( 1016 322 151 ) ( 1015 322 152 ) "unary.core . materials/dev/orange" [ -1 0 0 7 ] [ 0 0 -1 7 ] 270 1 1
+( 1006 322 151 ) ( 1006 322 152 ) ( 1006 323 151 ) "unary.core . materials/dev/orange" [ 0 1 0 -82 ] [ 0 0 -1 7 ] 90 1 1
+}
+// brush 70
+{
+( 416 496 0 ) ( 416 416 0 ) ( 416 416 -32 ) "unary.core . materials/dev/no_draw" [ 0 -1 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( 416 416 0 ) ( 464 384 0 ) ( 464 384 -32 ) "unary.core . materials/dev/no_draw" [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( 464 384 0 ) ( 576 384 0 ) ( 576 384 -32 ) "unary.core . materials/dev/no_draw" [ -1.0000000000000002 0 0 16 ] [ 0 0 -1.0000000000000002 0 ] 0 1 1
+( 464 384 -32 ) ( 576 384 -32 ) ( 416 496 -32 ) "unary.core . materials/dev/no_draw" [ -1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
+( 416 496 0 ) ( 576 384 0 ) ( 464 384 0 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 0.25 0.25
+( 576 384 -32 ) ( 576 384 0 ) ( 416 496 0 ) "unary.core . materials/dev/no_draw" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
+}
+// brush 71
+{
+( -576 384 -32 ) ( -416 496 0 ) ( -576 384 0 ) "unary.core . materials/dev/no_draw" [ 1 0 0 0 ] [ 0 0 -1 0 ] 180 1 1
+( -464 384 0 ) ( -576 384 -32 ) ( -576 384 0 ) "unary.core . materials/dev/no_draw" [ 1.0000000000000002 0 0 16 ] [ 0 0 -1.0000000000000002 0 ] 180 1 1
+( -464 384 -32 ) ( -416 496 -32 ) ( -576 384 -32 ) "unary.core . materials/dev/no_draw" [ 1 0 0 0 ] [ 0 -1 0 0 ] 180 1 1
+( -416 496 0 ) ( -464 384 0 ) ( -576 384 0 ) "unary.core . materials/dev/gray" [ -1 0 0 0 ] [ 0 -1 0 0 ] 180 0.25 0.25
+( -416 416 0 ) ( -464 384 -32 ) ( -464 384 0 ) "unary.core . materials/dev/no_draw" [ -1 0 0 0 ] [ 0 0 -1 0 ] 180 1 1
+( -416 496 0 ) ( -416 416 -32 ) ( -416 416 0 ) "unary.core . materials/dev/no_draw" [ 0 -1 0 0 ] [ 0 0 -1 0 ] 0 1 1
 }
 }
 // entity 1
@@ -419,274 +815,6 @@
 "classname" "brush_static"
 // brush 0
 {
-( 294 -412 0 ) ( 294 -412 8 ) ( 294 -428 8 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 294 -428 8 ) ( 384 -428 8 ) ( 384 -412 0 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -428 8 ) ( 294 -428 8 ) ( 294 -412 8 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -412 0 ) ( 384 -412 0 ) ( 384 -412 8 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 384 -412 0 ) ( 384 -428 8 ) ( 384 -412 8 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 0.25 0.25
-}
-// brush 1
-{
-( 294 -428 8 ) ( 294 -428 16 ) ( 294 -444 16 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 294 -444 16 ) ( 384 -444 16 ) ( 384 -428 8 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -444 16 ) ( 294 -444 16 ) ( 294 -428 16 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -428 8 ) ( 384 -428 8 ) ( 384 -428 16 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 384 -428 8 ) ( 384 -444 16 ) ( 384 -428 16 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 32 ] 0 0.25 0.25
-}
-// brush 2
-{
-( 294 -444 16 ) ( 294 -444 24 ) ( 294 -460 24 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 294 -460 24 ) ( 384 -460 24 ) ( 384 -444 16 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -460 24 ) ( 294 -460 24 ) ( 294 -444 24 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -444 16 ) ( 384 -444 16 ) ( 384 -444 24 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 384 -444 16 ) ( 384 -460 24 ) ( 384 -444 24 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 0.25 0.25
-}
-// brush 3
-{
-( 294 -460 24 ) ( 294 -460 32 ) ( 294 -476 32 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 294 -476 32 ) ( 384 -476 32 ) ( 384 -460 24 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -476 32 ) ( 294 -476 32 ) ( 294 -460 32 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -460 24 ) ( 384 -460 24 ) ( 384 -460 32 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 384 -460 24 ) ( 384 -476 32 ) ( 384 -460 32 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 32 ] 0 0.25 0.25
-}
-// brush 4
-{
-( 294 -476 32 ) ( 294 -476 40 ) ( 294 -492 40 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 294 -492 40 ) ( 384 -492 40 ) ( 384 -476 32 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -492 40 ) ( 294 -492 40 ) ( 294 -476 40 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -476 32 ) ( 384 -476 32 ) ( 384 -476 40 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 384 -476 32 ) ( 384 -492 40 ) ( 384 -476 40 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 0.25 0.25
-}
-// brush 5
-{
-( 294 -492 40 ) ( 294 -492 48 ) ( 294 -508 48 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 294 -508 48 ) ( 384 -508 48 ) ( 384 -492 40 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -508 48 ) ( 294 -508 48 ) ( 294 -492 48 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -492 40 ) ( 384 -492 40 ) ( 384 -492 48 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 384 -492 40 ) ( 384 -508 48 ) ( 384 -492 48 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 32 ] 0 0.25 0.25
-}
-// brush 6
-{
-( 294 -508 48 ) ( 294 -508 56 ) ( 294 -524 56 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 294 -524 56 ) ( 384 -524 56 ) ( 384 -508 48 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -524 56 ) ( 294 -524 56 ) ( 294 -508 56 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -508 48 ) ( 384 -508 48 ) ( 384 -508 56 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 384 -508 48 ) ( 384 -524 56 ) ( 384 -508 56 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 0.25 0.25
-}
-// brush 7
-{
-( 294 -524 56 ) ( 294 -524 64 ) ( 294 -540 64 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 294 -540 64 ) ( 384 -540 64 ) ( 384 -524 56 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -540 64 ) ( 294 -540 64 ) ( 294 -524 64 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -524 56 ) ( 384 -524 56 ) ( 384 -524 64 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 384 -524 56 ) ( 384 -540 64 ) ( 384 -524 64 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 32 ] 0 0.25 0.25
-}
-// brush 8
-{
-( 294 -540 64 ) ( 294 -540 72 ) ( 294 -556 72 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 294 -556 72 ) ( 384 -556 72 ) ( 384 -540 64 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -556 72 ) ( 294 -556 72 ) ( 294 -540 72 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -540 64 ) ( 384 -540 64 ) ( 384 -540 72 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 384 -540 64 ) ( 384 -556 72 ) ( 384 -540 72 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 0.25 0.25
-}
-// brush 9
-{
-( 294 -556 72 ) ( 294 -556 80 ) ( 294 -572 80 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 294 -572 80 ) ( 384 -572 80 ) ( 384 -556 72 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -572 80 ) ( 294 -572 80 ) ( 294 -556 80 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -556 72 ) ( 384 -556 72 ) ( 384 -556 80 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 384 -556 72 ) ( 384 -572 80 ) ( 384 -556 80 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 32 ] 0 0.25 0.25
-}
-// brush 10
-{
-( 294 -572 80 ) ( 294 -572 88 ) ( 294 -588 88 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 294 -588 88 ) ( 384 -588 88 ) ( 384 -572 80 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -588 88 ) ( 294 -588 88 ) ( 294 -572 88 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -572 80 ) ( 384 -572 80 ) ( 384 -572 88 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( 384 -572 80 ) ( 384 -588 88 ) ( 384 -572 88 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 0.25 0.25
-}
-// brush 11
-{
-( 294 -588 88 ) ( 294 -588 96 ) ( 294 -604 96 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 96 ] 0 0.25 0.25
-( 294 -604 96 ) ( 384 -604 96 ) ( 384 -588 88 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -604 96 ) ( 294 -604 96 ) ( 294 -588 96 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -588 88 ) ( 384 -588 88 ) ( 384 -588 96 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 96 ] 0 0.25 0.25
-( 384 -588 88 ) ( 384 -604 96 ) ( 384 -588 96 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 32 ] 0 0.25 0.25
-}
-// brush 12
-{
-( 294 -604 96 ) ( 294 -604 104 ) ( 294 -620 104 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 96 ] 0 0.25 0.25
-( 294 -620 104 ) ( 384 -620 104 ) ( 384 -604 96 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -620 104 ) ( 294 -620 104 ) ( 294 -604 104 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -604 96 ) ( 384 -604 96 ) ( 384 -604 104 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 96 ] 0 0.25 0.25
-( 384 -604 96 ) ( 384 -620 104 ) ( 384 -604 104 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 0.25 0.25
-}
-// brush 13
-{
-( 294 -620 104 ) ( 294 -620 112 ) ( 294 -636 112 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 96 ] 0 0.25 0.25
-( 294 -636 112 ) ( 384 -636 112 ) ( 384 -620 104 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -636 112 ) ( 294 -636 112 ) ( 294 -620 112 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -620 104 ) ( 384 -620 104 ) ( 384 -620 112 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 96 ] 0 0.25 0.25
-( 384 -620 104 ) ( 384 -636 112 ) ( 384 -620 112 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 32 ] 0 0.25 0.25
-}
-// brush 14
-{
-( 294 -636 112 ) ( 294 -636 120 ) ( 294 -652 120 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 96 ] 0 0.25 0.25
-( 294 -652 120 ) ( 384 -652 120 ) ( 384 -636 112 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -652 120 ) ( 294 -652 120 ) ( 294 -636 120 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -636 112 ) ( 384 -636 112 ) ( 384 -636 120 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 96 ] 0 0.25 0.25
-( 384 -636 112 ) ( 384 -652 120 ) ( 384 -636 120 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 0.25 0.25
-}
-// brush 15
-{
-( 294 -652 120 ) ( 294 -652 128 ) ( 294 -668 128 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 96 ] 0 0.25 0.25
-( 294 -668 128 ) ( 384 -668 128 ) ( 384 -652 120 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -668 128 ) ( 294 -668 128 ) ( 294 -652 128 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -652 120 ) ( 384 -652 120 ) ( 384 -652 128 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 96 ] 0 0.25 0.25
-( 384 -652 120 ) ( 384 -668 128 ) ( 384 -652 128 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 32 ] 0 0.25 0.25
-}
-// brush 16
-{
-( 294 -668 128 ) ( 294 -668 136 ) ( 294 -684 136 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 96 ] 0 0.25 0.25
-( 294 -684 136 ) ( 384 -684 136 ) ( 384 -668 128 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -684 136 ) ( 294 -684 136 ) ( 294 -668 136 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -668 128 ) ( 384 -668 128 ) ( 384 -668 136 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 96 ] 0 0.25 0.25
-( 384 -668 128 ) ( 384 -684 136 ) ( 384 -668 136 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 0.25 0.25
-}
-// brush 17
-{
-( 294 -684 136 ) ( 294 -684 144 ) ( 294 -700 144 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 96 ] 0 0.25 0.25
-( 294 -700 144 ) ( 384 -700 144 ) ( 384 -684 136 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -700 144 ) ( 294 -700 144 ) ( 294 -684 144 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -684 136 ) ( 384 -684 136 ) ( 384 -684 144 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 96 ] 0 0.25 0.25
-( 384 -684 136 ) ( 384 -700 144 ) ( 384 -684 144 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 32 ] 0 0.25 0.25
-}
-// brush 18
-{
-( 294 -700 144 ) ( 294 -700 152 ) ( 294 -716 152 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 96 ] 0 0.25 0.25
-( 294 -716 152 ) ( 384 -716 152 ) ( 384 -700 144 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -716 152 ) ( 294 -716 152 ) ( 294 -700 152 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -700 144 ) ( 384 -700 144 ) ( 384 -700 152 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 96 ] 0 0.25 0.25
-( 384 -700 144 ) ( 384 -716 152 ) ( 384 -700 152 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 0.25 0.25
-}
-// brush 19
-{
-( 294 -716 152 ) ( 294 -716 160 ) ( 294 -732 160 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 96 ] 0 0.25 0.25
-( 294 -732 160 ) ( 384 -732 160 ) ( 384 -716 152 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -732 160 ) ( 294 -732 160 ) ( 294 -716 160 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -716 152 ) ( 384 -716 152 ) ( 384 -716 160 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 96 ] 0 0.25 0.25
-( 384 -716 152 ) ( 384 -732 160 ) ( 384 -716 160 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 32 ] 0 0.25 0.25
-}
-// brush 20
-{
-( 294 -732 160 ) ( 294 -732 168 ) ( 294 -748 168 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 96 ] 0 0.25 0.25
-( 294 -748 168 ) ( 384 -748 168 ) ( 384 -732 160 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -748 168 ) ( 294 -748 168 ) ( 294 -732 168 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -732 160 ) ( 384 -732 160 ) ( 384 -732 168 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 96 ] 0 0.25 0.25
-( 384 -732 160 ) ( 384 -748 168 ) ( 384 -732 168 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 0.25 0.25
-}
-// brush 21
-{
-( 294 -748 168 ) ( 294 -748 176 ) ( 294 -764 176 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 96 ] 0 0.25 0.25
-( 294 -764 176 ) ( 384 -764 176 ) ( 384 -748 168 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -764 176 ) ( 294 -764 176 ) ( 294 -748 176 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -748 168 ) ( 384 -748 168 ) ( 384 -748 176 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 96 ] 0 0.25 0.25
-( 384 -748 168 ) ( 384 -764 176 ) ( 384 -748 176 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 32 ] 0 0.25 0.25
-}
-// brush 22
-{
-( 294 -764 176 ) ( 294 -764 184 ) ( 294 -780 184 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 -64 ] 0 0.25 0.25
-( 294 -780 184 ) ( 384 -780 184 ) ( 384 -764 176 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -780 184 ) ( 294 -780 184 ) ( 294 -764 184 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -764 176 ) ( 384 -764 176 ) ( 384 -764 184 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 -64 ] 0 0.25 0.25
-( 384 -764 176 ) ( 384 -780 184 ) ( 384 -764 184 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 0.25 0.25
-}
-// brush 23
-{
-( 294 -780 184 ) ( 294 -780 192 ) ( 294 -796 192 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 -64 ] 0 0.25 0.25
-( 294 -796 192 ) ( 384 -796 192 ) ( 384 -780 184 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -796 192 ) ( 294 -796 192 ) ( 294 -780 192 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -780 184 ) ( 384 -780 184 ) ( 384 -780 192 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 -64 ] 0 0.25 0.25
-( 384 -780 184 ) ( 384 -796 192 ) ( 384 -780 192 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 -32 ] 0 0.25 0.25
-}
-// brush 24
-{
-( 294 -796 192 ) ( 294 -796 200 ) ( 294 -812 200 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 -64 ] 0 0.25 0.25
-( 294 -812 200 ) ( 384 -812 200 ) ( 384 -796 192 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -812 200 ) ( 294 -812 200 ) ( 294 -796 200 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -796 192 ) ( 384 -796 192 ) ( 384 -796 200 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 -64 ] 0 0.25 0.25
-( 384 -796 192 ) ( 384 -812 200 ) ( 384 -796 200 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 0.25 0.25
-}
-// brush 25
-{
-( 294 -828 208 ) ( 294 -828 216 ) ( 294 -844 216 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 -64 ] 0 0.25 0.25
-( 294 -844 216 ) ( 384 -844 216 ) ( 384 -828 208 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -844 216 ) ( 294 -844 216 ) ( 294 -828 216 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -828 208 ) ( 384 -828 208 ) ( 384 -828 216 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 -64 ] 0 0.25 0.25
-( 384 -828 208 ) ( 384 -844 216 ) ( 384 -828 216 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 0.25 0.25
-}
-// brush 26
-{
-( 294 -812 200 ) ( 294 -812 208 ) ( 294 -828 208 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 -64 ] 0 0.25 0.25
-( 294 -828 208 ) ( 384 -828 208 ) ( 384 -812 200 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -828 208 ) ( 294 -828 208 ) ( 294 -812 208 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -812 200 ) ( 384 -812 200 ) ( 384 -812 208 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 -64 ] 0 0.25 0.25
-( 384 -812 200 ) ( 384 -828 208 ) ( 384 -812 208 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 -32 ] 0 0.25 0.25
-}
-// brush 27
-{
-( 294 -844 216 ) ( 294 -844 224 ) ( 294 -860 224 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 -64 ] 0 0.25 0.25
-( 294 -860 224 ) ( 384 -860 224 ) ( 384 -844 216 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -860 224 ) ( 294 -860 224 ) ( 294 -844 224 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -844 216 ) ( 384 -844 216 ) ( 384 -844 224 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 -64 ] 0 0.25 0.25
-( 384 -844 216 ) ( 384 -860 224 ) ( 384 -844 224 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 -32 ] 0 0.25 0.25
-}
-// brush 28
-{
-( 294 -860 224 ) ( 294 -860 232 ) ( 294 -876 232 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 -64 ] 0 0.25 0.25
-( 294 -876 232 ) ( 384 -876 232 ) ( 384 -860 224 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -876 232 ) ( 294 -876 232 ) ( 294 -860 232 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -860 224 ) ( 384 -860 224 ) ( 384 -860 232 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 -64 ] 0 0.25 0.25
-( 384 -860 224 ) ( 384 -876 232 ) ( 384 -860 232 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 0.25 0.25
-}
-// brush 29
-{
-( 294 -876 232 ) ( 294 -876 240 ) ( 294 -892 240 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 -64 ] 0 0.25 0.25
-( 294 -892 240 ) ( 384 -892 240 ) ( 384 -876 232 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -892 240 ) ( 294 -892 240 ) ( 294 -876 240 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -876 232 ) ( 384 -876 232 ) ( 384 -876 240 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 -64 ] 0 0.25 0.25
-( 384 -876 232 ) ( 384 -892 240 ) ( 384 -876 240 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 -32 ] 0 0.25 0.25
-}
-// brush 30
-{
-( 294 -892 240 ) ( 294 -892 248 ) ( 294 -908 248 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 -64 ] 0 0.25 0.25
-( 294 -908 248 ) ( 384 -908 248 ) ( 384 -892 240 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -908 248 ) ( 294 -908 248 ) ( 294 -892 248 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -892 240 ) ( 384 -892 240 ) ( 384 -892 248 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 -64 ] 0 0.25 0.25
-( 384 -892 240 ) ( 384 -908 248 ) ( 384 -892 248 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 0.25 0.25
-}
-// brush 31
-{
-( 294 -908 248 ) ( 294 -908 256 ) ( 294 -924 256 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 -64 ] 0 0.25 0.25
-( 294 -924 256 ) ( 384 -924 256 ) ( 384 -908 248 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -924 256 ) ( 294 -924 256 ) ( 294 -908 256 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -908 248 ) ( 384 -908 248 ) ( 384 -908 256 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 -64 ] 0 0.25 0.25
-( 384 -908 248 ) ( 384 -924 256 ) ( 384 -908 256 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 -32 ] 0 0.25 0.25
-}
-// brush 32
-{
-( 294 -924 256 ) ( 294 -924 264 ) ( 294 -940 264 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 -64 ] 0 0.25 0.25
-( 294 -940 264 ) ( 384 -940 264 ) ( 384 -924 256 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 384 -940 264 ) ( 294 -940 264 ) ( 294 -924 264 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 0 0.25 0.25
-( 294 -924 256 ) ( 384 -924 256 ) ( 384 -924 264 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 -64 ] 0 0.25 0.25
-( 384 -924 256 ) ( 384 -940 264 ) ( 384 -924 264 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 0.25 0.25
-}
-}
-// entity 13
-{
-"classname" "brush_static"
-// brush 0
-{
 ( 136 -836 160 ) ( 136 -940 160 ) ( 136 -940 0 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
 ( 240 -940 0 ) ( 136 -940 0 ) ( 136 -940 160 ) "unary.core . materials/dev/orange" [ 1 0 0 -16 ] [ 0 0 -1 0 ] 0 0.25 0.25
 ( 136 -940 0 ) ( 240 -940 0 ) ( 240 -836 0 ) "unary.core . materials/dev/gray" [ 1 0 0 -16 ] [ 0 -1 0 0 ] 0 0.25 0.25
@@ -695,7 +823,7 @@
 ( 240 -836 0 ) ( 240 -940 0 ) ( 240 -940 160 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
 }
 }
-// entity 14
+// entity 13
 {
 "classname" "brush_static"
 // brush 0
@@ -708,7 +836,7 @@
 ( 136 -836 0 ) ( 136 -940 0 ) ( 136 -940 178 ) "unary.core . materials/dev/orange" [ 0 1 0 -32 ] [ 0 0 -1 128 ] 0 0.25 0.25
 }
 }
-// entity 15
+// entity 14
 {
 "classname" "brush_static"
 // brush 0
@@ -721,7 +849,7 @@
 ( 32 -836 0 ) ( 32 -940 0 ) ( 32 -940 196 ) "unary.core . materials/dev/orange" [ 0 1 0 -32 ] [ 0 0 -1 201 ] 0 0.25 0.25
 }
 }
-// entity 16
+// entity 15
 {
 "classname" "brush_static"
 // brush 0
@@ -734,7 +862,7 @@
 ( -72 -836 0 ) ( -72 -940 0 ) ( -72 -940 220 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 0.25 0.25
 }
 }
-// entity 17
+// entity 16
 {
 "classname" "brush_static"
 // brush 0
@@ -747,7 +875,7 @@
 ( -176 -836 0 ) ( -176 -940 0 ) ( -176 -940 242 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 0.25 0.25
 }
 }
-// entity 18
+// entity 17
 {
 "classname" "brush_static"
 // brush 0
@@ -760,177 +888,7 @@
 ( -280 -836 0 ) ( -280 -940 0 ) ( -280 -940 265 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 0.25 0.25
 }
 }
-// entity 19
-{
-"classname" "brush_static"
-// brush 0
-{
-( -384 -479 0 ) ( -384 -460 0 ) ( -384 -460 19 ) "unary.core . materials/dev/orange" [ 0 -1 0 -60 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( -384 -479 19 ) ( -271 -479 19 ) ( -271 -479 0 ) "unary.core . materials/dev/orange" [ -1 0 0 -60 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( -271 -460 0 ) ( -384 -460 0 ) ( -384 -479 0 ) "unary.core . materials/dev/gray" [ -1 0 0 -60 ] [ 0 1 0 60 ] 0 0.25 0.25
-( -271 -479 19 ) ( -384 -479 19 ) ( -384 -460 19 ) "unary.core . materials/dev/gray" [ -1 0 0 -60 ] [ 0 1 0 124 ] 0 0.25 0.25
-( -384 -460 0 ) ( -271 -460 0 ) ( -271 -460 19 ) "unary.core . materials/dev/orange" [ -1 0 0 -60 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( -271 -479 19 ) ( -271 -460 19 ) ( -271 -460 0 ) "unary.core . materials/dev/orange" [ 0 -1 0 -60 ] [ 0 0 -1 0 ] 0 0.25 0.25
-}
-// brush 1
-{
-( -384 -498 19 ) ( -384 -479 19 ) ( -384 -479 38 ) "unary.core . materials/dev/orange" [ 0 -1 0 -8 ] [ 0 0 -1 12 ] 0 0.25 0.25
-( -384 -498 38 ) ( -271 -498 38 ) ( -271 -498 19 ) "unary.core . materials/dev/orange" [ -1 0 0 -60 ] [ 0 0 -1 12 ] 0 0.25 0.25
-( -271 -479 19 ) ( -384 -479 19 ) ( -384 -498 19 ) "unary.core . materials/dev/gray" [ -1 0 0 -60 ] [ 0 1 0 8 ] 0 0.25 0.25
-( -271 -498 38 ) ( -384 -498 38 ) ( -384 -479 38 ) "unary.core . materials/dev/gray" [ -1 0 0 -60 ] [ 0 1 0 72 ] 0 0.25 0.25
-( -384 -479 19 ) ( -271 -479 19 ) ( -271 -479 38 ) "unary.core . materials/dev/orange" [ -1 0 0 -60 ] [ 0 0 -1 76 ] 0 0.25 0.25
-( -271 -498 38 ) ( -271 -479 38 ) ( -271 -479 19 ) "unary.core . materials/dev/orange" [ 0 -1 0 -8 ] [ 0 0 -1 12 ] 0 0.25 0.25
-}
-// brush 2
-{
-( -384 -517 38 ) ( -384 -498 38 ) ( -384 -498 57 ) "unary.core . materials/dev/orange" [ 0 -1 0 -20 ] [ 0 0 -1 24 ] 0 0.25 0.25
-( -384 -517 57 ) ( -271 -517 57 ) ( -271 -517 38 ) "unary.core . materials/dev/orange" [ -1 0 0 -60 ] [ 0 0 -1 24 ] 0 0.25 0.25
-( -271 -498 38 ) ( -384 -498 38 ) ( -384 -517 38 ) "unary.core . materials/dev/gray" [ -1 0 0 -60 ] [ 0 1 0 20 ] 0 0.25 0.25
-( -271 -517 57 ) ( -384 -517 57 ) ( -384 -498 57 ) "unary.core . materials/dev/gray" [ -1 0 0 -60 ] [ 0 1 0 20 ] 0 0.25 0.25
-( -384 -498 38 ) ( -271 -498 38 ) ( -271 -498 57 ) "unary.core . materials/dev/orange" [ -1 0 0 -60 ] [ 0 0 -1 24 ] 0 0.25 0.25
-( -271 -517 57 ) ( -271 -498 57 ) ( -271 -498 38 ) "unary.core . materials/dev/orange" [ 0 -1 0 -20 ] [ 0 0 -1 24 ] 0 0.25 0.25
-}
-// brush 3
-{
-( -384 -536 57 ) ( -384 -517 57 ) ( -384 -517 76 ) "unary.core . materials/dev/orange" [ 0 -1 0 -32 ] [ 0 0 -1 36 ] 0 0.25 0.25
-( -384 -536 76 ) ( -271 -536 76 ) ( -271 -536 57 ) "unary.core . materials/dev/orange" [ -1 0 0 -60 ] [ 0 0 -1 36 ] 0 0.25 0.25
-( -271 -517 57 ) ( -384 -517 57 ) ( -384 -536 57 ) "unary.core . materials/dev/gray" [ -1 0 0 -60 ] [ 0 1 0 32 ] 0 0.25 0.25
-( -271 -536 76 ) ( -384 -536 76 ) ( -384 -517 76 ) "unary.core . materials/dev/gray" [ -1 0 0 -60 ] [ 0 1 0 96 ] 0 0.25 0.25
-( -384 -517 57 ) ( -271 -517 57 ) ( -271 -517 76 ) "unary.core . materials/dev/orange" [ -1 0 0 -60 ] [ 0 0 -1 100 ] 0 0.25 0.25
-( -271 -536 76 ) ( -271 -517 76 ) ( -271 -517 57 ) "unary.core . materials/dev/orange" [ 0 -1 0 -32 ] [ 0 0 -1 36 ] 0 0.25 0.25
-}
-// brush 4
-{
-( -384 -555 76 ) ( -384 -536 76 ) ( -384 -536 95 ) "unary.core . materials/dev/orange" [ 0 -1 0 -44 ] [ 0 0 -1 48 ] 0 0.25 0.25
-( -384 -555 95 ) ( -271 -555 95 ) ( -271 -555 76 ) "unary.core . materials/dev/orange" [ -1 0 0 -60 ] [ 0 0 -1 48 ] 0 0.25 0.25
-( -271 -536 76 ) ( -384 -536 76 ) ( -384 -555 76 ) "unary.core . materials/dev/gray" [ -1 0 0 -60 ] [ 0 1 0 44 ] 0 0.25 0.25
-( -271 -555 95 ) ( -384 -555 95 ) ( -384 -536 95 ) "unary.core . materials/dev/gray" [ -1 0 0 -60 ] [ 0 1 0 44 ] 0 0.25 0.25
-( -384 -536 76 ) ( -271 -536 76 ) ( -271 -536 95 ) "unary.core . materials/dev/orange" [ -1 0 0 -60 ] [ 0 0 -1 48 ] 0 0.25 0.25
-( -271 -555 95 ) ( -271 -536 95 ) ( -271 -536 76 ) "unary.core . materials/dev/orange" [ 0 -1 0 -44 ] [ 0 0 -1 48 ] 0 0.25 0.25
-}
-// brush 5
-{
-( -384 -574 95 ) ( -384 -555 95 ) ( -384 -555 114 ) "unary.core . materials/dev/orange" [ 0 -1 0 -56 ] [ 0 0 -1 60 ] 0 0.25 0.25
-( -384 -574 114 ) ( -271 -574 114 ) ( -271 -574 95 ) "unary.core . materials/dev/orange" [ -1 0 0 -60 ] [ 0 0 -1 60 ] 0 0.25 0.25
-( -271 -555 95 ) ( -384 -555 95 ) ( -384 -574 95 ) "unary.core . materials/dev/gray" [ -1 0 0 -60 ] [ 0 1 0 56 ] 0 0.25 0.25
-( -271 -574 114 ) ( -384 -574 114 ) ( -384 -555 114 ) "unary.core . materials/dev/gray" [ -1 0 0 -60 ] [ 0 1 0 120 ] 0 0.25 0.25
-( -384 -555 95 ) ( -271 -555 95 ) ( -271 -555 114 ) "unary.core . materials/dev/orange" [ -1 0 0 -60 ] [ 0 0 -1 124 ] 0 0.25 0.25
-( -271 -574 114 ) ( -271 -555 114 ) ( -271 -555 95 ) "unary.core . materials/dev/orange" [ 0 -1 0 -56 ] [ 0 0 -1 60 ] 0 0.25 0.25
-}
-// brush 6
-{
-( -384 -593 114 ) ( -384 -574 114 ) ( -384 -574 133 ) "unary.core . materials/dev/orange" [ 0 -1 0 -4 ] [ 0 0 -1 8 ] 0 0.25 0.25
-( -384 -593 133 ) ( -271 -593 133 ) ( -271 -593 114 ) "unary.core . materials/dev/orange" [ -1 0 0 -60 ] [ 0 0 -1 8 ] 0 0.25 0.25
-( -271 -574 114 ) ( -384 -574 114 ) ( -384 -593 114 ) "unary.core . materials/dev/gray" [ -1 0 0 -60 ] [ 0 1 0 4 ] 0 0.25 0.25
-( -271 -593 133 ) ( -384 -593 133 ) ( -384 -574 133 ) "unary.core . materials/dev/gray" [ -1 0 0 -60 ] [ 0 1 0 68 ] 0 0.25 0.25
-( -384 -574 114 ) ( -271 -574 114 ) ( -271 -574 133 ) "unary.core . materials/dev/orange" [ -1 0 0 -60 ] [ 0 0 -1 72 ] 0 0.25 0.25
-( -271 -593 133 ) ( -271 -574 133 ) ( -271 -574 114 ) "unary.core . materials/dev/orange" [ 0 -1 0 -4 ] [ 0 0 -1 8 ] 0 0.25 0.25
-}
-// brush 7
-{
-( -384 -612 133 ) ( -384 -593 133 ) ( -384 -593 152 ) "unary.core . materials/dev/orange" [ 0 -1 0 -16 ] [ 0 0 -1 20 ] 0 0.25 0.25
-( -384 -612 152 ) ( -271 -612 152 ) ( -271 -612 133 ) "unary.core . materials/dev/orange" [ -1 0 0 -60 ] [ 0 0 -1 20 ] 0 0.25 0.25
-( -271 -593 133 ) ( -384 -593 133 ) ( -384 -612 133 ) "unary.core . materials/dev/gray" [ -1 0 0 -60 ] [ 0 1 0 16 ] 0 0.25 0.25
-( -271 -612 152 ) ( -384 -612 152 ) ( -384 -593 152 ) "unary.core . materials/dev/gray" [ -1 0 0 -60 ] [ 0 1 0 16 ] 0 0.25 0.25
-( -384 -593 133 ) ( -271 -593 133 ) ( -271 -593 152 ) "unary.core . materials/dev/orange" [ -1 0 0 -60 ] [ 0 0 -1 20 ] 0 0.25 0.25
-( -271 -612 152 ) ( -271 -593 152 ) ( -271 -593 133 ) "unary.core . materials/dev/orange" [ 0 -1 0 -16 ] [ 0 0 -1 20 ] 0 0.25 0.25
-}
-// brush 8
-{
-( -384 -631 152 ) ( -384 -612 152 ) ( -384 -612 171 ) "unary.core . materials/dev/orange" [ 0 -1 0 -28 ] [ 0 0 -1 32 ] 0 0.25 0.25
-( -384 -631 171 ) ( -271 -631 171 ) ( -271 -631 152 ) "unary.core . materials/dev/orange" [ -1 0 0 -60 ] [ 0 0 -1 32 ] 0 0.25 0.25
-( -271 -612 152 ) ( -384 -612 152 ) ( -384 -631 152 ) "unary.core . materials/dev/gray" [ -1 0 0 -60 ] [ 0 1 0 28 ] 0 0.25 0.25
-( -271 -631 171 ) ( -384 -631 171 ) ( -384 -612 171 ) "unary.core . materials/dev/gray" [ -1 0 0 -60 ] [ 0 1 0 92 ] 0 0.25 0.25
-( -384 -612 152 ) ( -271 -612 152 ) ( -271 -612 171 ) "unary.core . materials/dev/orange" [ -1 0 0 -60 ] [ 0 0 -1 96 ] 0 0.25 0.25
-( -271 -631 171 ) ( -271 -612 171 ) ( -271 -612 152 ) "unary.core . materials/dev/orange" [ 0 -1 0 -28 ] [ 0 0 -1 32 ] 0 0.25 0.25
-}
-}
-// entity 20
-{
-"classname" "brush_static"
-// brush 0
-{
-( -384 -208 162 ) ( -384 -226 162 ) ( -384 -226 144 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( -271 -226 144 ) ( -384 -226 144 ) ( -384 -226 162 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( -384 -226 144 ) ( -271 -226 144 ) ( -271 -208 144 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 0.25 0.25
-( -384 -208 162 ) ( -271 -208 162 ) ( -271 -226 162 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 0.25 0.25
-( -271 -208 162 ) ( -384 -208 162 ) ( -384 -208 144 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( -271 -208 144 ) ( -271 -226 144 ) ( -271 -226 162 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-}
-// brush 1
-{
-( -384 -226 144 ) ( -384 -244 144 ) ( -384 -244 126 ) "unary.core . materials/dev/orange" [ 0 1 0 -56 ] [ 0 0 -1 56 ] 0 0.25 0.25
-( -271 -244 126 ) ( -384 -244 126 ) ( -384 -244 144 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( -384 -244 126 ) ( -271 -244 126 ) ( -271 -226 126 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 56 ] 0 0.25 0.25
-( -384 -226 144 ) ( -271 -226 144 ) ( -271 -244 144 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 0.25 0.25
-( -271 -226 144 ) ( -384 -226 144 ) ( -384 -226 126 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 0 -1 56 ] 0 0.25 0.25
-( -271 -226 126 ) ( -271 -244 126 ) ( -271 -244 144 ) "unary.core . materials/dev/orange" [ 0 1 0 -56 ] [ 0 0 -1 56 ] 0 0.25 0.25
-}
-// brush 2
-{
-( -384 -244 126 ) ( -384 -262 126 ) ( -384 -262 108 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 48 ] 0 0.25 0.25
-( -271 -262 108 ) ( -384 -262 108 ) ( -384 -262 126 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( -384 -262 108 ) ( -271 -262 108 ) ( -271 -244 108 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 48 ] 0 0.25 0.25
-( -384 -244 126 ) ( -271 -244 126 ) ( -271 -262 126 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 0.25 0.25
-( -271 -244 126 ) ( -384 -244 126 ) ( -384 -244 108 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 0 -1 48 ] 0 0.25 0.25
-( -271 -244 108 ) ( -271 -262 108 ) ( -271 -262 126 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 48 ] 0 0.25 0.25
-}
-// brush 3
-{
-( -384 -262 108 ) ( -384 -280 108 ) ( -384 -280 90 ) "unary.core . materials/dev/orange" [ 0 1 0 -40 ] [ 0 0 -1 40 ] 0 0.25 0.25
-( -271 -280 90 ) ( -384 -280 90 ) ( -384 -280 108 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( -384 -280 90 ) ( -271 -280 90 ) ( -271 -262 90 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 40 ] 0 0.25 0.25
-( -384 -262 108 ) ( -271 -262 108 ) ( -271 -280 108 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 0.25 0.25
-( -271 -262 108 ) ( -384 -262 108 ) ( -384 -262 90 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 0 -1 40 ] 0 0.25 0.25
-( -271 -262 90 ) ( -271 -280 90 ) ( -271 -280 108 ) "unary.core . materials/dev/orange" [ 0 1 0 -40 ] [ 0 0 -1 40 ] 0 0.25 0.25
-}
-// brush 4
-{
-( -384 -280 90 ) ( -384 -298 90 ) ( -384 -298 72 ) "unary.core . materials/dev/orange" [ 0 1 0 -32 ] [ 0 0 -1 32 ] 0 0.25 0.25
-( -271 -298 72 ) ( -384 -298 72 ) ( -384 -298 90 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( -384 -298 72 ) ( -271 -298 72 ) ( -271 -280 72 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 32 ] 0 0.25 0.25
-( -384 -280 90 ) ( -271 -280 90 ) ( -271 -298 90 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 0.25 0.25
-( -271 -280 90 ) ( -384 -280 90 ) ( -384 -280 72 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 0 -1 32 ] 0 0.25 0.25
-( -271 -280 72 ) ( -271 -298 72 ) ( -271 -298 90 ) "unary.core . materials/dev/orange" [ 0 1 0 -32 ] [ 0 0 -1 32 ] 0 0.25 0.25
-}
-// brush 5
-{
-( -384 -298 72 ) ( -384 -316 72 ) ( -384 -316 54 ) "unary.core . materials/dev/orange" [ 0 1 0 -24 ] [ 0 0 -1 24 ] 0 0.25 0.25
-( -271 -316 54 ) ( -384 -316 54 ) ( -384 -316 72 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( -384 -316 54 ) ( -271 -316 54 ) ( -271 -298 54 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 24 ] 0 0.25 0.25
-( -384 -298 72 ) ( -271 -298 72 ) ( -271 -316 72 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 0.25 0.25
-( -271 -298 72 ) ( -384 -298 72 ) ( -384 -298 54 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 0 -1 24 ] 0 0.25 0.25
-( -271 -298 54 ) ( -271 -316 54 ) ( -271 -316 72 ) "unary.core . materials/dev/orange" [ 0 1 0 -24 ] [ 0 0 -1 24 ] 0 0.25 0.25
-}
-// brush 6
-{
-( -384 -316 54 ) ( -384 -334 54 ) ( -384 -334 36 ) "unary.core . materials/dev/orange" [ 0 1 0 -16 ] [ 0 0 -1 16 ] 0 0.25 0.25
-( -271 -334 36 ) ( -384 -334 36 ) ( -384 -334 54 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( -384 -334 36 ) ( -271 -334 36 ) ( -271 -316 36 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 16 ] 0 0.25 0.25
-( -384 -316 54 ) ( -271 -316 54 ) ( -271 -334 54 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 0.25 0.25
-( -271 -316 54 ) ( -384 -316 54 ) ( -384 -316 36 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 0 -1 16 ] 0 0.25 0.25
-( -271 -316 36 ) ( -271 -334 36 ) ( -271 -334 54 ) "unary.core . materials/dev/orange" [ 0 1 0 -16 ] [ 0 0 -1 16 ] 0 0.25 0.25
-}
-// brush 7
-{
-( -384 -334 36 ) ( -384 -352 36 ) ( -384 -352 18 ) "unary.core . materials/dev/orange" [ 0 1 0 -8 ] [ 0 0 -1 8 ] 0 0.25 0.25
-( -271 -352 18 ) ( -384 -352 18 ) ( -384 -352 36 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( -384 -352 18 ) ( -271 -352 18 ) ( -271 -334 18 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 8 ] 0 0.25 0.25
-( -384 -334 36 ) ( -271 -334 36 ) ( -271 -352 36 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 0.25 0.25
-( -271 -334 36 ) ( -384 -334 36 ) ( -384 -334 18 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 0 -1 8 ] 0 0.25 0.25
-( -271 -334 18 ) ( -271 -352 18 ) ( -271 -352 36 ) "unary.core . materials/dev/orange" [ 0 1 0 -8 ] [ 0 0 -1 8 ] 0 0.25 0.25
-}
-// brush 8
-{
-( -384 -352 18 ) ( -384 -370 18 ) ( -384 -370 0 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( -271 -370 0 ) ( -384 -370 0 ) ( -384 -370 18 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( -384 -370 0 ) ( -271 -370 0 ) ( -271 -352 0 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 0.25 0.25
-( -384 -352 18 ) ( -271 -352 18 ) ( -271 -370 18 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 0.25 0.25
-( -271 -352 18 ) ( -384 -352 18 ) ( -384 -352 0 ) "unary.core . materials/dev/orange" [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-( -271 -352 0 ) ( -271 -370 0 ) ( -271 -370 18 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
-}
-}
-// entity 21
+// entity 18
 {
 "classname" "brush_static"
 // brush 0
@@ -1024,7 +982,7 @@
 ( -64 384 48 ) ( -64 368 48 ) ( -64 368 80 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
 }
 }
-// entity 22
+// entity 19
 {
 "classname" "brush_static"
 // brush 0
@@ -1046,7 +1004,7 @@
 ( -368 368 0 ) ( -368 80 0 ) ( -368 80 176 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
 }
 }
-// entity 23
+// entity 20
 {
 "classname" "brush_dynamic"
 "target_name" "Rotator"
@@ -1060,7 +1018,7 @@
 ( -176 224 0 ) ( -176 112 0 ) ( -176 112 16 ) "unary.core . materials/dev/orange" [ 0 1 0 0 ] [ 0 0 -1 -64 ] 0 0.25 0.25
 }
 }
-// entity 24
+// entity 21
 {
 "classname" "brush_nav"
 "flags" "1"
@@ -1074,7 +1032,7 @@
 ( 192 -576 16 ) ( 192 -576 17 ) ( 192 -575 16 ) "unary.recusant . materials/dev/nav" [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1
 }
 }
-// entity 25
+// entity 22
 {
 "classname" "brush_nav"
 "flags" "2"
@@ -1086,5 +1044,394 @@
 ( 176 1088 192 ) ( 176 1089 192 ) ( 177 1088 192 ) "unary.recusant . materials/dev/nav" [ 1 0 0 16 ] [ 0 -1 0 0 ] 90 1 1
 ( 176 1088 16 ) ( 177 1088 16 ) ( 176 1088 17 ) "unary.recusant . materials/dev/nav" [ -1 0 0 -16 ] [ 0 0 -1 0 ] 180 1 1
 ( 176 1088 16 ) ( 176 1088 17 ) ( 176 1089 16 ) "unary.recusant . materials/dev/nav" [ 0 1 0 0 ] [ 0 0 -1 0 ] 180 1 1
+}
+}
+// entity 23
+{
+"classname" "editor_text"
+"origin" "840 208 16"
+"text" "16"
+"size" "65"
+"color" "255 255 255"
+"distance" "256"
+}
+// entity 24
+{
+"classname" "editor_text"
+"origin" "841 125 16"
+"text" "17"
+"size" "65"
+"color" "255 255 255"
+"distance" "256"
+}
+// entity 25
+{
+"classname" "editor_text"
+"origin" "842 25 16"
+"text" "18"
+"size" "65"
+"color" "255 255 255"
+"distance" "256"
+}
+// entity 26
+{
+"classname" "editor_text"
+"origin" "838 -70 16"
+"text" "19"
+"size" "65"
+"color" "255 255 255"
+"distance" "256"
+}
+// entity 27
+{
+"classname" "editor_text"
+"origin" "840 289 16"
+"text" "15"
+"size" "65"
+"color" "255 255 255"
+"distance" "256"
+}
+// entity 28
+{
+"classname" "brush_static"
+// brush 0
+{
+( 192 -136 0 ) ( 192 -8 0 ) ( 192 -8 56 ) "unary.core . materials/dev/height" [ 0 -1 0 -32 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 224 -136 0 ) ( 192 -136 0 ) ( 192 -136 56 ) "unary.core . materials/dev/height" [ -1.0000000000000002 0 0 256 ] [ 0 0 -1.0000000000000002 0 ] 0 -0.25 0.25
+( 192 -8 0 ) ( 192 -136 0 ) ( 224 -136 0 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 0.25 0.25
+( 192 -136 15 ) ( 192 -8 15 ) ( 224 -8 15 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 0 ] 270 0.25 0.25
+( 192 -8 0 ) ( 224 -8 0 ) ( 224 -8 56 ) "unary.core . materials/dev/height" [ 1.0000000000000002 0 0 384 ] [ 0 0 -1.0000000000000002 0 ] 0 -0.25 0.25
+( 224 -8 0 ) ( 224 -136 0 ) ( 224 -136 56 ) "unary.core . materials/dev/height" [ 0 -1 0 32 ] [ 0 0 -1 0 ] 0 -0.25 0.25
+}
+}
+// entity 29
+{
+"classname" "brush_static"
+// brush 0
+{
+( 192 -136 0 ) ( 192 -8 0 ) ( 192 -8 56 ) "unary.core . materials/dev/height" [ 0 -1 0 -32 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 224 -136 0 ) ( 192 -136 0 ) ( 192 -136 56 ) "unary.core . materials/dev/height" [ -1.0000000000000002 0 0 256 ] [ 0 0 -1.0000000000000002 0 ] 0 -0.25 0.25
+( 192 -8 0 ) ( 192 -136 0 ) ( 224 -136 0 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 0.25 0.25
+( 192 -136 15 ) ( 192 -8 15 ) ( 224 -8 15 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 0 ] 270 0.25 0.25
+( 192 -8 0 ) ( 224 -8 0 ) ( 224 -8 56 ) "unary.core . materials/dev/height" [ 1.0000000000000002 0 0 384 ] [ 0 0 -1.0000000000000002 0 ] 0 -0.25 0.25
+( 224 -8 0 ) ( 224 -136 0 ) ( 224 -136 56 ) "unary.core . materials/dev/height" [ 0 -1 0 32 ] [ 0 0 -1 0 ] 0 -0.25 0.25
+}
+}
+// entity 30
+{
+"classname" "brush_static"
+// brush 0
+{
+( 160 -136 15 ) ( 160 -8 15 ) ( 160 -8 71 ) "unary.core . materials/dev/height" [ 0 -1 0 -32 ] [ 0 0 -1 60 ] 90 0.25 0.25
+( 192 -136 15 ) ( 160 -136 15 ) ( 160 -136 71 ) "unary.core . materials/dev/height" [ -1.0000000000000002 0 0 384 ] [ 0 0 -1.0000000000000002 60 ] 270 -0.25 0.25
+( 160 -8 15 ) ( 160 -136 15 ) ( 192 -136 15 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 0 ] 270 0.25 0.25
+( 160 -136 30 ) ( 160 -8 30 ) ( 192 -8 30 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 0.25 0.25
+( 160 -8 15 ) ( 192 -8 15 ) ( 192 -8 71 ) "unary.core . materials/dev/height" [ 1.0000000000000002 0 0 256 ] [ 0 0 -1.0000000000000002 60 ] 270 -0.25 0.25
+( 192 -8 15 ) ( 192 -136 15 ) ( 192 -136 71 ) "unary.core . materials/dev/height" [ 0 -1 0 32 ] [ 0 0 -1 60 ] 270 -0.25 0.25
+}
+}
+// entity 31
+{
+"classname" "brush_static"
+// brush 0
+{
+( 128 -136 30 ) ( 128 -8 30 ) ( 128 -8 86 ) "unary.core . materials/dev/height" [ 0 -1 0 -32 ] [ 0 0 -1 120 ] 270 0.25 0.25
+( 160 -136 30 ) ( 128 -136 30 ) ( 128 -136 86 ) "unary.core . materials/dev/height" [ -1.0000000000000002 0 0 0 ] [ 0 0 -1.0000000000000002 120 ] 90 -0.25 0.25
+( 128 -8 30 ) ( 128 -136 30 ) ( 160 -136 30 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 0 ] 90 0.25 0.25
+( 128 -136 45 ) ( 128 -8 45 ) ( 160 -8 45 ) "unary.core . materials/dev/gray" [ 1 0 0 0 ] [ 0 -1 0 0 ] 180 0.25 0.25
+( 128 -8 30 ) ( 160 -8 30 ) ( 160 -8 86 ) "unary.core . materials/dev/height" [ 1.0000000000000002 0 0 128 ] [ 0 0 -1.0000000000000002 120 ] 90 -0.25 0.25
+( 160 -8 30 ) ( 160 -136 30 ) ( 160 -136 86 ) "unary.core . materials/dev/height" [ 0 -1 0 32 ] [ 0 0 -1 120 ] 90 -0.25 0.25
+}
+}
+// entity 32
+{
+"classname" "brush_static"
+// brush 0
+{
+( 294 -924 280 ) ( 294 -924 288 ) ( 294 -940 288 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 32 ] 180 0.25 0.25
+( 294 -940 288 ) ( 384 -940 288 ) ( 384 -924 280 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 180 0.25 0.25
+( 384 -940 288 ) ( 294 -940 288 ) ( 294 -924 288 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 180 0.25 0.25
+( 294 -924 280 ) ( 384 -924 280 ) ( 384 -924 288 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 32 ] 180 0.25 0.25
+( 384 -924 280 ) ( 384 -940 288 ) ( 384 -924 288 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 96 ] 180 0.25 0.25
+}
+// brush 1
+{
+( 294 -908 272 ) ( 294 -908 280 ) ( 294 -924 280 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 294 -924 280 ) ( 384 -924 280 ) ( 384 -908 272 ) "unary.core . materials/dev/gray" [ 0 1 0 80 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -924 280 ) ( 294 -924 280 ) ( 294 -908 280 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -908 272 ) ( 384 -908 272 ) ( 384 -908 280 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 384 -908 272 ) ( 384 -924 280 ) ( 384 -908 280 ) "unary.core . materials/dev/orange" [ 0 1 0 80 ] [ 0 0 -1 64 ] 0 0.25 0.25
+}
+// brush 2
+{
+( 294 -892 264 ) ( 294 -892 272 ) ( 294 -908 272 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 -32 ] 270 0.25 0.25
+( 294 -908 272 ) ( 384 -908 272 ) ( 384 -892 264 ) "unary.core . materials/dev/gray" [ 0 1 0 16 ] [ 1 0 0 0 ] 270 0.25 0.25
+( 384 -908 272 ) ( 294 -908 272 ) ( 294 -892 272 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 90 0.25 0.25
+( 294 -892 264 ) ( 384 -892 264 ) ( 384 -892 272 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 -32 ] 90 0.25 0.25
+( 384 -892 264 ) ( 384 -908 272 ) ( 384 -892 272 ) "unary.core . materials/dev/orange" [ 0 1 0 16 ] [ 0 0 -1 32 ] 90 0.25 0.25
+}
+// brush 3
+{
+( 294 -364 0 ) ( 294 -364 8 ) ( 294 -380 8 ) "unary.core . materials/dev/orange" [ 0 1 0 -112 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 294 -380 8 ) ( 384 -380 8 ) ( 384 -364 0 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -380 8 ) ( 294 -380 8 ) ( 294 -364 8 ) "unary.core . materials/dev/gray" [ 0 1 0 -112 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -364 0 ) ( 384 -364 0 ) ( 384 -364 8 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 384 -364 0 ) ( 384 -380 8 ) ( 384 -364 8 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 0 ] 0 0.25 0.25
+}
+// brush 4
+{
+( 294 -380 8 ) ( 294 -380 16 ) ( 294 -396 16 ) "unary.core . materials/dev/orange" [ 0 1 0 -112 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 294 -396 16 ) ( 384 -396 16 ) ( 384 -380 8 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -396 16 ) ( 294 -396 16 ) ( 294 -380 16 ) "unary.core . materials/dev/gray" [ 0 1 0 -112 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -380 8 ) ( 384 -380 8 ) ( 384 -380 16 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 384 -380 8 ) ( 384 -396 16 ) ( 384 -380 16 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 32 ] 0 0.25 0.25
+}
+// brush 5
+{
+( 294 -396 16 ) ( 294 -396 24 ) ( 294 -412 24 ) "unary.core . materials/dev/orange" [ 0 1 0 -112 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 294 -412 24 ) ( 384 -412 24 ) ( 384 -396 16 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -412 24 ) ( 294 -412 24 ) ( 294 -396 24 ) "unary.core . materials/dev/gray" [ 0 1 0 -112 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -396 16 ) ( 384 -396 16 ) ( 384 -396 24 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 384 -396 16 ) ( 384 -412 24 ) ( 384 -396 24 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 0 ] 0 0.25 0.25
+}
+// brush 6
+{
+( 294 -412 24 ) ( 294 -412 32 ) ( 294 -428 32 ) "unary.core . materials/dev/orange" [ 0 1 0 -112 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 294 -428 32 ) ( 384 -428 32 ) ( 384 -412 24 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -428 32 ) ( 294 -428 32 ) ( 294 -412 32 ) "unary.core . materials/dev/gray" [ 0 1 0 -112 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -412 24 ) ( 384 -412 24 ) ( 384 -412 32 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 384 -412 24 ) ( 384 -428 32 ) ( 384 -412 32 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 32 ] 0 0.25 0.25
+}
+// brush 7
+{
+( 294 -428 32 ) ( 294 -428 40 ) ( 294 -444 40 ) "unary.core . materials/dev/orange" [ 0 1 0 -112 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 294 -444 40 ) ( 384 -444 40 ) ( 384 -428 32 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -444 40 ) ( 294 -444 40 ) ( 294 -428 40 ) "unary.core . materials/dev/gray" [ 0 1 0 -112 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -428 32 ) ( 384 -428 32 ) ( 384 -428 40 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 384 -428 32 ) ( 384 -444 40 ) ( 384 -428 40 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 0 ] 0 0.25 0.25
+}
+// brush 8
+{
+( 294 -444 40 ) ( 294 -444 48 ) ( 294 -460 48 ) "unary.core . materials/dev/orange" [ 0 1 0 -112 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 294 -460 48 ) ( 384 -460 48 ) ( 384 -444 40 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -460 48 ) ( 294 -460 48 ) ( 294 -444 48 ) "unary.core . materials/dev/gray" [ 0 1 0 -112 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -444 40 ) ( 384 -444 40 ) ( 384 -444 48 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 384 -444 40 ) ( 384 -460 48 ) ( 384 -444 48 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 32 ] 0 0.25 0.25
+}
+// brush 9
+{
+( 294 -460 48 ) ( 294 -460 56 ) ( 294 -476 56 ) "unary.core . materials/dev/orange" [ 0 1 0 -112 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 294 -476 56 ) ( 384 -476 56 ) ( 384 -460 48 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -476 56 ) ( 294 -476 56 ) ( 294 -460 56 ) "unary.core . materials/dev/gray" [ 0 1 0 -112 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -460 48 ) ( 384 -460 48 ) ( 384 -460 56 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 384 -460 48 ) ( 384 -476 56 ) ( 384 -460 56 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 0 ] 0 0.25 0.25
+}
+// brush 10
+{
+( 294 -476 56 ) ( 294 -476 64 ) ( 294 -492 64 ) "unary.core . materials/dev/orange" [ 0 1 0 -112 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 294 -492 64 ) ( 384 -492 64 ) ( 384 -476 56 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -492 64 ) ( 294 -492 64 ) ( 294 -476 64 ) "unary.core . materials/dev/gray" [ 0 1 0 -112 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -476 56 ) ( 384 -476 56 ) ( 384 -476 64 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 384 -476 56 ) ( 384 -492 64 ) ( 384 -476 64 ) "unary.core . materials/dev/orange" [ 0 1 0 -47.999878 ] [ 0 0 -1 32 ] 0 0.25 0.25
+}
+// brush 11
+{
+( 294 -492 64 ) ( 294 -492 72 ) ( 294 -508 72 ) "unary.core . materials/dev/orange" [ 0 1 0 -111.99988 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 294 -508 72 ) ( 384 -508 72 ) ( 384 -492 64 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -508 72 ) ( 294 -508 72 ) ( 294 -492 72 ) "unary.core . materials/dev/gray" [ 0 1 0 -112 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -492 64 ) ( 384 -492 64 ) ( 384 -492 72 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 384 -492 64 ) ( 384 -508 72 ) ( 384 -492 72 ) "unary.core . materials/dev/orange" [ 0 1 0 -47.999878 ] [ 0 0 -1 0 ] 0 0.25 0.25
+}
+// brush 12
+{
+( 294 -508 72 ) ( 294 -508 80 ) ( 294 -524 80 ) "unary.core . materials/dev/orange" [ 0 1 0 -112 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 294 -524 80 ) ( 384 -524 80 ) ( 384 -508 72 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -524 80 ) ( 294 -524 80 ) ( 294 -508 80 ) "unary.core . materials/dev/gray" [ 0 1 0 -112 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -508 72 ) ( 384 -508 72 ) ( 384 -508 80 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 384 -508 72 ) ( 384 -524 80 ) ( 384 -508 80 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 32 ] 0 0.25 0.25
+}
+// brush 13
+{
+( 294 -524 80 ) ( 294 -524 88 ) ( 294 -540 88 ) "unary.core . materials/dev/orange" [ 0 1 0 -112 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 294 -540 88 ) ( 384 -540 88 ) ( 384 -524 80 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -540 88 ) ( 294 -540 88 ) ( 294 -524 88 ) "unary.core . materials/dev/gray" [ 0 1 0 -112 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -524 80 ) ( 384 -524 80 ) ( 384 -524 88 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 0.25 0.25
+( 384 -524 80 ) ( 384 -540 88 ) ( 384 -524 88 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 0 ] 0 0.25 0.25
+}
+// brush 14
+{
+( 294 -540 88 ) ( 294 -540 96 ) ( 294 -556 96 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 96 ] 0 0.25 0.25
+( 294 -556 96 ) ( 384 -556 96 ) ( 384 -540 88 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -556 96 ) ( 294 -556 96 ) ( 294 -540 96 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -540 88 ) ( 384 -540 88 ) ( 384 -540 96 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 96 ] 0 0.25 0.25
+( 384 -540 88 ) ( 384 -556 96 ) ( 384 -540 96 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 32 ] 0 0.25 0.25
+}
+// brush 15
+{
+( 294 -556 96 ) ( 294 -556 104 ) ( 294 -572 104 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 96 ] 0 0.25 0.25
+( 294 -572 104 ) ( 384 -572 104 ) ( 384 -556 96 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -572 104 ) ( 294 -572 104 ) ( 294 -556 104 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -556 96 ) ( 384 -556 96 ) ( 384 -556 104 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 96 ] 0 0.25 0.25
+( 384 -556 96 ) ( 384 -572 104 ) ( 384 -556 104 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 0 ] 0 0.25 0.25
+}
+// brush 16
+{
+( 294 -572 104 ) ( 294 -572 112 ) ( 294 -588 112 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 96 ] 0 0.25 0.25
+( 294 -588 112 ) ( 384 -588 112 ) ( 384 -572 104 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -588 112 ) ( 294 -588 112 ) ( 294 -572 112 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -572 104 ) ( 384 -572 104 ) ( 384 -572 112 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 96 ] 0 0.25 0.25
+( 384 -572 104 ) ( 384 -588 112 ) ( 384 -572 112 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 32 ] 0 0.25 0.25
+}
+// brush 17
+{
+( 294 -588 112 ) ( 294 -588 120 ) ( 294 -604 120 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 96 ] 0 0.25 0.25
+( 294 -604 120 ) ( 384 -604 120 ) ( 384 -588 112 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -604 120 ) ( 294 -604 120 ) ( 294 -588 120 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -588 112 ) ( 384 -588 112 ) ( 384 -588 120 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 96 ] 0 0.25 0.25
+( 384 -588 112 ) ( 384 -604 120 ) ( 384 -588 120 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 0 ] 0 0.25 0.25
+}
+// brush 18
+{
+( 294 -604 120 ) ( 294 -604 128 ) ( 294 -620 128 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 96 ] 0 0.25 0.25
+( 294 -620 128 ) ( 384 -620 128 ) ( 384 -604 120 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -620 128 ) ( 294 -620 128 ) ( 294 -604 128 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -604 120 ) ( 384 -604 120 ) ( 384 -604 128 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 96 ] 0 0.25 0.25
+( 384 -604 120 ) ( 384 -620 128 ) ( 384 -604 128 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 32 ] 0 0.25 0.25
+}
+// brush 19
+{
+( 294 -620 128 ) ( 294 -620 136 ) ( 294 -636 136 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 96 ] 0 0.25 0.25
+( 294 -636 136 ) ( 384 -636 136 ) ( 384 -620 128 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -636 136 ) ( 294 -636 136 ) ( 294 -620 136 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -620 128 ) ( 384 -620 128 ) ( 384 -620 136 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 96 ] 0 0.25 0.25
+( 384 -620 128 ) ( 384 -636 136 ) ( 384 -620 136 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 0 ] 0 0.25 0.25
+}
+// brush 20
+{
+( 294 -636 136 ) ( 294 -636 144 ) ( 294 -652 144 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 96 ] 0 0.25 0.25
+( 294 -652 144 ) ( 384 -652 144 ) ( 384 -636 136 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -652 144 ) ( 294 -652 144 ) ( 294 -636 144 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -636 136 ) ( 384 -636 136 ) ( 384 -636 144 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 96 ] 0 0.25 0.25
+( 384 -636 136 ) ( 384 -652 144 ) ( 384 -636 144 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 32 ] 0 0.25 0.25
+}
+// brush 21
+{
+( 294 -652 144 ) ( 294 -652 152 ) ( 294 -668 152 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 96 ] 0 0.25 0.25
+( 294 -668 152 ) ( 384 -668 152 ) ( 384 -652 144 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -668 152 ) ( 294 -668 152 ) ( 294 -652 152 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -652 144 ) ( 384 -652 144 ) ( 384 -652 152 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 96 ] 0 0.25 0.25
+( 384 -652 144 ) ( 384 -668 152 ) ( 384 -652 152 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 0 ] 0 0.25 0.25
+}
+// brush 22
+{
+( 294 -668 152 ) ( 294 -668 160 ) ( 294 -684 160 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 96 ] 0 0.25 0.25
+( 294 -684 160 ) ( 384 -684 160 ) ( 384 -668 152 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -684 160 ) ( 294 -684 160 ) ( 294 -668 160 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -668 152 ) ( 384 -668 152 ) ( 384 -668 160 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 96 ] 0 0.25 0.25
+( 384 -668 152 ) ( 384 -684 160 ) ( 384 -668 160 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 32 ] 0 0.25 0.25
+}
+// brush 23
+{
+( 294 -684 160 ) ( 294 -684 168 ) ( 294 -700 168 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 96 ] 0 0.25 0.25
+( 294 -700 168 ) ( 384 -700 168 ) ( 384 -684 160 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -700 168 ) ( 294 -700 168 ) ( 294 -684 168 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -684 160 ) ( 384 -684 160 ) ( 384 -684 168 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 96 ] 0 0.25 0.25
+( 384 -684 160 ) ( 384 -700 168 ) ( 384 -684 168 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 0 ] 0 0.25 0.25
+}
+// brush 24
+{
+( 294 -700 168 ) ( 294 -700 176 ) ( 294 -716 176 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 96 ] 0 0.25 0.25
+( 294 -716 176 ) ( 384 -716 176 ) ( 384 -700 168 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -716 176 ) ( 294 -716 176 ) ( 294 -700 176 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -700 168 ) ( 384 -700 168 ) ( 384 -700 176 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 96 ] 0 0.25 0.25
+( 384 -700 168 ) ( 384 -716 176 ) ( 384 -700 176 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 32 ] 0 0.25 0.25
+}
+// brush 25
+{
+( 294 -716 176 ) ( 294 -716 184 ) ( 294 -732 184 ) "unary.core . materials/dev/orange" [ 0 1 0 -112 ] [ 0 0 -1 -64 ] 0 0.25 0.25
+( 294 -732 184 ) ( 384 -732 184 ) ( 384 -716 176 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -732 184 ) ( 294 -732 184 ) ( 294 -716 184 ) "unary.core . materials/dev/gray" [ 0 1 0 -112 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -716 176 ) ( 384 -716 176 ) ( 384 -716 184 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 -64 ] 0 0.25 0.25
+( 384 -716 176 ) ( 384 -732 184 ) ( 384 -716 184 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 0 ] 0 0.25 0.25
+}
+// brush 26
+{
+( 294 -732 184 ) ( 294 -732 192 ) ( 294 -748 192 ) "unary.core . materials/dev/orange" [ 0 1 0 -112 ] [ 0 0 -1 -64 ] 0 0.25 0.25
+( 294 -748 192 ) ( 384 -748 192 ) ( 384 -732 184 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -748 192 ) ( 294 -748 192 ) ( 294 -732 192 ) "unary.core . materials/dev/gray" [ 0 1 0 -112 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -732 184 ) ( 384 -732 184 ) ( 384 -732 192 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 -64 ] 0 0.25 0.25
+( 384 -732 184 ) ( 384 -748 192 ) ( 384 -732 192 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 -32 ] 0 0.25 0.25
+}
+// brush 27
+{
+( 294 -748 192 ) ( 294 -748 200 ) ( 294 -764 200 ) "unary.core . materials/dev/orange" [ 0 1 0 -112 ] [ 0 0 -1 -64 ] 0 0.25 0.25
+( 294 -764 200 ) ( 384 -764 200 ) ( 384 -748 192 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -764 200 ) ( 294 -764 200 ) ( 294 -748 200 ) "unary.core . materials/dev/gray" [ 0 1 0 -112 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -748 192 ) ( 384 -748 192 ) ( 384 -748 200 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 -64 ] 0 0.25 0.25
+( 384 -748 192 ) ( 384 -764 200 ) ( 384 -748 200 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 0 ] 0 0.25 0.25
+}
+// brush 28
+{
+( 294 -780 208 ) ( 294 -780 216 ) ( 294 -796 216 ) "unary.core . materials/dev/orange" [ 0 1 0 -112 ] [ 0 0 -1 -64 ] 0 0.25 0.25
+( 294 -796 216 ) ( 384 -796 216 ) ( 384 -780 208 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -796 216 ) ( 294 -796 216 ) ( 294 -780 216 ) "unary.core . materials/dev/gray" [ 0 1 0 -112 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -780 208 ) ( 384 -780 208 ) ( 384 -780 216 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 -64 ] 0 0.25 0.25
+( 384 -780 208 ) ( 384 -796 216 ) ( 384 -780 216 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 0 ] 0 0.25 0.25
+}
+// brush 29
+{
+( 294 -764 200 ) ( 294 -764 208 ) ( 294 -780 208 ) "unary.core . materials/dev/orange" [ 0 1 0 -112 ] [ 0 0 -1 -64 ] 0 0.25 0.25
+( 294 -780 208 ) ( 384 -780 208 ) ( 384 -764 200 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -780 208 ) ( 294 -780 208 ) ( 294 -764 208 ) "unary.core . materials/dev/gray" [ 0 1 0 -112 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -764 200 ) ( 384 -764 200 ) ( 384 -764 208 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 -64 ] 0 0.25 0.25
+( 384 -764 200 ) ( 384 -780 208 ) ( 384 -764 208 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 -32 ] 0 0.25 0.25
+}
+// brush 30
+{
+( 294 -796 216 ) ( 294 -796 224 ) ( 294 -812 224 ) "unary.core . materials/dev/orange" [ 0 1 0 -112 ] [ 0 0 -1 -64 ] 0 0.25 0.25
+( 294 -812 224 ) ( 384 -812 224 ) ( 384 -796 216 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -812 224 ) ( 294 -812 224 ) ( 294 -796 224 ) "unary.core . materials/dev/gray" [ 0 1 0 -112 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -796 216 ) ( 384 -796 216 ) ( 384 -796 224 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 -64 ] 0 0.25 0.25
+( 384 -796 216 ) ( 384 -812 224 ) ( 384 -796 224 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 -32 ] 0 0.25 0.25
+}
+// brush 31
+{
+( 294 -812 224 ) ( 294 -812 232 ) ( 294 -828 232 ) "unary.core . materials/dev/orange" [ 0 1 0 -112 ] [ 0 0 -1 -64 ] 0 0.25 0.25
+( 294 -828 232 ) ( 384 -828 232 ) ( 384 -812 224 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -828 232 ) ( 294 -828 232 ) ( 294 -812 232 ) "unary.core . materials/dev/gray" [ 0 1 0 -112 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -812 224 ) ( 384 -812 224 ) ( 384 -812 232 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 -64 ] 0 0.25 0.25
+( 384 -812 224 ) ( 384 -828 232 ) ( 384 -812 232 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 0 ] 0 0.25 0.25
+}
+// brush 32
+{
+( 294 -828 232 ) ( 294 -828 240 ) ( 294 -844 240 ) "unary.core . materials/dev/orange" [ 0 1 0 -112 ] [ 0 0 -1 -64 ] 0 0.25 0.25
+( 294 -844 240 ) ( 384 -844 240 ) ( 384 -828 232 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -844 240 ) ( 294 -844 240 ) ( 294 -828 240 ) "unary.core . materials/dev/gray" [ 0 1 0 -112 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -828 232 ) ( 384 -828 232 ) ( 384 -828 240 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 -64 ] 0 0.25 0.25
+( 384 -828 232 ) ( 384 -844 240 ) ( 384 -828 240 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 -32 ] 0 0.25 0.25
+}
+// brush 33
+{
+( 294 -844 240 ) ( 294 -844 248 ) ( 294 -860 248 ) "unary.core . materials/dev/orange" [ 0 1 0 -112 ] [ 0 0 -1 -63.99994 ] 0 0.25 0.25
+( 294 -860 248 ) ( 384 -860 248 ) ( 384 -844 240 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -860 248 ) ( 294 -860 248 ) ( 294 -844 248 ) "unary.core . materials/dev/gray" [ 0 1 0 -112 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -844 240 ) ( 384 -844 240 ) ( 384 -844 248 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 -64 ] 0 0.25 0.25
+( 384 -844 240 ) ( 384 -860 248 ) ( 384 -844 248 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 0 ] 0 0.25 0.25
+}
+// brush 34
+{
+( 294 -860 248 ) ( 294 -860 256 ) ( 294 -876 256 ) "unary.core . materials/dev/orange" [ 0 1 0 -112 ] [ 0 0 -1 -63.99994 ] 0 0.25 0.25
+( 294 -876 256 ) ( 384 -876 256 ) ( 384 -860 248 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 384 -876 256 ) ( 294 -876 256 ) ( 294 -860 256 ) "unary.core . materials/dev/gray" [ 0 1 0 -112 ] [ 1 0 0 0 ] 0 0.25 0.25
+( 294 -860 248 ) ( 384 -860 248 ) ( 384 -860 256 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 -64 ] 0 0.25 0.25
+( 384 -860 248 ) ( 384 -876 256 ) ( 384 -860 256 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 -31.999939 ] 0 0.25 0.25
+}
+// brush 35
+{
+( 294 -876 256 ) ( 294 -876 264 ) ( 294 -892 264 ) "unary.core . materials/dev/orange" [ 0 1 0 -112 ] [ 0 0 -1 -64 ] 270 0.25 0.25
+( 294 -892 264 ) ( 384 -892 264 ) ( 384 -876 256 ) "unary.core . materials/dev/gray" [ 0 1 0 -48 ] [ 1 0 0 0 ] 270 0.25 0.25
+( 384 -892 264 ) ( 294 -892 264 ) ( 294 -876 264 ) "unary.core . materials/dev/gray" [ 0 1 0 -112 ] [ 1 0 0 0 ] 90 0.25 0.25
+( 294 -876 256 ) ( 384 -876 256 ) ( 384 -876 264 ) "unary.core . materials/dev/orange" [ -1 0 0 0 ] [ 0 0 -1 -64 ] 90 0.25 0.25
+( 384 -876 256 ) ( 384 -892 264 ) ( 384 -876 264 ) "unary.core . materials/dev/orange" [ 0 1 0 -48 ] [ 0 0 -1 0 ] 90 0.25 0.25
 }
 }

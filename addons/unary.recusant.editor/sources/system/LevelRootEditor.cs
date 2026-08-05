@@ -142,14 +142,29 @@ namespace Unary.Recusant
 
         private NavigationRegion3D _region;
 
+        private void RunReported(Func<Task> step)
+        {
+            _ = Task.Run(async () =>
+            {
+                try
+                {
+                    await step();
+                }
+                catch (Exception exception)
+                {
+                    Failed(exception.ToString());
+                }
+            });
+        }
+
         public void BuildNavigation()
         {
-            Task.Run(StartBuildNavigation);
+            RunReported(StartBuildNavigation);
         }
 
         public void ResetNavigation()
         {
-            Task.Run(StartResetNavigation);
+            RunReported(StartResetNavigation);
         }
 
         private async Task StartResetNavigation()
@@ -202,7 +217,7 @@ namespace Unary.Recusant
             }
 
             _region.BakeFinished += OnBakeFinished;
-            _region.BakeNavigationMesh(true);
+            _region.BakeNavigationMesh(false);
         }
 
         private void Failed(string why)
@@ -216,13 +231,14 @@ namespace Unary.Recusant
         private void OnBakeFinished()
         {
             _region.BakeFinished -= OnBakeFinished;
-            Task.Run(OnBakeFinishedAsync);
+            RunReported(OnBakeFinishedAsync);
         }
 
         private int OriginalPolyCount = 0;
         private int ResultPolyCount = 0;
         private int MaxPolyPerBound = 0;
         private int InvalidatedGroups = 0;
+        private int DiscardedPolys = 0;
         private int Groups = 0;
 
         private readonly Lock ValidGroupLock = new();
@@ -290,24 +306,24 @@ namespace Unary.Recusant
                 return;
             }
 
-            Godot.Collections.Array<Node> navBrushNodes = GetTree().GetNodesInGroup(NavBrush.NavBrushGroup);
+            Godot.Collections.Array<Node> navBrushNodes = GetTree().GetNodesInGroup(nameof(BrushNav));
 
-            List<NavBrush> brushes = [];
-            List<NavBrush> startBrushes = [];
-            List<NavBrush> endBrushes = [];
+            List<BrushNav> brushes = [];
+            List<BrushNav> startBrushes = [];
+            List<BrushNav> endBrushes = [];
 
             foreach (var navBrushNode in navBrushNodes)
             {
-                if (navBrushNode is NavBrush brush)
+                if (navBrushNode is BrushNav brush)
                 {
                     brushes.Add(brush);
 
-                    if (brush.Flags.HasFlag(NavBrush.Flag.Start))
+                    if (brush.Flags.HasFlag(BrushNav.Flag.Start))
                     {
                         startBrushes.Add(brush);
                     }
 
-                    if (brush.Flags.HasFlag(NavBrush.Flag.End))
+                    if (brush.Flags.HasFlag(BrushNav.Flag.End))
                     {
                         endBrushes.Add(brush);
                     }
@@ -332,11 +348,20 @@ namespace Unary.Recusant
                 return;
             }
 
+            Aabb[] brushBounds = new Aabb[brushes.Count];
+
+            for (int i = 0; i < brushes.Count; i++)
+            {
+                brushBounds[i] = brushes[i].GlobalTransform * brushes[i].Aabb;
+            }
+
             Vector3[] vertices = navMesh.GetVertices();
 
             int polyCount = navMesh.GetPolygonCount();
             OriginalPolyCount = polyCount;
             InvalidatedGroups = 0;
+            MaxPolyPerBound = 0;
+            DiscardedPolys = 0;
             Groups = 0;
 
             if (OriginalPolyCount == 0)
@@ -700,34 +725,30 @@ namespace Unary.Recusant
                     }
                 });
 
-                for (int i = 0; i < filteredPolygons.Count; i++)
+                for (int i = filteredPolygons.Count - 1; i >= 0; i--)
                 {
                     PolyData data = filteredPolygons[i];
 
                     float vertexFlow1 = VertexDistance[data.Vertexes.X];
-
-                    if (vertexFlow1 == -1.0f)
-                    {
-                        return;
-                    }
-
                     float vertexFlow2 = VertexDistance[data.Vertexes.Y];
-
-                    if (vertexFlow2 == -1.0f)
-                    {
-                        return;
-                    }
-
                     float vertexFlow3 = VertexDistance[data.Vertexes.Z];
 
-                    if (vertexFlow3 == -1.0f)
+                    if (vertexFlow1 == -1.0f || vertexFlow2 == -1.0f || vertexFlow3 == -1.0f)
                     {
-                        return;
+                        filteredPolygons.RemoveAt(i);
+                        DiscardedPolys++;
+                        continue;
                     }
 
                     data.AverageFlow = (vertexFlow1 + vertexFlow2 + vertexFlow3) / 3.0f;
 
                     filteredPolygons[i] = data;
+                }
+
+                if (filteredPolygons.Count == 0)
+                {
+                    Failed($"Every polygon of the NavMesh failed its flow query ({DiscardedPolys} discarded)");
+                    return;
                 }
 
                 filteredPolygons.Sort();
@@ -833,10 +854,12 @@ namespace Unary.Recusant
                             continue;
                         }
 
-                        foreach (var brush in brushes)
+                        for (int brushIndex = 0; brushIndex < brushes.Count; brushIndex++)
                         {
+                            Aabb brushAabb = brushBounds[brushIndex];
+
                             // Current brush does not intersect with this probe, skip it
-                            if (!probeBox.Intersects(brush.GetAabb()))
+                            if (!probeBox.Intersects(brushAabb))
                             {
                                 continue;
                             }
@@ -849,12 +872,12 @@ namespace Unary.Recusant
                                 if (!Triangle.IntersectsBounds(newVerticesArray[poly.Vertexes.X],
                                 newVerticesArray[poly.Vertexes.Y],
                                 newVerticesArray[poly.Vertexes.Z],
-                                brush.GetAabb()))
+                                brushAabb))
                                 {
                                     continue;
                                 }
 
-                                poly.Flag |= (int)brush.Flags;
+                                poly.Flag |= (int)brushes[brushIndex].Flags;
 
                                 filteredPolygons[polyEntry] = poly;
                             }
@@ -924,7 +947,7 @@ namespace Unary.Recusant
 
             this.Critical($"Successfully build navigation!\n" +
                 $"Poly count reduction result: {OriginalPolyCount} - {OriginalPolyCount - ResultPolyCount} = {ResultPolyCount} (-{100 - percentage}%)\n" +
-                $"Remaining groups: {Groups} Invalidated groups: {InvalidatedGroups}\n" +
+                $"Remaining groups: {Groups} Invalidated groups: {InvalidatedGroups} Discarded polys: {DiscardedPolys}\n" +
                 $"Bound count: {Bounds.Length} Max polygons per bound: {MaxPolyPerBound}" +
                 additionalMessage);
 

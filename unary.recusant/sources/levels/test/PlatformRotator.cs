@@ -15,7 +15,7 @@ namespace Unary.Recusant.Levels.Test
 
         public override void Initialize()
         {
-            brush = FgdManager.Singleton.OwnByName<BrushDynamic>(this, BrushName).First();
+            brush = FgdManager.Singleton.OwnByNameSingle<BrushDynamic>(this, BrushName);
             platform = (PlatformBody3D)brush.GetChild(0);
         }
 

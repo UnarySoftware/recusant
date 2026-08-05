@@ -483,7 +483,8 @@ namespace FuncGodot
         /// marked with <see cref="FgdProperty"/>. The field name becomes the property key - kept in the field's
         /// own PascalCase here and only converted to snake_case where the FGD text is written - the field's
         /// default value (read through Godot's marshalling, so the field must also be <c>[Export]</c>) becomes
-        /// the FGD default, and enum fields become <c>choices</c> lists. Both dictionaries come back empty when
+        /// the FGD default, and enum fields become <c>choices</c> lists - or <c>flags</c> lists when the enum is
+        /// marked <see cref="FlagsAttribute"/>. Both dictionaries come back empty when
         /// no valid node type is set. Nothing is stored: these are only ever needed while a map or FGD build is
         /// underway.
         /// </summary>
@@ -547,7 +548,16 @@ namespace FuncGodot
 
                     if (field.FieldType.IsEnum)
                     {
-                        // Enums map onto FGD choices, with the default carried in the description entry.
+                        if (field.FieldType.GetCustomAttribute<FlagsAttribute>() != null)
+                        {
+                            // [Flags] enums are spawnflags: a checkbox per bit rather than a single-pick list.
+                            // The default is carried per flag, and the FGD format has no room for a description
+                            // on a flags property, so the attribute's one is dropped here.
+                            properties[propertyName] = BuildEnumFlags(field.FieldType, defaultValue.AsInt64());
+                            continue;
+                        }
+
+                        // Plain enums map onto FGD choices, with the default carried in the description entry.
                         properties[propertyName] = BuildEnumChoices(field.FieldType);
                         descriptions[propertyName] = new Godot.Collections.Array
                         {
@@ -570,6 +580,36 @@ namespace FuncGodot
             {
                 instance.Free();
             }
+        }
+
+        /// <summary>
+        /// Builds a flags array [[String name, int value, bool default], ...] for a <see cref="FlagsAttribute"/>
+        /// enum-typed FGD property, taking the per flag defaults from the field's default bitmask.
+        /// </summary>
+        private static Godot.Collections.Array BuildEnumFlags(Type enumType, long defaultBits)
+        {
+            Godot.Collections.Array flags = [];
+
+            foreach (object value in Enum.GetValues(enumType))
+            {
+                long bits = Convert.ToInt64(value);
+
+                // FGD flags are one checkbox per bit and are summed back into the property, so a zero member
+                // has nothing to toggle and a member combining several bits would count those bits twice.
+                if (bits == 0 || (bits & (bits - 1)) != 0)
+                {
+                    continue;
+                }
+
+                flags.Add(new Godot.Collections.Array
+                {
+                    Enum.GetName(enumType, value),
+                    bits,
+                    (defaultBits & bits) == bits,
+                });
+            }
+
+            return flags;
         }
 
         /// Builds a choices dictionary { "EnumName" : intValue } for an enum-typed FGD property.

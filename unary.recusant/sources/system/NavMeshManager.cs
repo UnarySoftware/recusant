@@ -11,7 +11,7 @@ namespace Unary.Recusant
         private struct PolyData
         {
             public Vector3I Vertex;
-            public NavBrush.Flag Flags;
+            public BrushNav.Flag Flags;
         }
 
         private LevelRoot _levelRoot;
@@ -19,7 +19,7 @@ namespace Unary.Recusant
         private int _polyCount;
         private PolyData[] _polyData;
         private readonly Dictionary<Vector3, int[]> _boundToPolys = [];
-        private readonly HashSet<NavBrush> _navBrushes = [];
+        private readonly HashSet<BrushNav> _navBrushes = [];
 
         bool ISystem.Initialize()
         {
@@ -58,7 +58,7 @@ namespace Unary.Recusant
                         Y = _levelRoot.Polys[polyReader + 1],
                         Z = _levelRoot.Polys[polyReader + 2],
                     },
-                    Flags = (NavBrush.Flag)_levelRoot.PolyFlags[i],
+                    Flags = (BrushNav.Flag)_levelRoot.PolyFlags[i],
                 };
 
                 polyReader += 3;
@@ -84,7 +84,7 @@ namespace Unary.Recusant
             return true;
         }
 
-        public (float flow, NavBrush.Flag flags, int triangle) GetFlow(Vector3 position)
+        public (float flow, BrushNav.Flag flags, int triangle) GetFlow(Vector3 position)
         {
             if (_levelRoot == null)
             {
@@ -143,12 +143,12 @@ namespace Unary.Recusant
             return true;
         }
 
-        public void AddNavBrush(NavBrush brush)
+        public void AddNavBrush(BrushNav brush)
         {
             _navBrushes.Add(brush);
         }
 
-        public void RemoveNavBrush(NavBrush brush)
+        public void RemoveNavBrush(BrushNav brush)
         {
             _navBrushes.Remove(brush);
         }

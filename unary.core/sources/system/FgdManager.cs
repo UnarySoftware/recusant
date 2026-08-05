@@ -32,7 +32,31 @@ namespace Unary.Core
                 result.Add((T)fgd);
             }
 
+            if (result.Count == 0)
+            {
+                this.Error($"Failed to find any FGD objects with name \"{name}\"");
+                return [];
+            }
+
             return result;
+        }
+
+        public T OwnByNameSingle<T>(IFgdOwner owner, string name) where T : BaseFgd
+        {
+            if (!_nameEntries.TryGetValue(name, out var namedEntries))
+            {
+                this.Error($"Failed to find any FGD objects with name \"{name}\"");
+                return null;
+            }
+
+            foreach (var fgd in namedEntries)
+            {
+                fgd.Owners.Add(owner);
+                return (T)fgd;
+            }
+
+            this.Error($"Failed to find any FGD objects with name \"{name}\"");
+            return null;
         }
 
         public HashSet<T> OwnByType<T>(IFgdOwner owner) where T : BaseFgd
@@ -53,6 +77,24 @@ namespace Unary.Core
             }
 
             return result;
+        }
+
+        public T OwnByTypeSingle<T>(IFgdOwner owner) where T : BaseFgd
+        {
+            Type type = typeof(T);
+
+            if (!_typeEntries.TryGetValue(type, out var typedEntries))
+            {
+                return null;
+            }
+
+            foreach (var fgd in typedEntries)
+            {
+                fgd.Owners.Add(owner);
+                return (T)fgd;
+            }
+
+            return null;
         }
 
         public void Disown<T>(IFgdOwner owner, T fgd) where T : BaseFgd

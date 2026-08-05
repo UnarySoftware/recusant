@@ -11,7 +11,7 @@ namespace Unary.Recusant
         public CharacterBody3D body;
 
         public float Flow = -1.0f;
-        public NavBrush.Flag Flags;
+        public BrushNav.Flag Flags;
         public int Triangle = -1;
 
         private Rid _navRid;
@@ -98,7 +98,7 @@ namespace Unary.Recusant
 
             //_gizmo.SetPosition(target);
 
-            (float flow, NavBrush.Flag flags, int triangle) = NavMeshManager.Singleton.GetFlow(target);
+            (float flow, BrushNav.Flag flags, int triangle) = NavMeshManager.Singleton.GetFlow(target);
 
             if (flow > -1.0f)
             {

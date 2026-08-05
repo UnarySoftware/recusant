@@ -54,6 +54,13 @@ namespace Unary.Core
 
         public Aabb GetAabb()
         {
+            if (!HasMeta(func_godot_mesh_data))
+            {
+                SharedLogger.Warning(this, $"{GetType().Name} with entity index {EntityIndex} has no mesh data to " +
+                    $"calculate an AABB from, it is only available while the map is being built.");
+                return default;
+            }
+
             Dictionary meta = GetMeta(func_godot_mesh_data).AsGodotDictionary();
             SetMeta(func_godot_mesh_data, new());
 

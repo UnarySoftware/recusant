@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="FuncGodotFGDPointClass" format=3 uid="uid://x6hm4x40mfgy"]
+
+[ext_resource type="Script" uid="uid://bx5076tvgjwkk" path="res://addons/unary.core.editor/sources/func_godot/fgd/FuncGodotFGDBaseClass.cs" id="1_bqvlm"]
+[ext_resource type="Script" uid="uid://mp4q5vujdupb" path="res://addons/unary.core.editor/sources/func_godot/fgd/FuncGodotFGDPointClassDisplayDescriptor.cs" id="2_k54j4"]
+[ext_resource type="Script" uid="uid://db2hiqt2xetip" path="res://addons/unary.core.editor/sources/func_godot/fgd/FuncGodotFGDPointClass.cs" id="2_wcnjr"]
+[ext_resource type="Script" uid="uid://j7t2gc45eqvw" path="res://unary.core/sources/resources/TypeResource.cs" id="3_type"]
+
+[sub_resource type="Resource" id="Resource_nodetype"]
+script = ExtResource("3_type")
+TargetValue = "uid://c2h2iqkeaoef6"
+metadata/_custom_type_script = "uid://j7t2gc45eqvw"
+
+[resource]
+script = ExtResource("2_wcnjr")
+ApplyRotationOnMapBuild = false
+ApplyScaleOnMapBuild = false
+Classname = "editor_text"
+Description = "Displays a label in the TrenchBroom viewport. This entity is ignored by the game."
+BaseClasses = Array[ExtResource("1_bqvlm")]([])
+MetaProperties = Dictionary[String, Variant]({
+"color": Color(0.878431, 0.878431, 0.376471, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+})
+NodeType = SubResource("Resource_nodetype")
+metadata/_custom_type_script = "uid://db2hiqt2xetip"
